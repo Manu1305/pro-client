@@ -55,7 +55,6 @@ import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 
 
 
-// const LazyShopping = React.lazy(() => import("./Shopingsection/Shopping"));
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"))
 const LazySellerDashboard = React.lazy(() => import("./Navbar/Profile/SellerDashboard/SellerDash"));
 const LazyAddProduct = React.lazy(() => import("./Navbar/Profile/SellerDashboard/ProductSec/Addproduct"));
@@ -161,8 +160,7 @@ const App = () => {
             <Route path="/deliveryGuys" element={<AssignDekivery  />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
             <Route path="/shoppingPage" element={<ShoppingPage />} />
-            {/* <Route path="/shoppingPage/:category" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyShopping />
-            </React.Suspense> } /> */}
+            <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
           <Route path="About" element={<AboutUs />} />
           <Route
                 path="/forgotpassword/:id/:token"
