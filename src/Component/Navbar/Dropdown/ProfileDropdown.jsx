@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { RiUserSmileFill } from "react-icons/ri";
 import { MdMarkEmailRead } from "react-icons/md";
-import { GoDashboard } from "react-icons/go";
+// import { RiDashboardLine } from "react-icons/go";
 import { FaFirstOrder } from "react-icons/fa";
 import { GrUpdate } from "react-icons/gr";
 import { CiLogout } from "react-icons/ci";
@@ -51,7 +51,7 @@ import styless from "./profileDrop.module.css"
           user?.urType === "delivery") && (
           <Link to="/dashboard" className="bg-white text-black">
             <Dropdown.Item href="#/action-3" className="bg-white text-black">
-              <GoDashboard /> Dashboard
+              Dashboard
             </Dropdown.Item>
           </Link>
         )}
