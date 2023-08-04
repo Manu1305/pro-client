@@ -1,0 +1,37 @@
+
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+/* @font-face {
+  font-family: "Bold";  
+  src: local("Poppins-Bold"),
+    url("./Poppinsfonts/Poppins-Bold.ttf") format("truetype");
+} */
+/* @font-face {
+  font-family: Bold;
+  src: url("./Fonts/Poppinsfonts/Poppins-Bold.ttf");
+}
+.fontClass p{
+  font-family:Bold ;
+  color: #0d0d0c;
+}
+.fontClass h2{
+  font-family:Bold ;
+  color: #0d0d0c;
+}
+.fontClass h6{
+  font-family:Bold ;
+  color: #0d0d0c;
+}
+.fontClass h5{
+  font-family:Bold ;
+  color: #0d0d0c;
+}
+.fontClass li{
+  font-family:Bold ;
+  color: #0d0d0d;
+} */

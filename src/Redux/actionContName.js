@@ -1,0 +1,6 @@
+export const addUserType ="ADDUSER"
+// export const updateUserType="ADDUSER"
+export const AddProductType= "ADDPRODUCT"
+export const sellerRegisData= "SAVEDATA"
+export const addOrder= "ADDORDER"
+export const AddReqProductType= "ADDREQUEST"

@@ -1,0 +1,68 @@
+.main {
+    height: 500px;
+  }
+  
+  .one {
+    display: flex;
+    flex-direction: row;
+    height: 50%;
+    width: 100%;
+    background-color: brown;
+  }
+  
+  .innerone {
+    background-color: white;
+    width: 50%;
+    height: 100%;
+    padding: 100px;
+    padding-left: 200px;
+  }
+  
+  .innertwo {
+    justify-content: center;
+    background-color: white;
+    width: 50%;
+    height: 100%;
+    padding: 100px;
+    padding-left: 200px;
+  }
+  
+  .two {
+    display: flex;
+    flex-direction: row;
+    background-color: aqua;
+    width: 100%;
+    height: 50%;
+  }
+  
+  .headingtext {
+    color: red;
+    font-weight: bolder;
+  }
+  
+  .subheading {
+    color: black;
+  }
+  
+  @media only screen and (max-width: 549px) {
+    .main {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .one,
+    .two {
+      flex-direction: column;
+      height: auto;
+      background-color: initial;
+    }
+  
+    .innerone,
+    .innertwo {
+      width: 100%;
+      height: auto;
+      padding: 50px;
+      padding-left: 100px;
+    }
+  }

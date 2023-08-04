@@ -1,0 +1,71 @@
+.sliderContainer {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 20px;
+  }
+  
+  .card {
+
+    display: flex;
+    flex-direction: column;
+    width: 16rem;
+    margin-left: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color:#fff;
+    height: 400px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(196, 38, 38, 0.878);
+    
+  }
+  .imgsg{
+    height: 15rem;
+  }
+  .control-btn button {
+    background: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    padding: 2px;
+  }
+  
+  .control-btn .next {
+    position: absolute;
+    top: 40%;
+    right: 20px;
+  }
+  
+  .control-btn .prev {
+    position: absolute;
+    top: 40%;
+    left: 20px;
+    z-index: 99;
+  }
+  .control-btn .icon {
+    font-size: 25px;
+  }
+  
+  /* .prices{
+    margin-left: 0.5rem;
+    margin-top: -1rem;
+    
+  }
+  
+  .description{
+    margin-top: -.7rem;
+    margin-left: 0.5rem;
+  
+  }
+  .title{
+    margin-left: 0.5rem;
+    font-weight:lighter
+    ;
+  
+  } */
+  

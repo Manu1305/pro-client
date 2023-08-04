@@ -1,0 +1,177 @@
+.heading{
+    margin-top: 70px;
+    font-weight: bolder;
+    font-size: x-large;
+}
+.starmaindiv{
+    width: 400px; 
+    height: 14px;
+    
+    margin-top: 20px; 
+    display: flex; 
+    flex-direction: row;
+  
+}
+.reviewmain{
+    height: 300px;
+    width: 1000px;
+
+    display: flex;
+    flex-direction: row;
+}
+.rating{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+}
+.checked{
+    color: orange;
+}
+notchecked{
+    background-color: white;
+}
+.allratingbox{
+    width: 70%;
+    height: 100%;
+
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+}
+.ratings{
+margin-left: 50px;
+}
+.bar{
+    width: 250px;
+    height: 14px;
+    background-color: rgb(205, 188, 188);
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+}
+.bar5{
+    width: 95%;
+    height: 14px;
+    background-color: green;
+    border-radius: 10px;
+}
+.bar4{
+    width: 65%;
+    height: 14px;
+    background-color: green;
+    border-radius: 10px;
+}
+.bar3{
+    width: 40%;
+    height: 14px;
+    background-color: green;
+    border-radius: 10px;
+}
+.bar2{
+    width: 20%;
+    height: 14px;
+    background-color: green;
+    border-radius: 10px;
+}
+.bar1{
+    width: 10%;
+    height: 14px;
+    background-color: green;
+    border-radius: 10px;
+}
+@media (min-width:360px) and (max-width:1000px){
+    .heading{
+        margin-top: 70px;
+        font-weight: bolder;
+        font-size: x-large;
+    }
+    .starmaindiv{
+        width: 380px; 
+        height: 14px;
+        
+        margin-top: 20px; 
+        display: flex; 
+        flex-direction: row;
+      
+    }
+    .reviewmain{
+        height: 300px;
+        width: 450px;
+    
+        display: flex;
+        flex-direction: column;
+    }
+    .rating{
+        width: 40%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: xx-large;
+    }
+    .checked{
+        color: orange;
+    }
+    notchecked{
+        background-color: white;
+    }
+    .allratingbox{
+        width: 30px;
+        height: 100%;
+        margin-left: 120px;
+    
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-direction: column;
+    }
+    .ratings{
+    margin-left: 50px;
+    }
+    .bar{
+        width: 250px;
+        height: 14px;
+        background-color: rgb(205, 188, 188);
+        margin-top: 5px;
+        display: flex;
+        flex-direction: row;
+        border-radius: 10px;
+    }
+    .bar5{
+        width: 95%;
+        height: 14px;
+        background-color: green;
+        border-radius: 10px;
+    }
+    .bar4{
+        width: 65%;
+        height: 14px;
+        background-color: green;
+        border-radius: 10px;
+    }
+    .bar3{
+        width: 40%;
+        height: 14px;
+        background-color: green;
+        border-radius: 10px;
+    }
+    .bar2{
+        width: 20%;
+        height: 14px;
+        background-color: green;
+        border-radius: 10px;
+    }
+    .bar1{
+        width: 10%;
+        height: 14px;
+        background-color: green;
+        border-radius: 10px;
+    }
+}

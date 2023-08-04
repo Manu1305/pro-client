@@ -1,0 +1,66 @@
+.productContainer {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 20px;
+  margin-left: 20%;
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.customers {
+  border-collapse: collapse;
+  width: 700px;
+}
+
+.customers td,
+.customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.customers tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.customers tr:hover {
+  background-color: #ddd;
+}
+
+.customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-image: linear-gradient(to bottom, #85aa6d ,#656ffd);
+  color: white;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  
+  background-color: rgb(213, 225, 236);
+  height: 50px;
+  border-radius: 20px;
+    &:hover {
+    background-color:rgba(255, 255, 255, 0.85) /* Replace with the hover background color */
+  }
+}
+
+.addButton {
+  
+  width: 100px;
+  border-radius: 20px;
+ 
+
+
+}
+
+@media only screen and (max-width: 600px) {
+  .customers {
+    width: 270px;
+  }
+}
+.buttonBox{
+  background-color:grey;
+}

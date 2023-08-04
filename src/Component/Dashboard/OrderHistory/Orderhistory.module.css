@@ -1,0 +1,113 @@
+/* OrderHistory.module.css
+
+.table-wrapper {
+  font-family: 'Theinhardt', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
+  background-image: url('https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.freepik.com%2Ffree-vector%2Frectangle-leafy-frame-design_53876-97624.jpg&tbnid=PRNkOCLc6BmS7M&vet=10CAIQxiAoAGoXChMIoMrl6f6UgAMVAAAAAB0AAAAAEAY..i&imgrefurl=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fbackground-card&docid=9CZijIepqju6OM&w=417&h=626&itg=1&q=background%20images%20for%20card&ved=0CAIQxiAoAGoXChMIoMrl6f6UgAMVAAAAAB0AAAAAEAY');
+}
+
+.orderHistoryTable {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .table-wrapper {
+    max-width: 100%;
+  }
+
+  .orderHistoryTable {
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 598px) {
+  .table-wrapper {
+    max-width: 100%;
+  }
+
+  .orderHistoryTable {
+    font-size: 0.75rem;
+  }
+  .tableWrapper{
+    margin: auto;
+  }
+  .orderCard{
+margin-left: -10rem;
+  }
+}
+.skjh{
+  background-color: rgb(107, 214, 214);
+} */
+
+.table-wrapper {
+  font-family: 'Theinhardt', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
+}
+.tableWrapper{
+  background-color: antiquewhite;
+}
+
+.orderHistoryTable {
+  width: 100%;
+}
+
+.orderCard {
+  width: 18rem;
+}
+
+.addressSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.addressSection p {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .table-wrapper {
+    max-width: 100%;
+  }
+
+  .orderHistoryTable {
+    font-size: 0.75rem;
+  }
+
+  .orderCard {
+    width: 100%;
+  }
+}
+.tableWrapper{
+  margin-top: 5rem;
+}
+@media (max-width: 767px) {
+  .orderCard {
+    width: 100%;
+  }
+
+}
+.imgcircle{
+  margin-left: 14rem;
+  margin-top: 0rem;
+  width: 2rem;
+  height: 2rem;
+}
+@media (max-width: 598px) {
+  .imgcircle{
+    margin-left: rem;
+    margin-top: -1rem;
+  }
+  .orderCard{
+   margin-right: -12rem;
+  }
+  .tableWrapper{
+    margin-left: -6rem;
+  }
+}

@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.component {
+  width: 100%;
+  max-width: 400px; /* Adjust the maximum width as per your needs */
+  margin: 10px;
+}
+
+/* Add media queries for responsiveness */
+@media (min-width: 768px) {
+  .component {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust the width and margins as per your needs */
+  }
+}
+
+@media (min-width: 1024px) {
+  .component {
+    flex: 0 0 calc(25% - 20px); /* Adjust the width and margins as per your needs */
+  }
+}

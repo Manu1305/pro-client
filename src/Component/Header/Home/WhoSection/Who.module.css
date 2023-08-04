@@ -1,0 +1,117 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 15px 6px 10px 
+}
+
+.redBox {
+  background-color: red;
+  height: 300px;
+  width: 50%;
+  cursor: pointer;
+}
+
+.whiteBox {
+  background-color: white;
+  height: 300px;
+  width: 50%;
+  cursor: pointer;
+}
+
+.text {
+  font-weight: bold;
+  font-size: 14rem;
+}
+
+.redText {
+  color: red;
+}
+
+.whiteText {
+  color: white;
+}
+
+.leftMargin {
+  margin-left: 265px;
+}
+
+.rightMargin {
+  margin-right: 315px;
+}
+
+
+
+.redBox.hovered {
+  height: 40px;
+  transition: height 2s;
+  display: block;
+}
+
+.whiteBox.hovered {
+  height: 40px;
+  transition: height 2s;
+  display: block;
+}
+.whiteTextinner{
+  text-align: center;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.whiteTextlast{
+  position: absolute;
+  left: auto;
+  color: white;
+}
+.redTextlast{
+  position: relative;
+ right: auto;
+ color: red;
+ float: right;
+}
+
+
+/* 
+///////////responsive\\\\\\\\\\\\\\\\\\\\\\ */
+
+@media screen and (max-width:800px) {
+  
+.redBox {
+  background-color: red;
+  height: 150px;
+  width: 50%;
+  
+}
+
+.whiteBox {
+  height: 150px;
+  width: 50%;
+}
+
+.text {
+  font-weight: bold;
+  font-size: 5rem;
+}
+
+.redText {
+  color: red;
+}
+
+.whiteText {
+  color: white;
+}
+
+.leftMargin {
+  margin-left: 70px;
+}
+
+.rightMargin {
+  margin-right: 315px;
+}  
+
+.redTextlast{
+  color: red;
+  
+}
+}

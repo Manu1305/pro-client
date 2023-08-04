@@ -1,0 +1,18 @@
+.pandaImage {
+  background-image: url('https://easydrawingguides.com/wp-content/uploads/2017/04/how-to-draw-a-cartoon-panda-featured-image-1200.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  animation: eyesMove 2s infinite;
+}
+
+@keyframes eyesMove {
+  0% {
+    background-position: center;
+  }
+  100% {
+    background-position: calc(50% + 10px * var(--mouse-x) / 100) calc(50% + 10px * var(--mouse-y) / 100);
+  }
+}

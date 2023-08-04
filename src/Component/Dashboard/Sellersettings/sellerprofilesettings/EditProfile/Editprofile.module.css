@@ -1,0 +1,41 @@
+.header {
+    height: 300px;
+    width: 100%;
+    box-shadow: inset 0px 44px 44px rgb(148, 144, 196);
+  }
+  
+  .imgdiv {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 70px;
+    padding: 20px;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    /* Styles for screens up to 768px wide */
+    .container {
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 300px;
+    }
+   
+  
+  @media (max-width: 576px) {
+    /* Styles for screens up to 576px wide */
+    .imgdiv {
+      top: 70px;
+      padding: 10px;
+      height: 150px;
+      width: 150px;
+    }
+      height: 2000px;
+    }
+  }
+  

@@ -1,0 +1,44 @@
+
+@media screen and (min-width: 576px) {
+    center {
+      font-size: 80px;
+      color: black;
+
+    }
+    .centerp {
+        font-size: large;  
+
+  
+      }
+  }
+  
+  @media screen and (max-width: 768px) {
+    center {
+      font-size: 30px;
+      font-weight: 600;
+
+    }
+    .centerp {
+      color: black;
+
+      }
+  }
+  /* .overlay {
+    position: absolute;
+    top: 80px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    color: #fff;
+  }
+  .overlay h1 {
+    font-weight: 500;
+    color: rgb(253, 246, 126);
+  }
+  .overlay p {
+    color: #fff;
+    font-weight: 300;
+    padding: 15px;
+  }
+   */

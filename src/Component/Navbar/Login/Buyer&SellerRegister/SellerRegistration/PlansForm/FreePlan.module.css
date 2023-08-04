@@ -1,0 +1,63 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 200px;
+  }
+  
+  .card {
+    background-color: #18aed8;
+    padding: 20px;
+    height: 350px;
+    border-radius: 10px;
+    flex-basis: calc(50% - 10px);
+    max-width: calc(50% - 10px);
+    min-width: 300px;
+    color: aliceblue;
+  }
+  
+  .card1 {
+    background-color: #f4f4f4;
+     height: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    flex-basis: calc(50% - 10px);
+    max-width: calc(50% - 10px);
+    min-width: 300px;
+  }
+  
+  .paymentOptions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .proceedButtonOrange {
+      margin-top: 40px;
+    background-color: orange;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .card,
+    .card1 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+  .content{
+      color: white;
+  }

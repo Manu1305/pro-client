@@ -1,0 +1,25 @@
+.card-title {
+    font-weight: 300;
+  }
+  
+  .btn {
+    font-size: 13px;
+  }
+  
+  .login-form {
+    width: 320px;
+    margin: 20px;
+  }
+  
+  .sign-up {
+    text-align: center;
+    padding: 20px 0 0;
+  }
+  
+  span {
+    font-size: 14px;
+  }
+  
+  .submit-btn {
+    margin-top: 20px;
+  }

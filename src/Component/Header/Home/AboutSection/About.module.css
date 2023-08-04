@@ -1,0 +1,180 @@
+.main{
+  position: relative;
+  width: 100%;
+  height: 700px;
+  background-image: url('../../../../../public/Image/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: center;
+}
+.headingcontent{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30%;
+  background-color: black;
+  opacity: 0.5;
+}
+.headingcontent1{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70%;
+  background-color: black;
+  opacity: 0.5;
+}
+.Headingtext{
+  color: aliceblue;
+  align-items: center;
+  font-weight: bolder;
+  font-size: x-large;
+}
+.contenttext{
+  margin-top: 20px;
+  color: white;
+  display: flex;
+ justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.aboutustext{
+  font-size: 4rem;
+  font-weight: bolder;
+  color: white;
+}
+.main1{
+  position: relative;
+  width: 100%;
+  height: 900px;
+  background-image: url('../../../../../public/Image/Aboutus/2nd.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.ourmission{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 45%;
+  height: 40%;
+  background-color: black;
+  opacity: 0.5;
+  margin-bottom: 160px;
+}
+.ourvision{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  height: 40%;
+  background-color: black;
+  opacity: 0.5;
+  margin-bottom: 160px;
+}
+.mainvision{
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-image: url('../../../../../public/Image/Aboutus/4th.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.main3{
+ 
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-image: url('../../../../../public/Image/Aboutus/3rd.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@media screen and (max-width: 768px) {
+  .main{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-image: url('../../../../../public/Image/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .headingcontent{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    background-color: black;
+    opacity: 0.5;
+  }
+  .headingcontent1{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 90%;
+    background-color: black;
+    opacity: 0.5;
+  }
+  .Headingtext{
+    color: aliceblue;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 1rem
+  }
+  .contenttext{
+    margin-top: 20px;
+    color: white;
+    display: flex;
+   justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: .6rem;
+  }
+  .aboutustext{
+    font-size: 4rem;
+    font-weight: bolder;
+    color: white;
+ 
+  }
+  .main1{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-image: url('../../../../../public/Image/Aboutus/2nd.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .ourmission{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 40%;
+    background-color: black;
+    opacity: 0.5;
+    margin-bottom: 160px;
+  }
+  .ourvision{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 45%;
+    height: 40%;
+    background-color: black;
+    opacity: 0.5;
+    margin-bottom: 160px;
+  }
+  .mainvision{
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-image: url('https://img.freepik.com/free-photo/artistic-blurry-colorful-wallpaper-background_58702-8365.jpg?w=900&t=st=1688798719~exp=1688799319~hmac=c4cb7dea5c13c1bf7999873877004534e2f900e2a480089b1d48340cb82db2dd');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+}

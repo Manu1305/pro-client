@@ -1,0 +1,14 @@
+.header{
+    margin-top: 4rem;
+    }
+    .img1 {
+        width: 100%;
+        height: 30rem;
+      }
+     
+      @media only screen and (max-width: 598px) {
+        .img1 {
+          width: 100%;
+          height: 20rem;
+        }
+      }
