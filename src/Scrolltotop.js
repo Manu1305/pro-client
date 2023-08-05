@@ -11,4 +11,5 @@ const ScrollToTop = ({ children }) => {
   return children || null;
 };
 
+const justCheck = ""
 export default ScrollToTop;
