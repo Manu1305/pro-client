@@ -1,4 +1,4 @@
-export const apiURL = 'https://demo-hitechmart-api.onrender.com'
+export const apiURL = 'http://localhost:8000'
 
 // razorpay API Key
 export const RAZ_API_KEY_TEST = "rzp_test_EvyMmsf90H0SWx"
