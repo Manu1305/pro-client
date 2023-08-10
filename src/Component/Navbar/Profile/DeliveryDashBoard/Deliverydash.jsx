@@ -196,7 +196,7 @@ const SamplePrevArrow = (props) => {
   const verifyOtp = async (phone, orderId) => {
     console.log(phone, "====", phoneOtp);
     await axios
-      .post("${apiURL}/user/verify-otp", { phone, phoneOtp })
+      .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
       .then((response) => {
         console.log(response.data);
         if (response.data.status === "approved") {

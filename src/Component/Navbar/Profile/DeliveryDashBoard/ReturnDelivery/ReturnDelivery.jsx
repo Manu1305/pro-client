@@ -65,7 +65,7 @@ export const ReturnDelivery = () => {
       },
     };
     await axios
-      .get("${apiURL}/delivery/dashboradDlvData", config)
+      .get(`${apiURL}/delivery/dashboradDlvData`, config)
       .then((res) => {
         setOrders(res.data);
 

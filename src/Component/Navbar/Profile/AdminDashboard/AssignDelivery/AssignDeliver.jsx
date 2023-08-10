@@ -28,7 +28,7 @@ import { apiURL } from "../../../../../const/config";
         },
       };
       await axios
-        .get("${apiURL}/user/userdata", config)
+        .get(`${apiURL}/user/userdata`, config)
 
         .then((res) => {
    

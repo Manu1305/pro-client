@@ -5,6 +5,7 @@ import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { addorder } from "../../../../Redux/order/orderAction";
+import { apiURL } from "../../../../const/config";
 
 const BuyerOrder = () => {
   const dispatch = useDispatch();
@@ -68,12 +69,16 @@ const BuyerOrder = () => {
         },
       };
       const res = await axios
-        .get("${apiURL}/orders/get-all-orders", config)
-        .then((res) => res.data)
+        .get(`${apiURL}/orders/get-all-orders`, config)
+        .then((res) => {
+          console.log(res)
+          return res.data
+        })
         .catch((err) => {
           console.log(err);
         });
-
+        console.log(res)
+        debugger
       dispatch(addorder(res));
       setOrders(res);
     } catch (error) {
@@ -85,11 +90,9 @@ const BuyerOrder = () => {
     getOrders();
   }, []);
 
-  const handleReturnOrder = (orderId) => { };
-
   return (
     <div className={`d-flex flex-wrap ${styles.tableWrapper}`}>
-      {orders.map((order, index) => {
+      {orders.length && orders.map((order, index) => {
         // const dateString = "2023-08-01T:36:25.914+00:00";
         const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
         const isExpRet = dateFromISOString > new Date();
