@@ -44,7 +44,7 @@ const Cart = ({setCartItems}) => {
       };
 
       await axios
-        .get(`${apiURL}/cart/user-car`, config)
+        .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
        
           setCartItem(res.data);
