@@ -164,7 +164,7 @@ const BuyerOrder = () => {
                   <h6>
                     Status:{" "}
                     {order.orderStatus === "confirm Delivery"
-                      ? "Dispatced 1"
+                      ? "Shipped"
                       : order.orderStatus}
                   </h6>
                 </div>
