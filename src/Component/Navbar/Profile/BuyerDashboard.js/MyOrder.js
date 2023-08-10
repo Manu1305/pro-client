@@ -93,119 +93,115 @@ const BuyerOrder = () => {
   return (
     <div className={`d-flex flex-wrap ${styles.tableWrapper}`}>
       {orders.length && orders.map((order, index) => {
-        // const dateString = "2023-08-01T:36:25.914+00:00";
-        const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
-        const isExpRet = dateFromISOString > new Date();
-        return (
-          <Card key={index} className={`m-2 ${styles.orderCard}`}>
-            <Card.Body>
-              <Card.Title>Order: {index + 1}</Card.Title>
-              <img
-                src="../Image/hiLogo.jpg"
-                alt=""
-                style={{ width: "45px", height: "45px" }}
-                className={`rounded-circle ${styles.imgcircle}`}
-              />
-              <div key={order.id} className="d-flex align-items-center mb-3">
+          // const dateString = "2023-08-01T:36:25.914+00:00";
+          const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
+          const isExpRet = dateFromISOString > new Date();
+          return (
+            <Card key={index} className={`m-2 ${styles.orderCard}`}>
+              <Card.Body>
+                <Card.Title>Order: {index + 1}</Card.Title>
                 <img
-                  src={order.prdDeta.images}
+                  src="../Image/hiLogo.jpg"
                   alt=""
                   style={{ width: "45px", height: "45px" }}
-                  className="rounded-circle"
+                  className={`rounded-circle ${styles.imgcircle}`}
                 />
+                <div key={order.id} className="d-flex align-items-center mb-3">
+                  <img
+                    src={order.prdDeta.images}
+                    alt=""
+                    style={{ width: "45px", height: "45px" }}
+                    className="rounded-circle"
+                  />
 
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{order.prdDeta.barnd}</p>
-                  <p className="text-muted mb-0">{order.prdDeta.category}</p>
+                  <div className="ms-3">
+                    <p className="fw-bold mb-1">{order.prdDeta.barnd}</p>
+                    <p className="text-muted mb-0">{order.prdDeta.category}</p>
+                  </div>
+                  <select>
+                    {order.sizeWithQuantity &&
+                      Object.entries(order.sizeWithQuantity).map(
+                        ([key, value]) => (
+                          <option key={key} value={key}>
+                            {value.selectedSizes ? (
+                              <p
+                                style={{
+                                  fontSize: 13,
+                                  color: "GrayText",
+                                }}
+                              >
+                                {value.selectedSizes}
+                              </p>
+                            ) : null}{" "}
+                            -
+                            {value.quantities ? (
+                              <p
+                                style={{
+                                  fontSize: 13,
+                                  color: "GrayText",
+                                }}
+                              >
+                                {value.quantities}
+                              </p>
+                            ) : null}
+                          </option>
+                        )
+                      )}
+                  </select>
                 </div>
-                <select>
-                  {order.sizeWithQuantity &&
-                    Object.entries(order.sizeWithQuantity).map(
-                      ([key, value]) => (
-                        <option key={key} value={key}>
-                          {value.selectedSizes ? (
-                            <p
-                              style={{
-                                fontSize: 13,
-                                color: "GrayText",
-                              }}
-                            >
-                              {value.selectedSizes}
-                            </p>
-                          ) : null}{" "}
-                          -
-                          {value.quantities ? (
-                            <p
-                              style={{
-                                fontSize: 13,
-                                color: "GrayText",
-                              }}
-                            >
-                              {value.quantities}
-                            </p>
-                          ) : null}
-                        </option>
-                      )
+
+                <div className={`mb-3 ${styles.addressSection}`}>
+                  <h6 className="my-2">Tracking ID: {order.trackId}</h6>
+                  <h6 className="text-muted">Address:</h6>
+                  <h6>Locality: {order.dlvAddr.locality} </h6>
+                  <h6>Area: {order.dlvAddr.area} </h6>
+                  <h6>
+                    City & State: {order.dlvAddr.city}, {order.dlvAddr.state}
+                  </h6>
+                  <h6>Pincode: {order.dlvAddr.pincode} </h6>
+                </div>
+                <div className="mb-3">
+                  <h6>
+                    Status:{" "}
+                    {order.orderStatus === "confirm Delivery"
+                      ? "Dispatced 1"
+                      : order.orderStatus}
+                  </h6>
+                </div>
+                <div className="mb-3">
+                  <h6>Amount: {order.ordPrc}</h6>
+                </div>
+                <div className="mb-3">
+                  {order.orderStatus !== "Shipped" &&
+                    order.orderStatus !== "Dispatched 1" &&
+                    order.orderStatus !== "Dispatced 1" &&
+                    order.orderStatus !== "Delivered" &&
+                    order.orderStatus !== "confirm Delivery" &&
+                    order.orderStatus !== "Return Successful" &&
+                    order.orderStatus !== "confirm Return" && (
+                      <>
+                        <button className="btn btn-warning my-2">
+                          CHANGE ADDRESS
+                        </button>
+                        <button className="btn btn-danger">CANCEL ORDER</button>
+                      </>
                     )}
-                </select>
-              </div>
 
-              <div className={`mb-3 ${styles.addressSection}`}>
-                <h6 className="my-2">Tracking ID: {order.trackId}</h6>
-                <h6 className="text-muted">
-                
-                  Address:
-
-
-                </h6>
-                <h6>Locality:   {order.dlvAddr.locality} </h6>
-                <h6>Area:   {order.dlvAddr.area} </h6>
-                <h6>City & State:   {order.dlvAddr.city}, {order.dlvAddr.state}</h6>
-                <h6>Pincode:   {order.dlvAddr.pincode} </h6>
-              </div>
-              <div className="mb-3">
-                <h6>
-                  Status:{" "}
-                  {order.orderStatus === "confirm Delivery"
-                    ? "Dispatced 1"
-                    : order.orderStatus}
-                </h6>
-              </div>
-              <div className="mb-3">
-                <h6>Amount: {order.ordPrc}</h6>
-              </div>
-              <div className="mb-3">
-                {order.orderStatus !== "Shipped" &&
-                  order.orderStatus !== "Dispatched 1" &&
-                  order.orderStatus !== "Dispatced 1" &&
-                  order.orderStatus !== "Delivered" &&
-                  order.orderStatus !== "confirm Delivery" &&
-                  order.orderStatus !== "Return Successful" &&
-                  order.orderStatus !== "confirm Return" &&
-                  (
-                    <>
-                      <button className="btn btn-warning my-2">
-                        CHANGE ADDRESS
+                  {order.orderStatus === "Delivered" && isExpRet ? (
+                    <Link to={`/returnPro/${order._id}`}>
+                      <button
+                        onClick={() => returnButton(order)}
+                        className="btn btn-warning my-2"
+                      >
+                        RETURN ORDER
                       </button>
-                      <button className="btn btn-danger">CANCEL ORDER</button>
-                    </>
-                  )}
-
-                {order.orderStatus === "Delivered" && isExpRet ? (
-                  <Link to={`/returnPro/${order._id}`}>
-                    <button
-                      onClick={() => returnButton(order)}
-                      className="btn btn-warning my-2"
-                    >
-                      RETURN ORDER
-                    </button>
-                  </Link>
-                ) : null}
-              </div>
-            </Card.Body>
-          </Card>
-        );
-      })}
+                    </Link>
+                  ) : null}
+                </div>
+              </Card.Body>
+            </Card>
+          );
+        })}
     </div>
   );
 };
