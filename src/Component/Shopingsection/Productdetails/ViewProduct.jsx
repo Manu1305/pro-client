@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
@@ -13,7 +13,7 @@ import { AiOutlineStar } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { BsBagDash } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
-import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
+import { AiOutlineShopping,AiFillHeart } from "react-icons/ai";
 import Review from "./Review/Review";
 import axios from "axios";
 import { apiURL } from "../../../const/config";
@@ -48,16 +48,17 @@ const ViewProduct = ({ setCartItems }) => {
     size: ["size1", "size2", "size3", "size4"],
   };
   const { productId } = useParams();
-  // const [data, setData] = useState({});
-  // const [productDetail, setDetails] = useState({});
+  const user = useSelector((state) => state.userReducer.user);
+  console.log(user);
+
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
   const [heartCount, setheartCouut] = useState(1);
   const [showShareDialog, setShowShareDialog] = useState(false);
-
-  const [isWishItem, setisWishItem] = useState(false);
+  const [offerBtn, setofferBtn] = useState(false);
+  const [isWishItem, setisWishItem] = useState(false)
 
   const handleShare = () => {
     if (navigator.share) {
@@ -70,12 +71,15 @@ const ViewProduct = ({ setCartItems }) => {
         .then(() => console.log("Product shared successfully."))
         .catch((error) => console.log("Error sharing product:", error));
     } else {
-      console.log("Share API not supported.");
-      // Fallback implementation for platforms that don't support the share API
-      // Implement your own custom share functionality here (e.g., copying the URL to clipboard)
-      // You can also show a share dialog and set showShareDialog to true to handle it in your UI
+      
     }
   };
+  useEffect(() => {
+
+    if (totalQuantity >= 100) {
+      setofferBtn(true);
+    }
+  }, [totalQuantity]);
 
   const wishUpdate = async (productId) => {
     const config = {
@@ -86,7 +90,7 @@ const ViewProduct = ({ setCartItems }) => {
     };
     try {
       await axios.post(
-        `${apiURL}/wish/update-wish`,
+        "http://localhost:8000/wish/update-wish",
         {
           productId,
         },
@@ -143,8 +147,6 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
 
-    console.log(product._id, config);
-
     const sizeWithQuantity = {};
     Object.keys(quantities).forEach((key, index) => {
       const sizeKey = `size${index + 1}`;
@@ -155,7 +157,7 @@ const ViewProduct = ({ setCartItems }) => {
       };
     });
 
-    console.log(sizeWithQuantity);
+    
 
     try {
       await axios
@@ -179,7 +181,43 @@ const ViewProduct = ({ setCartItems }) => {
     }
   };
 
-  console.log(productDetails);
+  const offerBtnHandler = async () => {
+    try {
+      const message = {
+        for:"admin",
+        heading: `Super Shopper ${user.name}: 100+ Quantity Purchase Unlocked! 🎉🛒`,
+        desc: `Admin Action Required: ${user.name} 100+ quantities purchase.Reach out to ${user.name} at their contact number: ${user.phone}, or email them at ${user.email} to share the exclusive deal.`,
+      };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      const res = await axios.post(`${apiURL}/noti/create-noti`,{message},config)
+        // .then((res) => {
+        //   console.log(res);
+        //   return res.json();
+        // })
+        .then((res) => {
+          console.log(res);
+          setofferBtn(false);
+          alert("Prepare for More: A Call for You – Details Inside!");
+
+          return res;
+        })
+        .catch((err) => {
+          alert("URL DATA");
+          console.log(err);
+          return err;
+        });
+
+      console.log("res from", res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={`card ${styles.card}`}>
@@ -233,12 +271,15 @@ const ViewProduct = ({ setCartItems }) => {
                       }}
                     >
                       <div onClick={() => setisWishItem(!isWishItem)}>
-                        {isWishItem ? (
-                          <AiFillHeart className={styles.mainicon} />
-                        ) : (
-                          <AiOutlineHeart className={styles.mainicon} />
-                        )}
+
+                        
+                      {isWishItem ? (
+                        <AiFillHeart className={styles.mainicon} />
+                      ) : (
+                        <AiOutlineHeart className={styles.mainicon} />
+                      )}
                       </div>
+            
                     </div>
                     <div className={styles.tagandshare}>
                       <BsBookmark />
@@ -269,15 +310,7 @@ const ViewProduct = ({ setCartItems }) => {
                     </div>
                   </div>
                 </div>
-                {/* <div className={`ml-2 mx-2 ${styles["price-info"]}`}>
-                    <small className={`${styles["dis-price"]}`}>
-                      <div className="mt-3 mr-3">
-                      <s >₹{product.realPrice}</s>
-                      </div>
-                   
-                    </small>
-                    <span>{product.discountPercentage}</span>
-                  </div> */}
+               
                 <div className={styles.priceandpercentage}>
                   <div>
                     <p className="line-through" style={{ color: "red" }}>
@@ -343,30 +376,10 @@ const ViewProduct = ({ setCartItems }) => {
                                       : "rgb(243,243,243)",
                                   }}
                                 >
-                                  {/* <input
-                                    type="checkbox"
-                                    value={size}
-                                    className={styles.checkbox}
-                                    checked={selectedSizes.includes(size)}
-                                    onChange={(e) =>
-                                      handleSizeSelection(size, e)
-                                    }
-                                  /> */}
+                                 
                                   {size}
                                 </div>
-                                {/* {["size1", "size2", "size3", "size4"].map(
-                                    (item) => (
-                                      <label  abel htmlFor={quantities[size]}>
-                                        
-                                        {
-                                          product.productDetail.selectedSizes[
-                                            item
-                                          ].quantities
-                                        } 
-                                        left
-                                      </label>
-                                    )
-                                  )} */}
+                               
                                 <input
                                   type="text"
                                   placeholder="Enter Qty"
@@ -385,14 +398,7 @@ const ViewProduct = ({ setCartItems }) => {
               </div>
 
               <div className={`cart mt-4 align-items-center ${styles.cart}`}>
-                {/* <div className={styles.totalmain}>
-                <label htmlFor="total">total:</label>
-                <div className={styles.totaldiv}>
-                <h6 className={`text-uppercase`}>
-                   {totalQuantity} 
-                </h6>
-                </div>
-                </div> */}
+               
 
                 {totalQuantity >= 5 ? (
                   <>
@@ -409,6 +415,26 @@ const ViewProduct = ({ setCartItems }) => {
                     </button>
                   </>
                 ) : null}
+                {offerBtn ? (
+                      <div class="container m-4">
+                        <div class="row justify-content-center">
+                          <div class="col-md-6 text-center">
+                            <h3 class="text-danger">
+                              Your Bulk Buying Deal Is a Click Away - Don't Miss
+                              Out!
+                            </h3>
+                          </div>
+                          <div class="col-md-6 text-center">
+                            <button
+                              class="btn btn-success"
+                              onClick={offerBtnHandler}
+                            >
+                              Offers
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
               </div>
             </div>
 
