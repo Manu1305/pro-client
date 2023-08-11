@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
-
+import Styles from './cart.module.css'
 
 const Cart = ({setCartItems}) => {
   const [CartItem, setCartItem] = useState([]);
@@ -101,17 +101,16 @@ const Cart = ({setCartItems}) => {
   };
 
   return (
-    <>
+    <div > 
+    
       <section
         className="h-100"
-        style={{ backgroundColor: "#eee", marginTop: "100px" }}
+        style={{ backgroundColor: "white"}}
       >
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-10">
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                {/* <h3 className="fw-normal mb-0 text-black">Shopping Cart</h3> */}
-              </div>
+            <div className="col-10" style={{marginTop:'100px'}}>
+             
 
               {/* <h2>Total {totalPrice}</h2> */}
               {CartItem.items.length > 0 &&
@@ -130,7 +129,7 @@ const Cart = ({setCartItems}) => {
                         </div>
 
                         <div className="col-md-3 col-lg-3 col-xl-3">
-                          <p className="lead fw-normal mb-2">
+                          <p className="font-bold text-xl text-black">
                             {item.productDetails.barnd}
                           </p>
 
@@ -141,9 +140,9 @@ const Cart = ({setCartItems}) => {
                           </p>
 
                           <div>
-       
-                            <label>Select Size</label>
-                            <select>
+                            
+                            <label>Size</label>
+                            <select className={Styles.select}>
                               {Object.entries(item.sizeWithQuantity).map(
                                 ([key, value]) => (
                                   <option key={key} value={key}>
@@ -241,7 +240,7 @@ const Cart = ({setCartItems}) => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
