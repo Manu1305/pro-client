@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { apiURL } from "../../../const/config";
+import NewAddress from "../NEwAddress/NewAddress";
+import { getUserAddress } from "../../../const/api";
 
 const BuyerConfirm = () => {
   const navigate = useNavigate();
@@ -26,37 +28,21 @@ const BuyerConfirm = () => {
     phone: null,
   });
 
-  const [shippingAddress, setShippingAddress] = useState({});
-
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showForm, setShowForm] = useState(false);
+
   // seleted delivery addrees
   const [deliveryAddress, setDeliveryAddress] = useState({});
-  const [pType, setPType] = useState("");
   const [sum, setSum] = useState(0);
 
   // getting saved addresses
+
   const getSavedAddress = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      const response = await axios.get(
-        `${apiURL}/address/savedaaddress`,
-        config
-      );
-
-      setAddresses(response.data);
-    } catch (error) {
-      console.log("API Error", error);
-    }
+    const ans = await getUserAddress();
+    setAddresses(ans);
+    setShowForm(false);
   };
-
   useEffect(() => {
     getSavedAddress();
   }, []);
@@ -67,44 +53,6 @@ const BuyerConfirm = () => {
 
   const handleAddAddress = () => {
     setShowForm(true);
-  };
-
-  const onChangeHandler = (e) => {
-    setAddress((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
-
-  const saveAddressHandler = async (e) => {
-    e.preventDefault();
-
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      const response = await axios
-        .post(
-          `${apiURL}/address/add-address`,
-          {
-            addressDetails: address,
-          },
-          config
-        )
-        .then((res) => res.data)
-        .catch((err) => {
-          console.log(err);
-        });
-
-      setShippingAddress(response.addressDetails);
-
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const getCartCarts = async () => {
@@ -126,13 +74,13 @@ const BuyerConfirm = () => {
           console.log(err);
         });
 
+      // total quantity
       let allQua = apiRes.items.map((element) => {
-        console.log(element.totalQuantity);
-        // allQua+ element.totalQuantity
         return element.totalQuantity;
       });
+
+      // cart sum
       let totSum = allQua.reduce((curr, next) => curr + next);
-      console.log("Check here", totSum);
       setSum(totSum * 10);
     } catch (error) {
       console.log(error);
@@ -145,7 +93,6 @@ const BuyerConfirm = () => {
 
   const totalPrice = Number(params.totalPrice);
 
-  const shippingPrice = 100;
   const GST = (5 * totalPrice) / 100;
 
   const placeOrderButton = async (paymentId, amount) => {
@@ -205,6 +152,7 @@ const BuyerConfirm = () => {
         console.log(err);
       });
   };
+
   const removeFromCart = async (id) => {
     try {
       const config = {
@@ -228,8 +176,8 @@ const BuyerConfirm = () => {
     navigate("/shoppingPage");
   };
 
+  // cash on delivery
   const cashOnDelv = async () => {
-    setPType("cash");
     let keys = getApiKey();
 
     let cashbaby = (totalPrice * 10) / 100 + sum + GST;
@@ -281,6 +229,8 @@ const BuyerConfirm = () => {
       alert(response.error.metadata.payment_id);
     });
   };
+
+  // online payment
   const placeOrderButton2 = async () => {
     // api keys
     let keys = getApiKey();
@@ -365,405 +315,202 @@ const BuyerConfirm = () => {
       </div>
     );
   }
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
-  };
 
   return (
-    <div>
-      <div className="row" style={{ marginTop: "100px" }}>
-        <div className="col-md-6 mb-4">
-          <div className="card mb-4">
-            <div className="card-header py-3">
-              <h5 className="mb-0">Billing Details</h5>
-            </div>
-
-            {/* saved address */}
-            <div style={{ overflowX: "auto" }}>
-              <h5 className="mb-0">Saved Address</h5>
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                {addresses.map((address) => (
-                  <div
-                    key={address.id}
-                    style={{
-                      cursor: "pointer",
-                      backgroundColor:
-                        selectedAddress && selectedAddress.id === address.id
-                          ? "white"
-                          : "white",
-                      border: "1px solid #ccc",
-                      borderRadius: "4px",
-                      padding: "10px",
-                      marginRight: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                    // getting address
-                    onClick={() => {
-                      setDeliveryAddress(address.addressDetails);
-                    }}
-                  >
-                    <button
+    <div style={{ backgroundColor: "yellow" }}>
+      <div
+        className="row"
+        style={{ marginTop: "100px", backgroundColor: "white" }}
+      >
+        {/* <div style={{ display: "flex" }}>
+        
+      </div> */}
+        <div className="col-md-1"></div>
+        <div
+          className="col-md-6 mb-4 mw-100"
+          style={{ overflowX: "auto", backgroundColor: "#eeeeee" }}
+        >
+          <div
+            className="row justify-content-center"
+            style={{ marginTop: "45px" }}
+          >
+            <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>Deliver to</h1>
+          </div>
+          <button onClick={handleAddAddress} className="btn btn-primary">
+            Add new
+          </button>
+          {/* saved Address */}
+          <div
+            className="card mb-4"
+            style={{ backgroundColor: "#eeeeee", borderRadius: 0, border: 0 }}
+          >
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {addresses.map((address) => (
+                <div
+                  key={address.id}
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: "#ffffff",
+                    margin: "20px",
+                    alignItems: "center",
+                  }}
+                  // getting address
+                  onClick={() => {
+                    setDeliveryAddress(address.addressDetails);
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      className="form-check"
                       onClick={() => handleAddressSelection(address)}
                       style={{
-                        marginRight: "5px",
-                        backgroundColor: "orange",
-                        border: "none",
-                        padding: 0,
-                        textDecoration: "underline",
+                        // margin:"10px",
                         cursor: "pointer",
                       }}
                     >
-                      Select ~
-                    </button>
-
-                    <div>
+                      <input
+                        className="form-check-input m-2"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                    </div>
+                    <div className="m-3">
                       <p>
-                        <strong>Locality:</strong>{" "}
-                        {address.addressDetails.locality}
+                        <span>Locality: {address.addressDetails.locality}</span>
                       </p>
                       <p>
-                        <strong>Area:</strong> {address.addressDetails.area}
+                        <span>Area: {address.addressDetails.area}</span>
                       </p>
                       <p>
-                        <strong>Landmark:</strong>{" "}
-                        {address.addressDetails.landmark}
+                        <span>Landmark: {address.addressDetails.landmark}</span>
                       </p>
                       <p>
-                        <strong>City:</strong> {address.addressDetails.city}
+                        <span>City: {address.addressDetails.city}</span>
                       </p>
                       <p>
-                        <strong>State:</strong> {address.addressDetails.state}
+                        <span>State: {address.addressDetails.state}</span>
                       </p>
                       <p>
-                        <strong>Pincode:</strong>{" "}
-                        {address.addressDetails.pincode}
+                        <span>Pincode: {address.addressDetails.pincode}</span>{" "}
                       </p>
                       <p>
-                        <strong>Phone:</strong> {address.addressDetails.phone}
+                        <span>Phone: {address.addressDetails.phone}</span>
                       </p>
                     </div>
                   </div>
-                ))}
-              </div>
-
-              {/* saved address */}
-              {selectedAddress && (
-                <div>
-                  <h5>Selected Address:</h5>
-                  <p>
-                    <strong>Locality:</strong>{" "}
-                    {selectedAddress.addressDetails.locality}
-                  </p>
-                  <p>
-                    <strong>Area:</strong> {selectedAddress.addressDetails.area}
-                  </p>
-                  <p>
-                    <strong>Landmark:</strong>{" "}
-                    {selectedAddress.addressDetails.landmark}
-                  </p>
-                  <p>
-                    <strong>City:</strong> {selectedAddress.addressDetails.city}
-                  </p>
-                  <p>
-                    <strong>State:</strong>{" "}
-                    {selectedAddress.addressDetails.state}
-                  </p>
-                  <p>
-                    <strong>Pincode:</strong>{" "}
-                    {selectedAddress.addressDetails.pincode}
-                  </p>
-                  <p>
-                    <strong>Phone:</strong>{" "}
-                    {selectedAddress.addressDetails.phone}
-                  </p>
                 </div>
-              )}
+              ))}
             </div>
 
-            {/* saved address end */}
-
-            <button
-              onClick={handleAddAddress}
-              style={{ backgroundColor: "orange" }}
-            >
-              Add new address
-            </button>
-
-            {showForm && (
-              <div className="card-body">
-                <form style={{ border: "solid" }}>
-                  <div className="row mb-4">
-                    <div className="col">
-                      <div className="form-outline">
-                        <h4>{user.name}</h4>
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div className="form-outline">
-                        <h4>{user.phone}</h4>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* <!-- Number input --> */}
-                  <div className="form-outline mb-4">
-                    <input
-                      type="number"
-                      id="form7Example3"
-                      className="form-control"
-                      value={address.pincode}
-                      name="pincode"
-                      onChange={onChangeHandler}
-                    />
-                    <label className="form-label" for="form7Example3">
-                      Pincode
-                    </label>
-                  </div>
-
-                  {/* <!-- locality input --> */}
-                  <div className="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="form7Example4"
-                      className="form-control"
-                      value={address.locality}
-                      name="locality"
-                      onChange={onChangeHandler}
-                    />
-                    <label className="form-label" for="form7Example4">
-                      Locality
-                    </label>
-                  </div>
-
-                  {/* <!-- area input --> */}
-                  <div className="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="form7Example5"
-                      className="form-control"
-                      value={address.area}
-                      name="area"
-                      onChange={onChangeHandler}
-                    />
-                    <label className="form-label" for="form7Example5">
-                      Address(Area and street)
-                    </label>
-                  </div>
-
-                  {/* <!-- Number input --> */}
-                  <div className="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="form7Example6"
-                      className="form-control"
-                      value={address.city}
-                      name="city"
-                      onChange={onChangeHandler}
-                    />
-                    <label className="form-label" for="form7Example6">
-                      City/DIstrict/Town
-                    </label>
-                  </div>
-
-                  <div className="form-outline mb-4">
-                    <input
-                      type="text"
-                      id="form7Example6"
-                      className="form-control"
-                      value={address.state}
-                      name="state"
-                      onChange={onChangeHandler}
-                    />
-                    <label className="form-label" for="form7Example6">
-                      State
-                    </label>
-                  </div>
-                  {/* <!-- Message input --> */}
-                  <div className="form-outline mb-4">
-                    <input
-                      className="form-control"
-                      id="form7Example7"
-                      rows="4"
-                      value={address.landmark}
-                      name="landmark"
-                      onChange={onChangeHandler}
-                    ></input>
-                    <label className="form-label" for="form7Example7">
-                      Landmart(optional)
-                    </label>
-                  </div>
-                  <div className="form-outline mb-4">
-                    <input
-                      className="form-control"
-                      id="form7Example7"
-                      rows="4"
-                      value={address.phone}
-                      name="phone"
-                      onChange={onChangeHandler}
-                    ></input>
-                    <label className="form-label" for="form7Example7">
-                      AlternatePhone(optional)
-                    </label>
-                  </div>
-                  {/* <!-- Checkbox --> */}
-                  <button
-                    style={{ backgroundColor: "green", borderRadius: "30px" }}
-                    onClick={saveAddressHandler}
-                  >
-                    save
-                  </button>
-                </form>
+            {/* saved address */}
+            {selectedAddress && (
+              <div>
+                <h5>Selected Address:</h5>
+                <p>
+                  <span>Locality:</span>{" "}
+                  {selectedAddress.addressDetails.locality}
+                </p>
+                <p>
+                  <span>Area:</span> {selectedAddress.addressDetails.area}
+                </p>
+                <p>
+                  <span>Landmark:</span>{" "}
+                  {selectedAddress.addressDetails.landmark}
+                </p>
+                <p>
+                  <span>City:</span> {selectedAddress.addressDetails.city}
+                </p>
+                <p>
+                  <span>State:</span> {selectedAddress.addressDetails.state}
+                </p>
+                <p>
+                  <span>Pincode:</span> {selectedAddress.addressDetails.pincode}
+                </p>
+                <p>
+                  <span>Phone:</span> {selectedAddress.addressDetails.phone}
+                </p>
               </div>
             )}
+            {showForm && <NewAddress getSavedAddress={getSavedAddress} />}
+          </div>
+          <div className="card mb-4">
+            <div className="card-header py-3">
+              <h5 className="mb-0">Select Address or add new address</h5>
+            </div>
+
+            {showForm && <NewAddress getSavedAddress={getSavedAddress} />}
           </div>
         </div>
 
-        <div className="col-md-6 mb-4">
-          <div className="card mb-4">
-            <section
-              className="h-100"
-              style={{ backgroundColor: "#eee", marginTop: "100px" }}
-            >
-              <div className="container h-100 py-5">
-                <div className="row d-flex justify-content-center align-items-center h-100">
-                  <div className="col-10">
-                    <div className="d-flex justify-content-between align-items-center mb-4">
-                      <h3 className="fw-normal mb-0 text-black">
-                        Shopping Cart
-                      </h3>
-                    </div>
-                    {cartItems.items.map((item) => {
-                      return (
-                        <div className="card rounded-3 mb-4" key={item._id}>
-                          <div className="card-body p-4">
-                            <div className="row d-flex justify-content-between align-items-center">
-                              <div className="col-md-2 col-lg-2 col-xl-2">
-                                <Slider {...settings}>
-                                  <img
-                                    className="img-fluid img-responsive rounded product-image"
-                                    src={item.productDetails.images}
-                                    alt="img"
-                                  />
-                                </Slider>
-                              </div>
+        {/* Order summary */}
+        <div className="col-md-4" style={{ borderRadius: 0 }}>
+          <div
+            className="card "
+            style={{ backgroundColor: "#EEEEEE", borderRadius: 0, border: 0 }}
+          >
+            <div className="row justify-content-center mb-4" >
+              <h1 style={{ color: "#bf0a2a", fontSize: "23px", }}>Pay With</h1>
+            </div>
+          </div>
 
-                              <div className="col-md-3 col-lg-3 col-xl-3">
-                                <div>
-                                  <select>
-                                    <option value="option1">Option 1</option>
-                                    <option value="option2">Option 2</option>
-                                    <option value="option3">Option 3</option>
-                                    <option value="option4">option 4</option>
-                                  </select>
-                                </div>
-                                <p className="lead fw-normal mb-2">
-                                  {item.productDetails.barnd}
-                                </p>
-
-                                <p>
-                                  <span
-                                    className="text-muted"
-                                    style={{ color: "green" }}
-                                  >
-                                    Category:
-                                    {item.productDetails.category}{" "}
-                                  </span>
-                                </p>
-                                <p>
-                                  Product price :{item.productDetails.price}
-                                </p>
-                                {/* <h1>{item.quantity}</h1> */}
-                              </div>
-                              <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                <h5 className="mb-0">
-                                  {item.productDetails.price *
-                                    item.totalQuantity}
-                                </h5>
-                                <button
-                                  className="btn btn-link px-2"
-                                  onClick={() => removeFromCart(item._id)}
-                                >
-                                  <i className="fas fa-trash fa-lg"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <h2>Total {totalPrice}</h2>
-                    <div className="card">
-                      <div className="card-body"></div>
-                    </div>
+          {/* order summ */}
+          <div
+            className="card mb-4"
+            style={{ backgroundColor: "#EEEEEE", borderRadius: 0, border: 0 }}
+          >
+            <div className="container h-100 py-5">
+              <div className="row d-flex justify-content-center align-items-center">
+                <div className="row justify-content-center mb-4 mt-0">
+                  <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>
+                    Order Summary
+                  </h1>
+                </div>
+                <div className="col-10">
+                  <div className="d-flex justify-content-between m-3">
+                    <div className="font-weight-bold">Items</div>
+                    <div>12345</div>
+                  </div>
+                  <div className="d-flex justify-content-between m-3">
+                    <div>Delivery</div>
+                    <div>200</div>
+                  </div>
+                  <div className="d-flex justify-content-between m-3">
+                    <div>GST</div>
+                    <div>100</div>
+                  </div>
+                </div>
+                <div>
+                  <hr className="hr" />
+                </div>
+                <div
+                  className="d-flex justify-content-between m-3"
+                  style={{ color: "#bf0a2a" }}
+                >
+                  <div
+                    className="font-weight-bold"
+                    style={{ marginLeft: "30px" }}
+                  >
+                    <b>Order Total:</b>
+                  </div>
+                  <div
+                    className="font-weight-bold"
+                    style={{ marginRight: "46px" }}
+                  >
+                    <b>₹ 100235</b>
                   </div>
                 </div>
               </div>
-            </section>
-
-            <div className="card-header py-3">
-              <h5 className="mb-0">Summary</h5>
-            </div>
-            <div className="card-body">
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                  Products
-                  <span>{totalPrice}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-                  Shipping
-                  <span>{sum}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-                  GST- (5%)
-                  <span>{GST}</span>
-                </li>
-                <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                  <div>
-                    <strong>Total amount</strong>
-                    <strong>
-                      <p className="mb-0">(including VAT)</p>
-                    </strong>
-                  </div>
-                  <span>
-                    <strong>{parseInt(totalPrice) + GST + sum}</strong>
-                  </span>
-                </li>
-              </ul>
-              {Object.keys(deliveryAddress).length ? (
-                <>
-                  <h5 className="text-red-600"> 
-                    For Cash on Delivery You need to pay Minimum 10% of the real
-                    Product Price. GST + Shippment Charge will be Included
-                  
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn btn-warning btn-lg btn-block text-black"
-                    onClick={cashOnDelv}
-                  >
-                    CashOnDelivery
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-lg btn-block mx-2 text-black"
-                    onClick={placeOrderButton2}
-                  >
-                    Make purchase
-                  </button>
-                </>
-              ) : (
-                <h1>Please Fill or Select the Address</h1>
-              )}
             </div>
           </div>
+          <div
+            className="btn btn-danger w-100 border p-3"
+            style={{ borderRadius: "0px", backgroundColor: "#bf0a2a" }}
+          >
+            <span style={{ color: "#fff7e9" }}>Place Order</span>
+          </div>
         </div>
+        <div className="col-md-1"></div>
       </div>
     </div>
   );
