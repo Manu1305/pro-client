@@ -465,7 +465,7 @@ const BuyerConfirm = () => {
                     <strong>Area:</strong> {selectedAddress.addressDetails.area}
                   </p>
                   <p>
-                    <strong>Landmark:</strong>{" "}
+                    <span>Landmark:</span>{" "}
                     {selectedAddress.addressDetails.landmark}
                   </p>
                   <p>
