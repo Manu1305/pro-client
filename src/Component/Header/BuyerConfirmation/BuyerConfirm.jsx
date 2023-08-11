@@ -413,7 +413,7 @@ const BuyerConfirm = () => {
                       onClick={() => handleAddressSelection(address)}
                       style={{
                         marginRight: "5px",
-                        backgroundColor: "orange",
+                        backgroundColor: "red",
                         border: "none",
                         padding: 0,
                         textDecoration: "underline",
@@ -491,7 +491,7 @@ const BuyerConfirm = () => {
 
             <button
               onClick={handleAddAddress}
-              style={{ backgroundColor: "orange" }}
+              style={{ backgroundColor: "red" }}
             >
               Add new address
             </button>
@@ -636,7 +636,7 @@ const BuyerConfirm = () => {
                   <div className="col-10">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <h3 className="fw-normal mb-0 text-black">
-                        Shopping Cart
+                        Products
                       </h3>
                     </div>
                     {cartItems.items.map((item) => {
@@ -647,7 +647,7 @@ const BuyerConfirm = () => {
                               <div className="col-md-2 col-lg-2 col-xl-2">
                                 <Slider {...settings}>
                                   <img
-                                    className="img-fluid img-responsive rounded product-image"
+                                    className="img-fluid img-responsive rounded product-image h-32 w-32"
                                     src={item.productDetails.images}
                                     alt="img"
                                   />
@@ -655,14 +655,14 @@ const BuyerConfirm = () => {
                               </div>
 
                               <div className="col-md-3 col-lg-3 col-xl-3">
-                                <div>
+                                {/* <div>
                                   <select>
                                     <option value="option1">Option 1</option>
                                     <option value="option2">Option 2</option>
                                     <option value="option3">Option 3</option>
                                     <option value="option4">option 4</option>
                                   </select>
-                                </div>
+                                </div> */}
                                 <p className="lead fw-normal mb-2">
                                   {item.productDetails.barnd}
                                 </p>
@@ -681,7 +681,7 @@ const BuyerConfirm = () => {
                                 </p>
                                 {/* <h1>{item.quantity}</h1> */}
                               </div>
-                              <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                              {/* <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                 <h5 className="mb-0">
                                   {item.productDetails.price *
                                     item.totalQuantity}
@@ -692,7 +692,7 @@ const BuyerConfirm = () => {
                                 >
                                   <i className="fas fa-trash fa-lg"></i>
                                 </button>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </div>
@@ -745,7 +745,7 @@ const BuyerConfirm = () => {
                   </h5>
                   <button
                     type="button"
-                    className="btn btn-warning btn-lg btn-block text-black"
+                    className="btn btn-danger btn-lg btn-block text-black"
                     onClick={cashOnDelv}
                   >
                     CashOnDelivery
