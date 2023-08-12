@@ -8,6 +8,7 @@ import NewAddress from "../../../Header/NEwAddress/NewAddress";
 import SavedBanks from "../../../Header/BankDetails/getBank";
 import axios from "axios";
 import { apiURL } from "../../../../const/config";
+import { getUserAddress } from "../../../../const/api";
 function SellerProSettings() {
   const [newaddressForm, setNewaddressform] = useState(false);
 const[bank,setBank]=useState([])
@@ -23,30 +24,13 @@ const[bank,setBank]=useState([])
   }
 
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
 
-  const getSavedAddress = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      const response = await axios.get(
-        `${apiURL}/address/savedaaddress`,
-        config
-      );
-
-      setAddresses(response.data);
-    } catch (error) {
-      console.log("API Error", error);
-    }
-  };
-
+  const getSavedAddress = async() => {
+    const ans = await getUserAddress()
+    setAddresses(ans)
+  }
   useEffect(() => {
-    getSavedAddress();
+    getSavedAddress()
   }, []);
 
 
