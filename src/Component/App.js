@@ -119,16 +119,6 @@ const App = () => {
 
             <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
             </React.Suspense>} />
-
-
-
-
-
-
-
-
-
-
         <Route path="/ViewDetails/:productId" element={<ViewProduct setCartItems={setCartItems} />} />
 
           <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
@@ -178,9 +168,10 @@ const App = () => {
           <Route path="/editprofile" element={<Editprofile />} />
           <Route path="/returnPro/:id" element={<BuyerReturn />} />
         </Routes>
-      </div>
-      <Footer />
+        <Footer />
+    </div>
       </ScrollToTop>
+    
     </Router>
   );
 };

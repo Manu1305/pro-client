@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -6,9 +5,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
+import Styles from "./cart.module.css";
+import { BsTrash } from "react-icons/bs";
 
-
-const Cart = ({setCartItems}) => {
+const Cart = ({ setCartItems }) => {
   const [CartItem, setCartItem] = useState([]);
 
   const removeFromCart = async (id) => {
@@ -19,7 +19,7 @@ const Cart = ({setCartItems}) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-     
+
       await axios
         .delete(`${apiURL}/cart/delete-cart-item/${id}`, config)
         .then((res) => {
@@ -46,9 +46,8 @@ const Cart = ({setCartItems}) => {
       await axios
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
-       
           setCartItem(res.data);
-          setCartItems(res.data.items.length)
+          setCartItems(res.data.items.length);
         })
         .catch((err) => console.log(err));
     } catch (error) {
@@ -56,7 +55,6 @@ const Cart = ({setCartItems}) => {
     }
   };
 
- 
   useEffect(() => {
     getCartCarts();
   }, []);
@@ -64,11 +62,12 @@ const Cart = ({setCartItems}) => {
   if (CartItem.length === 0) {
     return (
       <div className="text-center" style={{ marginTop: "40px" }}>
-        <img
+        {/* <img
           src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
           alt="empty"
           style={{ maxWidth: "100%", height: "auto" }}
-        />
+        /> */}
+        x
         <Link to="/shoppingPage">
           <div
             style={{
@@ -101,22 +100,15 @@ const Cart = ({setCartItems}) => {
   };
 
   return (
-    <>
-      <section
-        className="h-100"
-        style={{ backgroundColor: "#eee", marginTop: "100px" }}
-      >
+    <div>
+      <section className="h-100" style={{ backgroundColor: "white" }}>
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-10">
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                {/* <h3 className="fw-normal mb-0 text-black">Shopping Cart</h3> */}
-              </div>
-
+            <div className="col-10" style={{ marginTop: "100px" }}>
               {/* <h2>Total {totalPrice}</h2> */}
               {CartItem.items.length > 0 &&
                 CartItem.items.map((item) => (
-                  <div className="card rounded-3 mb-4" key={item._id}>
+                  <div className={Styles.cartDiv} key={item._id}>
                     <div className="card-body p-4">
                       <div className="row d-flex justify-content-between align-items-center">
                         <div className="col-md-2 col-lg-2 col-xl-2">
@@ -130,7 +122,7 @@ const Cart = ({setCartItems}) => {
                         </div>
 
                         <div className="col-md-3 col-lg-3 col-xl-3">
-                          <p className="lead fw-normal mb-2">
+                          <p className="font-bold text-xl text-black">
                             {item.productDetails.barnd}
                           </p>
 
@@ -141,9 +133,16 @@ const Cart = ({setCartItems}) => {
                           </p>
 
                           <div>
-       
-                            <label>Select Size</label>
-                            <select>
+                            <label>Size</label>
+                            <select
+                              className={Styles.select}
+                              style={{
+                                appearance: "none",
+                                width: "100px",
+                                marginLeft: "10px",
+                                WebkitAppearance: "none",
+                              }}
+                            >
                               {Object.entries(item.sizeWithQuantity).map(
                                 ([key, value]) => (
                                   <option key={key} value={key}>
@@ -174,10 +173,6 @@ const Cart = ({setCartItems}) => {
                             </select>
 
                             <div>
-                              <span>price :{item.productDetails.price}</span>
-                            </div>
-
-                            <div>
                               <span
                                 className="text-muted"
                                 // style={{ color: "green" }}
@@ -185,52 +180,53 @@ const Cart = ({setCartItems}) => {
                                 Total quantities {item.totalQuantity}{" "}
                               </span>
                             </div>
+
+                            <div>
+                              <span className="text-red-600 text-xl font-bold">
+                                price : &#8377;{item.productDetails.price}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                        <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                       
+                        <div className="col-md-3 col-lg-3 col-xl-2 d-flex"></div>
+                        <div className="col-md-1 col-lg-1 col-xl-1 text-end">
+                          <div className={Styles.hideprice}>
+                            <span className="text-red-600 text-xl font-bold">
+                              &#8377;
+                              {item.productDetails.price * item.totalQuantity}
+                            </span>
+                          </div>
                         </div>
                         <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                           <button
-                            className="btn btn-link px-2"
+                            className="btn btn-link px-2 text-red-700"
                             onClick={() => removeFromCart(item._id)}
                           >
-                            <i className="fas fa-trash fa-lg"></i>
+                            <BsTrash className="h-10 w-10" />
+                            {/* <i className="fas fa-trash fa-lg"></i> */}
                           </button>
                         </div>
                       </div>
                     </div>
                   </div>
                 ))}
-              <h2>Total {CartItem.subTotal}</h2>
+              <h2>SubTotal: &#8377;{CartItem.subTotal}</h2>
 
-              {/* <div className="card mb-4">
-                <div className="card-body p-4 d-flex flex-row">
-                  <div className="form-outline flex-fill">
-                    <input
-                      type="text"
-                      id="form1"
-                      className="form-control form-control-lg"
-                    />
-                    <label className="form-label" htmlFor="form1">
-                      Discount code
-                    </label>
-                  </div>
-                  <button
-                    type="button"
-                    className="btn btn-outline-warning btn-lg ms-3"
-                  >
-                    Apply
-                  </button>
-                </div>
-              </div> */}
-
-              <div className="card">
+              <div
+                className="card"
+                style={{ display: "flex", alignItems: "center" }}
+              >
                 <div className="card-body">
                   <Link to={`/confirm/${CartItem.subTotal}`}>
                     <button
                       type="button"
-                      className="btn btn-warning btn-block btn-lg"
+                      className="btn  btn-block btn-lg"
+                      style={{
+                        backgroundColor: "red",
+                        color: "white",
+                        fontSize: "1rem",
+                        borderRadius: "0",
+                      }}
                     >
                       Proceed to Pay
                     </button>
@@ -241,8 +237,8 @@ const Cart = ({setCartItems}) => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
-export default Cart
+export default Cart;
