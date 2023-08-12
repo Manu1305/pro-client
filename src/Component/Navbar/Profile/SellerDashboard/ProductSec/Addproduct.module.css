@@ -1,12 +1,17 @@
 
 .container {
-
-  margin: 0 auto;
-  padding: 20px;
-   background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg");
+   /* background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg"); */
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ padding-left: 0px;
 }
+.inputField{
+  width: 200px;
+  border: 1px solid ;
+}
+
+
+
 
 .legend {
   font-size: 24px;
@@ -82,50 +87,45 @@ textarea {
 }
 
 .formGroup {
-  width: 100%;
+  width:900px;
+  display:'flex';
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 0px;
+
 }
 
-.controlLabel {
-  /* Add your control label styles */
-}
 
-.inputWrapper {
-  /* Add your input wrapper styles */
-}
 
 .sizeButtons {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
-}
-
-.flexRow {
-  flex-direction: row;
+ 
 }
 
 .sizeContainer {
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
   flex: 0 0 100px;
   margin: 10px;
-  max-width: 700px;
+
 }
 
 .sizeButton {
-  margin: 10px;
-  padding: 20px;
+
+width: 20%;
   /* Add your size button styles */
 }
 
 .blue {
-  background-color: blue;
+  background-color: greenyellow
 }
 
-.gray {
-  background-color: gray;
-}
 
 .quantityInput {
-  width: 100%;
+  width: 20%;
 }
 .imgeupload{
   width: '300px';
@@ -136,3 +136,5 @@ textarea {
   color: '#333';
   padding: '5px';
 }
+
+

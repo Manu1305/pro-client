@@ -81,7 +81,7 @@ const SamplePrevArrow = (props) => {
               >
                 <img src={item.image} alt="cover" width="100%" />
                 
-                  <button
+                  {/* <button
                     style={{
                       backgroundColor:'red',  
                       position: "absolute",
@@ -96,7 +96,7 @@ const SamplePrevArrow = (props) => {
                     }}
                   >
                    SHOP NOW
-                  </button>
+                  </button> */}
            
                 <div className={header.overlay}>{/* <Search /> */}</div>
               </div>
