@@ -334,47 +334,52 @@ const AddProduct = () => {
     };
     
   return (
-    <div class={styles.container}>
-      <form class="form-horizontal">
-        <fieldset style={{ textAlign: "center" }}>
+    <div className={styles.container}>
+      <form >
+        <fieldset style={{ marginLeft:'20px'}}>
           <legend>ADD PRODUCTS</legend>
+          <div className="form-group">
+           
+           <div style={{display:'flex',flexDirection:'column'}}>
 
-          <div class="form-group">
-
-            <label class="control-label" for="product_id">
+         <div>
+          
+     
+            <label className="control-label" for="product_id">
               PRODUCT ID
             </label>
             {productIdError && (
-                <span class="help-block text-danger">{productIdError}</span>
+                <span className="help-block text-danger">{productIdError}</span>
               )}
-            <div class="input-wrapper">
+            <div className="input-wrapper">
               <input
                 id="product_id"
                 name="product_id"
-                // placeholder="PRODUCT ID"
-                class="form-control input-md"
                 type="text"
                 requiredTxt
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
+                className={styles.inputField}
               />
               
             </div>
-          </div>
+            </div>
 
-          <div class="form-group">
-            <label class="control-label" for="product_name">
+
+
+          <div className="form-group" style={{marginLeft:'20px'}}>
+            <label className="control-label" for="product_name">
               PRODUCT BRAND
             </label>
             {brandError && (
-                <span class="help-block text-danger">{brandError}</span>
+                <span className="help-block text-danger">{brandError}</span>
               )}
-            <div class="input-wrapper">
+            <div className="input-wrapper">
               <input
                 id="product_name"
                 name="product_name"
                 // placeholder="PRODUCT BRAND"
-                class="form-control input-md"
+                className={styles.inputField}
                 required=""
                 type="text"
                 value={brand}
@@ -383,16 +388,21 @@ const AddProduct = () => {
             
             </div>
           </div>
-
-          <div class="form-group">
-            <label class="control-label" for="product_category">
+       
+          </div>
+          </div>
+          
+            <label  for="product_category">
               PRODUCT CATEGORY
             </label>
-            <div class="input-wrapper">
+            <div style={{display:'flex', flexDirection:'column'}}>
+
+            
+            <div className="input-wrapper" style={{width:'200px'}}>
               <select
                 id="product_category"
                 name="product_category"
-                class="form-control"
+                className="form-control"
                 value={selectedCategory}
                 onChange={handleCategoryChange}
               >
@@ -404,18 +414,18 @@ const AddProduct = () => {
                 ))}
               </select>
             </div>
-          </div>
+        
 
           {selectedCategory && (
-            <div class="form-group">
-              <label class="control-label" for="product_subcategory">
-                Subcategory CATEGORY
+            <div style={{marginLeft:'50px'}}>
+              <label className="control-label" for="product_subcategory">
+                SUBCATEGORY
               </label>
-              <div class="input-wrapper">
+              <div>
                 <select
                   id="product_subcategory"
                   name="product_subcategory"
-                  class="form-control"
+                  className="form-control"
                   value={selectedSubcategory}
                   onChange={(e) => setSelectedSubcategory(e.target.value)}
                 >
@@ -429,102 +439,115 @@ const AddProduct = () => {
                   )}
                 </select>
                 {selectedSubcategoryError && (
-                  <span class="help-block text-danger">{selectedSubcategoryError}</span>
+                  <span className="help-block text-danger">{selectedSubcategoryError}</span>
                 )}
               </div>
             </div>
           )}
+          </div>
+
           {selectedCategory && (
-            <div className={`${styles.formGroup} ${styles.responsive}`}>
+            <div className={`${styles.formGroup}`}>
               <label className={styles.controlLabel} htmlFor="product_size">
                 PRODUCT SIZE
               </label>
-              <div className={styles.inputWrapper}>
-                <div className={`${styles.sizeButtons} ${styles.flexRow}`}>
-                  {/* */}
+              <div >
+                <div className={`${styles.sizeButtons}`}>
+                <div>
                   <h3>Total Quantity: {totalQuantity}</h3>
-
+                  </div>
+                  <div>
                   {categorySizes[selectedCategory].map((size, index) => (
-                    <div key={index} className={styles.sizeContainer}>
+                    <div key={index} className={styles.sizeContainer} style={{display:'flex',flexDirection:'column'}}>
+                      <div>
+
+                      
                       <h5
                         className={`${styles.sizeButton} ${
                           selectedSizes.includes(size)
                             ? styles.blue
-                            : styles.gray
+                            : styles.blue
                         }`}
                       >
 
-                        <input
-                          type="checkbox"
-                          value={size}
-                          checked={selectedSizes.includes(size)}
-                          onChange={(e) => handleSizeSelection(size, e)}
-                        />
+                       
 
                         {size}
                       </h5>
-                      <input
+                      </div>
+                      <div>           
+                                   <input
                         type="text"
                         // placeholder="Enter quantity"
                         value={quantities[size]}
                         onChange={(e) => handleQuantityChange(size, e)}
                         className={styles.quantityInput}
+                        style={{border:'1px solid black'}}
                       />
+</div>
 
                     </div>
                   ))}
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="form-group">
+          <div >
             <label className="control-label" htmlFor="product_price">
               PRODUCT PRICE
             </label>
-            <div className="input-wrapper">
+            <div style={{display:'flex',flexDirection:'column'}} >
+           
               <input
+
                 id="product_real_price"
                 name="product_real_price"
-                // placeholder="REAL PRICE"
-                className="form-control input-md"
+                placeholder="REAL PRICE"
+                className={styles.inputField}
                 required=""
                 type="text"
-                style={{
-                  width: "45%",
-                  display: "inline-block",
-                  marginRight: "5px",
-                }}
+                // style={{
+                //   width: "45%",
+                //   display: "inline-block",
+                //   marginRight: "5px",
+                // }}
                 value={realPrice}
                 onChange={handleRealPriceChange}
+               
+              
               />
               {realPriceError && (
-                <span class="help-block text-danger">{realPriceError}</span>
+                <span className="help-block text-danger">{realPriceError}</span>
               )}
+             
               <input
                 id="product_selling_price"
                 name="product_selling_price"
-                // placeholder="SELLING PRICE"
-                className="form-control input-md"
+                placeholder="SELLING PRICE"
+                className={styles.inputField}
                 required=""
                 type="text"
-                style={{ width: "45%", display: "inline-block" }}
+                // style={{ width: "45%", display: "inline-block" }}
                 value={sellingPrice}
                 onChange={handleSellingPriceChange}
+                style={{marginLeft:'20px'}}
+          
               />
               {sellingPriceError && (
-                <span class="help-block text-danger">{sellingPriceError}</span>
+                <span className="help-block text-danger">{sellingPriceError}</span>
               )}
             </div>
           </div>
-          <div style={{ marginTop: "40px" }}>
+          <div>
             {realPrice !== "" &&
               sellingPrice !== "" &&
               sellingPrice <= realPrice && (
                 <div>
                   <span
                     style={{
-                      fontSize: "2rem",
+                      fontSize: "1rem",
                     }}
                   >
                     {sellingPrice === "0"
@@ -540,7 +563,7 @@ const AddProduct = () => {
               )}
           </div>
           <div
-            style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+            style={{ display: "flex", flexDirection: "column" }}
           >
             <div
               className="form-group"
@@ -549,22 +572,22 @@ const AddProduct = () => {
               <label className="control-label" htmlFor="product_color">
                 PRIMARY COLOR
               </label>
-              <div className="input-wrapper" style={{display:'flex' ,flexDirection:'row'}}>
+              <div className="input-wrapper" style={{display:'flex' ,flexDirection:'column'}}>
               
                 <input
                   id="product_color"
                   name="product_color"
                   // placeholder="PRIMARY COLOR"
-                  className="form-control input-md"
+                  className={styles.inputField}
                   required=""
                   type="color"
                   value={primaryColor}
                   onChange={(e) => setPrimaryColor(e.target.value)}
-                  style={{ width: "50%" }}
+                  style={{ width: "200px" }}
                 />
-                <h5>  selected color is  <div style={{backgroundColor:primaryColor ,height:"30px",width:"30px"}}></div></h5>
+                <h5>  <div style={{backgroundColor:primaryColor ,height:"30px",width:"30px"}}></div></h5>
                 {primaryColorError && (
-                  <span class="help-block text-danger">{primaryColorError}</span>
+                  <span className="help-block text-danger">{primaryColorError}</span>
                 )}
               </div>
             </div>
@@ -576,86 +599,91 @@ const AddProduct = () => {
               <label className="control-label" htmlFor="product_other_colors">
                 OTHER COLOR
               </label>
-              <div className="input-wrapper" style={{display:'flex',flexDirection:'row'}}>
+              <div className="input-wrapper" style={{display:'flex',flexDirection:'column'}}>
                 <input
                   id="product_other_colors"
                   name="product_other_colors"
                   // placeholder="OTHER COLORS"
-                  className="form-control input-md"
+                  className={styles.inputField}
                   required=""
                   type="color"
                   value={otherColors}
                   style={{ width: "50%%" }}
                   onChange={(e) => setOtherColors(e.target.value)}
-                /> <h5>  selected color is<div style={{backgroundColor:otherColors,width:'30px',height:'30px'}}></div></h5>
+                /> <h5>  <div style={{backgroundColor:otherColors,width:'30px',height:'30px'}}></div></h5>
                 {otherColorsError && (
-                  <span class="help-block text-danger">{otherColorsError}</span>
+                  <span className="help-block text-danger">{otherColorsError}</span>
                 )}
               </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label" for="product_care_instructions">
+          <div className="form-group">
+            <label className="control-label" for="product_care_instructions">
               WASHCARE INSTRUCTIONS
             </label>
-            <div class="input-wrapper">
+            <div >
               <textarea
                 className="form-control"
                 id="product_care_instructions"
                 name="product_care_instructions"
                 value={WashcareInstructions}
                 onChange={(e) => setCareInstructions(e.target.value)}
+                style={{width:'300px', border:" 1px solid"}}
               ></textarea>
               {WashcareInstructionsError && (
-                <span class="help-block text-danger">{WashcareInstructionsError}</span>
+                <span className="help-block text-danger">{WashcareInstructionsError}</span>
               )}
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label" for="product_material">
+          <div className="form-group">
+            <label className="control-label" for="product_material">
               MATERIAL
             </label>
-            <div class="input-wrapper">
+            <div className="input-wrapper">
               <input
                 id="product_material"
                 name="product_material"
                 // placeholder="MATERIAL"
-                className="form-control input-md"
+                className={styles.inputField}
                 required=""
                 type="text"
                 value={material}
                 onChange={(e) => setMaterial(e.target.value)}
               />
               {materialError && (
-                <span class="help-block text-danger">{materialError}</span>
+                <span className="help-block text-danger">{materialError}</span>
               )}
             </div>
           </div>
 
           <div className="form-group">
-            <label class="control-label" for="product_description">
+            <label className="control-label" for="product_description">
               PRODUCT DESCRIPTION
             </label>
-            <div class="input-wrapper">
+            <div className="input-wrapper">
               <textarea
                 className="form-control"
                 id="product_description"
                 name="product_description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                style={{width:'300px', border:" 1px solid"}}
               ></textarea>
               {descriptionError && (
-                <span class="help-block text-danger">{descriptionError}</span>
+                <span className="help-block text-danger">{descriptionError}</span>
               )}
             </div>
           </div>
 
-          <div>
+       
             <div>
               <h3>Upload images</h3>
-              <div>
+              <div className="flex-col">
+                <div>
+
+              
                 <label htmlFor="">Main image</label>
                 <input
       type="file"
@@ -663,7 +691,10 @@ const AddProduct = () => {
       name="img1"
       onChange={convertToBase64}
       style={inputStyles}
-    />
+    />  </div>
+    <div>
+
+
                 <label htmlFor="">2nd image</label>
                 <input
                   type="file"
@@ -672,6 +703,10 @@ const AddProduct = () => {
                   onChange={convertToBase64}
                    style={inputStyles}
                 />
+                    </div>
+                    <div>
+
+                 
                 <label htmlFor="">3rd image</label>
                 <input
                   type="file"
@@ -681,6 +716,11 @@ const AddProduct = () => {
                   style={inputStyles}
                   
                 />
+                   </div>
+
+                   <div>
+
+                  
                 <label htmlFor="">4th image</label>
                 <input
                   type="file"
@@ -689,13 +729,14 @@ const AddProduct = () => {
                   onChange={convertToBase64}
                   style={inputStyles}
                 />
+                 </div>
               </div>
 
               <div className="input-wrapper">
                 <button
                   id="singlebutton"
                   name="singlebutton"
-                  class="btn btn-warning"
+                  className="btn btn-warning"
                   onClick={addToCart}
                   
                 >
@@ -703,7 +744,7 @@ const AddProduct = () => {
                 </button>
               </div>
             </div>
-          </div>
+          
         </fieldset>
       </form>
     </div>

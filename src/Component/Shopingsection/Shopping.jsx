@@ -244,7 +244,7 @@ const Shopping = ({}) => {
         }}
       
     >
-      <header style={{ marginTop: 150 }}></header>
+      <header ></header>
 
       <section>
         <div className="container">
