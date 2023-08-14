@@ -73,59 +73,50 @@ const App = () => {
 
   return (
     <Router>
-      <ScrollToTop>
-        <div className="fontClass">
-          <Navbar wishlist={wishlist} cartItems={cartItems} />
-          <Routes>
-            <Route path="*" element={<Error404 />} />
-            <Route path="/" element={<Header productItems={productItems} />} />
-            <Route path="login" element={<Login />} />
+            <ScrollToTop>
 
-            <Route path="/dashboard" element={<SellerDashboard />} />
+      <div className="fontClass">
+    
+        <Navbar 
+            wishlist={wishlist} cartItems={cartItems} />
+        <Routes>
+        <Route path="*" element={<Error404/>} />
+          <Route path="login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <Header
+                productItems={productItems}
+              
+                   
+              />
+            }
+          />
+          <Route path="/dashboard" element={<SellerDashboard />} />
+          {/* <Route
+            path="/cart"
+            element={
+              <Cart
+                   
+              setCartItems={setCartItems}
+              />
+            }
+          /> */}
+            {/* <Route path="/Cart" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyCart />
+            </React.Suspense>} /> */}
 
-            <Route
-              path="/Cart"
-              element={
-                <React.Suspense fallback={<div>Loading... </div>}>
-                  {" "}
-                  <LazyCart />
-                </React.Suspense>
-              }
-            />
+            <Route path="/Cart" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyCart />
+            </React.Suspense>} />
 
-            <Route
-              path="/dashboard"
-              element={
-                <React.Suspense fallback={<div>Loading... </div>}>
-                  {" "}
-                  <LazySellerDashboard />
-                </React.Suspense>
-              }
-            />
+            <Route path="/dashboard" element={<React.Suspense fallback={<div>Loading... </div>}> <LazySellerDashboard />
+            </React.Suspense>} />
 
-            <Route
-              path="/dashboard/Addproduct"
-              element={
-                <React.Suspense fallback={<div>Loading... </div>}>
-                  {" "}
-                  <LazyAddProduct />
-                </React.Suspense>
-              }
-            />
+            <Route path="/dashboard/Addproduct" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyAddProduct />
+            </React.Suspense>} />
 
-            <Route
-              path="storeset"
-              element={
-                <React.Suspense fallback={<div>Loading... </div>}>
-                  {" "}
-                  <LazyMainPage />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/ViewDetails/:productId"
-              element={<ViewProduct setCartItems={setCartItems} />}
-            />
+            <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
+            </React.Suspense>} />
+        <Route path="/ViewDetails/:productId" element={<ViewProduct setCartItems={setCartItems} />} />
 
             <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
             <Route path="thankyou" element={<Thankyou />} />

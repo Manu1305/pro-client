@@ -56,8 +56,6 @@ const ViewProduct = ({ setCartItems }) => {
   const [quantities, setQuantities] = useState({});
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
-  const [heartCount, setheartCouut] = useState(1);
-  const [showShareDialog, setShowShareDialog] = useState(false);
   const [offerBtn, setofferBtn] = useState(false);
   const [isWishItem, setisWishItem] = useState(false)
 
@@ -79,6 +77,8 @@ const ViewProduct = ({ setCartItems }) => {
 
     if (totalQuantity >= 100) {
       setofferBtn(true);
+    }else{
+      setofferBtn(false)
     }
   }, [totalQuantity]);
 
@@ -416,7 +416,7 @@ const ViewProduct = ({ setCartItems }) => {
                     </button>
                   </>
                 ) : null}
-                {offerBtn ? (
+                {offerBtn  ? (
                       <div class="container m-4">
                         <div class="row justify-content-center">
                           <div class="col-md-6 text-center">
