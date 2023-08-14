@@ -78,7 +78,7 @@ const App = () => {
     <Router>
             <ScrollToTop>
 
-      <div className="fontClass">
+      <div style={{fontFamily:"Inter,sans-serif"}}>
     
         <Navbar 
             wishlist={wishlist} cartItems={cartItems} />
