@@ -61,7 +61,7 @@ const[bank,setBank]=useState([])
      getSavedBank();
    }, []);
   return (
-    <div style={{ marginTop: "120px" }}>
+    <div >
       <div className="container">
         <div className="row gutters">
           <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">

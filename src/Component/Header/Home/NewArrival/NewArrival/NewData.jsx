@@ -6,31 +6,12 @@ import styless from "./NewArrival.module.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
-// import { cards } from "./Cards";
-// import { AiOutlineTags, AiOutlineClockCircle, AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai"
-
-const SampleNextArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.next}>
-        <MdNavigateNext className={styless.icon} />
-      </button>
-    </div>
-  );
-};
-const SamplePrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.prev}>
-        <GrFormPrevious className={styless.icon} />
-      </button>
-    </div>
-  );
-};
-const NewData = ({ productItems, addToCart }) => {
+import { useEffect } from "react";
+import axios from "axios";
+import { apiURL } from "../../../../../const/config";
+const NewData = ({ productItems }) => {
   const [count, setCount] = useState(0)
+  const [data,setData]=useState([])
   const increment = () => {
     setCount(count + 1)
   }
@@ -40,9 +21,7 @@ const NewData = ({ productItems, addToCart }) => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 2,
-    
-        // nextArrow: <SampleNextArrow />,
-        // prevArrow: <SamplePrevArrow />,
+
     responsive: [
       {
         breakpoint: 800,
@@ -62,20 +41,44 @@ const NewData = ({ productItems, addToCart }) => {
       },
     ],
   };
+  useEffect(() => {
+    axios
+      .get(`${apiURL}/product/get-all-products`)
+      .then((res) => {
+        
+        console.log(res.data)
+        // dispatch(addProduct(res.data));
+        const currentDate = new Date()
+        const newProducts=res.data.filter(
+          (product)=> new Date(product.createDate)<=currentDate
+        )
+        setData(newProducts);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   return (
     <div className={`${styless.bg}`}>
       <h2>NEW ARRAIVAL</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          {productItems &&
-            productItems.map((productItems) => (
+          {data &&
+            data.map((productItems) => (
               <div className={styless.mains}>
+               
+
+               
+               
                 <div className={styless.customerheading}>
+                   <Link  to={`/ViewDetails/${productItems._id}`} >
                   <div className={`${styless.card}`}>
-                    <img src={productItems.image} alt="imge" />
+
+                    <img src={productItems.images[0]} alt="imge" />
                   </div>
+                  </Link>
                 </div>
-                <h5 className={styless.title}>{productItems.title}</h5>
+                <h5 className={styless.title}>{productItems.productDetail.brand}</h5>
                 {/* <span className={styless.description}> */}
                 <Link style={{textDecoration:'none'}}>
                   <p>Explore Now!</p>

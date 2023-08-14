@@ -39,8 +39,8 @@ function RedyToPick({ id,getOrders }) {
   };
 
   return (
-    <div className="mb-3">
-      <Button variant="primary" onClick={handleShow}>
+    <div >
+      <Button style={{color:'black',backgroundColor:'white'}} onClick={handleShow}>
         Ready to pick up
       </Button>
 

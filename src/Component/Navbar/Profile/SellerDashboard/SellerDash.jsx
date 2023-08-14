@@ -25,7 +25,7 @@ import  DeliveryDash  from "../DeliveryDashBoard/Deliverydash";
     setSelectedLoginType(loginType);
   };
   return (
-    <div className={dash.space}>
+    <div >
       <div className={dash.body}>
         <div className={dash.sidebar}>
           <ul className={dash.sidebar_items}>
@@ -33,14 +33,14 @@ import  DeliveryDash  from "../DeliveryDashBoard/Deliverydash";
             onClick={() => handleLoginTypeChange("dashboard")} >
               <i class="fa fa-dashboard"></i>
               <span className={dash.nombres}>
-                {" "}
+          
                 <button
                   className={`login-tab ${
                     selectedLoginType === "dashboard" && "active"
                   }`}
                   
                 >
-                  {" "}
+            
                   Dashboard
                 </button>
               </span>

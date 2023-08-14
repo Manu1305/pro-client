@@ -17,6 +17,7 @@ import { AiOutlineShopping,AiFillHeart } from "react-icons/ai";
 import Review from "./Review/Review";
 import axios from "axios";
 import { apiURL } from "../../../const/config";
+import { Footer } from "../../Footer/Footer";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -222,7 +223,7 @@ const ViewProduct = ({ setCartItems }) => {
   return (
     <div className={`card ${styles.card}`}>
       {productDetails.map((product) => (
-        <div className="row" style={{ marginTop: "10rem" }}>
+        <div className="row">
           <div className={`col-md-6 ${styles.images}`}>
             <div className={`text-center p-4 ${styles.thumbnail}`}>
               <Slider {...settings}>
@@ -515,6 +516,8 @@ const ViewProduct = ({ setCartItems }) => {
       ))}
 
       <SellerRelatedPro />
+      <Footer />
+
     </div>
   );
 };

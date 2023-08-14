@@ -106,7 +106,7 @@ export const ReturnReq = () => {
     <>
    
       {/* <p style={{ backgroundColor: "red" }}>AssignDelivery</p> */}
-      <div className={`row ${styles.tableWrapper}`}>
+      <div>
         {userData &&
           userData.map((order, index) => (
             <div key={index} className="col-md-4">

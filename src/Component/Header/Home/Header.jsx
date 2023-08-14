@@ -20,6 +20,7 @@ import Who from "./WhoSection/Who";
 import TrendingItems from "./TopTrends/Trends";
 import BigDeals from "./BigDeals/Bigdeals";
 import Strength from "./TopTrends/StrengthUI/StrengthUI";
+import { Footer } from "../../Footer/Footer";
 const SampleNextArrow = (props) => {
   const { onClick } = props;
   return (
@@ -41,7 +42,7 @@ const SamplePrevArrow = (props) => {
   );
 };
 
- const Header = ({ productItems, addToCart, CartItem }) => {
+const Header = ({ productItems }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -80,24 +81,7 @@ const SamplePrevArrow = (props) => {
                 style={{ position: "relative", display: "inline-block" }}
               >
                 <img src={item.image} alt="cover" width="100%" />
-                
-                  {/* <button
-                    style={{
-                      backgroundColor:'red',  
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      transform: "translate(-50%, -50%)",
-                      padding: "10px 20px",
-                     
-                      border: "none",
-                      zIndex: 1,
-                    
-                    }}
-                  >
-                   SHOP NOW
-                  </button> */}
-           
+
                 <div className={header.overlay}>{/* <Search /> */}</div>
               </div>
             ))}
@@ -107,7 +91,7 @@ const SamplePrevArrow = (props) => {
       <Who />
       <Logoslider />
       <CategoryNew />
-      <NewData productItems={productItems} addToCart={addToCart} />
+      <NewData productItems={productItems} />
       <TrendingItems />
       <BigDeals />
       <Strength />
@@ -115,7 +99,8 @@ const SamplePrevArrow = (props) => {
 
       <ShortAbout />
       <CustomerReview /> */}
+      <Footer />
     </div>
   );
 };
-export default Header
+export default Header;

@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styles from "./Addproduct.module.css";
-import {useFormik} from 'formik'
 import Swal from 'sweetalert2'
 import { apiURL } from "../../../../../const/config";
 const initialValues={
@@ -336,11 +335,11 @@ const AddProduct = () => {
   return (
     <div className={styles.container}>
       <form >
-        <fieldset style={{ marginLeft:'20px'}}>
+        <fieldset >
           <legend>ADD PRODUCTS</legend>
-          <div className="form-group">
+          <div >
            
-           <div style={{display:'flex',flexDirection:'column'}}>
+           <div   className={styles.respo} >
 
          <div>
           
@@ -367,7 +366,7 @@ const AddProduct = () => {
 
 
 
-          <div className="form-group" style={{marginLeft:'20px'}}>
+          <div>
             <label className="control-label" for="product_name">
               PRODUCT BRAND
             </label>
@@ -395,7 +394,7 @@ const AddProduct = () => {
             <label  for="product_category">
               PRODUCT CATEGORY
             </label>
-            <div style={{display:'flex', flexDirection:'column'}}>
+            <div  className={styles.respo}  >
 
             
             <div className="input-wrapper" style={{width:'200px'}}>
@@ -498,7 +497,7 @@ const AddProduct = () => {
             <label className="control-label" htmlFor="product_price">
               PRODUCT PRICE
             </label>
-            <div style={{display:'flex',flexDirection:'column'}} >
+            <div  className={styles.respo}  >
            
               <input
 
@@ -563,16 +562,16 @@ const AddProduct = () => {
               )}
           </div>
           <div
-            style={{ display: "flex", flexDirection: "column" }}
+           
           >
             <div
               className="form-group"
-              style={{ flexBasis: "100%", maxWidth: "100%" }}
+              style={{ display:'flex' ,flexDirection: "column" }}
             >
               <label className="control-label" htmlFor="product_color">
                 PRIMARY COLOR
               </label>
-              <div className="input-wrapper" style={{display:'flex' ,flexDirection:'column'}}>
+              <div className="input-wrapper" style={{display:'flex' ,flexDirection:'row'}}>
               
                 <input
                   id="product_color"
@@ -605,7 +604,6 @@ const AddProduct = () => {
                   name="product_other_colors"
                   // placeholder="OTHER COLORS"
                   className={styles.inputField}
-                  required=""
                   type="color"
                   value={otherColors}
                   style={{ width: "50%%" }}

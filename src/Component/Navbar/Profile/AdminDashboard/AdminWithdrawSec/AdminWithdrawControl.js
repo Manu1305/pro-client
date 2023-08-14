@@ -321,34 +321,6 @@ const AdminWithdrawControl = () => {
   const selectedOptionHandler = (e) => {
     setStatus(e.target.value);
   };
-
-  //   const getOrders = async () => {
-  //     try {
-  //       const config = {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       };
-
-  //       const res = await axios.get(
-  //         "${apiURL}/withdraw/getwithdraw",
-  //         config
-  //       )
-  //      .then((res)=>{
-  //       setWith(res.data);
-  //      })
-  //      .catch((error)=>{
-  // console.log(error)
-  //      })
-
-
-  //       setWith();
-  //     } catch (error) {
-  //       console.log(error);
-  //       setWith([]);
-  //     }
-  //   };
   const getWithdraw = async () => {
     try {
       const config = {

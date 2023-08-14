@@ -111,13 +111,12 @@ ul {
 }
 
 li {
-  margin: 0 10px;
+  /* margin: 0 10px;   updated  on 14 with manu and akshay*/
   cursor: pointer;
   color: white;
-}
-li {
   list-style: none;
 }
+
 .navbar {
   display: flex;
   flex-direction: row;
