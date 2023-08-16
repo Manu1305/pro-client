@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styless from "./productRequest.module.css";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
@@ -9,9 +8,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import httpService from "../../../Error Handling/httpService";
-=======
-import axios from "axios";
->>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
 import { addReqProduct } from "../../../../Redux/productBefore/productReqAction";
 import { useSelector, useDispatch } from "react-redux";
 import ReasonModal from "./ReasonModal";
@@ -30,21 +26,16 @@ export const ProductRequest = () => {
   const [modalShow, setModalShow] = useState(false);
 
   const getProducts = async () => {
-<<<<<<< HEAD
     await httpService
       .post(`${apiURL}/product/requested-Products`, {
-=======
-    try {
-      const res = await axios.post(`${apiURL}/product/requested-Products`, {
->>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
         type: user.urType,
         seller: user.email,
-      });
-      dispatch(addReqProduct(res.data));
+      }).then((res) => {
+        dispatch(addReqProduct(res.data));
       setProduct(res.data);
-    } catch (err) {
-      console.log("ERROR", err);
-    }
+      }).catch(Err => console.log(Err))
+      
+    
   };
 
   useEffect(() => {
@@ -52,7 +43,6 @@ export const ProductRequest = () => {
   }, []);
 
   const addToShop = async (id) => {
-<<<<<<< HEAD
     await httpService
       .put(`${apiURL}/product/allow-requested-product/${id}`)
       .then((res) => {
@@ -75,33 +65,6 @@ export const ProductRequest = () => {
       .catch((err) => {
         console.log("ERROR", err);
       });
-=======
-    try {
-      const res = await axios.put(
-        `${apiURL}/product/allow-requested-product/${id}`
-      );
-      console.log(res.data);
-      getProducts();
-    } catch (err) {
-      console.log("ERROR", err);
-    }
-  };
-
-  const removeFromShop = async (id, obj) => {
-    try {
-      const res = await axios.put(
-        `${apiURL}/product/remove-requested-product/${id}`,
-        {
-          message: { ...obj, forU: user.email },
-        }
-      );
-      console.log(res.data);
-      getProducts();
-      alert("Removed");
-    } catch (err) {
-      console.log("ERROR", err);
-    }
->>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
   };
   function sendproductdetails(product) {
     setproductdetails(true);

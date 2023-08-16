@@ -12,11 +12,8 @@ import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { apiURL } from "../../const/config";
-<<<<<<< HEAD
 import httpService from "../Error Handling/httpService";
-=======
 import { Footer } from "../Footer/Footer";
->>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
