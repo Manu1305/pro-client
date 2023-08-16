@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const Alert = ({message}) => {
+export const Alert = ({}) => {
+
+  const msg = useSelector()
   console.log("Alert")
-  const notify = () => toast(message);
+  const notify = () => toast(msg);
   useEffect(() => {
     notify()
   },[])
 
   return (
     <div>
-      {/* <button onClick={notify}>Notify!</button> */}
       <ToastContainer />
     </div>
   );

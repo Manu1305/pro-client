@@ -15,8 +15,8 @@ import { BsBagDash } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
 import { AiOutlineShopping,AiFillHeart } from "react-icons/ai";
 import Review from "./Review/Review";
-import axios from "axios";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -89,7 +89,7 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
     try {
-      await axios.post(
+      await httpService.post(
         "http://localhost:8000/wish/update-wish",
         {
           productId,
@@ -160,7 +160,7 @@ const ViewProduct = ({ setCartItems }) => {
     
 
     try {
-      await axios
+      await httpService
         .post(
           `${apiURL}/cart/add-to-cart`,
           {
@@ -195,7 +195,7 @@ const ViewProduct = ({ setCartItems }) => {
         },
       };
 
-      const res = await axios.post(`${apiURL}/noti/create-noti`,{message},config)
+      const res = await httpService.post(`${apiURL}/noti/create-noti`,{message},config)
         // .then((res) => {
         //   console.log(res);
         //   return res.json();
@@ -416,17 +416,17 @@ const ViewProduct = ({ setCartItems }) => {
                   </>
                 ) : null}
                 {offerBtn  ? (
-                      <div class="container m-4">
-                        <div class="row justify-content-center">
-                          <div class="col-md-6 text-center">
-                            <h3 class="text-danger">
+                      <div className="container m-4">
+                        <div className="row justify-content-center">
+                          <div className="col-md-6 text-center">
+                            <h3 className="text-danger">
                               Your Bulk Buying Deal Is a Click Away - Don't Miss
                               Out!
                             </h3>
                           </div>
-                          <div class="col-md-6 text-center">
+                          <div className="col-md-6 text-center">
                             <button
-                              class="btn btn-success"
+                              className="btn btn-success"
                               onClick={offerBtnHandler}
                             >
                               Offers

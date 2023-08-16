@@ -7,14 +7,14 @@ import DashHome from "../../../../Dashboard/OrderHistory/DashHome/DashHome";
 
 function VendorDashboard() {
   return (
-    <div class="container">
-      <div class="component">
+    <div className="container">
+      <div className="component">
         <DashHome/>
       </div>
-      <div class="component">
+      <div className="component">
         {/* <Orders /> */}
       </div>
-      <div class="component">
+      <div className="component">
         {/* <Products /> */}
       </div>
     </div>

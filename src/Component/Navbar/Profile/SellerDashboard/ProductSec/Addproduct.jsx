@@ -1,7 +1,6 @@
 // akashay
 
 import React, { useEffect } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -9,6 +8,7 @@ import styles from "./Addproduct.module.css";
 import {useFormik} from 'formik'
 import Swal from 'sweetalert2'
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 const initialValues={
   name: "",
   price: "",
@@ -128,16 +128,6 @@ const AddProduct = () => {
 
   const [selectedSizes, setSelectedSizes] = useState([]);
 
-  const handleSizeSelection = (size) => {
-    if (selectedSizes.includes(size)) {
-      setSelectedSizes(
-        selectedSizes.filter((selectedSize) => selectedSize !== size)
-      );
-    } else {
-      setSelectedSizes([...selectedSizes, size]);
-    }
-  };
-
   const handleQuantityChange = (size, event) => {
     const { value } = event.target;
     const updatedQuantities = { ...quantities, [size]: value };
@@ -187,7 +177,7 @@ const AddProduct = () => {
     const isValid = validate();
     if (isValid) {
     try {
-      await axios
+      await httpService
         .post(`${apiURL}/product/add-new-product`, {
           seller: user.email,
           productId,

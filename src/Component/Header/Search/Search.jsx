@@ -17,7 +17,7 @@ export const Search = () => {
           </p>
            </div>
       
-          {/* <div class="btn-group">
+          {/* <div className="btn-group">
             <button>Categories</button>
             <button>Location</button>
             <button>Investment</button>

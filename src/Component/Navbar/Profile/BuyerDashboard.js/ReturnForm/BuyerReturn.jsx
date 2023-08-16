@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
@@ -15,6 +14,7 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 const BuyerReturn = () => {
   const orders = useSelector((state) => state.orderReducer.order);
@@ -38,7 +38,7 @@ const BuyerReturn = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      await axios
+      await httpService
         .post(
           `${apiURL}/return/return-prod`,
           {

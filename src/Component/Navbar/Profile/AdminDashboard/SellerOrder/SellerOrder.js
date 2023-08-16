@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./sellerOrder.module.css";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { Card } from "react-bootstrap";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 const SellerOrder = () => {
-  const user = useSelector((state) => state.userReducer.user);
-  
-
 
   const [orders, setOrders] = useState([]);
 
@@ -20,7 +17,7 @@ const SellerOrder = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      const res = await axios
+      const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => res.data)
         .catch((err) => {
@@ -34,7 +31,7 @@ const SellerOrder = () => {
   };
 
   const addToDelivery = async (id) => {
-    await axios
+    await httpService
       .put(`${apiURL}/delivery/assign-delivery-product/${id}`)
       .then((res) => {
       

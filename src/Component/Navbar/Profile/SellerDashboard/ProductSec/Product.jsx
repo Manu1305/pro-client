@@ -7,10 +7,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import SizeModal from "./modal/SizeModal";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -42,7 +42,7 @@ export const ProductSec = () => {
 
   const getProducts = async () => {
    
-    await axios
+    await httpService
       .get(`${apiURL}/product/get-all-products`,
        {
         type: user.urType,
@@ -86,7 +86,7 @@ export const ProductSec = () => {
    
   };
   const removeFromShop = async (id) => {
-    await axios
+    await httpService
       .delete(`${apiURL}/product/remove-requested-product/${id}`)
       .then((res) => {
         getProducts();

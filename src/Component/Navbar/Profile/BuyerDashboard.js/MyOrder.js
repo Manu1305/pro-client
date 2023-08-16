@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MyOrder.module.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { addorder } from "../../../../Redux/order/orderAction";
 import { apiURL } from "../../../../const/config";
+import httpService from "../../../Error Handling/httpService";
 
 const BuyerOrder = () => {
   const dispatch = useDispatch();
@@ -68,7 +68,7 @@ const BuyerOrder = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      const res = await axios
+      const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
           console.log(res)

@@ -1,9 +1,9 @@
 
 import React, { useState } from "react";
-import axios from "axios";
 import styles from './NewAddress.module.css';
 import Swal from "sweetalert2";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 
 function NewAddress({getSavedAddress}) {
@@ -37,8 +37,8 @@ const saveAddressHandler = async (e) => {
         },
       };
   
-      const response = await axios
-        .post(
+      const response = await 
+        httpService.post(
           `${apiURL}/address/add-address`,
           {
             addressDetails: address,

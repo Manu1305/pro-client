@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./Withdraw.module.css";
 import { BiMoneyWithdraw, BiHappyAlt } from "react-icons/bi";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { BsWallet2 } from "react-icons/bs";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 const Withdraw = () => {
   const [orders, setOrders] = useState([]);
@@ -18,8 +18,8 @@ const Withdraw = () => {
         },
       };
 
-      const res = await axios
-        .get(
+      const res = await 
+        httpService.get(
           `${apiURL}/seller/seller-admin-withdrawDetails`,
           config
         )

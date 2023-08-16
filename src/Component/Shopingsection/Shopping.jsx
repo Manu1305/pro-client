@@ -3,7 +3,6 @@ import styless from "./Shopping.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../../Redux/product/productAction";
@@ -13,6 +12,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { apiURL } from "../../const/config";
+import httpService from "../Error Handling/httpService";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -74,7 +74,7 @@ const Shopping = ({}) => {
 
   const viewproductDetails = () => {};
   useEffect(() => {
-    axios
+    httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         setData(res.data);
@@ -115,7 +115,7 @@ const Shopping = ({}) => {
       return;
     }
     try {
-      axios
+      httpService
         .post(`${apiURL}/cart/add-to-cart`, { _id, userId })
         .then((res) => {
           console.log(res.data);
@@ -128,9 +128,6 @@ const Shopping = ({}) => {
     }
   }
 
-  function addToWishHandle(_id) {
-    // axios.post("${apiURL}/product/wishlistupdate", { _id, userId });
-  }
 
   const settings = {
     infinite: true,

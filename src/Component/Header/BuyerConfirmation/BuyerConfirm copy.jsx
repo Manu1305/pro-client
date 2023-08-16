@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 const BuyerConfirm = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const BuyerConfirm = () => {
         },
       };
 
-      const response = await axios.get(
+      const response = await httpService.get(
         `${apiURL}/address/savedaaddress`,
         config
       );

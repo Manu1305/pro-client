@@ -3,7 +3,7 @@
 // export const SellerPayment=()=>{
 //     return(
 
-//         <div class="container">
+//         <div className="container">
 //          <h2 className={payment.header}>Payment setup</h2>
 //     <form>
 
@@ -17,7 +17,7 @@
 //         </select>
 //       </div>
 
-//       <div class="form-group">
+//       <div className="form-group">
 //         <label for="image">PayPal Email</label>
 //         <input type="email" className="form-control" id="email" placeholder="PayPal Email"/>
 //       </div>
@@ -116,7 +116,7 @@ function handleChange(event) {
                 </h5>
                 {/* {nameError && <div className="text-danger">{nameError}</div>}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Full name"
                   id="formControlLg"
                   type="text"
@@ -143,7 +143,7 @@ function handleChange(event) {
 
                 {emailError && <div className="text-danger">{emailError}</div>}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Skrill Email"
                   id="formControlLg"
                   type="email"

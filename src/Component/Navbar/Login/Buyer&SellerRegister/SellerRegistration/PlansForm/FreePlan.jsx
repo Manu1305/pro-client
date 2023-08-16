@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./FreePlan.module.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import httpService from "../../../../../Error Handling/httpService";
 import { useSelector } from "react-redux";
 import { apiURL } from "../../../../../../const/config";
 
@@ -15,7 +15,7 @@ import { apiURL } from "../../../../../../const/config";
     e.preventDefault();
 
     try {
-      let loginDetails = await axios
+      let loginDetails = await httpService
         .post(`${apiURL}/user/signup`, {
           userData:sellerLoginData
         })

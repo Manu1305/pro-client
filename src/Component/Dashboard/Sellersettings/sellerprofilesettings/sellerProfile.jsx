@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import SavedAddress from "../../../Header/Alreadysavedaddress/Saved";
 import NewAddress from "../../../Header/NEwAddress/NewAddress";
 import SavedBanks from "../../../Header/BankDetails/getBank";
-import axios from "axios";
 import { apiURL } from "../../../../const/config";
 import { getUserAddress } from "../../../../const/api";
+import httpService from "../../../Error Handling/httpService";
 function SellerProSettings() {
   const [newaddressForm, setNewaddressform] = useState(false);
 const[bank,setBank]=useState([])
@@ -43,7 +43,7 @@ const[bank,setBank]=useState([])
          },
        };
 
-       const response = await axios.get(
+       const response = await httpService.get(
          `${apiURL}/Bankdetails/getBankData/${user.email}`,
          config
        );

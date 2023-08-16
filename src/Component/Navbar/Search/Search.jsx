@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import styles from "./SearchBar.module.css";
 import { addProduct } from "../../../Redux/product/productAction";
 import { useSelector, useDispatch } from "react-redux";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 function SearchBar() {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function SearchBar() {
   }
 
   useEffect(() => {
-    axios
+    httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         setData(res.data);

@@ -2,7 +2,6 @@ import React from "react";
 import register from "../Register.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
@@ -14,6 +13,7 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 const CustomerRegister = () => {
    const history = useNavigate();
@@ -39,7 +39,7 @@ const CustomerRegister = () => {
     const isValid = validate();
     if (isValid) {
       try {
-        await axios
+        await httpService
           .post(`${apiURL}/user/signup`, {
             userData: { name, email, password, phone, gst, urType: "buyer" }})
           .then((res) => {
@@ -160,7 +160,7 @@ const CustomerRegister = () => {
                 </h5>
                 {nameError && <div className="text-danger">{nameError}</div>}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Full name"
                   id="formControlLg"
                   type="string"
@@ -170,7 +170,7 @@ const CustomerRegister = () => {
                 />
                 {emailError && <div className="text-danger">{emailError}</div>}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Email address"
                   id="formControlLg"
                   type="string"
@@ -182,7 +182,7 @@ const CustomerRegister = () => {
                   <div className="text-danger">{passwordError}</div>
                 )}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Password"
                   id="formControlLg"
                   type="string"
@@ -194,7 +194,7 @@ const CustomerRegister = () => {
   <div className="text-danger">{confirmpasswordError}</div>
 )}
                 <MDBInput
-  wrapperClass="mb-4"
+  wrapperclassName="mb-4"
   label="Confirm Password"
   id="formControlLg"
   type="password"
@@ -206,7 +206,7 @@ const CustomerRegister = () => {
 
                 {phoneError && <div className="text-danger">{phoneError}</div>}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Phone No."
                   id="formControlLg"
                   type="number"
@@ -216,7 +216,7 @@ const CustomerRegister = () => {
                 />
                   
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="GST No."
                   id="formControlLg"
                   type="string"

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styless from "./Reverse.module.css"
 import DataTable from "datatables.net-dt";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 
 
@@ -11,7 +11,7 @@ const UserTable = ({ onDelete }) => {
 
   const getUsers = async () => {
     try {
-      const res = await axios.get(`${apiURL}/user/allUserData`);
+      const res = await httpService.get(`${apiURL}/user/allUserData`);
       console.log("users", res.data);
       setUser(res.data);
     } catch (error) {

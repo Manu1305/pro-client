@@ -1,10 +1,10 @@
 import React, {  useState } from "react";
-import axios from "axios";
 import { Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { apiURL } from "../../../../const/config";
+import httpService from "../../../Error Handling/httpService";
 
 function RedyToPick({ id,getOrders }) {
   const [show, setShow] = useState(false);
@@ -20,8 +20,8 @@ function RedyToPick({ id,getOrders }) {
   const updateStatus = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios
-        .put(`${apiURL}/status/redayToPickup/${id}`, {
+      const response = await 
+        httpService.put(`${apiURL}/status/redayToPickup/${id}`, {
           packageDetails,
         })
         .then((res) => {
