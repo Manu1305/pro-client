@@ -25,12 +25,7 @@ const Login = () => {
           <CustomerLogin/>
         </div>
       )}
-      {selectedLoginType === "seller" && (
-        <div className={login.bg["seller-login"]}>
-          <h1> seller login</h1>
-        </div>
-      )}
-   
+         
     </div>
   );
 };

@@ -7,10 +7,10 @@ import Recentsales from "./Recentsales";
 function DashHome() {
   return (
     <div>
-      <Saleandrevenue />
+      {/* <Saleandrevenue /> */}
       {/* <SaleChart/> */}
       {/* <ChartData /> */}
-      <Recentsales />
+      {/* <Recentsales /> */}
     </div>
   );
 }

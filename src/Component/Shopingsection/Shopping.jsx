@@ -12,7 +12,11 @@ import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { apiURL } from "../../const/config";
+<<<<<<< HEAD
 import httpService from "../Error Handling/httpService";
+=======
+import { Footer } from "../Footer/Footer";
+>>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -233,15 +237,15 @@ const Shopping = ({}) => {
     <div
       style={{
         marginLeft: "50px",
-        background: "whitesmoke",
-        color: "red",
-        backgroundImage:
-          "url('https://img.freepik.com/premium-photo/abstract-blurred-gradient-nature-wallpaper-backgroundsoft-background-wallpaperdesigngraphic-presentation_532332-1415.jpg')",
-      backgroundSize:'cover'
+        background: "white",
+        color: "black",
+      //   backgroundImage:
+      //     "url('https://img.freepik.com/premium-photo/abstract-blurred-gradient-nature-wallpaper-backgroundsoft-background-wallpaperdesigngraphic-presentation_532332-1415.jpg')",
+      // backgroundSize:'cover'
         }}
       
     >
-      <header ></header>
+    
 
       <section>
         <div className="container">
@@ -328,10 +332,11 @@ const Shopping = ({}) => {
                 </strong>
               </header>
 
-              <div className="row">
+              <div className={`row , ${styless.pages}`} style={{color:'black'}} >
                 {displayUsers}
 
-                <ReactPaginate
+                <ReactPaginate 
+               
                   previousLabel={"prev"}
                   nextLabel={"next"}
                   pageCount={pageCount}
@@ -343,6 +348,7 @@ const Shopping = ({}) => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

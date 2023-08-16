@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./sellerOrder.module.css";
 import { useSelector } from "react-redux";
-import { Card } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 
 const SellerOrder = () => {
-
+  const user = useSelector((state) => state.userReducer.user);
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
@@ -23,7 +23,7 @@ const SellerOrder = () => {
         .catch((err) => {
           console.log(err);
         });
- ;
+
       setOrders(res);
     } catch (error) {
       console.log(error);
@@ -34,17 +34,12 @@ const SellerOrder = () => {
     await httpService
       .put(`${apiURL}/delivery/assign-delivery-product/${id}`)
       .then((res) => {
-      
         getOrders();
       })
       .catch((err) => {
         console.log("ERROR", err);
       });
   };
-
-
-
-
 
   const confirmDelivery = async (id) => {
     try {
@@ -55,7 +50,6 @@ const SellerOrder = () => {
         },
       };
 
-
       const res = await fetch(
         `${apiURL}/delivery/delivered/${id}`,
         {
@@ -64,16 +58,14 @@ const SellerOrder = () => {
         },
         config
       )
-        .then((res) => {          
+        .then((res) => {
           return res.json();
         })
         .then((json) => {
-       
           getOrders();
-       
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
         });
     } catch (error) {
       console.log(error);
@@ -85,31 +77,34 @@ const SellerOrder = () => {
   }, []);
 
   return (
-    <div className={`d-flex flex-wrap ${styles.tableWrapper}`}>
-      {orders.map((order, index) => (
-        <Card key={index} className={`m-2 ${styles.orderCard}`}>
-          <Card.Body>
-            <img
-              src="../Image/hiLogo.jpg"
-              alt=""
-              className={`rounded-circle ${styles.imgcircle}`}
-            />
-              <div key={order.id} className="d-flex align-items-center mb-3">
+    <div  className={styles.tableContainer}>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Select Size</th>
+            <th>Status</th>
+            <th>Tracking ID</th>
+            <th>Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order, index) => (
+            <tr key={index}>
+              <td>
                 <img
                   src={order.prdDeta.images}
                   alt=""
                   style={{ width: "45px", height: "45px" }}
                   className="rounded-circle"
                 />
-              
-                <div className="ms-3">
-                  <p className="fw-bold mb-1">{order.prdDeta.barnd}</p>
-                  <p className="text-muted mb-0">
-                    {order.prdDeta.category}
-                  </p>
-                </div>
-                <label>Select Size</label> 
-                <select>
+              </td>
+              <td>{order.prdDeta.category}</td>
+              <td>
+              <select className={styles.selectStyle}>
+
                   {order.sizeWithQuantity &&
                     Object.entries(order.sizeWithQuantity).map(([key, value]) => (
                       <option key={key} value={key}>
@@ -137,41 +132,39 @@ const SellerOrder = () => {
                       </option>
                     ))}
                 </select>
-              </div>
-
-         
-            <div className="mb-3">
-              <h6 className="text-green-400">Status: {order.orderStatus}</h6>
-            </div>
-            <div className="mb-3">
-              <h2>Tracking ID: {order.trackId}</h2>
-              {order.pType === "cash" ? (
-                <h2>Collect {(parseInt(order.ordPrc) * 90)/100}</h2>
-              ) : null}
-              <h6>Amount: {order.ordPrc}</h6>
-            </div>
-            <div className="mb-3">
-              {order.orderStatus === "Ready To PickUp" ? 
-                <button
-                  className="btn btn-warning my-2"
-                  onClick={() => addToDelivery(order._id)}
-                >
-                  Assign Delivery
-                </button>
-               : (
-
-              (  order.orderStatus === "confirm Delivery"  ||  order.orderStatus === "confirm Return") &&
-                <button
-                  className="btn btn-warning my-2"
-                  onClick={() => confirmDelivery(order._id)}
-                >
-                 Confirm Delivery
-                </button>
-              )}
-            </div>
-          </Card.Body>
-        </Card>
-      ))}
+              </td>
+              <td>
+                <h6 className="text-green-400">Status: {order.orderStatus}</h6>
+              </td>
+              <td>{order.trackId}</td>
+              <td>
+                {order.pType === "cash" ? (
+                  <h2>Collect {(parseInt(order.ordPrc) * 90) / 100}</h2>
+                ) : (
+                  <h6>Amount: {order.ordPrc}</h6>
+                )}
+              </td>
+              <td>
+                {order.orderStatus === "Ready To PickUp" ? (
+                  <button
+                    className="btn btn-warning my-2"
+                    onClick={() => addToDelivery(order._id)}
+                  >
+                    Assign Delivery
+                  </button>
+                ) : order.orderStatus === "confirm Delivery" || order.orderStatus === "confirm Return" ? (
+                  <button
+                    className="btn btn-warning my-2"
+                    onClick={() => confirmDelivery(order._id)}
+                  >
+                    Confirm Delivery
+                  </button>
+                ) :  <p> View </p> }
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };

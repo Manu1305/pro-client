@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './About.module.css'
+import { Footer } from '../../../Footer/Footer'
 function AboutUs() {
   return (
     <div>
@@ -77,6 +78,7 @@ effectively
      
      </div>
            </div>
+           <Footer />
       </div>
   )
 }

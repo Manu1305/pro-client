@@ -163,7 +163,7 @@ export const Footer=()=> {
   return (
     <footer>
       <div className={styles.main}>
-        <div className={styles.one}>
+        {/* <div className={styles.one}>
           <div>
             <h1 className={styles.headinttext}>
               JOIN SHOPPING COMMUNITY TO <br />
@@ -184,7 +184,7 @@ export const Footer=()=> {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className={styles.two}>
           <div className={styles.twoOne}>
             <h2 className={styles.twoheading}>HITECMART</h2>

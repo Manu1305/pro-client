@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styless from "./productRequest.module.css";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
@@ -8,75 +9,50 @@ import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import httpService from "../../../Error Handling/httpService";
+=======
+import axios from "axios";
+>>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
 import { addReqProduct } from "../../../../Redux/productBefore/productReqAction";
 import { useSelector, useDispatch } from "react-redux";
 import ReasonModal from "./ReasonModal";
 import { apiURL } from "../../../../const/config";
-
-const SampleNextArrow = (props) => {
-  const { onClick } = props;
-
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.next}>
-        <MdNavigateNext className={styless.icon} />
-      </button>
-    </div>
-  );
-};
-
-const SamplePrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.prev}>
-        <GrFormPrevious className={styless.icon} />
-      </button>
-    </div>
-  );
-};
+import ProductModal from "./SellerOrder/Modal/ProduuctModal";
+import DataTable from "react-data-table-component";
+import { BsFillTrashFill, } from "react-icons/bs";
+import {GrView} from 'react-icons/gr'
 
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
+  const [productdetails, setproductdetails] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
-  console.log("USER DETAIL", user);
-
+  const [pro, setPro] = useState({});
   const [modalShow, setModalShow] = useState(false);
 
   const getProducts = async () => {
+<<<<<<< HEAD
     await httpService
       .post(`${apiURL}/product/requested-Products`, {
+=======
+    try {
+      const res = await axios.post(`${apiURL}/product/requested-Products`, {
+>>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
         type: user.urType,
         seller: user.email,
-      })
-      .then((res) => {
-        console.log("RES", res.data);
-        dispatch(addReqProduct(res.data));
-        setProduct(res.data);
-        alert("successfull response");
-      })
-      .catch((err) => {
-        console.log("ERROR", err);
       });
+      dispatch(addReqProduct(res.data));
+      setProduct(res.data);
+    } catch (err) {
+      console.log("ERROR", err);
+    }
   };
 
   useEffect(() => {
     getProducts();
-
-    console.log(products);
   }, []);
 
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-  };
-
   const addToShop = async (id) => {
+<<<<<<< HEAD
     await httpService
       .put(`${apiURL}/product/allow-requested-product/${id}`)
       .then((res) => {
@@ -99,91 +75,179 @@ export const ProductRequest = () => {
       .catch((err) => {
         console.log("ERROR", err);
       });
+=======
+    try {
+      const res = await axios.put(
+        `${apiURL}/product/allow-requested-product/${id}`
+      );
+      console.log(res.data);
+      getProducts();
+    } catch (err) {
+      console.log("ERROR", err);
+    }
   };
 
+  const removeFromShop = async (id, obj) => {
+    try {
+      const res = await axios.put(
+        `${apiURL}/product/remove-requested-product/${id}`,
+        {
+          message: { ...obj, forU: user.email },
+        }
+      );
+      console.log(res.data);
+      getProducts();
+      alert("Removed");
+    } catch (err) {
+      console.log("ERROR", err);
+    }
+>>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
+  };
+  function sendproductdetails(product) {
+    setproductdetails(true);
+    setPro(product);
+  }
+
+  const columns = [
+    {
+      name: "Images",
+      selector: (row) => row.images,
+      sortable: true,
+    },
+    {
+      name: "Brand",
+      selector: (row) => row.brand,
+      sortable: true,
+    },
+    ,
+    {
+      name: "Quantity",
+      selector: (row) => row.quantity,
+      sortable: true,
+    },
+    {
+      name: "Price",
+      selector: (row) => row.price,
+      sortable: true,
+    },
+
+    {
+      name: "Action",
+      selector: (row) => row.action,
+      // sortable: true,
+    },
+  ];
+
+  console.log("====================", products);
+
+  const data = products.map((product) => {
+    return {
+      id: product._id,
+      images: <img src={product.images[0]} style={{ width: "20px" }} />,
+      brand: product.productDetail.brand,
+      quantity: product.totalQuantity,
+      price: product.sellingPrice,
+      action: (
+        <>
+          <button className="m-2"><i><BsFillTrashFill/></i></button>
+          <button className="m-2"><i><GrView/></i></button>
+        </>
+      ),
+    };
+  });
+
+  console.log("(((((())))))) ==========", data);
+
   return (
-    <div className="container mt-5 mb-5 ml-4">
+    <div className={styless.container}>
       <div className="d-flex justify-content-center row">
         <div className="col-md-10">
-          <div className="d-flex justify-content-center mt-3"></div>
+          <div className="d-flex justify-content-center"></div>
           {products.length > 0 ? (
-            products.map((product) => (
-              <div
-                key={product.Id}
-                className="row p-2 bg-white border rounded mt-2"
-              >
-                <div className="col-md-3 mt-1">
-                  <Slider {...settings}>
-                    {product.images.map((image, index) => {
-                      return (
-                        <img
-                          key={index}
-                          className="img-fluid img-responsive rounded product-image"
-                          src={image}
-                          alt={product.name}
-                        />
-                      );
-                    })}
-                  </Slider>
-                </div>
-                <div className="col-md-3 mt-1">
-                  <Slider {...settings}></Slider>
-                </div>
-                <div className="col-md-6 mt-1">
-                  <h5>{product.productDetail.brand}</h5>
-                  <p className="text-justify text-truncate para mb-0">
-                    total quantity: {product.totalQuantity}
-                    <br />
-                  </p>
-                </div>
-                <div className="align-items-center align-content-center col-md-3 border-left mt-1">
-                  <div className="d-flex flex-row align-items-center">
-                    <h4 className="mr-1">₹{product.sellingPrice}</h4>
-                    <span className="strike-text">{product.realPrice}</span>
-                  </div>
-
-                  <div className="d-flex flex-column mt-4">
-                    <Link
-                      style={{ cursor: "pointer" }}
-                      to={`/productVerification/${product._id}`}
-                    >
-                      <button
-                        className="btn btn-outline-success btn-sm mt-2 my-2"
-                        type="button"
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Images</th>
+                  <th>Brand</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((product) => (
+                  <tr key={product.Id}>
+                    <td>
+                      <img
+                        className="img-fluid img-responsive rounded product-image"
+                        src={product.images[0]}
+                        alt={product.name}
+                        style={{ height: "70px", width: "200px" }}
+                      />
+                    </td>
+                    <td>{product.productDetail.brand}</td>
+                    <td>{product.totalQuantity}</td>
+                    <td className="flex-col">
+                      ₹selling_price~{product.sellingPrice}
+                      <br />
+                      <span className="strike-text">
+                        {" "}
+                        real_price~{product.realPrice}
+                      </span>
+                    </td>
+                    <td>
+                      <Link
+                        className="btn btn-danger btn-sm text-black"
+                        style={{ cursor: "pointer" }}
+                        to={`/productVerification/${product._id}`}
                       >
                         Product Details
+                      </Link>
+                      {/* <button
+                        className="btn btn-danger btn-sm text-black"
+                        type="button"
+                        onClick={() => sendproductdetails(product)}
+                      >
+                       View details
                       </button>
-                    </Link>
-                    <button
-                      className="btn btn-danger btn-sm text-black"
-                      type="button"
-                      onClick={() => setModalShow(true)}
-                      // onClick={() => removeFromShop(product._id)}
-                    >
-                      Remove Product
-                    </button>
-                    <ReasonModal
-                      product={product}
-                      show={modalShow}
-                      onHide={() => setModalShow(false)}
-                      removeFromShop={removeFromShop}
-                    />
-                    <button
-                      className="btn btn-outline-success btn-sm mt-2"
-                      type="button"
-                      onClick={() => addToShop(product._id)}
-                    >
-                      Add To Shop
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
+                      <ProductModal
+                        product={pro}
+                        show={productdetails}
+                        onHide={() => setproductdetails(false)}
+                        removeFromShop={removeFromShop}
+                      /> */}
+
+                      <button
+                        className="btn btn-danger btn-sm text-black"
+                        type="button"
+                        onClick={() => setModalShow(true)}
+                      >
+                        Remove Product
+                      </button>
+                      <ReasonModal
+                        product={product}
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                        removeFromShop={removeFromShop}
+                      />
+                      <button
+                        className="btn btn-outline-success btn-sm"
+                        type="button"
+                        onClick={() => addToShop(product._id)}
+                      >
+                        Add To Shop
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           ) : (
             <div className="col-md-6 mt-1 text-justif">
               <img
                 src="https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png"
                 className={styless.imgeee}
+                alt="No products"
               />
             </div>
           )}
@@ -194,6 +258,7 @@ export const ProductRequest = () => {
           Add New Product
         </Link>
       </div>
+      <DataTable columns={columns} data={data} selectableRows />
     </div>
   );
 };

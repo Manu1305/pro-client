@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
+import { Footer } from "../../Footer/Footer";
 
 const WishList = () => {
   const [wishLists, setWishLists] = useState([]);
@@ -186,6 +187,7 @@ const WishList = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 };

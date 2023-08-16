@@ -98,10 +98,10 @@ export const ProductSec = () => {
 
 
   return (
-    <div className="container mt-5 mb-5">
+    <div className="container mb-5 ml-3">
       <div className="d-flex justify-content-center row">
         <div className="col-md-10">
-          <div className="d-flex justify-content-center mt-3"></div>
+          <div className="d-flex justify-content-center"></div>
           {reqProducts.map((product) => (
             <div
               key={product.Id}

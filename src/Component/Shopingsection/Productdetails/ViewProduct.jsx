@@ -16,7 +16,11 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { AiOutlineShopping,AiFillHeart } from "react-icons/ai";
 import Review from "./Review/Review";
 import { apiURL } from "../../../const/config";
+<<<<<<< HEAD
 import httpService from "../../Error Handling/httpService";
+=======
+import { Footer } from "../../Footer/Footer";
+>>>>>>> 82725411f559253343fee64f8f8421ab94b5a775
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -222,7 +226,7 @@ const ViewProduct = ({ setCartItems }) => {
   return (
     <div className={`card ${styles.card}`}>
       {productDetails.map((product) => (
-        <div className="row" style={{ marginTop: "10rem" }}>
+        <div className="row">
           <div className={`col-md-6 ${styles.images}`}>
             <div className={`text-center p-4 ${styles.thumbnail}`}>
               <Slider {...settings}>
@@ -515,6 +519,8 @@ const ViewProduct = ({ setCartItems }) => {
       ))}
 
       <SellerRelatedPro />
+      <Footer />
+
     </div>
   );
 };

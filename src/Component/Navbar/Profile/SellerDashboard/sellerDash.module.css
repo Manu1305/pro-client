@@ -9,7 +9,7 @@
   position: absolute;
 
   height: 37.6rem;
-  width: 50px;
+  width: 200px;
   background-color: brown;
   transition: width 0.8s;
 }
@@ -17,30 +17,29 @@
 .sidebar_items {
   color: rgb(236, 65, 65);
   list-style: none;
-
   display: flex;
   flex-direction: column;
 }
 
 .item {
   display: flex;
-  width: 100%;
-  padding: 1rem;
+  width: 200px;
+  padding: 1rem
 }
 
 .nombres {
   margin-left: 20px;
   width: 80%;
-  display: none;
+  display: block;
 }
 
 .sidebar_items li:hover {
   background: rgb(136, 101, 104);
 }
 
-.sidebar:hover {
+/* .sidebar:hover {
   width: 15rem;
-}
+} */
 
 .sidebar:hover .nombres {
   display: block;
@@ -64,11 +63,21 @@ p {
   .body {
     background-color: rgb(224, 214, 245);
   }
+  .sidebar {
+   
+
+    width: 0px
+ 
+  }
 
   /* .main {
     border: 1px solid blue;
   } */
-
+  .nombres {
+    
+    display: none;
+  }
+  
   .sidebar_items {
     flex-direction: row;
     text-indent: -15px;
@@ -102,6 +111,7 @@ p {
   i {
     margin: auto;
   }
+  
 }
 
 .space {
