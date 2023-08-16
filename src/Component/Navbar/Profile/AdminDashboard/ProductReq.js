@@ -8,8 +8,8 @@ import ReasonModal from "./ReasonModal";
 import { apiURL } from "../../../../const/config";
 import ProductModal from "./SellerOrder/Modal/ProduuctModal";
 import DataTable from "react-data-table-component";
-import { BsFillTrashFill, } from "react-icons/bs";
-import {GrView} from 'react-icons/gr'
+import { BsFillTrashFill } from "react-icons/bs";
+import { GrView } from "react-icons/gr";
 
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
@@ -93,7 +93,23 @@ export const ProductRequest = () => {
 
     {
       name: "Action",
-      selector: (row) => row.action,
+      cell: (row) => (
+        <>
+          <button className="m-2">
+            <i>
+              <BsFillTrashFill />
+            </i>
+          </button>
+          <button className="m-2">
+            <i>
+              <GrView />
+            </i>
+          </button>
+          <button className="m-2">
+          <i className="bi bi-bag"></i>
+          </button>
+        </>
+      ),
       // sortable: true,
     },
   ];
@@ -107,12 +123,6 @@ export const ProductRequest = () => {
       brand: product.productDetail.brand,
       quantity: product.totalQuantity,
       price: product.sellingPrice,
-      action: (
-        <>
-          <button className="m-2"><i><BsFillTrashFill/></i></button>
-          <button className="m-2"><i><GrView/></i></button>
-        </>
-      ),
     };
   });
 

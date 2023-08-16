@@ -43,7 +43,7 @@ const OrderHistory = () => {
 
   return (
     <div className={styles.tableWrapper}>
-      <div className={`d-flex flex-wrap ${styles.tableWrapper}`}>
+      <div className={`d-flex  ${styles.tableWrapper}`}>
         {orders.map((order, index) => (
           <Card key={index} className={`m-2 ${styles.orderCard}`}>
             <Card.Body>

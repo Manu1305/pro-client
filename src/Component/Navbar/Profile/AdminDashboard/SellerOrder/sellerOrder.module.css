@@ -52,10 +52,9 @@
     border-top: 1px solid #dee2e6;
   }
   
-  /* You can add more responsive styling as needed */
 }
 
 .selectStyle {
-  width: 100%; /* Make the select element width 100% */
-  max-width: 150px; /* Add a max-width if needed */
+  width: 100%;  
+   /* max-width: 150px; */
 }

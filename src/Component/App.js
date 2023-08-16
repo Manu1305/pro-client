@@ -23,6 +23,7 @@ import Editprofile from "./Dashboard/Sellersettings/sellerprofilesettings/EditPr
 import AddProduct from "./Navbar/Profile/SellerDashboard/ProductSec/Addproduct";
 import Withdraw from "./Dashboard/Withdraw/Withdraw";
 import SellerSettingsPage from "./Dashboard/Sellersettings/SellerSettings";
+
 import Thankyou from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/Thankyou";
 import AboutUs from "./Header/Home/AboutSection/About";
 import cards from "./Header/Home/NewArrival/NewArrival/Cards";
@@ -91,9 +92,7 @@ const App = () => {
               />
             }
           />
-          <Route path="/dashboard" element={<SellerDashboard />} >
-            
-          </Route>
+          <Route path="/dashboard" element={<SellerDashboard />} />
           {/* <Route
             path="/cart"
             element={
