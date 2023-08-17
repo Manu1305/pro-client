@@ -14,9 +14,9 @@ import {
   MDBInput,
   MDBBtn,
 } from "mdb-react-ui-kit";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../../../const/config";
+import httpService from "../../../../../Error Handling/httpService";
  const BankPayment = () => {
   const [bankName, setBankName] = useState("");
   const [AccountNumber, setAccountNumber] = useState();
@@ -43,7 +43,7 @@ import { apiURL } from "../../../../../../const/config";
           },
         };
 
-        const response = await axios
+        const response = await httpService
           .post(
             `${apiURL}/Bankdetails/addBankData`,
             {
@@ -230,7 +230,7 @@ import { apiURL } from "../../../../../../const/config";
                 )}
 
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Branch"
                   id="formControlLg"
                   type="text"
@@ -241,7 +241,7 @@ import { apiURL } from "../../../../../../const/config";
                 {nameError && <div className="text-danger">{nameError}</div>}
 
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Name"
                   id="formControlLg"
                   type="text"
@@ -254,7 +254,7 @@ import { apiURL } from "../../../../../../const/config";
                 )}
 
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Account Number"
                   id="formControlLg"
                   type="text"
@@ -267,7 +267,7 @@ import { apiURL } from "../../../../../../const/config";
                 )}
 
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="confirm Account Number"
                   id="formControlLg"
                   type="text"
@@ -279,7 +279,7 @@ import { apiURL } from "../../../../../../const/config";
                 {ifscError && <div className="text-danger">{ifscError}</div>}
 
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="IFSC Code"
                   id="formControlLg"
                   type="text"

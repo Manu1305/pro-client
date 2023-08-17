@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DeliveryDash.module.css";
-import axios from "axios";
 import { Card } from "react-bootstrap";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { apiURL } from "../../../../const/config";
+import httpService from "../../../Error Handling/httpService";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -50,13 +50,15 @@ const SamplePrevArrow = (props) => {
   };
   const sendOtp = (phone) => {
     alert("otp sended to this" + phone);
-    axios
+    httpService
       .post(`${apiURL}/user/send-otp`, { phone })
       .then((response) => {
         console.log(response.data);
+        alert("got")
       })
       .catch((error) => {
         console.error(error);
+        
       });
   };
 
@@ -72,7 +74,7 @@ const SamplePrevArrow = (props) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-    await axios
+    await httpService
       .get(`${apiURL}/delivery/dashboradDlvData`, config)
       .then((res) => {
         console.log("jjjjjj", res.data);
@@ -90,7 +92,7 @@ const SamplePrevArrow = (props) => {
 
   const orderPkdBtn = async (id) => {
     try {
-      await axios
+      await httpService
         .put(`${apiURL}/delivery/order-shipped/${id}`)
         .then((res) => {
           getOrders();
@@ -104,7 +106,7 @@ const SamplePrevArrow = (props) => {
   };
   const deliveredBtn = async (id) => {
     try {
-      await axios
+      await httpService
         .put(`${apiURL}/delivery/order-deliverd/${id}`)
         .then((res) => {
           getOrders();
@@ -126,7 +128,7 @@ const SamplePrevArrow = (props) => {
         },
       };
 
-      const res = await axios
+      const res = await httpService
         .put(
           `${apiURL}/delivery/update-trackId-request/${id}`,
           { trackId },
@@ -157,7 +159,7 @@ const SamplePrevArrow = (props) => {
         },
       };
 
-      const res = await axios
+      const res = await httpService
         .get(`${apiURL}/delivery/PckgDetail/${orderId}`, config)
         .then((res) => {
           setPckDet(res.data[0]);
@@ -177,7 +179,7 @@ const SamplePrevArrow = (props) => {
   // const verifyOtp =async (phone) => {
 
   //   console.log(phone,"====",phoneOtp);
-  //      await axios
+  //      await httpService
   //         .post("${apiURL}/user/verify-otp", { phone, phoneOtp })
   //         .then((response) => {
   //           console.log(response.data);
@@ -195,7 +197,7 @@ const SamplePrevArrow = (props) => {
   //     };
   const verifyOtp = async (phone, orderId) => {
     console.log(phone, "====", phoneOtp);
-    await axios
+    await httpService
       .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
       .then((response) => {
         console.log(response.data);

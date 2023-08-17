@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
 import Styles from "./cart.module.css";
 import { BsTrash } from "react-icons/bs";
+import httpService from "../../Error Handling/httpService";
 
 const Cart = ({ setCartItems }) => {
   const [CartItem, setCartItem] = useState([]);
@@ -20,11 +20,11 @@ const Cart = ({ setCartItems }) => {
         },
       };
 
-      await axios
+      await httpService
         .delete(`${apiURL}/cart/delete-cart-item/${id}`, config)
         .then((res) => {
           console.log(res);
-          getCartCarts();
+          getCarts();
         })
         .catch((err) => {
           console.log(err);
@@ -34,7 +34,7 @@ const Cart = ({ setCartItems }) => {
     }
   };
 
-  const getCartCarts = async () => {
+  const getCarts = async () => {
     try {
       const config = {
         headers: {
@@ -43,7 +43,7 @@ const Cart = ({ setCartItems }) => {
         },
       };
 
-      await axios
+     return await httpService
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           setCartItem(res.data);
@@ -56,7 +56,7 @@ const Cart = ({ setCartItems }) => {
   };
 
   useEffect(() => {
-    getCartCarts();
+    getCarts();
   }, []);
 
   if (CartItem.length === 0) {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 // import styles from "./Orderhistory.module.css";
 import styles from "./Orderhistory.module.css";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { Card } from "react-bootstrap";
 import RedyToPick from "./seller/RedyToPick";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 const OrderHistory = () => {
   const user = useSelector((state) => state.userReducer.user);
@@ -21,7 +21,7 @@ const OrderHistory = () => {
         },
       };
 
-      const res = await axios.get(
+      const res = await httpService.get(
         `${apiURL}/orders/get-all-orders`,
         config
       );

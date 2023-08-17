@@ -26,7 +26,7 @@
 //                 className="text-uppercase fw-bold mb-4"
 //                 style={{ marginLeft: "20px" }}
 //               >
-//                 <i class="fas fa-camera-retro"></i>
+//                 <i className="fas fa-camera-retro"></i>
 //                 HitecMart
 //               </h6>
 //               <p className="text-light" style={{ marginRight: "30px" }}>

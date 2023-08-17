@@ -3,13 +3,13 @@ import styles from "./AssignDelivery.module.css";
 import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 
-import axios from "axios";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
  const AssignDekivery = () => {
   const [userData, setUserData] = useState([]);
 
   const addToDelivery = async (id) => {
-    await axios
+    await httpService
       .put(`${apiURL}/delivery/assign-delivery-product/${id}`)
       .then((res) => {
    
@@ -27,7 +27,7 @@ import { apiURL } from "../../../../../const/config";
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      await axios
+      await httpService
         .get(`${apiURL}/user/userdata`, config)
 
         .then((res) => {

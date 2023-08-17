@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Styles from "./Editprofile.module.css";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../../../../Redux/user/userAction";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 
 function Editprofile() {
@@ -30,7 +30,7 @@ function Editprofile() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         };
-        const response = await axios.patch(
+        const response = await httpService.patch(
           `${apiURL}/user/updateProfile`,
           { name, phone },
           config

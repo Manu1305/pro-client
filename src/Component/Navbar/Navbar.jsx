@@ -8,11 +8,11 @@ import { CgShoppingCart } from "react-icons/cg";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import  Profile  from "./Dropdown/ProfileDropdown";
 import { addUser } from "../../Redux/user/userAction";
-import axios from "axios";
 import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
 import { MdMarkEmailRead, MdOutlineNotificationsNone } from "react-icons/md";
 import { apiURL } from "../../const/config";
+import httpService from "../Error Handling/httpService";
 
  const Navbar = ({ wishlist, cartItems }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -21,28 +21,7 @@ import { apiURL } from "../../const/config";
   let user = useSelector((state) => state.userReducer.user);
 
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.userReducer.user?.email);
 
-  const getCartCarts = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      await axios
-        .get(`${apiURL}/cart/user-cart`, config)
-        .then((res) => {})
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log("API Error", error);
-    }
-  };
-  useEffect(() => {
-    getCartCarts();
-  }, []);
 
   useEffect(() => {
     if (user && !user.name) {

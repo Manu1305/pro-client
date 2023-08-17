@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ReturnDeliver.module.css";
-import axios from "axios";
 import { Card } from "react-bootstrap";
 import Modal from "react-modal";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 export const ReturnDelivery = () => {
   const [orders, setOrders] = useState([]);
@@ -36,7 +36,7 @@ export const ReturnDelivery = () => {
         },
       };
 
-      const res = await axios
+      const res = await httpService
         .get(`${apiURL}/delivery/PckgDetail/${orderId}`, config)
         .then((res) => {
           setPckDet(res.data[0]);
@@ -64,7 +64,7 @@ export const ReturnDelivery = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-    await axios
+    await httpService
       .get(`${apiURL}/delivery/dashboradDlvData`, config)
       .then((res) => {
         setOrders(res.data);
@@ -88,7 +88,7 @@ export const ReturnDelivery = () => {
         },
       };
 
-      const res = await axios
+      const res = await httpService
         .put(
           `${apiURL}/delivery/update-trackId-request/${id}`,
           { trackId },
@@ -114,7 +114,7 @@ export const ReturnDelivery = () => {
 
   const ReturnOrderPkdBtn = async (id) => {
     try {
-      await axios
+      await httpService
         .put(`${apiURL}/delivery/return-order-shipped/${id}`)
         .then((res) => {
           getOrders();
@@ -129,7 +129,7 @@ export const ReturnDelivery = () => {
 
   const deliveredBtn = async (id) => {
     try {
-      await axios
+      await httpService
         .put(`${apiURL}/delivery/order-deliverd/${id}`)
         .then((res) => {
           getOrders();

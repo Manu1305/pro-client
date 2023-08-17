@@ -1,83 +1,19 @@
-// import React, { useState } from 'react';
-// import styles from './Email.module.css';
-
-// function Email() {
-//   const [email, setEmail] = useState('');
-//   const [showForm, setShowForm] = useState(false);
-
-//   const sendOtp = () => {
-//     setShowForm(true);
-       
-//   };
-
-//   return (
-//     <div>
-//       <div className={styles.main}>
-//         <div className={styles.box1}>
-//           <label htmlFor="emaill">Enter the registered Email address</label>
-//           <input
-//             type="text"
-//             className={styles.inputbox}
-//             id="emaill"
-//             onChange={(e) => {
-//               setEmail(e.target.value);
-//             }}
-//           />
-//           <button className="bg-orange-400" onClick={sendOtp}>
-//             Send OTP
-//           </button>
-//           {showForm && (
-//             <div>
-//               <label htmlFor="password">Enter OTP</label>
-//               <input
-//                 type="text"
-//                 className={styles.otpinput}
-//                 id="password"
-//                 onChange={(e) => {
-//                   setEmail(e.target.value);
-//                 }}
-//               />
-//               <button className="bg-green-400">Submit</button>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Email;
-
 import React, { useState, CSSProperties } from "react";
 import styles from "./Email.module.css";
-import axios from "axios";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
-import PropagateLoader from "react-spinners/PropagateLoader"
+import PropagateLoader from "react-spinners/PropagateLoader";
 import { apiURL } from "../../../../../../const/config";
-
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
+import httpService from "../../../../../Error Handling/httpService";
 
 
 function EmailCheck() {
   const [email, setEmail] = useState("");
-  const [showForm, setShowForm] = useState(false);
-  const [password, setPassword] = useState("");
-    let [loading, setLoading] = useState(false);
-    let [color, setColor] = useState("#ffffff");
+  let [loading, setLoading] = useState(false);
 
   const Submit = () => {
     try {
       setLoading(true);
-      axios
-        .post(`${apiURL}/user/forgetpassword`, { email })
-        // axios.put("https://localhost:8000/user/updatePassword", { email, password })
-
+      httpService.post(`${apiURL}/user/forgetpassword`, { email })
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
@@ -132,21 +68,9 @@ function EmailCheck() {
           </button>
         </div>
         <div className="sweet-loading">
-          {/*           
-          <input
-            value={color}
-            onChange={(input) => setColor(input.target.value)}
-            placeholder="Color of the loader"
-          /> */}
+          
           <PropagateLoader color="#36d7b7" loading={loading} />
-          {/* <ClipLoader
-            color={color}
-            loading={loading}
-            cssOverride={override}
-            size={150}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /> */}
+          
         </div>
       </div>
     </div>

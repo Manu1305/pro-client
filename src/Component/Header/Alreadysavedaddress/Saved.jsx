@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 const SavedAddress = ({addresses,getSavedAddress}) => {
 
 
@@ -26,7 +26,7 @@ const SavedAddress = ({addresses,getSavedAddress}) => {
             },
           };
 
-          await axios
+          await httpService
             .delete(`${apiURL}/address/delete-address/${id}`, config)
             .then((res) => {
            

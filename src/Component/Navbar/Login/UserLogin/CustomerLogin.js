@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import login from "./login.module.css";
 import { useState, useRef } from "react";
-import axios from "axios";
 import {
   MDBContainer,
   MDBRow,
@@ -16,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../../../Redux/user/userAction";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../const/config";
+import httpService from "../../../Error Handling/httpService";
 const CustomerLogin = () => {
   const history = useNavigate();
   const localStorage = window.localStorage;
@@ -34,7 +34,7 @@ const CustomerLogin = () => {
     const isValid = validate();
 
     try {
-      const response = await axios
+      const response = await httpService
         .post(`${apiURL}/user/login`, { email, password })
         .then((res) => res)
         .catch((err) => {
@@ -131,7 +131,7 @@ const CustomerLogin = () => {
                 </h5>
                 {emailError && <div className="text-danger">{emailError}</div>}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Email address"
                   id="formControlLg"
                   type="email"
@@ -144,7 +144,7 @@ const CustomerLogin = () => {
                   <div className="text-danger">{passwordError}</div>
                 )}
                 <MDBInput
-                  wrapperClass="mb-4"
+                  wrapperclassName="mb-4"
                   label="Password"
                   id="formControlLg"
                   type="password"

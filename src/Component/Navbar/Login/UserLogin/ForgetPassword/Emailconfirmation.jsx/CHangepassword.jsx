@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./Email.module.css";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { apiURL } from "../../../../../../const/config";
+import httpService from '../../../../../Error Handling/httpService'
 function Changepassword() {
   const { id, token } = useParams();
   const [password, setPassword] = useState("");
@@ -22,7 +22,7 @@ function Changepassword() {
     }
 
     try {
-      axios
+      httpService
         .put(`${apiURL}/user/updatePassword`, { id, password })
         .then((res) => {
           console.log(res.data);
