@@ -1,16 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import login from "./login.module.css";
 import { useState, useRef } from "react";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBBtn,
-} from "mdb-react-ui-kit";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../../../Redux/user/userAction";
 import Swal from "sweetalert2";
@@ -26,7 +16,6 @@ const CustomerLogin = () => {
   const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const pandaRef = useRef(null);
-
 
   const handleCustomerLogin = async (e) => {
     e.preventDefault();
@@ -63,7 +52,9 @@ const CustomerLogin = () => {
         localStorage.setItem("token", response.data.token);
         const route =
           response.data.user.urType === "seller"
-            ? !response.data.user?.storeSetup ? "/StorePage" : '/dashboard'
+            ? !response.data.user?.storeSetup
+              ? "/StorePage"
+              : "/dashboard"
             : `/Profilepage/${email}`;
         history(route, {
           state: {
@@ -111,80 +102,98 @@ const CustomerLogin = () => {
   };
 
   return (
-    <div>
-      <MDBContainer className="my-5">
-        <MDBCard>
-          <MDBRow className="g-0">
-            <MDBCol md="6">
-              <div ref={pandaRef} className={login.pandaImage}></div>
-            </MDBCol>
-            <MDBCol md="6">
-              <MDBCardBody className="d-flex flex-column">
-                <div className="d-flex flex-row mt-2">
-                  <span className="h1 fw-bold mb-0">Customer</span>
+    <section
+      className="vh-90"
+      style={{ "background-color": "rgb(191,10,41)" }}
+    >
+      <div className="container py-5 h-100">
+        <div className="row d-flex justify-content-center align-items-center h-100">
+          <div className="col col-xl-10">
+            <div className="card" style={{ "border-radius": "1rem" }}>
+              <div className="row g-0">
+                <div className="col-md-6 col-lg-5 d-none d-md-block">
+                  <img
+                    src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?size=626&ext=jpg&ga=GA1.2.1301076806.1687760879&semt=ais"
+                    alt="login form"
+                    className="img-fluid"
+                    style={{ "border-radius": "1rem 0 0 1rem" }}
+                  />
                 </div>
-                <h5
-                  className="fw-normal my-4 pb-3"
-                  style={{ letterSpacing: "1px" }}
-                >
-                  Sign into your account
-                </h5>
-                {emailError && <div className="text-danger">{emailError}</div>}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Email address"
-                  id="formControlLg"
-                  type="email"
-                  size="lg"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  error={emailError}
-                />
-                {passwordError && (
-                  <div className="text-danger">{passwordError}</div>
-                )}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Password"
-                  id="formControlLg"
-                  type="password"
-                  size="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  error={passwordError}
-                />
-
-                <button
-                  className="btn btn-dark"
-                  color="dark"
-                  size="lg"
-                  onClick={handleCustomerLogin}
-                >
-                  Login
-                </button>
-                <Link className="small text-muted" to="/passwordupdate">
-                  Forgot password?
-                </Link>
-                <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
-                  Don't have an account?{" "}
-                  <Link to="/register" style={{ color: "#393f81" }}>
-                    Register here
-                  </Link>
-                </p>
-                <div className="d-flex flex-row justify-content-start">
-                  <a href="#!" className="small text-muted me-1">
-                    Terms of use.
-                  </a>
-                  <a href="#!" className="small text-muted">
-                    Privacy policy
-                  </a>
+                <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                  <div className="card-body p-4 p-lg-5 text-black">
+                    <form>
+                      <div className="d-flex align-items-center mb-3 pb-1">
+                        <i
+                          className="fas fa-cubes fa-2x me-3"
+                          style={{ color: "#ff6219" }}
+                        ></i>
+                        <span className="h1 fw-bold mb-0">Login</span>
+                      </div>
+                      <h5
+                        className="fw-normal mb-3 pb-3"
+                        style={{ "letter-spacing": "1px" }}
+                      >
+                        Sign into your account
+                      </h5>
+                      <div className="form-outline mb-4">
+                        <input
+                          type="email"
+                          id="form2Example17"
+                          className="form-control form-control-lg"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          error={emailError}
+                        />
+                        <label className="form-label" for="form2Example17">
+                          Email address
+                        </label>
+                      </div>
+                      <div className="form-outline mb-4">
+                        <input
+                          type="password"
+                          id="form2Example27"
+                          className="form-control form-control-lg"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          error={passwordError}
+                        />
+                        <label className="form-label" for="form2Example27">
+                          Password
+                        </label>
+                      </div>
+                      <div className="pt-1 mb-4">
+                        <button
+                          className="btn btn-dark btn-lg btn-block bg-dark"
+                          // type="button"
+                          onClick={handleCustomerLogin}
+                        >
+                          Login
+                        </button>
+                      </div>
+                      <Link className="small text-muted" to="/passwordupdate">
+                        Forgot password?
+                      </Link>{" "}
+                      <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
+                        Don't have an account?{" "}
+                        <Link to="/register" style={{ color: "#393f81" }}>
+                          Register here
+                        </Link>
+                      </p>
+                      <a href="#!" className="small text-muted">
+                        Terms of use.
+                      </a>
+                      <a href="#!" className="small text-muted">
+                        Privacy policy
+                      </a>
+                    </form>
+                  </div>
                 </div>
-              </MDBCardBody>
-            </MDBCol>
-          </MDBRow>
-        </MDBCard>
-      </MDBContainer>
-    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 export default CustomerLogin;

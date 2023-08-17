@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./sellerOrder.module.css";
 import { useSelector } from "react-redux";
-import { Table } from "react-bootstrap";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
+import DataTable from "../../../../Data table/DataTable";
+import { useNavigate } from "react-router-dom";
 
 const SellerOrder = () => {
   const user = useSelector((state) => state.userReducer.user);
   const [orders, setOrders] = useState([]);
+  const [deleteProductId, setDeleteProductId] = useState(null);
+
+  const navigate = useNavigate();
 
   const getOrders = async () => {
     try {
@@ -24,6 +28,7 @@ const SellerOrder = () => {
           console.log(err);
         });
 
+      console.log("all order response", res);
       setOrders(res);
     } catch (error) {
       console.log(error);
@@ -76,95 +81,146 @@ const SellerOrder = () => {
     getOrders();
   }, []);
 
-  return (
-    <div  className={styles.tableContainer}>
-      <Table striped bordered hover width={'auto'}>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Category</th>
-            <th>Select Size</th>
-            <th>Status</th>
-            <th>Tracking ID</th>
-            <th>Amount</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order, index) => (
-            <tr key={index}>
-              <td>
-                <img
-                  src={order.prdDeta.images}
-                  alt=""
-                  style={{ width: "45px", height: "45px" }}
-                  className="rounded-circle"
-                />
-              </td>
-              <td>{order.prdDeta.category}</td>
-              <td>
-              <select className={styles.selectStyle}>
+  const header = [
+    "Product",
+    "Category",
+    "Selectedsize",
+    "Status",
+    "Trackingid",
+    "amount",
+    "Action",
+  ].map((ele) => {
+    let string = ele;
+    string.replace(/^./, string[0].toUpperCase());
 
-                  {order.sizeWithQuantity &&
-                    Object.entries(order.sizeWithQuantity).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value.selectedSizes ? (
-                          <p
-                            style={{
-                              fontSize: 13,
-                              color: "GrayText",
-                            }}
-                          >
-                            {value.selectedSizes}
-                          </p>
-                        ) : null}{" "}
-                        -
-                        {value.quantities ? (
-                          <p
-                            style={{
-                              fontSize: 13,
-                              color: "GrayText",
-                            }}
-                          >
-                            {value.quantities}
-                          </p>
-                        ) : null}
-                      </option>
-                    ))}
-                </select>
-              </td>
-              <td>
-                <h6 className="text-green-400">Status: {order.orderStatus}</h6>
-              </td>
-              <td>{order.trackId}</td>
-              <td>
-                {order.pType === "cash" ? (
-                  <h2>Collect {(parseInt(order.ordPrc) * 90) / 100}</h2>
-                ) : (
-                  <h6>Amount: {order.ordPrc}</h6>
-                )}
-              </td>
-              <td>
-                {order.orderStatus === "Ready To PickUp" ? (
-                  <button
-                    className="btn btn-warning my-2"
-                    onClick={() => addToDelivery(order._id)}
-                  >
-                    Assign Delivery
+    if (ele === "Product") {
+      return {
+        field: "Product",
+        type: "image",
+        renderCell: (params) => {
+          console.log("parmas*******************", params);
+          return (
+            <div>
+              <img src={params.row.Product} alt="" />
+            </div>
+          );
+        },
+      };
+    }
+    if (ele === "Action") {
+      return {
+        field: "Action",
+        type: "action",
+        width: 150,
+        renderCell: (params) => {
+          console.log("Check KR", params.row);
+          return (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              {params.row.Status === "Ready To PickUp" ? (
+                <button style={{padding:"10px",background:"rgb(248,249,250)"}} onClick={() => addToDelivery(params.row.id)}>
+                  <i className="bi bi-truck fa-2x"></i>
+                </button>
+              ) : (
+                (params.row.Status === "confirm Delivery" ||
+                  params.row.Status === "confirm Return") ? (
+                  <button>
+                    <i className="bi bi-check-circle-fill fa-2x"></i>
                   </button>
-                ) : order.orderStatus === "confirm Delivery" || order.orderStatus === "confirm Return" ? (
-                  <button
-                    className="btn btn-warning my-2"
-                    onClick={() => confirmDelivery(order._id)}
+                  
+                ):  <button onClick={() => navigate(`/productVerification/${params.row.id}`)}><i className="bi bi-eye-fill fa-2xl"></i></button>
+              )}
+              <div
+                className="m-2"
+                onClick={() => {
+                  // setModalShow(true);
+                  console.log(params);
+                  setDeleteProductId({
+                    id: params.row.id,
+                    seller: params.row.seller,
+                  });
+                }}
+              ></div>
+            </div>
+          );
+        },
+      };
+    }
+    if (ele === "Selectedsize") {
+      return {
+        field: "Selectedsize",
+        type: "Selectedsize",
+        width: 200,
+        renderCell: (params) => (
+          <select
+            style={{
+              padding: "8px",
+              margin: "8px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+              appearance: "none", // This removes the default dropdown arrow/icon
+              WebkitAppearance: "none", // For Safari
+            }}
+          >
+            {Object.entries(params.row.Selectedsize).map(([key, value]) => (
+              <option key={key} value={key}>
+                {value.selectedSizes ? (
+                  <span
+                    style={{
+                      fontSize: 13,
+                      color: "GrayText",
+                    }}
                   >
-                    Confirm Delivery
-                  </button>
-                ) :  <p> View </p> }
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+                    {value.selectedSizes}
+                  </span>
+                ) : null}{" "}
+                -{" "}
+                {value.quantities ? (
+                  <span
+                    style={{
+                      fontSize: 13,
+                      color: "GrayText",
+                    }}
+                  >
+                    {value.quantities}
+                  </span>
+                ) : null}
+              </option>
+            ))}
+          </select>
+        ),
+      };
+    } else {
+      return {
+        id: ele,
+        field: ele,
+        headerName: string,
+        width: 150,
+        editable: true,
+      };
+    }
+  });
+
+  const rowData = orders.map((ele) => {
+    return {
+      id: ele._id,
+      prdId:ele.productId,
+      Product: ele.prdDeta.images,
+      Category: ele.prdDeta.category,
+      Selectedsize: ele.sizeWithQuantity,
+      Status: ele.orderStatus,
+      Trackingid: ele.trackId,
+      amount: ele.ordPrc,
+    };
+  });
+
+  return (
+    <div style={{ marginLeft: "-50px", marginTop: "10px" }}>
+      <div>
+        {rowData.length !== 0 && (
+          <DataTable columns={header} rows={rowData} autoHeight />
+        )}
+      </div>
     </div>
   );
 };

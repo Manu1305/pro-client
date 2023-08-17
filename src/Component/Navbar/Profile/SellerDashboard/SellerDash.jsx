@@ -35,7 +35,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("dashboard")}
               >
-                <i class="fa fa-dashboard"></i>
+                <i className="fa fa-dashboard"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -52,7 +52,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("productReq")}
               >
-                <i class="fa-solid fa-box-open"></i>
+                <i className="fa-solid fa-box-open"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -70,7 +70,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("product")}
               >
-                <i class="fa-solid fa-box-open"></i>
+                <i className="fa-solid fa-box-open"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -87,7 +87,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("order0")}
               >
-                <i class="fa-solid fa-cart-shopping"></i>
+                <i className="fa-solid fa-cart-shopping"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -104,7 +104,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("order")}
               >
-                <i class="fa-solid fa-cart-shopping"></i>
+                <i className="fa-solid fa-cart-shopping"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -122,7 +122,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("Withdraw")}
               >
-                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <i className="fa-sharp fa-solid fa-sack-dollar"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -139,7 +139,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("Withdrawdetails")}
               >
-                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <i className="fa-sharp fa-solid fa-sack-dollar"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -157,7 +157,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("reversewith")}
               >
-                <i class="fa-solid fa-money-bill-transfer"></i>
+                <i className="fa-solid fa-money-bill-transfer"></i>
                 <span className={dash.nombres}>
                   <button
                     //   to="/product"
@@ -176,7 +176,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("settings")}
               >
-                <i class="fa-sharp fa-solid fa-gears"></i>
+                <i className="fa-sharp fa-solid fa-gears"></i>
                 <span className={dash.nombres}>
                   <button
                     //   to="/product"
@@ -195,7 +195,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("returndel")}
               >
-                <i class="fa-solid fa-money-bill-transfer"></i>
+                <i className="fa-solid fa-money-bill-transfer"></i>
                 <span className={dash.nombres}>
                   <button
                     //   to="/product"
@@ -213,7 +213,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("return")}
               >
-                <i class="fa-sharp fa-solid fa-gears"></i>
+                <i className="fa-sharp fa-solid fa-gears"></i>
                 <span className={dash.nombres}>
                   <button
                     //   to="/product"

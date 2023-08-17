@@ -34,7 +34,7 @@ const user = useSelector((state) => state.userReducer.user);
              user?.urType==="admin") && (
 <li className={`nav-item p-1 ${styles.li}`}>
     <a href="" className='nav-link text-white'>
-    <i class="bi bi-info-square"></i>
+    <i className="bi bi-info-square"></i>
         <span className='fs-5'>Product request</span>
     </a>
 
@@ -43,7 +43,7 @@ const user = useSelector((state) => state.userReducer.user);
              user?.urType==="seller" || user?. urType==="admin") &&(
 <li className={`nav-item p-1 ${styles.li}`}>
     <a href="" className='nav-link text-white'>
-    <i class="bi bi-clipboard2-data-fill"></i>
+    <i className="bi bi-clipboard2-data-fill"></i>
         <span className='fs-5'>Product</span>
     </a>
 

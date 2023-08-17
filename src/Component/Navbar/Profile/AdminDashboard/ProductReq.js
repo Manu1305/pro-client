@@ -38,7 +38,6 @@ export const ProductRequest = () => {
       })
       .then((res) => {
         dispatch(addReqProduct(res.data));
-        console.log("&&&&&&&&&&&&&&&&&&&&", res.data);
         setProduct(res.data);
       })
       .catch((Err) => console.log(Err));
@@ -91,7 +90,6 @@ export const ProductRequest = () => {
         field: "image",
         type: "image",
         renderCell: (params) => {
-          console.log("parmas*******************", params);
           return (
             <div>
               <img src={params.row.images} alt="" />

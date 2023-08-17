@@ -2,14 +2,14 @@
 
 /* sellerOrder.module.css */
 .tableContainer {
-  overflow-x: auto;
+  /* overflow-x: auto; */
 }
 
 @media (max-width: 768px) {
   /* Adjust the breakpoint as needed */
   .tableContainer {
     width: 100%;
-    margin-bottom: 20px;
+   
   }
   
   /* Adjust table styles for smaller screens */
