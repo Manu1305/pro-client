@@ -215,7 +215,7 @@ const SellerOrder = () => {
   });
 
   return (
-    <div style={{ marginLeft: "-50px", marginTop: "10px" }}>
+    <div style={{ marginLeft: "-150px"}}>
       <div>
         {rowData.length !== 0 && (
           <DataTable columns={header} rows={rowData} autoHeight />
