@@ -1,7 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from './Dassh.module.css'
-import "bootstrap-icons/font/bootstrap-icons.css"
+// import "bootstrap-icons/font/bootstrap-icons.css"
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 
