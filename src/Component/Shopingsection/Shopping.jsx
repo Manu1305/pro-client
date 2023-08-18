@@ -129,7 +129,6 @@ const Shopping = ({}) => {
     }
   }
 
-
   const settings = {
     infinite: true,
     speed: 500,
@@ -236,14 +235,11 @@ const Shopping = ({}) => {
         marginLeft: "50px",
         background: "white",
         color: "black",
-      //   backgroundImage:
-      //     "url('https://img.freepik.com/premium-photo/abstract-blurred-gradient-nature-wallpaper-backgroundsoft-background-wallpaperdesigngraphic-presentation_532332-1415.jpg')",
-      // backgroundSize:'cover'
-        }}
-      
+        //   backgroundImage:
+        //     "url('https://img.freepik.com/premium-photo/abstract-blurred-gradient-nature-wallpaper-backgroundsoft-background-wallpaperdesigngraphic-presentation_532332-1415.jpg')",
+        // backgroundSize:'cover'
+      }}
     >
-    
-
       <section>
         <div className="container">
           <div className="row">
@@ -292,28 +288,28 @@ const Shopping = ({}) => {
                 </div>
                 <div></div>
               </div>
- {user && user.email ? (
-              <div className={styless.pricefilterdiv}>
-                <h1>FILTER BY PRICE</h1>
-                <br />
-                <input
-                  type="range"
-                  name=""
-                  min={lowestprice}
-                  max={highestPrice}
-                  id=""
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
-                  className={styless.inputprice}
-                />
-                <br /> <br />
-                <p>
-                  {" "}
-                  price {lowestprice} --{price}
-                </p>
-              </div>
- ):null}
+              {user && user.email ? (
+                <div className={styless.pricefilterdiv}>
+                  <h1>FILTER BY PRICE</h1>
+                  <br />
+                  <input
+                    type="range"
+                    name=""
+                    min={lowestprice}
+                    max={highestPrice}
+                    id=""
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
+                    className={styless.inputprice}
+                  />
+                  <br /> <br />
+                  <p>
+                    {" "}
+                    price {lowestprice} --{price}
+                  </p>
+                </div>
+              ) : null}
             </div>
 
             {/* Content */}
@@ -329,11 +325,13 @@ const Shopping = ({}) => {
                 </strong>
               </header>
 
-              <div className={`row , ${styless.pages}`} style={{color:'black'}} >
+              <div
+                className={`row , ${styless.pages}`}
+                style={{ color: "black" }}
+              >
                 {displayUsers}
 
-                <ReactPaginate 
-               
+                <ReactPaginate
                   previousLabel={"prev"}
                   nextLabel={"next"}
                   pageCount={pageCount}

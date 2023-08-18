@@ -11,46 +11,23 @@ import { useSelector } from "react-redux";
 import SizeModal from "./modal/SizeModal";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
-
-const SampleNextArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.next}>
-        <MdNavigateNext className={styless.icon} />
-      </button>
-    </div>
-  );
-};
-
-const SamplePrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.prev}>
-        <GrFormPrevious className={styless.icon} />
-      </button>
-    </div>
-  );
-};
+import ReasonModal from "../../AdminDashboard/ReasonModal";
+import {toast} from 'react-toastify';
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
   const [quantityModal, setQuantityModal] = useState(false);
+  const [modalShow, setModalShow] = useState(false)
 
   const user = useSelector((state) => state.userReducer.user);
 
   const getProducts = async () => {
-   
     await httpService
-      .get(`${apiURL}/product/get-all-products`,
-       {
+      .get(`${apiURL}/product/get-all-products`, {
         type: user.urType,
         seller: user.email,
-      }
-      )
+      })
       .then((res) => {
-      
         const filteredProducts = res.data.filter(
           (product) => product.seller === user.email
         );
@@ -59,19 +36,18 @@ export const ProductSec = () => {
       .catch((err) => {
         console.log("ERROR", err);
       });
-  }
+  };
 
   useEffect(() => {
     getProducts();
   }, []);
-
 
   // add qunatity
 
   const quantityHandler = (product) => {
     setQuantityModal(true);
   };
-  
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -82,20 +58,31 @@ export const ProductSec = () => {
     // prevArrow: <SamplePrevArrow />,
   };
 
-  const addToShop = (id) => {
-   
-  };
-  const removeFromShop = async (id) => {
-    await httpService
-      .delete(`${apiURL}/product/remove-requested-product/${id}`)
+  const notify  = () => {
+    toast('Removed Product')
+  }
+
+  const removeFromShop = async (id,obj) => {
+    
+
+    try {
+      await httpService
+      .put(`${apiURL}/product/remove-requested-product/${id}`, {
+        message: { ...obj, forU: user.email },
+      })
       .then((res) => {
+        console.log(res.data);
         getProducts();
+        notify()
+        
       })
       .catch((err) => {
         console.log("ERROR", err);
       });
+    } catch (error) {
+      console.log(error)
+    }
   };
-
 
   return (
     <div className="container mb-5 ml-3">
@@ -110,7 +97,6 @@ export const ProductSec = () => {
               <div className="col-md-3 mt-1">
                 <Slider {...settings}>
                   {product.images.map((image, index) => {
-                 
                     return (
                       <img
                         key={index}
@@ -123,44 +109,45 @@ export const ProductSec = () => {
                 </Slider>
               </div>
               <div className="col-md-6 mt-1">
-              <h4>ProductId: {product.productId}</h4>
+                <h4>ProductId: {product.productId}</h4>
 
                 <h5>Brand: {product.productDetail.brand}</h5>
                 <span>Description: {product.productDetail.description}</span>
                 <div className="d-flex flex-row"></div>
 
-               <div className="my-2">
-               <label >Remaining Product According to there Size :</label> 
-                <select>
-                  {product.productDetail.selectedSizes &&
-                    Object.entries(product.productDetail.selectedSizes).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value.selectedSizes ? (
-                          <p
-                            style={{
-                              fontSize: 13,
-                              color: "GrayText",
-                            }}
-                          >
-                            {value.selectedSizes}
-                          </p>
-                        ) : null}{" "}
-                        -
-                        {value.quantities ? (
-                          <p
-                            style={{
-                              fontSize: 13,
-                              color: "GrayText",
-                            }}
-                          >
-                            {value.quantities}
-                          </p>
-                        ) : null}
-                      </option>
-                    ))}
-                </select>
-             
-               </div>
+                <div className="my-2">
+                  <label>Remaining Product According to there Size :</label>
+                  <select>
+                    {product.productDetail.selectedSizes &&
+                      Object.entries(product.productDetail.selectedSizes).map(
+                        ([key, value]) => (
+                          <option key={key} value={key}>
+                            {value.selectedSizes ? (
+                              <p
+                                style={{
+                                  fontSize: 13,
+                                  color: "GrayText",
+                                }}
+                              >
+                                {value.selectedSizes}
+                              </p>
+                            ) : null}{" "}
+                            -
+                            {value.quantities ? (
+                              <p
+                                style={{
+                                  fontSize: 13,
+                                  color: "GrayText",
+                                }}
+                              >
+                                {value.quantities}
+                              </p>
+                            ) : null}
+                          </option>
+                        )
+                      )}
+                  </select>
+                </div>
               </div>
               <div className="align-items-center align-content-center col-md-3 border-left mt-1">
                 <div className="d-flex flex-row align-items-center">
@@ -170,29 +157,34 @@ export const ProductSec = () => {
 
                 <div className="d-flex flex-column mt-4">
                   <button
-                   className="btn btn-danger bg-dark text-white" 
-                   type="button"
-                   onClick={() => removeFromShop(product._id)}
-                   
-                   >
+                    className="btn btn-danger bg-dark text-white"
+                    type="button"
+                    onClick={() => setModalShow(true)}
+                  >
                     Remove Product
                   </button>
+
+                  <ReasonModal
+                    product={{"id":product._id,seller:product.seller}}
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    removeFromShop={removeFromShop}
+                  />
                   <button
-                      className="btn btn-outline-success btn-sm mt-2"
-                      type="button"
-                      onClick={() => quantityHandler(product)}
-                    >
-                      Add Quantity
-                    </button>
+                    className="btn btn-outline-success btn-sm mt-2"
+                    type="button"
+                    onClick={() => quantityHandler(product)}
+                  >
+                    Add Quantity
+                  </button>
                 </div>
                 <SizeModal
-                getProducts={getProducts}
-                setQuantityModal={setQuantityModal}
-                quantityModal={quantityModal}
-                product={product}
-              />
+                  getProducts={getProducts}
+                  setQuantityModal={setQuantityModal}
+                  quantityModal={quantityModal}
+                  product={product}
+                />
               </div>
-              
             </div>
           ))}
         </div>

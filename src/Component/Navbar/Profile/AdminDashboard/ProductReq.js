@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styless from "./productRequest.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
-
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
@@ -13,9 +13,11 @@ import { useSelector, useDispatch } from "react-redux";
 import ReasonModal from "./ReasonModal";
 import { apiURL } from "../../../../const/config";
 import ProductModal from "./SellerOrder/Modal/ProduuctModal";
-import DataTable from "react-data-table-component";
-import { BsFillTrashFill, } from "react-icons/bs";
-import {GrView} from 'react-icons/gr'
+import { BsFillTrashFill } from "react-icons/bs";
+import DataTable from "../../../Data table/DataTable";
+import { GrView } from "react-icons/gr";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { BiSolidShoppingBags } from "react-icons/bi";
 
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
@@ -24,18 +26,21 @@ export const ProductRequest = () => {
   const user = useSelector((state) => state.userReducer.user);
   const [pro, setPro] = useState({});
   const [modalShow, setModalShow] = useState(false);
+  const [deleteProductId, setDeleteProductId] = useState(null);
+
+  const navigate = useNavigate();
 
   const getProducts = async () => {
     await httpService
       .post(`${apiURL}/product/requested-Products`, {
         type: user.urType,
         seller: user.email,
-      }).then((res) => {
+      })
+      .then((res) => {
         dispatch(addReqProduct(res.data));
-      setProduct(res.data);
-      }).catch(Err => console.log(Err))
-      
-    
+        setProduct(res.data);
+      })
+      .catch((Err) => console.log(Err));
   };
 
   useEffect(() => {
@@ -54,9 +59,11 @@ export const ProductRequest = () => {
       });
   };
 
-  const removeFromShop = async (id,obj) => {
-    await httpService 
-      .put(`${apiURL}/product/remove-requested-product/${id}`,{message:{...obj,forU:user.email}})
+  const removeFromShop = async (id, obj) => {
+    await httpService
+      .put(`${apiURL}/product/remove-requested-product/${id}`, {
+        message: { ...obj, forU: user.email },
+      })
       .then((res) => {
         console.log(res.data);
         getProducts();
@@ -66,162 +73,103 @@ export const ProductRequest = () => {
         console.log("ERROR", err);
       });
   };
-  function sendproductdetails(product) {
-    setproductdetails(true);
-    setPro(product);
-  }
 
-  const columns = [
-    {
-      name: "Images",
-      selector: (row) => row.images,
-      sortable: true,
-    },
-    {
-      name: "Brand",
-      selector: (row) => row.brand,
-      sortable: true,
-    },
-    ,
-    {
-      name: "Quantity",
-      selector: (row) => row.quantity,
-      sortable: true,
-    },
-    {
-      name: "Price",
-      selector: (row) => row.price,
-      sortable: true,
-    },
+  const header = [
+    "seller",
+    "images",
+    "brand",
+    "quantity",
+    "price",
+    "action",
+  ].map((ele) => {
+    let string = ele;
+    string.replace(/^./, string[0].toUpperCase());
 
-    {
-      name: "Action",
-      selector: (row) => row.action,
-      // sortable: true,
-    },
-  ];
+    if (ele === "images") {
+      return {
+        field: "image",
+        type: "image",
+        renderCell: (params) => {
+          return (
+            <div>
+              <img src={params.row.images} alt="" />
+            </div>
+          );
+        },
+      };
+    }
+    if (ele === "action") {
+      return {
+        field: "Action",
+        type: "action",
+        width: "150px",
+        renderCell: (params) => {
+          return (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div
+                onClick={() =>
+                  navigate(`/productVerification/${params.row.id}`)
+                }
+                className="m-2"
+              >
+                <GrView />
+              </div>
+              <div
+                className="m-2"
+                onClick={() => {
+                  setModalShow(true);
 
-  console.log("====================", products);
-
-  const data = products.map((product) => {
-    return {
-      id: product._id,
-      images: <img src={product.images[0]} style={{ width: "20px" }} />,
-      brand: product.productDetail.brand,
-      quantity: product.totalQuantity,
-      price: product.sellingPrice,
-      action: (
-        <>
-          <button className="m-2"><i><BsFillTrashFill/></i></button>
-          <button className="m-2"><i><GrView/></i></button>
-        </>
-      ),
-    };
+                  console.log(params);
+                  setDeleteProductId({
+                    id: params.row.id,
+                    seller: params.row.seller,
+                  });
+                }}
+              >
+                <RiDeleteBinLine />
+              </div>
+              <div className="m-2" onClick={() => addToShop(params.row.id)}>
+                <BiSolidShoppingBags />
+              </div>
+            </div>
+          );
+        },
+      };
+    } else {
+      return {
+        field: ele,
+        headerName: string,
+        width: 150,
+        editable: true,
+      };
+    }
   });
 
-  console.log("(((((())))))) ==========", data);
-
+  const rowData = products.map((ele) => {
+    return {
+      id: ele._id,
+      images: ele.images[0],
+      brand: ele.productDetail.brand,
+      quantity: ele.totalQuantity,
+      price: ele.sellingPrice,
+      seller: ele.seller,
+    };
+  });
   return (
     <div className={styless.container}>
-      <div className="d-flex justify-content-center row">
-        <div className="col-md-10">
-          <div className="d-flex justify-content-center"></div>
-          {products.length > 0 ? (
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Images</th>
-                  <th>Brand</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((product) => (
-                  <tr key={product.Id}>
-                    <td>
-                      <img
-                        className="img-fluid img-responsive rounded product-image"
-                        src={product.images[0]}
-                        alt={product.name}
-                        style={{ height: "70px", width: "200px" }}
-                      />
-                    </td>
-                    <td>{product.productDetail.brand}</td>
-                    <td>{product.totalQuantity}</td>
-                    <td className="flex-col">
-                      ₹selling_price~{product.sellingPrice}
-                      <br />
-                      <span className="strike-text">
-                        {" "}
-                        real_price~{product.realPrice}
-                      </span>
-                    </td>
-                    <td>
-                      <Link
-                        className="btn btn-danger btn-sm text-black"
-                        style={{ cursor: "pointer" }}
-                        to={`/productVerification/${product._id}`}
-                      >
-                        Product Details
-                      </Link>
-                      {/* <button
-                        className="btn btn-danger btn-sm text-black"
-                        type="button"
-                        onClick={() => sendproductdetails(product)}
-                      >
-                       View details
-                      </button>
-                      <ProductModal
-                        product={pro}
-                        show={productdetails}
-                        onHide={() => setproductdetails(false)}
-                        removeFromShop={removeFromShop}
-                      /> */}
-
-                      <button
-                        className="btn btn-danger btn-sm text-black"
-                        type="button"
-                        onClick={() => setModalShow(true)}
-                      >
-                        Remove Product
-                      </button>
-                      <ReasonModal
-                        product={product}
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                        removeFromShop={removeFromShop}
-                      />
-                      <button
-                        className="btn btn-outline-success btn-sm"
-                        type="button"
-                        onClick={() => addToShop(product._id)}
-                      >
-                        Add To Shop
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="col-md-6 mt-1 text-justif">
-              <img
-                src="https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png"
-                className={styless.imgeee}
-                alt="No products"
-              />
-            </div>
-          )}
-        </div>
-      </div>
       <div className="d-flex justify-content-center mt-3">
         <Link to="Addproduct" className="btn btn-warning">
           Add New Product
         </Link>
       </div>
-      <DataTable columns={columns} data={data} selectableRows />
+      {rowData.length !== 0 && <DataTable columns={header} rows={rowData} />}
+
+      <ReasonModal
+        product={deleteProductId}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        removeFromShop={removeFromShop}
+      />
     </div>
   );
 };

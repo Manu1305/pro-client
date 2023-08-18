@@ -59,7 +59,7 @@ margin-left: -10rem;
 }
 
 .orderCard {
-  width: 18rem;
+  width: 100%
 }
 
 .addressSection {
@@ -73,7 +73,7 @@ margin-left: -10rem;
 
 @media (max-width: 767px) {
   .table-wrapper {
-    max-width: 100%;
+   
   }
 
   .orderHistoryTable {

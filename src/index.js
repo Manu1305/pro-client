@@ -4,6 +4,7 @@ import App from "./Component/App";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 import "./index.css";
+import Dashnew from "./Component/Navbar/Profile/SellerDashboard/Dashboard";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

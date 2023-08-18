@@ -5,6 +5,11 @@ axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response && error.response >= 400 && error.response < 500;
 
+
+
+
+    console.log(error)
+
   if (!expectedError) {
     //console.log('Logging the error', error);
     toast.error("An unexpected error occured!", {

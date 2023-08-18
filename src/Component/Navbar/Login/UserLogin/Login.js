@@ -11,9 +11,7 @@ const Login = () => {
   };
 
   return (
-    <div>
-      {/* <img src="../Image/loginHor.jpg"/> */}
-
+    <div className={login.bg}>
       <CustomerLogin />
     </div>
   );
