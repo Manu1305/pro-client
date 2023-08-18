@@ -6,7 +6,7 @@
 .icon-hover:hover i {
   color: #3b71ca !important;
 }
-.card-text{
+.card-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -19,15 +19,15 @@
   position: relative;
   display: inline-block;
 }
-.bg23{
+.bg23 {
   /* background-color: aliceblue; */
   border-radius: 1rem;
 }
 
 .image-overlay {
   position: absolute;
- margin-top: 17rem;
- margin-left: 12rem;
+  margin-top: 17rem;
+  margin-left: 12rem;
   top: 0;
   left: 0;
   width: 1rem;
@@ -37,7 +37,6 @@
   align-items: center;
   opacity: 0;
   transition: opacity 0.3s;
-
 }
 
 .image-container:hover .image-overlay {
@@ -67,7 +66,6 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.4s ease-in-out;
-
 }
 
 .sliderContainer {
@@ -75,7 +73,7 @@
   max-width: 1200px;
   padding: 0 20px;
 }
- .control-btn button {
+.control-btn button {
   background: white;
   width: 30px;
   height: 30px;
@@ -104,15 +102,18 @@
 .control-btn .icon {
   font-size: 25px;
 }
-.cardbody{
+.cardbody {
+  width: 389px;
+  height: 578px;
   display: flex;
   flex-direction: column;
+  align-items: start;
 }
-.range{
+.range {
   width: 200px;
-background-color: red;
-color: red;
-outline: none;
+  /* background-color: red; */
+  color: red;
+  outline: none;
 }
 /* CSS module */
 .range {
@@ -122,15 +123,12 @@ outline: none;
   outline: none;
 }
 
-.pages a{
+.pages a {
   color: black;
 }
-.pages li{
+.pages li {
   color: black;
 }
-
-
-
 
 .range::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -138,7 +136,7 @@ outline: none;
 }
 
 .range::after {
-  content: '100';
+  content: "100";
   color: black;
   font-size: 2rem;
   position: absolute;
@@ -146,17 +144,16 @@ outline: none;
   top: 26%;
 }
 
-.pricefilterdiv{
+.pricefilterdiv {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  background:red;
+  background: red;
   cursor: pointer;
   width: 15rem;
 }
@@ -175,7 +172,7 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: -12px; /* Centers thumb on the track */
   background-color: black;
   height: 2rem;
-  width: 1rem;    
+  width: 1rem;
 }
 @media (max-width: 600px) {
   input[type="range"] {
@@ -189,8 +186,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .btn.active {
   background-color: #ff0000; /* Replace with your desired background color */
-  color: black /* Replace with your desired text color */
+  color: black; /* Replace with your desired text color */
 }
-.sidebar{
+.sidebar {
   margin-left: 0rem;
 }

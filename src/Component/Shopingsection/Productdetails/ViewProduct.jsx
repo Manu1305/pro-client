@@ -211,17 +211,12 @@ const ViewProduct = ({ setCartItems }) => {
         <div className="row">
           <div className={`col-md-6 ${styles.images}`}>
             <div className={`text-center p-4`}>
-              {/* <Slider {...settings}> */}
-              {/* {product.images.map((img) => ( */}
               <img
                 src={!imgPreview ? product.images[0] : imgPreview}
                 className={`img-fluid img-responsive rounded product-image ${styles.image} `}
-                // width="70"
                 style={{ height: "400px", width: "770px" }}
                 alt="img"
               />
-              {/* ))} */}
-              {/* </Slider> */}
             </div>
             <div className="ml-5" style={{ display: "flex" }}>
               {product.images.map((img) => (
@@ -300,12 +295,6 @@ const ViewProduct = ({ setCartItems }) => {
                   </div>
                 </div>
               </div>
-              {/* <p className={`about ${styles.about}`}>
-                Category: {product.selectedCategory}
-              </p>
-              <p className={`about ${styles.about}`}>
-                SubCategory:{product.selectedSubcategory}
-              </p> */}
               <div
                 style={{
                   display: "flex",
@@ -313,7 +302,6 @@ const ViewProduct = ({ setCartItems }) => {
                   marginTop: "25px",
                 }}
               >
-                {/* <br /> */}
                 <div className={styles.color_Container}>
                   <div className="m-1">
                     <h4 className={`about ${styles.about}`}>Choose a color</h4>
@@ -349,18 +337,7 @@ const ViewProduct = ({ setCartItems }) => {
                     ></div>
                   </div>
                 </div>
-                {/* <div
-                  style={{
-                    backgroundColor: product.productDetail.otherColors,
-                    width: "25px",
-                    height: "50px",
-                    marginTop: "10px",
-                    borderRadius: " 0rem 5rem 5rem 0rem",
-                  }}
-                ></div> */}
               </div>
-              {/* <h2>Items left -{product.totalQuantity}</h2> */}
-
               <div className={`sizes ${styles.sizes}`}>
                 {product.selectedCategory && (
                   <div>
@@ -388,7 +365,7 @@ const ViewProduct = ({ setCartItems }) => {
                                 <input
                                   type="text"
                                   placeholder="Enter Qty"
-                                  style={{ width: "20%" }}
+                                  style={{ width: "20%", }}
                                   value={quantities[size]}
                                   onChange={(e) =>
                                     handleQuantityChange(size, e)
@@ -468,52 +445,27 @@ const ViewProduct = ({ setCartItems }) => {
           </div>
           <div className={styles.tabs}>
             <div
-              className={`${styles.tab} ${
-                activeTab === "description" && styles.active
-              }`}
+              // className={}
               onClick={() => setActiveTab("description")}
             >
-              <h3
-                className={
-                  activeTab === "description" ? styles.activeHeading : ""
-                }
-              >
-                Description
-              </h3>
-            </div>
-            <div
-              className={`${styles.tab} ${
-                activeTab === "reviews" && styles.active
-              }`}
-              onClick={() => setActiveTab("reviews")}
-            >
-              {" "}
-              <h3
-                className={activeTab === "reviews" ? styles.activeHeading : ""}
-              >
-                &nbsp;&nbsp;&nbsp; Reviews
-              </h3>
+              <h3 className={styles.activeHeading}>Description</h3>
             </div>
           </div>
           <div className={styles.descrip}>
-            {activeTab === "description" ? (
-              <div className={styles.description}>
-                <p className={`about ${styles.about}`}>Product description</p>
-                <span className={styles["text1"]}>
-                  {product.productDetail.description}
-                </span>
-                <p className={`about ${styles.about}`}>WashcareInstructions</p>
-                <span className={styles["text1"]}>
-                  {product.WashcareInstructions}
-                </span>
-                <p className={`about ${styles.about}`}>Material </p>
-                <span className={styles["text1"]}>
-                  {product.productDetail.material}
-                </span>
-              </div>
-            ) : (
-              <Review />
-            )}
+            <div className={styles.description}>
+              <p className={`about ${styles.about}`}>Product description</p>
+              <span className={styles["text1"]}>
+                {product.productDetail.description}
+              </span>
+              <p className={`about ${styles.about}`}>WashcareInstructions</p>
+              <span className={styles["text1"]}>
+                {product.WashcareInstructions}
+              </span>
+              <p className={`about ${styles.about}`}>Material </p>
+              <span className={styles["text1"]}>
+                {product.productDetail.material}
+              </span>
+            </div>
           </div>
         </div>
       ))}

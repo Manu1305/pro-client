@@ -153,7 +153,7 @@ const BuyerConfirm = () => {
 
     console.log(valid)
     if (
-      !valid &&
+      valid &&
       payType !== ""
     ) {
       let cashbaby = (totalPrice * 10) / 100 + sum + GST;
@@ -176,9 +176,9 @@ const BuyerConfirm = () => {
         order_id: payment.data.id,
         callback_url: `${apiURL}/payment/payment-verification/${orderStoreInDB.ids}?pType=cash`,
         prefill: {
-          name: user.name, //login user name
-          email: user.email, //login user email
-          contact: user.phone, //contact number
+          name: user.name, 
+          email: user.email, 
+          contact: user.phone, 
           order: orderStoreInDB,
           pTyp: "Cash",
         },
@@ -216,10 +216,9 @@ const BuyerConfirm = () => {
     let keys = getApiKey();
 
     const valid = Object.keys(deliveryAddress).length >= 0 && deliveryAddress.constructor === Object
-console.log(valid)
-
+    console.log(deliveryAddress)
     if (
-       !valid &&
+       valid &&
       payType !== ""
     ) {
       // payment checkout
