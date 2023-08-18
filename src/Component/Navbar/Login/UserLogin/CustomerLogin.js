@@ -112,7 +112,6 @@ const CustomerLogin = () => {
 
   return (
     <div>
-      <MDBContainer className="my-5">
         <MDBCard>
           <MDBRow className="g-0">
             <MDBCol md="6">
@@ -183,7 +182,6 @@ const CustomerLogin = () => {
             </MDBCol>
           </MDBRow>
         </MDBCard>
-      </MDBContainer>
     </div>
   );
 };

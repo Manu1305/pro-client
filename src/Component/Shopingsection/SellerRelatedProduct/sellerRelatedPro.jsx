@@ -35,35 +35,7 @@ const SellerRelatedPro = ({ addToCart }) => {
   const [userData, setUserData] = useState([]);
   // const [related, setRelated]= useState("")
 
-
-  const getUser = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-      await httpService
-        .get(`${apiURL}/user/userdata`, config)
-
-        .then((res) => {
-     
-         
-          // setUserData();
-        
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getUser();
-  }, []);
-
+  
   useEffect(() => {
     httpService
       .get(`${apiURL}/product/get-all-products`)
