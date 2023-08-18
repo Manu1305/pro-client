@@ -6,8 +6,8 @@ import styless from "./sellerrelated.module.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -33,39 +33,11 @@ const SamplePrevArrow = (props) => {
 const SellerRelatedPro = ({ addToCart }) => {
   const [productItems, setProductItems] = useState([]);
   const [userData, setUserData] = useState([]);
-  const [related, setRelated]= useState("")
+  // const [related, setRelated]= useState("")
 
-
-  const getUser = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-      await axios
-        .get(`${apiURL}/user/userdata`, config)
-
-        .then((res) => {
-     
-         
-          setUserData();
-        
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
   useEffect(() => {
-    getUser();
-  }, []);
-
-  useEffect(() => {
-    axios
+    httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         setProductItems(res.data);

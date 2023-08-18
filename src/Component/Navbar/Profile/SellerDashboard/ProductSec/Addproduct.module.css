@@ -1,12 +1,23 @@
 
 .container {
+   /* background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg"); */
+   box-shadow: inset 10px 5px 5px rgb(255, 1, 1);
+   border-radius: 5px;
+ padding-left: 0px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
 
-  margin: 0 auto;
-  padding: 20px;
-   background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg");
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ border: 3px solid rgba(196, 222, 0, 0);
 }
+.inputField{
+  width: 400px;
+  border: 1px solid ;
+  border-radius: 5px;
+}
+
+
+
 
 .legend {
   font-size: 24px;
@@ -81,51 +92,38 @@ textarea {
   border: 1px solid #ccc;
 }
 
-.formGroup {
-  width: 100%;
-}
-
-.controlLabel {
-  /* Add your control label styles */
-}
-
-.inputWrapper {
-  /* Add your input wrapper styles */
-}
-
 .sizeButtons {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
-}
-
-.flexRow {
-  flex-direction: row;
+ 
 }
 
 .sizeContainer {
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
   flex: 0 0 100px;
   margin: 10px;
-  max-width: 700px;
+
 }
 
 .sizeButton {
-  margin: 10px;
-  padding: 20px;
+
+width: 20%;
   /* Add your size button styles */
 }
 
 .blue {
-  background-color: blue;
+  border-radius: 5px;
+  background-color: rgb(148, 151, 144);
+  display: flex;
+  flex-direction: row;
 }
 
-.gray {
-  background-color: gray;
-}
 
 .quantityInput {
-  width: 100%;
+  width: 20%;
 }
 .imgeupload{
   width: '300px';
@@ -135,4 +133,35 @@ textarea {
   background-color: '#f8f8f8';
   color: '#333';
   padding: '5px';
+}
+.respo{
+  display: flex;
+flex-direction: row;
+
+}
+
+@media only screen and (max-width: 518px) {
+
+.respo{
+  display: flex;
+flex-direction: column;
+
+}
+
+ 
+ }
+/* Example media query for screens up to 768px wide */
+@media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: center;
+  }
+
+  /* Adjust input fields to take up full width */
+  .inputField {
+    width: 100%;
+  }
+
+  /* Adjust other styling for responsiveness */
+  /* ... */
 }

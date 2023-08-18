@@ -1,15 +1,14 @@
-
 nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  transition: background-color 0.3s ease-in-out;
+  position: sticky;
   z-index: 999;
 }
 .badge {
@@ -26,7 +25,7 @@ nav {
   text-decoration-line: none;
   animation: colorChange 5s infinite;
 } */
-.length1{
+.length1 {
   position: absolute;
   top: 7px;
   right: 95px;
@@ -36,7 +35,6 @@ nav {
   color: white;
   font-size: 9px;
 }
-
 
 /* .heading {
   font-weight: bold;
@@ -77,35 +75,32 @@ nav {
   animation-play-state: paused; 
 } */
 
-
-@media (max-width: 768px) { 
- 
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  transition: background-color 0.3s ease-in-out;
-  z-index: 999;
-  color: black;
-}
-.length1{
-  position: absolute;
-  top: 300px;
-  right: 590px;
-  padding: 4px 8px;
-  border-radius: 10px;
-  background-color: red;
-  color: white;
-  font-size: 9px;
-}
-
-
+@media (max-width: 768px) {
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    transition: background-color 0.3s ease-in-out;
+    z-index: 999;
+    color: black;
+    position: sticky;
+  }
+  .length1 {
+    position: absolute;
+    top: 300px;
+    right: 590px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    font-size: 9px;
+  }
 }
 
 ul {
@@ -116,13 +111,12 @@ ul {
 }
 
 li {
-  margin: 0 10px;
+  /* margin: 0 10px;   updated  on 14 with manu and akshay*/
   cursor: pointer;
   color: white;
-}
-li {
   list-style: none;
 }
+
 .navbar {
   display: flex;
   flex-direction: row;
@@ -131,7 +125,6 @@ li {
   height: 80px;
   padding: 0 20px;
   background-color: #fff;
- 
 }
 
 .navbar-logo {
@@ -149,9 +142,8 @@ li {
 
 .navbar-menu {
   display: flex;
-  
+
   flex-direction: row;
-  
 }
 
 .navbar-menu li {
@@ -169,32 +161,31 @@ li {
     flex-direction: column;
     height: auto;
   }
-  
+
   .navbar-toggle {
     display: block;
     font-size: 24px;
     color: #333;
     cursor: pointer;
   }
-  
+
   .navbar-menu {
     display: none;
     flex-direction: column;
     margin: 10px 0;
     padding: 0;
-    
   }
-  
+
   .navbar-menu li {
     margin: 10px 0;
   }
-  
+
   .navbar-menu li a {
     font-size: 15px;
     color: #333;
     text-decoration: none;
   }
-  
+
   .navbar-menu.show {
     display: flex;
   }
@@ -203,11 +194,11 @@ li {
   font-family: MEDIUM;
   src: url("../../Fonts/Poppinsfonts/Poppins-SemiBold.ttf");
 }
-.navbar li{
-  font-family:MEDIUM ;
+.navbar li {
+  font-family: MEDIUM;
   color: #0d0d0c;
 }
-.navbar h2{
-  font-family:MEDIUM ;
+.navbar h2 {
+  font-family: MEDIUM;
   color: #0d0d0c;
 }

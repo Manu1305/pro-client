@@ -1,69 +1,60 @@
-.table-wrapper {
-  font-family: 'Theinhardt', sans-serif;
-  font-size: 0.875rem;
-  line-height: 1.4;
-  margin-left: auto;
-  margin-right: auto;
-  overflow-x: auto;
-}
-.tableWrapper{
-  background-color: antiquewhite;
+
+
+/* sellerOrder.module.css */
+.tableContainer {
+  /* overflow-x: auto; */
 }
 
-.orderHistoryTable {
-  width: 100%;
-}
-
-.orderCard {
-  width: 18rem;
-}
-
-.addressSection {
-  display: flex;
-  flex-direction: column;
-}
-
-.addressSection p {
-  margin-bottom: 0.5rem;
-}
-
-@media (max-width: 767px) {
-  .table-wrapper {
-    max-width: 100%;
-  }
-
-  .orderHistoryTable {
-    font-size: 0.75rem;
-  }
-
-  .orderCard {
+@media (max-width: 768px) {
+  /* Adjust the breakpoint as needed */
+  .tableContainer {
     width: 100%;
+   
   }
-}
-.tableWrapper{
-  margin-top: 5rem;
-}
-@media (max-width: 767px) {
-  .orderCard {
+  
+  /* Adjust table styles for smaller screens */
+  .table-responsive {
+    display: block;
     width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
   }
+  
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+  }
+  
+  /* Adjust table header and cells for smaller screens */
+  .table th,
+  .table td {
+    white-space: nowrap;
+  }
+  
+  .table th {
+    display: table-cell;
+    padding: 0.5rem;
+    vertical-align: top;
+    font-weight: bold;
+  }
+  
+  .table td {
+    display: table-cell;
+    padding: 0.5rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .table th,
+  .table td {
+    border-top: 1px solid #dee2e6;
+  }
+  
+}
 
-}
-.imgcircle{
-  margin-left: 14rem;
-  margin-top: 0rem;
-  width: 2rem;
-  height: 2rem;
-}
-@media (max-width: 598px) {
-  .imgcircle{
-    margin-left: rem;
-    margin-top: -1rem;
-  }
-  .orderCard{
-   margin-right: -12rem;
-  }
-  .tableWrapper{
-    margin-left: -10rem;
-  }
+.selectStyle {
+  width: 100%;  
+   /* max-width: 150px; */
 }

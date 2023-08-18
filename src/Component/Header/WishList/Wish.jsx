@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Wish.module.css";
-import axios from "axios";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
+import { Footer } from "../../Footer/Footer";
 
 const WishList = () => {
   const [wishLists, setWishLists] = useState([]);
@@ -17,7 +18,7 @@ const WishList = () => {
         },
       };
 
-      await axios
+      await httpService
         .get(`${apiURL}/wish/user-wish`, config)
         .then((res) => {
         
@@ -53,7 +54,7 @@ const WishList = () => {
       },
     };
     try {
-      await axios
+      await httpService
         .post(
           `${apiURL}/wish/update-wish`,
           {
@@ -186,6 +187,7 @@ const WishList = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 };

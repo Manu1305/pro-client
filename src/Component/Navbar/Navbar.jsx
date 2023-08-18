@@ -8,11 +8,11 @@ import { CgShoppingCart } from "react-icons/cg";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import  Profile  from "./Dropdown/ProfileDropdown";
 import { addUser } from "../../Redux/user/userAction";
-import axios from "axios";
 import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
 import { MdMarkEmailRead, MdOutlineNotificationsNone } from "react-icons/md";
 import { apiURL } from "../../const/config";
+import httpService from "../Error Handling/httpService";
 
  const Navbar = ({ wishlist, cartItems }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -21,28 +21,7 @@ import { apiURL } from "../../const/config";
   let user = useSelector((state) => state.userReducer.user);
 
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.userReducer.user?.email);
 
-  const getCartCarts = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      await axios
-        .get(`${apiURL}/cart/user-cart`, config)
-        .then((res) => {})
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log("API Error", error);
-    }
-  };
-  useEffect(() => {
-    getCartCarts();
-  }, []);
 
   useEffect(() => {
     if (user && !user.name) {
@@ -96,7 +75,7 @@ import { apiURL } from "../../const/config";
         <i className="fas fa-bars"></i>
       </div>
       <ul className={`${styles["navbar-menu"]} ${showMenu ? styles.show : ""}`}>
-        {user?.urType === "buyer" && (
+        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
           <li>
             <Link to="/" onClick={closeMenu}>
               HOME
@@ -113,7 +92,7 @@ import { apiURL } from "../../const/config";
               </Link>
             </li>
           )}
-        {user?.urType === "buyer" && (
+        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
           <li>
             <Link to="bloghome" onClick={closeMenu}>
               Blog
@@ -175,9 +154,15 @@ import { apiURL } from "../../const/config";
             </Link>
           )}
         </li>
+     {
+(user?.urType === "seller" || user?.urType === "admin") && <li style={{ height: "20px" }}>
+<MdOutlineNotificationsNone className='fa-lg' onClick={() => navigation('/notifications')} />
 
-        <MdOutlineNotificationsNone className='fa-lg' onClick={() => navigation('/notifications')} />
-      </ul>
+   </li>
+
+}   
+</ul>
+     
     </nav>
   );
 };

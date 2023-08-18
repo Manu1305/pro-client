@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styless from "./OrderSummery.module.css";
 import { positions } from "@mui/system";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
 
 export const OrderSummery = () => {
   // const navigate = useNavigate();
@@ -35,7 +35,7 @@ export const OrderSummery = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-    await axios.get(`${apiURL}/cart/cart`, config).then((res) => {
+    await httpService.get(`${apiURL}/cart/cart`, config).then((res) => {
       setCartItem(res.data);
      
     });

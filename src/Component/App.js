@@ -53,26 +53,23 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 
-
-
-const LazyCart = React.lazy(() => import("./Header/Cart/Cart"))
-const LazySellerDashboard = React.lazy(() => import("./Navbar/Profile/SellerDashboard/SellerDash"));
-const LazyAddProduct = React.lazy(() => import("./Navbar/Profile/SellerDashboard/ProductSec/Addproduct"));
-const LazyMainPage = React.lazy(() => import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage"));
-
-
-
+const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
+const LazySellerDashboard = React.lazy(() =>
+  import("./Navbar/Profile/SellerDashboard/SellerDash")
+);
+const LazyAddProduct = React.lazy(() =>
+  import("./Navbar/Profile/SellerDashboard/ProductSec/Addproduct")
+);
+const LazyMainPage = React.lazy(() =>
+  import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage")
+);
 
 const App = () => {
   const { productItems } = cards;
 
-
   const [wishlist, setWishlist] = useState([]);
 
-  const [cartItems, setCartItems] = useState(0)
-
-
-
+  const [cartItems, setCartItems] = useState(0);
 
   return (
     <Router>
@@ -119,67 +116,57 @@ const App = () => {
 
             <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
             </React.Suspense>} />
-
-
-
-
-
-
-
-
-
-
         <Route path="/ViewDetails/:productId" element={<ViewProduct setCartItems={setCartItems} />} />
 
-          <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
-          <Route path="thankyou" element={<Thankyou />} />
+            <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
+            <Route path="thankyou" element={<Thankyou />} />
 
-          <Route path="register" element={<Register />} />
-          <Route path="bloghome" element={<BlogHome />} />
-          <Route path="/details/:id" element={<DetailsPages />} />
-          <Route path="sellerplans" element={<Plans />} />
-          <Route path="StorePage" element={<StorePage />} />
-          <Route path="dashboard/Addproduct" element={<AddProduct />} />
-          <Route path="storeset" element={<MainPage />} />
-          <Route path="store" element={<Store />} />
-          <Route path="payment" element={<SellerPayment />} />
-          <Route path="customer" element={<CustomerSup />} />
-          <Route path="bank" element={<BankPayment />} />
-          <Route path="pages" element={<StorePage />} />
-          <Route path="withdraw" element={<Withdraw />} />
-          <Route path="sellersettings" element={<SellerSettingsPage />} />
-          <Route path="sellerregistration" element={<SellerRegister />} />
-          <Route path="free" element={<FreeSubscriptionForm />} />
-          <Route path="confirmation" element={<SubscriptionForm />} />
-          <Route path="buyerOrder" element={<BuyerOrder />} />
-          <Route path="/whyus" element={<Whydetail />} />
+            <Route path="register" element={<Register />} />
+            <Route path="bloghome" element={<BlogHome />} />
+            <Route path="/details/:id" element={<DetailsPages />} />
+            <Route path="sellerplans" element={<Plans />} />
+            <Route path="StorePage" element={<StorePage />} />
+            <Route path="dashboard/Addproduct" element={<AddProduct />} />
+            <Route path="storeset" element={<MainPage />} />
+            <Route path="store" element={<Store />} />
+            <Route path="payment" element={<SellerPayment />} />
+            <Route path="customer" element={<CustomerSup />} />
+            <Route path="bank" element={<BankPayment />} />
+            <Route path="pages" element={<StorePage />} />
+            <Route path="withdraw" element={<Withdraw />} />
+            <Route path="sellersettings" element={<SellerSettingsPage />} />
+            <Route path="sellerregistration" element={<SellerRegister />} />
+            <Route path="free" element={<FreeSubscriptionForm />} />
+            <Route path="confirmation" element={<SubscriptionForm />} />
+            <Route path="buyerOrder" element={<BuyerOrder />} />
+            <Route path="/whyus" element={<Whydetail />} />
             <Route path="/whatus" element={<Whatmakeus />} />
             <Route path="/whoweare" element={<WhoWeAre />} />
-            <Route path="/productVerification/:id" element={<ProductVerification />} />
+            <Route
+              path="/productVerification/:id"
+              element={<ProductVerification />}
+            />
             <Route path="/deliverydash" element={<DeliveryDash />} />
-            <Route path="/deliveryGuys" element={<AssignDekivery  />} />
+            <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
             <Route path="/shoppingPage" element={<ShoppingPage />} />
             <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
-          <Route path="About" element={<AboutUs />} />
-          <Route
-                path="/forgotpassword/:id/:token"
-                element={<Changepassword />}
-              />
-              <Route path="/passwordupdate" element={<EmailCheck />} />
-          <Route
-            path="Wish" element={<Wish />  }         />
-                      <Route path="notifications" element={<Notification />} />
+            <Route path="About" element={<AboutUs />} />
+            <Route
+              path="/forgotpassword/:id/:token"
+              element={<Changepassword />}
+            />
+            <Route path="/passwordupdate" element={<EmailCheck />} />
+            <Route path="Wish" element={<Wish />} />
+            <Route path="notifications" element={<Notification />} />
 
-
-          {/* <Route path="AdminHome" element={<AdminDashboard />} /> */}
-          <Route path="/profile/:id " element={<Profile />} />
-          <Route path="/Profilepage/:id" element={<SellerProSettings />} />
-          <Route path="/editprofile" element={<Editprofile />} />
-          <Route path="/returnPro/:id" element={<BuyerReturn />} />
-        </Routes>
-      </div>
-      <Footer />
+            {/* <Route path="AdminHome" element={<AdminDashboard />} /> */}
+            <Route path="/profile/:id " element={<Profile />} />
+            <Route path="/Profilepage/:id" element={<SellerProSettings />} />
+            <Route path="/editprofile" element={<Editprofile />} />
+            <Route path="/returnPro/:id" element={<BuyerReturn />} />
+          </Routes>
+        </div>
       </ScrollToTop>
     </Router>
   );

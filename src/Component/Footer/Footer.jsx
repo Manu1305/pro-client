@@ -26,7 +26,7 @@
 //                 className="text-uppercase fw-bold mb-4"
 //                 style={{ marginLeft: "20px" }}
 //               >
-//                 <i class="fas fa-camera-retro"></i>
+//                 <i className="fas fa-camera-retro"></i>
 //                 HitecMart
 //               </h6>
 //               <p className="text-light" style={{ marginRight: "30px" }}>
@@ -163,7 +163,7 @@ export const Footer=()=> {
   return (
     <footer>
       <div className={styles.main}>
-        <div className={styles.one}>
+        {/* <div className={styles.one}>
           <div>
             <h1 className={styles.headinttext}>
               JOIN SHOPPING COMMUNITY TO <br />
@@ -184,7 +184,7 @@ export const Footer=()=> {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className={styles.two}>
           <div className={styles.twoOne}>
             <h2 className={styles.twoheading}>HITECMART</h2>

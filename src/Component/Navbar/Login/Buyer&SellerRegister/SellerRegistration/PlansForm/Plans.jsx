@@ -1,40 +1,10 @@
-// import {Link} from 'react-router-dom'
-// import React from 'react';
-// import {MainPlan} from './MainPlan';
-// import plans from './planSec.module.css';
-
-// export const Plans=() =>{
-//   return (
-//     <div className={plans.App}>
-//       <div className={plans["card-container"]}>
-//     <Link to='/confirmation'>
-//         <MainPlan
-//           about="Prime Listing"
-//           title="1,499.00"
-//           description="Every day deal sale, Hot Promotions, SEO, Facebook Ads, Google Ads, High Visibility etc."
-//           buttonText="SUBSCRIBE NOW!"
-//         />
-//         </Link>
-//         <Link to='/free'>
-//         <MainPlan
-//           about="1 Month Free Subscription"
-//           title="00.00"
-//           description="Low Visibility & Limited Orders"
-//           buttonText="SUBSCRIBE NOW!"
-//         />
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// }
-
 import { Link } from "react-router-dom";
 import React from "react";
 import { MainPlan } from "./MainPlan";
 import plans from "./planSec.module.css";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { apiURL } from "../../../../../../const/config";
+import httpService from "../../../../../Error Handling/httpService";
  
 const Plans = () => {
   const seller = useSelector((state) => state.userReducer.seller);
@@ -42,7 +12,7 @@ const Plans = () => {
   const getApiKey = async () => {
     let res;
     try {
-      res = await axios
+      res = await httpService
         .get(`${apiURL}/payment/get-api-key`)
         .then((res) => {
    
@@ -62,7 +32,7 @@ const Plans = () => {
     // return
     let res;
     try {
-      res = await axios
+      res = await httpService
         .post(`${apiURL}/subscription/subscriptions`, {
          userData:seller
         })

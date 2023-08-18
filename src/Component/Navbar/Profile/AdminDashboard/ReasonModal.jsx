@@ -4,11 +4,16 @@ import { Button, Form, Modal } from "react-bootstrap";
 function ReasonModal(props) {
   const [heading, setHeading] = useState("");
   const [desc, setDesc] = useState("");
-  // submit reason
+
+  // alert(props.id)
   const submitHandler = async () => {
     try {
       props.onHide();
-      props.removeFromShop(props.product._id, { heading, desc,email:props.product.seller });
+      props.removeFromShop(props.product.id, {
+        heading,
+        desc,
+        email: props.product.seller,
+      });
     } catch (error) {
       console.log(error);
     }

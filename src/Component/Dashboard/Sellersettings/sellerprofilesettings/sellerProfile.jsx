@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import SavedAddress from "../../../Header/Alreadysavedaddress/Saved";
 import NewAddress from "../../../Header/NEwAddress/NewAddress";
 import SavedBanks from "../../../Header/BankDetails/getBank";
-import axios from "axios";
 import { apiURL } from "../../../../const/config";
+import { getUserAddress } from "../../../../const/api";
+import httpService from "../../../Error Handling/httpService";
 function SellerProSettings() {
   const [newaddressForm, setNewaddressform] = useState(false);
 const[bank,setBank]=useState([])
@@ -23,30 +24,13 @@ const[bank,setBank]=useState([])
   }
 
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
 
-  const getSavedAddress = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      const response = await axios.get(
-        `${apiURL}/address/savedaaddress`,
-        config
-      );
-
-      setAddresses(response.data);
-    } catch (error) {
-      console.log("API Error", error);
-    }
-  };
-
+  const getSavedAddress = async() => {
+    const ans = await getUserAddress()
+    setAddresses(ans)
+  }
   useEffect(() => {
-    getSavedAddress();
+    getSavedAddress()
   }, []);
 
 
@@ -59,7 +43,7 @@ const[bank,setBank]=useState([])
          },
        };
 
-       const response = await axios.get(
+       const response = await httpService.get(
          `${apiURL}/Bankdetails/getBankData/${user.email}`,
          config
        );
@@ -77,7 +61,7 @@ const[bank,setBank]=useState([])
      getSavedBank();
    }, []);
   return (
-    <div style={{ marginTop: "120px" }}>
+    <div >
       <div className="container">
         <div className="row gutters">
           <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Slider from "react-slick";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdHeight, MdNavigateNext } from "react-icons/md";
+// import { GrFormPrevious } from "react-icons/gr";
+// import {  MdNavigateNext } from "react-icons/md";
 import styles from "./Product.module.css";
 import SellerRelatedPro from "../SellerRelatedProduct/sellerRelatedPro";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -11,34 +10,34 @@ import { BsBookmark } from "react-icons/bs";
 import { BiShareAlt } from "react-icons/bi";
 import { AiOutlineStar } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
-import { BsBagDash } from "react-icons/bs";
 import { TbTruckDelivery } from "react-icons/tb";
-import { AiOutlineShopping,AiFillHeart } from "react-icons/ai";
+import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
 import Review from "./Review/Review";
-import axios from "axios";
 import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
+import { Footer } from "../../Footer/Footer";
 
-const SampleNextArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styles["control-btn"]} onClick={onClick}>
-      <button className={styles.next}>
-        <MdNavigateNext className={styles.icon} />
-      </button>
-    </div>
-  );
-};
+// const SampleNextArrow = (props) => {
+//   const { onClick } = props;
+//   return (
+//     <div className={styles["control-btn"]} onClick={onClick}>
+//       <button className={styles.next}>
+//         <MdNavigateNext className={styles.icon} />
+//       </button>
+//     </div>
+//   );
+// };
 
-const SamplePrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styles["control-btn"]} onClick={onClick}>
-      <button className={styles.prev}>
-        <GrFormPrevious className={styles.icon} />
-      </button>
-    </div>
-  );
-};
+// const SamplePrevArrow = (props) => {
+//   const { onClick } = props;
+//   return (
+//     <div className={styles["control-btn"]} onClick={onClick}>
+//       <button className={styles.prev}>
+//         <GrFormPrevious className={styles.icon} />
+//       </button>
+//     </div>
+//   );
+// };
 
 const ViewProduct = ({ setCartItems }) => {
   const categorySizes = {
@@ -55,10 +54,10 @@ const ViewProduct = ({ setCartItems }) => {
   const [quantities, setQuantities] = useState({});
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
-  const [heartCount, setheartCouut] = useState(1);
-  const [showShareDialog, setShowShareDialog] = useState(false);
   const [offerBtn, setofferBtn] = useState(false);
-  const [isWishItem, setisWishItem] = useState(false)
+  const [isWishItem, setisWishItem] = useState(false);
+
+  const [imgPreview, setimgPreview] = useState("");
 
   const handleShare = () => {
     if (navigator.share) {
@@ -71,13 +70,13 @@ const ViewProduct = ({ setCartItems }) => {
         .then(() => console.log("Product shared successfully."))
         .catch((error) => console.log("Error sharing product:", error));
     } else {
-      
     }
   };
   useEffect(() => {
-
     if (totalQuantity >= 100) {
       setofferBtn(true);
+    } else {
+      setofferBtn(false);
     }
   }, [totalQuantity]);
 
@@ -89,7 +88,7 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
     try {
-      await axios.post(
+      await httpService.post(
         "http://localhost:8000/wish/update-wish",
         {
           productId,
@@ -98,16 +97,6 @@ const ViewProduct = ({ setCartItems }) => {
       );
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const handleSizeSelection = (size) => {
-    if (selectedSizes.includes(size)) {
-      setSelectedSizes(
-        selectedSizes.filter((selectedSize) => selectedSize !== size)
-      );
-    } else {
-      setSelectedSizes([...selectedSizes, size]);
     }
   };
 
@@ -130,15 +119,16 @@ const ViewProduct = ({ setCartItems }) => {
     (product) => product._id === productId
   );
 
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-  };
+  console.log("+_+_+_+__+========-=-", productDetails);
+  // const settings = {
+  //   infinite: true,
+  //   speed: 500,
+  //   dots: true,
+  //   slidesToShow: 1,
+  //   slidesToScroll: 1,
+  //   nextArrow: <SampleNextArrow />,
+  //   prevArrow: <SamplePrevArrow />,
+  // };
   const addtoCartButton = async (product) => {
     const config = {
       headers: {
@@ -157,10 +147,8 @@ const ViewProduct = ({ setCartItems }) => {
       };
     });
 
-    
-
     try {
-      await axios
+      await httpService
         .post(
           `${apiURL}/cart/add-to-cart`,
           {
@@ -184,7 +172,7 @@ const ViewProduct = ({ setCartItems }) => {
   const offerBtnHandler = async () => {
     try {
       const message = {
-        for:"admin",
+        for: "admin",
         heading: `Super Shopper ${user.name}: 100+ Quantity Purchase Unlocked! 🎉🛒`,
         desc: `Admin Action Required: ${user.name} 100+ quantities purchase.Reach out to ${user.name} at their contact number: ${user.phone}, or email them at ${user.email} to share the exclusive deal.`,
       };
@@ -195,11 +183,8 @@ const ViewProduct = ({ setCartItems }) => {
         },
       };
 
-      const res = await axios.post(`${apiURL}/noti/create-noti`,{message},config)
-        // .then((res) => {
-        //   console.log(res);
-        //   return res.json();
-        // })
+      const res = await httpService
+        .post(`${apiURL}/noti/create-noti`, { message }, config)
         .then((res) => {
           console.log(res);
           setofferBtn(false);
@@ -222,43 +207,37 @@ const ViewProduct = ({ setCartItems }) => {
   return (
     <div className={`card ${styles.card}`}>
       {productDetails.map((product) => (
-        <div className="row" style={{ marginTop: "10rem" }}>
+        <div className="row">
           <div className={`col-md-6 ${styles.images}`}>
-            <div className={`text-center p-4 ${styles.thumbnail}`}>
-              <Slider {...settings}>
-                {product.images.map((img) => (
+            <div className={`text-center p-4`}>
+              {/* <Slider {...settings}> */}
+              {/* {product.images.map((img) => ( */}
+              <img
+                src={!imgPreview ? product.images[0] : imgPreview}
+                className={`img-fluid img-responsive rounded product-image ${styles.image} `}
+                // width="70"
+                style={{ height: "400px", width: "770px" }}
+                alt="img"
+              />
+              {/* ))} */}
+              {/* </Slider> */}
+            </div>
+            <div className="ml-5" style={{ display: "flex" }}>
+              {product.images.map((img) => (
+                <div className="m-2">
                   <img
+                    style={{ height: "70px", width: "70px" }}
                     src={img}
-                    className={`img-fluid img-responsive rounded product-image ${styles.image}`}
-                    width="70"
+                    onClick={() => setimgPreview(img)}
                     alt=""
                   />
-                ))}
-              </Slider>
-
-              {/* <div className={styles.descrip}>
-                <p className={`about ${styles.about}`}>Description: </p>
-                <span className={styles["text1"]}>
-                  {product.productDetail.description}
-                </span>
-                <p className={`about ${styles.about}`}>
-                  WashcareInstructions:{" "}
-                </p>
-                <span className={styles["text1"]}>
-                  {product.WashcareInstructions}
-                </span>
-                <p className={`about ${styles.about}`}>Material: </p>
-                <span className={styles["text1"]}>
-                  {product.productDetail.material}
-                </span>
-              </div> */}
+                </div>
+              ))}
             </div>
           </div>
-          {/* //////////////////////////TOPSECONT DIV /////////////////// */}
           <div className="col-md-6">
-            <div className={`product p-4 ${styles.product}`}>
-              <div className="d-flex justify-content-between align-items-center"></div>
-              <div className={`mt-4 mb-3 ${styles.details}`}>
+            <div className={`product`}>
+              <div className={"mt-4"}>
                 <div className={styles.heads}>
                   <h5 className={`text-uppercase brand ${styles.brand}`}>
                     {product.productDetail.brand}
@@ -271,15 +250,12 @@ const ViewProduct = ({ setCartItems }) => {
                       }}
                     >
                       <div onClick={() => setisWishItem(!isWishItem)}>
-
-                        
-                      {isWishItem ? (
-                        <AiFillHeart className={styles.mainicon} />
-                      ) : (
-                        <AiOutlineHeart className={styles.mainicon} />
-                      )}
+                        {isWishItem ? (
+                          <AiFillHeart className={styles.mainicon} />
+                        ) : (
+                          <AiOutlineHeart className={styles.mainicon} />
+                        )}
                       </div>
-            
                     </div>
                     <div className={styles.tagandshare}>
                       <BsBookmark />
@@ -293,7 +269,7 @@ const ViewProduct = ({ setCartItems }) => {
                 <span>{product.productDetail.description}</span>
 
                 <div
-                  className={`price d-flex flex-row align-items-center ${styles.price}`}
+                  className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
                 >
                   <h5 className={styles["act-price"]}>
                     ₹{product.sellingPrice}
@@ -310,7 +286,7 @@ const ViewProduct = ({ setCartItems }) => {
                     </div>
                   </div>
                 </div>
-               
+
                 <div className={styles.priceandpercentage}>
                   <div>
                     <p className="line-through" style={{ color: "red" }}>
@@ -319,31 +295,60 @@ const ViewProduct = ({ setCartItems }) => {
                   </div>
                   <div className={styles.percentagetext}>
                     <h5 className="text-success">93%</h5>
-
                     <p> &nbsp; of buyers have reccomented this.</p>
                   </div>
                 </div>
               </div>
-              <p className={`about ${styles.about}`}>
+              {/* <p className={`about ${styles.about}`}>
                 Category: {product.selectedCategory}
               </p>
               <p className={`about ${styles.about}`}>
                 SubCategory:{product.selectedSubcategory}
-              </p>
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <br />
-                <h1>Product Color</h1>
-                <div
-                  style={{
-                    backgroundColor: product.productDetail.primaryColor,
-                    width: "25px",
-                    height: "50px",
-                    marginTop: "10px",
-                    borderRadius: " 5rem 0rem 0rem 5rem",
-                    marginLeft: "10px",
-                  }}
-                ></div>
-                <div
+              </p> */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: "25px",
+                }}
+              >
+                {/* <br /> */}
+                <div className={styles.color_Container}>
+                  <div className="m-1">
+                    <h4 className={`about ${styles.about}`}>Choose a color</h4>
+                  </div>
+                  <div
+                    style={{
+                      marginLeft: "-105px",
+                      display: "flex",
+                      alignItems: "start",
+                      gap: "13px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <div
+                      className={styles.color_box}
+                      style={{ background: "#BBC1F8" }}
+                    ></div>
+                    <div
+                      className={styles.color_box}
+                      style={{ background: "#BBD278" }}
+                    ></div>
+                    <div
+                      className={styles.color_box}
+                      style={{ background: "#FFD3F8" }}
+                    ></div>
+                    <div
+                      className={styles.color_box}
+                      style={{ background: "#B2BE91" }}
+                    ></div>
+                    <div
+                      className={styles.color_box}
+                      style={{ background: "#124B88" }}
+                    ></div>
+                  </div>
+                </div>
+                {/* <div
                   style={{
                     backgroundColor: product.productDetail.otherColors,
                     width: "25px",
@@ -351,12 +356,11 @@ const ViewProduct = ({ setCartItems }) => {
                     marginTop: "10px",
                     borderRadius: " 0rem 5rem 5rem 0rem",
                   }}
-                ></div>
+                ></div> */}
               </div>
-              <h2>Items left -{product.totalQuantity}</h2>
+              {/* <h2>Items left -{product.totalQuantity}</h2> */}
 
-              <div className={`sizes mt-5 ${styles.sizes}`}>
-                {/* <h6 className={`text-uppercase ${styles["size-heading"]}`}> SELECT SIZE</h6> */}
+              <div className={`sizes ${styles.sizes}`}>
                 {product.selectedCategory && (
                   <div>
                     <label htmlFor="product_size">CHOOSE SIZE</label>
@@ -369,6 +373,7 @@ const ViewProduct = ({ setCartItems }) => {
                                 <div
                                   className={styles.desgin}
                                   style={{
+                                    borderRadius: "0px",
                                     backgroundColor: selectedSizes.includes(
                                       size
                                     )
@@ -376,13 +381,13 @@ const ViewProduct = ({ setCartItems }) => {
                                       : "rgb(243,243,243)",
                                   }}
                                 >
-                                 
                                   {size}
                                 </div>
-                               
+
                                 <input
                                   type="text"
                                   placeholder="Enter Qty"
+                                  style={{ width: "20%" }}
                                   value={quantities[size]}
                                   onChange={(e) =>
                                     handleQuantityChange(size, e)
@@ -398,8 +403,6 @@ const ViewProduct = ({ setCartItems }) => {
               </div>
 
               <div className={`cart mt-4 align-items-center ${styles.cart}`}>
-               
-
                 {totalQuantity >= 5 ? (
                   <>
                     <button
@@ -416,25 +419,25 @@ const ViewProduct = ({ setCartItems }) => {
                   </>
                 ) : null}
                 {offerBtn ? (
-                      <div class="container m-4">
-                        <div class="row justify-content-center">
-                          <div class="col-md-6 text-center">
-                            <h3 class="text-danger">
-                              Your Bulk Buying Deal Is a Click Away - Don't Miss
-                              Out!
-                            </h3>
-                          </div>
-                          <div class="col-md-6 text-center">
-                            <button
-                              class="btn btn-success"
-                              onClick={offerBtnHandler}
-                            >
-                              Offers
-                            </button>
-                          </div>
-                        </div>
+                  <div className="container m-4">
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 text-center">
+                        <h3 className="text-danger">
+                          Your Bulk Buying Deal Is a Click Away - Don't Miss
+                          Out!
+                        </h3>
                       </div>
-                    ) : null}
+                      <div className="col-md-6 text-center">
+                        <button
+                          className="btn btn-success"
+                          onClick={offerBtnHandler}
+                        >
+                          Offers
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
 
@@ -471,7 +474,7 @@ const ViewProduct = ({ setCartItems }) => {
             >
               <h3
                 className={
-                  activeTab == "description" ? styles.activeHeading : ""
+                  activeTab === "description" ? styles.activeHeading : ""
                 }
               >
                 Description
@@ -485,7 +488,7 @@ const ViewProduct = ({ setCartItems }) => {
             >
               {" "}
               <h3
-                className={activeTab == "reviews" ? styles.activeHeading : ""}
+                className={activeTab === "reviews" ? styles.activeHeading : ""}
               >
                 &nbsp;&nbsp;&nbsp; Reviews
               </h3>
@@ -515,6 +518,7 @@ const ViewProduct = ({ setCartItems }) => {
       ))}
 
       <SellerRelatedPro />
+      <Footer />
     </div>
   );
 };

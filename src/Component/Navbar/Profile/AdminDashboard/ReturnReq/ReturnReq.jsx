@@ -8,9 +8,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
-
-import axios from "axios";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -47,7 +46,7 @@ export const ReturnReq = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-      await axios
+      await httpService
         .get(`${apiURL}/return/returnReq`, config)
         .then((res) => {
        
@@ -68,7 +67,7 @@ export const ReturnReq = () => {
 
 
   const removeFromReq = async (id) => {
-    await axios
+    await httpService
       .delete(`${apiURL}/return/remove-requested-return/${id}`)
       .then((res) => {
       
@@ -81,7 +80,7 @@ export const ReturnReq = () => {
   };
 
   const AssignReturnDelivery = async (id) => {
-    await axios
+    await httpService
       .put(`${apiURL}/delivery/assign-return-delivery-order/${id}`)
       .then((res) => {
         
@@ -106,7 +105,7 @@ export const ReturnReq = () => {
     <>
    
       {/* <p style={{ backgroundColor: "red" }}>AssignDelivery</p> */}
-      <div className={`row ${styles.tableWrapper}`}>
+      <div>
         {userData &&
           userData.map((order, index) => (
             <div key={index} className="col-md-4">

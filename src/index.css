@@ -2,30 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
- body {
-  margin: 0;
+
+
+
+
+
+
+ /* body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-} 
-
+} */
+/* 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}  body {
+} */
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");  body {
   font-family: "Poppins", sans-serif;
-  background-color: #f9f9f9;
+  background-color: white;
   color: #000;
-} 
- h1,
+}  */
+ /* h1,
 h2 {
   font-weight: 600;
 }
@@ -34,49 +34,49 @@ h3 {
 }
 a {
   font-size: 17px;
-}
-ul,
-li,
-a,
-button,
-input,
-textarea {
+} */
+  /* ul,
+  li,
+  a,
+  button,
+  input, */
+/* textarea {
   border: none;
   background: none;
   outline: none;
   cursor: pointer;
   text-decoration: none;
   list-style-type: none;
-}
-::placeholder {
+} */
+/* ::placeholder {
   font-size: 17px;
-}
-.flex {
+} */
+/* .flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
-} 
-.flexCenter {
+}  */
+/* .flexCenter {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-p {
+} */
+/* p {
   color: #5a5a5a;
   font-size: 15px;
-}
-label {
+} */
+/* label {
   color: #999;
   font-size: 13px;
-}
-form,
+} */
+/* form,
 .boxItems {
   border: 1px solid #e6e6e6;
   border-radius: 12px;
   padding: 20px;
   background: #fff;
-}
-form {
+} */
+/* form {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -141,4 +141,4 @@ footer .icon {
 }
 .link {
   color: #000;
-} 
+}  */

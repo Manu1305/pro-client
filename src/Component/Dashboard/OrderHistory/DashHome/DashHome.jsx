@@ -8,8 +8,8 @@ function DashHome() {
   return (
     <div>
       <Saleandrevenue />
-      {/* <SaleChart/> */}
-      {/* <ChartData /> */}
+      <SaleChart/>
+      <ChartData />
       <Recentsales />
     </div>
   );

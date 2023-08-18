@@ -122,6 +122,16 @@ outline: none;
   outline: none;
 }
 
+.pages a{
+  color: black;
+}
+.pages li{
+  color: black;
+}
+
+
+
+
 .range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -129,7 +139,7 @@ outline: none;
 
 .range::after {
   content: '100';
-  color: white;
+  color: black;
   font-size: 2rem;
   position: absolute;
   left: 80%;
@@ -179,7 +189,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .btn.active {
   background-color: #ff0000; /* Replace with your desired background color */
-  color: #ffffff; /* Replace with your desired text color */
+  color: black /* Replace with your desired text color */
 }
 .sidebar{
   margin-left: 0rem;

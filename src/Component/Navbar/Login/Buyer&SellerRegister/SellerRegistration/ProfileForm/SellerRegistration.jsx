@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import axios from "axios";
 import register from "../../Register.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +18,7 @@ import {
 } from "mdb-react-ui-kit";
 import { Dropdown } from "react-bootstrap";
 import { useEffect } from "react";
+import httpService from '../../../../../Error Handling/httpService'
 import { apiURL } from "../../../../../../const/config";
 
  const SellerRegister = () => {
@@ -137,7 +137,7 @@ import { apiURL } from "../../../../../../const/config";
 
   const sendOtp = () => {
     if (phone.length == 10) {
-      axios
+      httpService
         .post(`${apiURL}/user/send-otp`, { phone })
         .then((response) => {
           console.log(response.data);
@@ -151,7 +151,7 @@ import { apiURL } from "../../../../../../const/config";
   };
 
   const verifyOtp = () => {
-    axios
+    httpService
       .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
       .then((response) => {
         console.log(response.data);

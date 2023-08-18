@@ -3,7 +3,6 @@ import styless from "./Shopping.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../../Redux/product/productAction";
@@ -13,6 +12,8 @@ import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { apiURL } from "../../const/config";
+import httpService from "../Error Handling/httpService";
+import { Footer } from "../Footer/Footer";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -74,7 +75,7 @@ const Shopping = ({}) => {
 
   const viewproductDetails = () => {};
   useEffect(() => {
-    axios
+    httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         setData(res.data);
@@ -115,7 +116,7 @@ const Shopping = ({}) => {
       return;
     }
     try {
-      axios
+      httpService
         .post(`${apiURL}/cart/add-to-cart`, { _id, userId })
         .then((res) => {
           console.log(res.data);
@@ -126,10 +127,6 @@ const Shopping = ({}) => {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  function addToWishHandle(_id) {
-    // axios.post("${apiURL}/product/wishlistupdate", { _id, userId });
   }
 
   const settings = {
@@ -236,16 +233,13 @@ const Shopping = ({}) => {
     <div
       style={{
         marginLeft: "50px",
-        background: "whitesmoke",
-        color: "red",
-        backgroundImage:
-          "url('https://img.freepik.com/premium-photo/abstract-blurred-gradient-nature-wallpaper-backgroundsoft-background-wallpaperdesigngraphic-presentation_532332-1415.jpg')",
-      backgroundSize:'cover'
-        }}
-      
+        background: "white",
+        color: "black",
+        //   backgroundImage:
+        //     "url('https://img.freepik.com/premium-photo/abstract-blurred-gradient-nature-wallpaper-backgroundsoft-background-wallpaperdesigngraphic-presentation_532332-1415.jpg')",
+        // backgroundSize:'cover'
+      }}
     >
-      <header style={{ marginTop: 150 }}></header>
-
       <section>
         <div className="container">
           <div className="row">
@@ -294,28 +288,28 @@ const Shopping = ({}) => {
                 </div>
                 <div></div>
               </div>
- {user && user.email ? (
-              <div className={styless.pricefilterdiv}>
-                <h1>FILTER BY PRICE</h1>
-                <br />
-                <input
-                  type="range"
-                  name=""
-                  min={lowestprice}
-                  max={highestPrice}
-                  id=""
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
-                  className={styless.inputprice}
-                />
-                <br /> <br />
-                <p>
-                  {" "}
-                  price {lowestprice} --{price}
-                </p>
-              </div>
- ):null}
+              {user && user.email ? (
+                <div className={styless.pricefilterdiv}>
+                  <h1>FILTER BY PRICE</h1>
+                  <br />
+                  <input
+                    type="range"
+                    name=""
+                    min={lowestprice}
+                    max={highestPrice}
+                    id=""
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
+                    className={styless.inputprice}
+                  />
+                  <br /> <br />
+                  <p>
+                    {" "}
+                    price {lowestprice} --{price}
+                  </p>
+                </div>
+              ) : null}
             </div>
 
             {/* Content */}
@@ -331,7 +325,10 @@ const Shopping = ({}) => {
                 </strong>
               </header>
 
-              <div className="row">
+              <div
+                className={`row , ${styless.pages}`}
+                style={{ color: "black" }}
+              >
                 {displayUsers}
 
                 <ReactPaginate
@@ -346,6 +343,7 @@ const Shopping = ({}) => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
