@@ -75,7 +75,7 @@ import httpService from "../Error Handling/httpService";
         <i className="fas fa-bars"></i>
       </div>
       <ul className={`${styles["navbar-menu"]} ${showMenu ? styles.show : ""}`}>
-        {user?.urType === "buyer" && (
+        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
           <li>
             <Link to="/" onClick={closeMenu}>
               HOME
@@ -92,7 +92,7 @@ import httpService from "../Error Handling/httpService";
               </Link>
             </li>
           )}
-        {user?.urType === "buyer" && (
+        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
           <li>
             <Link to="bloghome" onClick={closeMenu}>
               Blog
@@ -154,9 +154,15 @@ import httpService from "../Error Handling/httpService";
             </Link>
           )}
         </li>
+     {
+(user?.urType === "seller" || user?.urType === "admin") && <li style={{ height: "20px" }}>
+<MdOutlineNotificationsNone className='fa-lg' onClick={() => navigation('/notifications')} />
 
-        <MdOutlineNotificationsNone className='fa-lg' onClick={() => navigation('/notifications')} />
-      </ul>
+   </li>
+
+}   
+</ul>
+     
     </nav>
   );
 };
