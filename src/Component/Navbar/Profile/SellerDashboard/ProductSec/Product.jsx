@@ -89,7 +89,19 @@ export const ProductSec = () => {
       <div className="d-flex justify-content-center row">
         <div className="col-md-10">
           <div className="d-flex justify-content-center"></div>
-          {reqProducts.map((product) => (
+           {reqProducts.length === 0 ? (
+            <div className="row p-2 bg-white border rounded mt-2">
+              <div className="col-md-12 text-center">
+                <img
+                 
+                  src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692361382~exp=1692361982~hmac=ad51a1df0bb656b800860f3339a091ebf21dc19e7d3d334f2db23126f6c863e5"
+                  alt="No products available"
+                />
+                <p>No products available</p>
+              </div>
+            </div>
+          ) : (
+          reqProducts.map((product) => (
             <div
               key={product.Id}
               className="row p-2 bg-white border rounded mt-2"
@@ -186,7 +198,7 @@ export const ProductSec = () => {
                 />
               </div>
             </div>
-          ))}
+          )))}
         </div>
       </div>
       <div className="d-flex justify-content-center mt-3">

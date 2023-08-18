@@ -205,6 +205,7 @@ const ViewProduct = ({ setCartItems }) => {
   };
 
   return (
+    <div>
     <div className={`card ${styles.card}`}>
       {productDetails.map((product) => (
         <div className="row">
@@ -519,6 +520,7 @@ const ViewProduct = ({ setCartItems }) => {
 
       <SellerRelatedPro />
       <Footer />
+    </div>
     </div>
   );
 };

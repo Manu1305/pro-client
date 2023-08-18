@@ -41,3 +41,66 @@
     cursor: pointer;
   }
    */
+
+
+
+   .formdiv {
+    height: 500px;
+    width: 100%;
+    margin-left: 40px;
+   
+  }
+  .inputbox {
+    height: 50px;
+    width: 80%;
+    border-radius: 5px;
+    border: 1px solid #c0a7a7;
+    margin-top: 20px;
+  }
+  .button {
+    background-color: #c11232;
+    margin-top: 20px;
+    height: 50px;
+    width: 200px;
+    color: white;
+    font-weight: bolder;
+  }
+  .return {
+    display: flex;
+    flex-direction: row;
+  }
+  .divresponsive{
+   display: flex;
+   flex-direction: row;
+  }
+  
+  @media screen and (max-width:512px){
+    .formdiv {
+      margin: auto;
+      width:500px;
+      height: 100%;
+  
+    }
+    .inputbox {
+      height: 50px;
+      width: 200px;
+      border-radius: 5px;
+      border: 1px solid #c0a7a7;
+      margin-top: 20px;
+    }
+    .divresponsive{
+      display: flex;
+      flex-direction: column;
+     }
+     .responsiveinput{
+      width: 200px
+      ;
+      height: 50px;
+     }
+     .responsiveinput1{
+      width: 200px
+      ;
+      height: 50px;
+      margin-left: 0;
+     }
+  }

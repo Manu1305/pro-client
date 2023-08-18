@@ -106,7 +106,17 @@ export const ReturnReq = () => {
    
       {/* <p style={{ backgroundColor: "red" }}>AssignDelivery</p> */}
       <div>
-        {userData &&
+      {userData.length === 0 ? (
+          <div className="text-center">
+            <img
+              src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692363284~exp=1692363884~hmac=de0b653face09fa8fe1906c821c1210f4e5d3f6c7e0386e48da337ae429b3d7f" // Replace with the path to your empty image
+              alt="No return requests"
+              
+            />
+            <p>No return requests available.</p>
+          </div>
+        ) : (
+        userData &&
           userData.map((order, index) => (
             <div key={index} className="col-md-4">
               <Card className={`mb-4 ${styles.orderCard}`}>
@@ -155,7 +165,7 @@ export const ReturnReq = () => {
                 </Card.Body>
               </Card>
             </div>
-          ))}
+          )))}
       </div>
     </>
   );
