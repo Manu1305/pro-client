@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 import { MdMarkEmailRead, MdOutlineNotificationsNone } from "react-icons/md";
 import { apiURL } from "../../const/config";
 import httpService from "../Error Handling/httpService";
+import logo from '../../images/logo.png';
 
  const Navbar = ({ wishlist, cartItems }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -63,7 +64,7 @@ import httpService from "../Error Handling/httpService";
         <Link to="/" onClick={closeMenu} className={styles.heading}>
           {/* HITEC MART */}
           <img
-                src="../Image/loho.jpeg"
+                src={logo}
                 alt=""
                 style={{ width: "140px", height: "50px" }}
                 className={`rounded-circle ${styles.imgcircle}`}
