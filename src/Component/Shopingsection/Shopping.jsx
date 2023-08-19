@@ -47,7 +47,6 @@ const Shopping = ({}) => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
-
   // const handleNameFilterChange = (e) => {
   //   setNameFilter(e.target.value);
   // };
@@ -125,31 +124,47 @@ const Shopping = ({}) => {
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
-        <div key={data.id} className="col-lg-4 col-md-6 d-flex shadow-xl flex-wrap mb-5">
+        <div
+          key={data.id}
+          className="col-lg-4 col-md-6 d-flex shadow-xl flex-wrap mb-5"
+        >
           {" "}
-          <div className='shadow-md'>
+          <div className="shadow-md">
             <div>
-                <Link
-                  style={{ cursor: "pointer" }}
-                  to={`/ViewDetails/${data._id}`}
-                >
-                  <img
-                    src={data.images[0]}
-                    style={{height:320,width:305}}
-                    alt=""
-                  />
-                </Link>
+              <Link
+                style={{ cursor: "pointer" }}
+                to={`/ViewDetails/${data._id}`}
+              >
+                <img
+                  src={data.images[0]}
+                  style={{ height: 320, width: 305 }}
+                  alt=""
+                />
+              </Link>
             </div>
             {/* Description */}
 
             <div className={`card-body d-flex flex-column `}>
-              <div className="cart-title m-1" style={{textTransform:"uppercase"}}>{data.productDetail.brand}</div>
+              <div
+                className="cart-title m-1"
+                style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
+              >
+                {data.productDetail.brand}
+              </div>
               {user && user.email ? (
-                <div className=  "m-2 d-flex justify-content-between">
-                  <div className="" style={{fontWeight:"30px",fontFamily:"fantasy",}}>{data.productDetail.description}</div>
-                  <div className="mb-1 me-1 mx-4" style={{fontSize:"bolt"}}>&#8377; {data.sellingPrice} </div>
+                <div className="m-2 d-flex justify-content-between">
+                  <div className="mb-1 me-1 mx-4" style={{ fontSize: "bolt" }}>
+                    &#8377; {data.sellingPrice}{" "}
+                  </div>
                 </div>
-              ) : null}
+              ) : (
+                <div
+                  className="m-2"
+                  style={{ fontWeight: "30px", }}
+                >
+                  {data.productDetail.description}
+                </div>
+              )}
             </div>
           </div>
           {/* <div>
@@ -195,9 +210,11 @@ const Shopping = ({}) => {
   };
   return (
     <div
-      style={{
-        // background: "#f5f5f5",
-      }}
+      style={
+        {
+          // background: "#f5f5f5",
+        }
+      }
     >
       <div className="container">
         <div className="row p-3">
@@ -255,7 +272,7 @@ const Shopping = ({}) => {
                     <br />
                     <input
                       type="range"
-                      style={{background:"red"}}
+                      style={{ background: "red" }}
                       min={lowestprice}
                       max={highestPrice}
                       onChange={(e) => {
@@ -304,6 +321,16 @@ const Shopping = ({}) => {
               className={`row , ${styless.pages}`}
               style={{ color: "black" }}
             >
+              {/* 
+              <div>
+                {[1,2,3,4].map((ele) => {
+                  return (
+                    <div>
+
+                    </div>
+                  )
+                })}
+              </div> */}
               {displayUsers}
 
               <ReactPaginate

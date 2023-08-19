@@ -281,12 +281,6 @@ const BuyerConfirm = () => {
     }
   };
 
- 
-
-  useEffect(() => {
-    console.log(payType);
-  }, [payType]);
-
   if (cartItems.length === 0) {
     return (
       <div className="text-center" style={{ marginTop: "40px" }}>
