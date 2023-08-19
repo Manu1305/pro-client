@@ -6,8 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../../Redux/product/productAction";
-
-import Slider from "react-slick";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { useParams } from "react-router-dom";
@@ -49,7 +47,6 @@ const Shopping = ({}) => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const [flag, setFlag] = useState(false);
 
   // const handleNameFilterChange = (e) => {
   //   setNameFilter(e.target.value);
@@ -73,7 +70,6 @@ const Shopping = ({}) => {
     }
   }, [selectedCategory]);
 
-  const viewproductDetails = () => {};
   useEffect(() => {
     httpService
       .get(`${apiURL}/product/get-all-products`)
@@ -129,61 +125,67 @@ const Shopping = ({}) => {
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
-        <div key={data.id} className="col-lg-4 col-md-6 col-sm-6 d-flex ">
+        <div key={data.id} className="col-lg-4 col-md-6 d-flex shadow-xl flex-wrap mb-5">
           {" "}
-          <div className={`card w-100 my-2 shadow-2-strong`}>
-            <div className={styless["image-container"]}>
-              <div>
+          <div className='shadow-md'>
+            <div>
                 <Link
                   style={{ cursor: "pointer" }}
                   to={`/ViewDetails/${data._id}`}
                 >
                   <img
                     src={data.images[0]}
-                    className={styless["hover-image"]}
+                    style={{height:320,width:305}}
                     alt=""
-                    onClick={() => viewproductDetails(data)}
                   />
                 </Link>
-              </div>
-
-              <div className={styless["image-overlay"]}>
-                <p style={{ color: "red", fontFamily: "lolita" }}>
-                  {(
-                    ((data.realPrice - data.sellingPrice) / data.realPrice) *
-                    100
-                  ).toFixed(2)}
-                  % off
-                </p>
-              </div>
             </div>
+            {/* Description */}
 
             <div className={`card-body d-flex flex-column `}>
-              <p>{data.productDetail.brand}</p>
-              <p className={styless["card-text"]}>
-                {data.productDetail.description}
-              </p>
+              <div className="cart-title m-1" style={{textTransform:"uppercase"}}>{data.productDetail.brand}</div>
               {user && user.email ? (
-                <div className="d-flex flex-row">
-                  <h6 className="mb-1 me-1 mx-4">Rs. {data.sellingPrice}</h6>
-
-                  {data.productDetail.brand && (
-                    <small className="text-danger mx-3">
-                      <s>Rs. {data.realPrice}</s>
-                      <p style={{ color: "green", fontFamily: "lolita" }}>
-                        {(
-                          ((data.realPrice - data.sellingPrice) /
-                            data.realPrice) *
-                          100
-                        ).toFixed(2)}
-                        % off
-                      </p>
-                    </small>
-                  )}
+                <div className=  "m-2 d-flex justify-content-between">
+                  <div className="" style={{fontWeight:"30px",fontFamily:"fantasy",}}>{data.productDetail.description}</div>
+                  <div className="mb-1 me-1 mx-4" style={{fontSize:"bolt"}}>&#8377; {data.sellingPrice} </div>
                 </div>
               ) : null}
             </div>
           </div>
+          {/* <div>
+            <div class="card">
+              <img src={data.images[0]} class="card-img-top" alt="img" />
+
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" aria-hidden="true">
+              <img src="..." class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </h5>
+                <p class="card-text placeholder-glow">
+                  <span class="placeholder col-7"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-4"></span>
+                  <span class="placeholder col-6"></span>
+                  <span class="placeholder col-8"></span>
+                </p>
+                <a
+                  href="#"
+                  tabindex="-1"
+                  class="btn btn-primary disabled placeholder col-6"
+                ></a>
+              </div>
+            </div>
+          </div> */}
         </div>
       );
     });
@@ -194,14 +196,14 @@ const Shopping = ({}) => {
   return (
     <div
       style={{
-        background: "#EEEEEE",
+        // background: "#f5f5f5",
       }}
     >
       <div className="container">
-        <div className="row p-3 ml-n2">
+        <div className="row p-3">
           <div className="col-lg-3">
             <div className="card mb-5">
-              <div className={styless.cardbody}>
+              <div className="card-body mb-7">
                 <div style={{ color: "black", fontWeight: "bolder" }}>
                   PRODUCT CATEGORIES
                 </div>
@@ -253,19 +255,37 @@ const Shopping = ({}) => {
                     <br />
                     <input
                       type="range"
+                      style={{background:"red"}}
                       min={lowestprice}
                       max={highestPrice}
-                      id=""
                       onChange={(e) => {
                         setPrice(e.target.value);
                       }}
-                      className={styless.inputprice}
                     />
                     <br /> <br />
                     <p>
                       {" "}
-                      price {lowestprice} --{price}
+                      price {lowestprice}-{price}
                     </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-around",
+                      }}
+                    >
+                      <div>
+                        <button
+                          style={{
+                            background: "#BF0A2A",
+                            color: "white",
+                            width: "250px",
+                            height: "52px",
+                          }}
+                        >
+                          Filter
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ) : null}
               </div>
@@ -274,10 +294,6 @@ const Shopping = ({}) => {
 
           {/* Content */}
           <div className="col-lg-9">
-            <div
-              className="input-group mb-3"
-              style={{ borderRadius: "20px", width: "500px" }}
-            ></div>
             <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
               <strong className="d-block py-2">
                 Total {filteredProducts.length} items

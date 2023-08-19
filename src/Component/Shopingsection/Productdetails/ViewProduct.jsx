@@ -389,7 +389,8 @@ const ViewProduct = ({ setCartItems }) => {
                       Add to Cart
                     </button>
                     <button
-                      className={`btn btn-danger text-uppercase  mx-4 ${styles["add-to-cart"]}`}
+                      className={`text-uppercase  mx-4 ${styles["add-to-cart"]}`}
+                      style={{color:"#BF0A2A"}}
                     >
                       Buy
                     </button>

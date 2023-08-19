@@ -7,8 +7,8 @@ import { apiURL } from "../../../const/config";
 import NewAddress from "../NEwAddress/NewAddress";
 import { getUserAddress } from "../../../const/api";
 import { MDBRadio } from "mdb-react-ui-kit";
-import { Alert } from "../../Error Handling/Alert";
 import httpService from "../../Error Handling/httpService";
+import { toast } from "react-toastify";
 
 const BuyerConfirm = () => {
   const navigate = useNavigate();
@@ -86,6 +86,10 @@ const BuyerConfirm = () => {
 
   const GST = (5 * totalPrice) / 100;
 
+
+  const warningMsg = (message) => {
+    toast.warning(message)
+  }
   const placeOrderButton = async (paymentId, amount) => {
     try {
       const config = {
@@ -148,7 +152,7 @@ const BuyerConfirm = () => {
   const cashHandler = async () => {
     let keys = getApiKey();
 
-    const valid = Object.keys(deliveryAddress).length >= 0 && deliveryAddress.constructor === Object
+    const valid = Object.keys(deliveryAddress).length > 0
 
 
     console.log(valid)
@@ -206,7 +210,9 @@ const BuyerConfirm = () => {
       });
     } else {
       // alert("address or payment method")
-     return  <Alert/>
+      warningMsg("Plese selete address or add address")
+
+
     }
   };
 
@@ -215,8 +221,8 @@ const BuyerConfirm = () => {
     // api keys
     let keys = getApiKey();
 
-    const valid = Object.keys(deliveryAddress).length >= 0 && deliveryAddress.constructor === Object
-    console.log(deliveryAddress)
+    const valid = Object.keys(deliveryAddress).length > 0 
+    console.log(valid)
     if (
        valid &&
       payType !== ""
@@ -269,14 +275,13 @@ const BuyerConfirm = () => {
         alert(response.error.metadata.payment_id);
       });
     } else {
-      return  <Alert/>
+      // return  <Alert/>
+      warningMsg("Plese selete address or add address")
       
     }
   };
 
-  useEffect(() => {
-    console.log(deliveryAddress);
-  }, [deliveryAddress]);
+ 
 
   useEffect(() => {
     console.log(payType);
@@ -531,7 +536,7 @@ const BuyerConfirm = () => {
                } else if (payType === "Online Payment") {
                  onlineHandler();
                } else {
-                return <Alert message={"Please select address or payment"}/>
+                warningMsg("Please select Payement type")
 
                }
              }}
