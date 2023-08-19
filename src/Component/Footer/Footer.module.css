@@ -1,16 +1,12 @@
 
-/* .list-unstyled li {
-    display: block;
-    padding: 0;
-}
-.my-col:hover {
-    color: red;
-} */
-
 .main {
     height: 400px;
     width: 100%;
     background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
   }
   .one {
     height: 50%;
@@ -25,7 +21,6 @@
   .formbox {
     height: 70px;
     width: 450px;
-    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,6 +57,8 @@
   .two {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 50%;
     width: 100%;
     background-color: black;
@@ -133,7 +130,7 @@
   }
   @media screen and (max-width: 1000px) {
       .main{
-          height: 1300px;
+          height: 850px;
       }
       .one{
           height: 40%;

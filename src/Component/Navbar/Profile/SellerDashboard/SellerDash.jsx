@@ -152,7 +152,7 @@ const SellerDashboard = () => {
               </li>
             )}
 
-            {(user?.urType === "admin" || user?.urType === "seller") && (
+            {(user?.urType === "admin" ) && (
               <li
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("reversewith")}

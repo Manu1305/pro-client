@@ -92,7 +92,17 @@ const BuyerOrder = () => {
 
   return (
     <div className={`d-flex flex-wrap ${styles.tableWrapper}`}>
-      {orders.length && orders.map((order, index) => {
+    {orders.length === 0 ? (
+      <div className="text-center">
+        <img
+          src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692363614~exp=1692364214~hmac=50fdc191d0505493b2c65c16d41980e4a57366ab2612b582d5f03af7c5576ac3" // Replace with the path to your empty image
+          alt="No orders"
+         
+        />
+        <p>No orders available.</p>
+      </div>
+    ) : (
+      orders.length && orders.map((order, index) => {
           // const dateString = "2023-08-01T:36:25.914+00:00";
           const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
           const isExpRet = dateFromISOString > new Date();
@@ -201,7 +211,7 @@ const BuyerOrder = () => {
               </Card.Body>
             </Card>
           );
-        })}
+        }))}
     </div>
   );
 };

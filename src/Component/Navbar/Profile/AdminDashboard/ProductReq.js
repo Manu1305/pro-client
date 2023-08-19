@@ -162,8 +162,14 @@ export const ProductRequest = () => {
           Add New Product
         </Link>
       </div>
-      {rowData.length !== 0 && <DataTable columns={header} rows={rowData} />}
-
+      {rowData.length !== 0 ? (
+        <DataTable columns={header} rows={rowData} />
+      ) : (
+        <div className="text-center">
+          <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692361382~exp=1692361982~hmac=ad51a1df0bb656b800860f3339a091ebf21dc19e7d3d334f2db23126f6c863e5" alt="Empty" />
+          <p>No data available.</p>
+        </div>
+      )}
       <ReasonModal
         product={deleteProductId}
         show={modalShow}

@@ -43,8 +43,18 @@ const OrderHistory = () => {
 
   return (
     <div className={styles.tableWrapper}>
-      <div className={`d-flex  ${styles.tableWrapper}`}>
-        {orders.map((order, index) => (
+    <div className={`d-flex  ${styles.tableWrapper}`}>
+      {orders.length === 0 ? (
+        <div className="text-center">
+          <img
+            src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692361382~exp=1692361982~hmac=ad51a1df0bb656b800860f3339a091ebf21dc19e7d3d334f2db23126f6c863e5" // Replace with the path to your empty image
+            alt="No orders"
+           
+          />
+          <p>No orders available.</p>
+        </div>
+      ) : (
+        orders.map((order, index) => (
           <Card key={index} className={`m-2 ${styles.orderCard}`}>
             <Card.Body>
               <Card.Title>Order: {index + 1}</Card.Title>
@@ -121,7 +131,7 @@ const OrderHistory = () => {
               )}
             </Card.Body>
           </Card>
-        ))}
+        )))}
       </div>
     </div>
   );
