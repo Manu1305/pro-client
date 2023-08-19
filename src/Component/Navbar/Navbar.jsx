@@ -54,7 +54,7 @@ import httpService from "../Error Handling/httpService";
 
   return (
     <nav
-      className={styles.navbar}
+      className={`shadow-xl ${styles.navbar}`}
       style={{
         backgroundColor: scrollPosition > 0 ? "white" : "white",
       }}

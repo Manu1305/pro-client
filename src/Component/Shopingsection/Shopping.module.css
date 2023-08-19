@@ -109,19 +109,9 @@
   flex-direction: column;
   align-items: start;
 }
-.range {
-  width: 200px;
-  /* background-color: red; */
-  color: red;
-  outline: none;
-}
+
 /* CSS module */
-.range {
-  width: 200px;
-  background-color: red;
-  color: red;
-  outline: none;
-}
+
 
 .pages a {
   color: black;
@@ -130,19 +120,6 @@
   color: black;
 }
 
-.range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.range::after {
-  content: "100";
-  color: black;
-  font-size: 2rem;
-  position: absolute;
-  left: 80%;
-  top: 26%;
-}
 
 .pricefilterdiv {
   display: flex;
@@ -150,30 +127,18 @@
   justify-content: center;
   align-items: center;
 }
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: red;
-  cursor: pointer;
-  width: 15rem;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  background: red;
-  height: 0.5rem;
-}
 
-input[type="range"]::-moz-range-track {
+/* input[type="range"]::-moz-range-track {
   background: #053a5f;
   height: 0.5rem;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
+} */
+/* input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; 
   appearance: none;
-  margin-top: -12px; /* Centers thumb on the track */
+  margin-top: -12px; 
   background-color: black;
-  height: 2rem;
-  width: 1rem;
-}
+} */
+
 @media (max-width: 600px) {
   input[type="range"] {
     width: 80vw; /* Adjust the width as needed */
