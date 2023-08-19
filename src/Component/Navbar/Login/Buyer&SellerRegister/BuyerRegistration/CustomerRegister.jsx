@@ -141,7 +141,7 @@ const CustomerRegister = () => {
 
   return (
     <div>
-      <MDBContainer className="my-5">
+      <MDBContainer>
         <MDBCard>
           <MDBRow className="g-0">
             <MDBCol md="6">

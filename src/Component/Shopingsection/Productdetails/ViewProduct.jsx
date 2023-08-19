@@ -388,12 +388,11 @@ const ViewProduct = ({ setCartItems }) => {
                     >
                       Add to Cart
                     </button>
-                    <button
-                      className={`text-uppercase  mx-4 ${styles["add-to-cart"]}`}
-                      style={{color:"#BF0A2A"}}
+                    {/* <button
+                      className={`btn btn-danger text-uppercase  mx-4 ${styles["add-to-cart"]}`}
                     >
                       Buy
-                    </button>
+                    </button> */}
                   </>
                 ) : null}
                 {offerBtn ? (
@@ -471,7 +470,7 @@ const ViewProduct = ({ setCartItems }) => {
       ))}
 
       <SellerRelatedPro />
-      <Footer />
+      {/* <Footer /> */}
     </div>
     </div>
   );

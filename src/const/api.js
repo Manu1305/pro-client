@@ -52,7 +52,7 @@ const getUserAddress = async () => {
       .then(res => res)
       .catch((err) => {
         console.log(err)
-        alert("address error")
+        alert("address errorb")
 
       });
 

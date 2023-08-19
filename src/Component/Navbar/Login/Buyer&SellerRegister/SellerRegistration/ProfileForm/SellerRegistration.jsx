@@ -289,7 +289,7 @@ import { apiURL } from "../../../../../../const/config";
   }, [userFilledData]);
   return (
     <div>
-      <MDBContainer className="my-5">
+      <MDBContainer>
         <MDBCard>
           <MDBRow className="g-0">
             {/* {userData.map((data)=>{
