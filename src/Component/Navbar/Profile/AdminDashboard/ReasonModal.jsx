@@ -44,7 +44,7 @@ function ReasonModal(props) {
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={submitHandler}>Submit</Button>
+        <Button className="bg-red-700" onClick={submitHandler}>Submit</Button>
       </Modal.Footer>
     </Modal>
   );

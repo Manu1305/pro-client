@@ -4,7 +4,7 @@ function Saleandrevenue() {
   const data = [
     {
       icon: "fa fa-chart-line fa-3x text-primary",
-      label: "Sales Growing",
+      label: "Total Sales",
       value: "₹1234",
     },
     {

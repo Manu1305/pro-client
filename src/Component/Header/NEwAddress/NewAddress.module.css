@@ -42,7 +42,9 @@
   }
    */
 
-
+   .responsiveinput{
+    text-indent: 10px;
+   }
 
    .formdiv {
     height: 500px;
@@ -52,10 +54,11 @@
   }
   .inputbox {
     height: 50px;
-    width: 80%;
+    width: 68%;
     border-radius: 5px;
     border: 1px solid #c0a7a7;
     margin-top: 20px;
+    text-indent: 10px;
   }
   .button {
     background-color: #c11232;
@@ -73,13 +76,16 @@
    display: flex;
    flex-direction: row;
   }
-  
-  @media screen and (max-width:512px){
+  .responsiveinput1{
+   text-indent: 10px;
+   }
+
+   
+  @media screen and (max-width:712px){
     .formdiv {
       margin: auto;
       width:500px;
       height: 100%;
-  
     }
     .inputbox {
       height: 50px;
@@ -87,15 +93,17 @@
       border-radius: 5px;
       border: 1px solid #c0a7a7;
       margin-top: 20px;
+      text-indent: 10px;
     }
     .divresponsive{
       display: flex;
       flex-direction: column;
      }
      .responsiveinput{
-      width: 200px
+      width: 500px
       ;
       height: 50px;
+      text-indent: 10px;
      }
      .responsiveinput1{
       width: 200px

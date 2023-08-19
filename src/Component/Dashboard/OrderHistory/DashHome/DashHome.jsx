@@ -9,7 +9,7 @@ function DashHome() {
     <div>
       <Saleandrevenue />
       <SaleChart/>
-      <ChartData />
+      {/* <ChartData /> */}
       <Recentsales />
     </div>
   );

@@ -18,7 +18,7 @@ import DataTable from "../../../Data table/DataTable";
 import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiSolidShoppingBags } from "react-icons/bi";
-
+import toast, { Toaster } from 'react-hot-toast';
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
   const [productdetails, setproductdetails] = useState(false);
@@ -67,7 +67,7 @@ export const ProductRequest = () => {
       .then((res) => {
         console.log(res.data);
         getProducts();
-        alert("Removed");
+        toast("Removed");
       })
       .catch((err) => {
         console.log("ERROR", err);

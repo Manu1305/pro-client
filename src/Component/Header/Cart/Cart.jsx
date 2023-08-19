@@ -209,23 +209,24 @@ const Cart = ({ setCartItems }) => {
                       </div>
                     </div>
                   </div>
-                ))}
-              <h2>SubTotal: &#8377;{CartItem.subTotal}</h2>
+                ))} 
+                
+              <h2 className="text-black font-extrabold">SubTotal: &#8377;{CartItem.subTotal}</h2>
 
               <div
-                className="card"
-                style={{ display: "flex", alignItems: "center" }}
+                style={{ display: "flex",justifyContent:'center', alignItems: "center" }}
               >
-                <div className="card-body">
+                <div  className="mt-2" >
                   <Link to={`/confirm/${CartItem.subTotal}`}>
                     <button
                       type="button"
                       className="btn  btn-block btn-lg"
                       style={{
-                        backgroundColor: "red",
+                        backgroundColor: "#BF0A2A",
                         color: "white",
                         fontSize: "1rem",
-                        borderRadius: "0",
+                        borderRadius:"0",
+                        width:'300px'
                       }}
                     >
                       Proceed to Pay

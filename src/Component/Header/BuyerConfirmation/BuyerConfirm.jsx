@@ -33,8 +33,6 @@ const BuyerConfirm = () => {
 
   const getSavedAddress = async () => {
     const ans = await getUserAddress();
-
-    console.log(ans);
     setAddresses(ans);
     setShowForm(false);
   };
@@ -284,33 +282,9 @@ const BuyerConfirm = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="text-center" style={{ marginTop: "40px" }}>
-        <img
-          src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
-          alt="img"
-          style={{ maxWidth: "100%", height: "auto" }}
-        />
-        <Link to="/shoppingPage">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "30px",
-            }}
-          >
-            <button
-              style={{
-                backgroundColor: "green",
-                height: "50px",
-                width: "100px",
-                borderRadius: "40px",
-              }}
-            >
-              Shop Now
-            </button>
-          </div>
-        </Link>
-      </div>
+      <div className="spinner-border" style={{display:'flex',justifyContent:'center',alignItems:'center', height:'50px',width:'50px', margin:'auto'}} role="status">
+      <span className="sr-only">Loading...</span>
+    </div>
     );
   }
 
@@ -410,7 +384,7 @@ const BuyerConfirm = () => {
                ))}
              </div>
            ) : (
-             <NewAddress getSavedAddress={getSavedAddress} />
+             <NewAddress getSavedAddress={getSavedAddress}  />
            )}
          </div>
        </div>
