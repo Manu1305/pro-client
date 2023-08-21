@@ -95,7 +95,7 @@ import httpService from "../Error Handling/httpService";
         {(user?.urType !== "admin"|| user?.urType !== "seller") && (
           <li>
             <Link to="bloghome" onClick={closeMenu}>
-              Blog
+              BLOG
             </Link>
           </li>
         )}
@@ -145,12 +145,12 @@ import httpService from "../Error Handling/httpService";
           </li>
         )}
 
-        <li style={{ height: "20px" }}>
+        <li style={{ height: "20px" }} >
           {user && user.email ? (
-            <Profile />
+            <Profile closemenu={closeMenu} />
           ) : (
-            <Link to="login">
-              <FiUser />
+            <Link to="login"  onClick={closeMenu} style={{marginTop:'5px'}}  >
+              <FiUser style={{height:"20px",width:'20px'}} />
             </Link>
           )}
         </li>
