@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 // import {  MdNavigateNext } from "react-icons/md";
 import styles from "./Product.module.css";
 import SellerRelatedPro from "../SellerRelatedProduct/sellerRelatedPro";
-import { AiOutlineHeart } from "react-icons/ai";
-import { BsBookmark } from "react-icons/bs";
+import { AiOutlineHeart, AiOutlineMinusCircle } from "react-icons/ai";
 import { BiShareAlt } from "react-icons/bi";
 import { AiOutlineStar } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
@@ -14,29 +13,8 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
-import { Footer } from "../../Footer/Footer";
-
-// const SampleNextArrow = (props) => {
-//   const { onClick } = props;
-//   return (
-//     <div className={styles["control-btn"]} onClick={onClick}>
-//       <button className={styles.next}>
-//         <MdNavigateNext className={styles.icon} />
-//       </button>
-//     </div>
-//   );
-// };
-
-// const SamplePrevArrow = (props) => {
-//   const { onClick } = props;
-//   return (
-//     <div className={styles["control-btn"]} onClick={onClick}>
-//       <button className={styles.prev}>
-//         <GrFormPrevious className={styles.icon} />
-//       </button>
-//     </div>
-//   );
-// };
+import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 const ViewProduct = ({ setCartItems }) => {
   const categorySizes = {
@@ -47,7 +25,6 @@ const ViewProduct = ({ setCartItems }) => {
   };
   const { productId } = useParams();
   const user = useSelector((state) => state.userReducer.user);
-  console.log(user);
 
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [quantities, setQuantities] = useState({});
@@ -111,6 +88,34 @@ const ViewProduct = ({ setCartItems }) => {
     }
     setTotalQuantity(sum);
   };
+
+  const increaseHandler = (size) => {
+    console.log(quantities);
+    setQuantities((prev) => {
+      return {
+        ...prev,
+        [size]: !prev[size] ? 1 : Number(prev[size]) + 1,
+      };
+    });
+  };
+
+  const decreaseHandler = (size) => {
+    setQuantities((prev) => {
+      return {
+        ...prev,
+        [size]: !prev[size] && prev[size] === 0 ? 0 : Number(prev[size]) - 1,
+      };
+    });
+  };
+
+  useEffect(() => {
+    let sum = 0;
+    for (const size in quantities) {
+      sum += Number(quantities[size]);
+    }
+    setTotalQuantity(sum);
+  },[quantities])
+
   const storedProductData = useSelector(
     (state) => state.productReducer.product
   );
@@ -119,7 +124,6 @@ const ViewProduct = ({ setCartItems }) => {
     (product) => product._id === productId
   );
 
-  console.log("+_+_+_+__+========-=-", productDetails);
   // const settings = {
   //   infinite: true,
   //   speed: 500,
@@ -137,6 +141,8 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
 
+    console.log(totalQuantity)
+
     const sizeWithQuantity = {};
     Object.keys(quantities).forEach((key, index) => {
       const sizeKey = `size${index + 1}`;
@@ -146,6 +152,17 @@ const ViewProduct = ({ setCartItems }) => {
         quantities: parseInt(quantities[key]),
       };
     });
+
+    if(totalQuantity <= 5){
+      toast.warning("Minimum 5 quantity per order",{
+        position: "top-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        theme: "dark",
+      })
+    } else {
 
     try {
       await httpService
@@ -158,15 +175,16 @@ const ViewProduct = ({ setCartItems }) => {
           },
           config
         )
-        .then((err) => {
-          console.log(err);
+        .then((res) => {
+          console.log(res);
 
-          setCartItems(err.data.items.length);
+          setCartItems(res.data.items.length);
         })
         .catch((err) => console.log(err));
     } catch (error) {
       console.log(error);
     }
+  }
   };
 
   const offerBtnHandler = async () => {
@@ -205,7 +223,6 @@ const ViewProduct = ({ setCartItems }) => {
   };
 
   return (
-    <div>
     <div className={`card ${styles.card}`}>
       {productDetails.map((product) => (
         <div className="row">
@@ -235,10 +252,12 @@ const ViewProduct = ({ setCartItems }) => {
             <div className={`product`}>
               <div className={"mt-4"}>
                 <div className={styles.heads}>
-                  <h5 className={`text-uppercase brand ${styles.brand}`}>
-                    {product.productDetail.brand}
-                  </h5>
-                  <div className={styles.icons}>
+                  <div>
+                    <h5 className={`text-uppercase brand ${styles.brand}`}>
+                      {product.productDetail.brand}
+                    </h5>
+                  </div>
+                  <div className={`m-1 ${styles.icons}`}>
                     <div
                       className={styles.wishicon}
                       onClick={() => {
@@ -252,9 +271,6 @@ const ViewProduct = ({ setCartItems }) => {
                           <AiOutlineHeart className={styles.mainicon} />
                         )}
                       </div>
-                    </div>
-                    <div className={styles.tagandshare}>
-                      <BsBookmark />
                     </div>
                     <div className={styles.tagandshare}>
                       <BiShareAlt onClick={handleShare} />
@@ -302,7 +318,7 @@ const ViewProduct = ({ setCartItems }) => {
                   marginTop: "25px",
                 }}
               >
-                <div className={styles.color_Container}>
+                {/* <div className={styles.color_Container}>
                   <div className="m-1">
                     <h4 className={`about ${styles.about}`}>Choose a color</h4>
                   </div>
@@ -336,14 +352,14 @@ const ViewProduct = ({ setCartItems }) => {
                       style={{ background: "#124B88" }}
                     ></div>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className={`sizes ${styles.sizes}`}>
                 {product.selectedCategory && (
                   <div>
                     <label htmlFor="product_size">CHOOSE SIZE</label>
                     <div>
-                      <div className={styles.sizeresponsive}>
+                      <div className={`mt-1 ${styles.sizeresponsive}`}>
                         {product.selectedCategory &&
                           categorySizes[product.selectedCategory].map(
                             (size, index) => (
@@ -362,15 +378,36 @@ const ViewProduct = ({ setCartItems }) => {
                                   {size}
                                 </div>
 
-                                <input
-                                  type="text"
-                                  placeholder="Enter Qty"
-                                  style={{ width: "20%", }}
-                                  value={quantities[size]}
-                                  onChange={(e) =>
-                                    handleQuantityChange(size, e)
-                                  }
-                                />
+                                {/* <IoAddCircle/> */}
+                                <div className="mt-2 ml-8 d-flex flex-row align-items-center">
+                                  <div>
+                                    <AiOutlineMinusCircle
+                                      onClick={() => decreaseHandler(size)}
+                                    />
+                                  </div>
+
+                                  <div style={{ width: "20px" }}>
+                                    <input
+                                      type="text"
+                                      placeholder="Enter"
+                                      style={{
+                                        width: "20px",
+                                        textAlign: "center",
+                                      }}
+                                      value={
+                                        quantities[size]
+                                      }
+                                      onChange={(e) =>
+                                        handleQuantityChange(size, e)
+                                      }
+                                    />
+                                  </div>
+                                  <div>
+                                    <BsPlusCircle
+                                      onClick={() => increaseHandler(size)}
+                                    />
+                                  </div>
+                                </div>
                               </div>
                             )
                           )}
@@ -380,22 +417,17 @@ const ViewProduct = ({ setCartItems }) => {
                 )}
               </div>
 
-              <div className={`cart mt-4 align-items-center ${styles.cart}`}>
-                {totalQuantity >= 5 ? (
-                  <>
-                    <button
-                      className={`btn btn-danger text-uppercase mr-2 px-4 ${styles["add-to-cart"]}`}
-                      onClick={() => addtoCartButton(product)}
-                    >
-                      Add to Cart
-                    </button>
-                    {/* <button
-                      className={`btn btn-danger text-uppercase  mx-4 ${styles["add-to-cart"]}`}
-                    >
-                      Buy
-                    </button> */}
-                  </>
-                ) : null}
+              <div className={`mb-3 mt-4 align-items-center`}>
+                <>
+                  <button
+                    className={`text-uppercase mr-2 ${styles.add_to_cart}`}
+                    onClick={() => addtoCartButton(product)}
+                  >
+                    <BsHandbagFill className="mb-1 mr-3"/>
+                    Add to Cart
+                  </button>
+                  
+                </>
                 {offerBtn ? (
                   <div className="container m-4">
                     <div className="row justify-content-center">
@@ -417,19 +449,17 @@ const ViewProduct = ({ setCartItems }) => {
                   </div>
                 ) : null}
               </div>
-            </div>
-
-            <div className={styles.lasthead}>
+              <div className={styles.lasthead}>
               <div className={styles.headone}>
                 <div className={styles.oneone}>
                   <TbTruckDelivery />
                 </div>
                 <div>
                   <h4 className="font-bold mt-4">free delivery</h4>
-                  <input
+                  {/* <input
                     className="text-black"
                     placeholder="enter your postal code"
-                  />
+                  /> */}
                 </div>
               </div>
               <div className={styles.headone}>
@@ -438,12 +468,15 @@ const ViewProduct = ({ setCartItems }) => {
                 </div>
                 <div className={styles.onetwo}>
                   <h4 className="font-bold mt-4">Return delivery</h4>
-                  <span>Free 30 days Delivery Return.Details</span>
+                  <span>Free 3 days Delivery Return</span>
                 </div>
               </div>
             </div>
+            </div>
+
+            
           </div>
-          <div className={styles.tabs}>
+          <div className="m-2">
             <div
               // className={}
               onClick={() => setActiveTab("description")}
@@ -452,7 +485,7 @@ const ViewProduct = ({ setCartItems }) => {
             </div>
           </div>
           <div className={styles.descrip}>
-            <div className={styles.description}>
+            <div>
               <p className={`about ${styles.about}`}>Product description</p>
               <span className={styles["text1"]}>
                 {product.productDetail.description}
@@ -472,7 +505,6 @@ const ViewProduct = ({ setCartItems }) => {
 
       <SellerRelatedPro />
       {/* <Footer /> */}
-    </div>
     </div>
   );
 };

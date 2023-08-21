@@ -233,7 +233,6 @@ const Cart = ({ setCartItems }) => {
                             onClick={() => removeFromCart(item._id)}
                           >
                             <BsTrash className="h-10 w-10" />
-                            {/* <i className="fas fa-trash fa-lg"></i> */}
                           </button>
                         </div>
                       </div>

@@ -12,6 +12,7 @@ import { apiURL } from "../../../../const/config";
 import top1 from "../../../../images/top1.png";
 import top2 from "../../../../images/top2.png";
 import top3 from "../../../../images/top3.png";
+import httpService from "../../../Error Handling/httpService";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -69,7 +70,7 @@ const TrendingItems = ({ addToCart }) => {
 
 
   useEffect(() => {
-    axios
+   httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         const shuffledData = shuffleArray(res.data); // Shuffle the data

@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styless from "./productRequest.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import Slider from "react-slick";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdNavigateNext } from "react-icons/md";
 import httpService from "../../../Error Handling/httpService";
 import { addReqProduct } from "../../../../Redux/productBefore/productReqAction";
 import { useSelector, useDispatch } from "react-redux";
 import ReasonModal from "./ReasonModal";
 import { apiURL } from "../../../../const/config";
-import ProductModal from "./SellerOrder/Modal/ProduuctModal";
-import { BsFillTrashFill } from "react-icons/bs";
 import DataTable from "../../../Data table/DataTable";
 import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -23,10 +17,8 @@ import { ScaleLoader } from "react-spinners";
 
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
-  const [productdetails, setproductdetails] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
-  const [pro, setPro] = useState({});
   const [modalShow, setModalShow] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -79,7 +71,6 @@ export const ProductRequest = () => {
       .then((res) => {
         console.log(res.data);
         getProducts();
-        toast("Removed");
       })
       .catch((err) => {
         console.log("ERROR", err);

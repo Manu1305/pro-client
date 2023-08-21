@@ -48,12 +48,6 @@ const Shopping = ({}) => {
   const [pageNumber, setPageNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // const handleNameFilterChange = (e) => {
-  //   setNameFilter(e.target.value);
-  // };
-  const navigate = useNavigate();
-  const userId = useSelector((state) => state.userReducer.user?.email);
-
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
       setCategories([]);
@@ -70,22 +64,26 @@ const Shopping = ({}) => {
     }
   }, [selectedCategory]);
 
+  const getAllProducts = async () => {
+    await httpService.get(`${apiURL}/product/get-all-products`)
+    .then((res) => {
+      setData(res.data);
+      dispatch(addProduct(res.data));
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    })
+    .finally(() => {
+      setIsLoading(false); 
+    });
+  }
+
   useEffect(() => {
     setIsLoading(true);
-
-    httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        setData(res.data);
-        dispatch(addProduct(res.data));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      .finally(() => {
-        setIsLoading(false); 
-      });
+    getAllProducts();
   }, []);
+
+
 
   const sellingPrices = data.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
@@ -165,10 +163,7 @@ const Shopping = ({}) => {
                   </div>
                 </div>
               ) : (
-                <div
-                  className="m-2"
-                  style={{ fontWeight: "30px", }}
-                >
+                <div className="m-2" style={{ fontWeight: "30px" }}>
                   {data.productDetail.description}
                 </div>
               )}
