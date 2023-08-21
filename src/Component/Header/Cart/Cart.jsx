@@ -43,7 +43,7 @@ const Cart = ({ setCartItems }) => {
         },
       };
 
-     return await httpService
+      return await httpService
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           setCartItem(res.data);
@@ -104,7 +104,7 @@ const Cart = ({ setCartItems }) => {
       <section className="h-100" style={{ backgroundColor: "white" }}>
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-10" >
+            <div className="col-10">
               {/* <h2>Total {totalPrice}</h2> */}
               {CartItem.items.length > 0 &&
                 CartItem.items.map((item) => (
@@ -203,20 +203,24 @@ const Cart = ({ setCartItems }) => {
                             onClick={() => removeFromCart(item._id)}
                           >
                             <BsTrash className="h-10 w-10" />
-                            {/* <i className="fas fa-trash fa-lg"></i> */}
                           </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))} 
-                
-              <h2 className="text-black font-extrabold">SubTotal: &#8377;{CartItem.subTotal}</h2>
+                ))}
+              <h2 className="text-black font-extrabold">
+                SubTotal: &#8377;{CartItem.subTotal}
+              </h2>
 
               <div
-                style={{ display: "flex",justifyContent:'center', alignItems: "center" }}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <div  className="mt-2" >
+                <div className="mt-2">
                   <Link to={`/confirm/${CartItem.subTotal}`}>
                     <button
                       type="button"
@@ -225,8 +229,8 @@ const Cart = ({ setCartItems }) => {
                         backgroundColor: "#BF0A2A",
                         color: "white",
                         fontSize: "1rem",
-                        borderRadius:"0",
-                        width:'300px'
+                        borderRadius: "0",
+                        width: "300px",
                       }}
                     >
                       Proceed to Pay

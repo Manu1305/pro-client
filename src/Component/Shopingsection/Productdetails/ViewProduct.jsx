@@ -14,6 +14,7 @@ import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 const ViewProduct = ({ setCartItems }) => {
   const categorySizes = {
@@ -106,6 +107,14 @@ const ViewProduct = ({ setCartItems }) => {
     });
   };
 
+  useEffect(() => {
+    let sum = 0;
+    for (const size in quantities) {
+      sum += Number(quantities[size]);
+    }
+    setTotalQuantity(sum);
+  },[quantities])
+
   const storedProductData = useSelector(
     (state) => state.productReducer.product
   );
@@ -131,6 +140,8 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
 
+    console.log(totalQuantity)
+
     const sizeWithQuantity = {};
     Object.keys(quantities).forEach((key, index) => {
       const sizeKey = `size${index + 1}`;
@@ -140,6 +151,17 @@ const ViewProduct = ({ setCartItems }) => {
         quantities: parseInt(quantities[key]),
       };
     });
+
+    if(totalQuantity <= 5){
+      toast.warning("Minimum 5 quantity per order",{
+        position: "top-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        theme: "dark",
+      })
+    } else {
 
     try {
       await httpService
@@ -152,15 +174,16 @@ const ViewProduct = ({ setCartItems }) => {
           },
           config
         )
-        .then((err) => {
-          console.log(err);
+        .then((res) => {
+          console.log(res);
 
-          setCartItems(err.data.items.length);
+          setCartItems(res.data.items.length);
         })
         .catch((err) => console.log(err));
     } catch (error) {
       console.log(error);
     }
+  }
   };
 
   const offerBtnHandler = async () => {
@@ -371,7 +394,7 @@ const ViewProduct = ({ setCartItems }) => {
                                         textAlign: "center",
                                       }}
                                       value={
-                                        !quantities[size] ? 0 : quantities[size]
+                                        quantities[size]
                                       }
                                       onChange={(e) =>
                                         handleQuantityChange(size, e)
@@ -394,7 +417,6 @@ const ViewProduct = ({ setCartItems }) => {
               </div>
 
               <div className={`mb-3 mt-4 align-items-center`}>
-                {/* {totalQuantity >= 5 ? ( */}
                 <>
                   <button
                     className={`text-uppercase mr-2 ${styles.add_to_cart}`}
