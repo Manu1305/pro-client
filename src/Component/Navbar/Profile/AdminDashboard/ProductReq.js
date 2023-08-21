@@ -12,7 +12,6 @@ import DataTable from "../../../Data table/DataTable";
 import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiSolidShoppingBags } from "react-icons/bi";
-import toast, { Toaster } from 'react-hot-toast';
 import { ScaleLoader } from "react-spinners";
 
 export const ProductRequest = () => {
@@ -31,6 +30,9 @@ export const ProductRequest = () => {
       .post(`${apiURL}/product/requested-Products`, {
         type: user.urType,
         seller: user.email,
+
+
+        
       })
       .then((res) => {
         dispatch(addReqProduct(res.data));
