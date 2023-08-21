@@ -16,7 +16,7 @@ import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 
 const CustomerRegister = () => {
-   const history = useNavigate();
+  const history = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,10 +28,8 @@ const CustomerRegister = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmpasswordError, setConfirmPasswordError] = useState("");
-  
+
   const [phoneError, setPhoneError] = useState("");
-
-
 
   async function handleCustomerSignup(e) {
     e.preventDefault();
@@ -41,30 +39,28 @@ const CustomerRegister = () => {
       try {
         await httpService
           .post(`${apiURL}/user/signup`, {
-            userData: { name, email, password, phone, gst, urType: "buyer" }})
+            userData: { name, email, password, phone, gst, urType: "buyer" },
+          })
           .then((res) => {
-            
-            console.log(res)
-            if (res.data.message=="emailexist") {
+            console.log(res);
+            if (res.data.message == "emailexist") {
               Swal.fire({
-                icon: 'error',
-                title: 'Email already registered',
-               
-                footer: '<a href="/login">Go to Login page</a>'
-              })
-            } 
-             else if (res.data.message == "Phonexist") {
-               Swal.fire({
-                 icon: "error",
-                 title: "this phone already registered",
+                icon: "error",
+                title: "Email already registered",
 
-                 footer: '<a href="/login">Go to Login page</a>',
-               });
-             } else if (res.data.message == "success") {
-               history("/login");
-             }
+                footer: '<a href="/login">Go to Login page</a>',
+              });
+            } else if (res.data.message == "Phonexist") {
+              Swal.fire({
+                icon: "error",
+                title: "this phone already registered",
+
+                footer: '<a href="/login">Go to Login page</a>',
+              });
+            } else if (res.data.message == "success") {
+              history("/login");
+            }
           });
-    
       } catch (error) {
         console.log("Registration failed:", error);
         // Handle error, e.g., show an error message
@@ -80,7 +76,6 @@ const CustomerRegister = () => {
     let confirmpasswordError = "";
     let phoneError = "";
     let nameError = "";
-
 
     if (!name) {
       nameError = "Email address is required";
@@ -115,7 +110,6 @@ const CustomerRegister = () => {
     } else if (!/^[a-zA-Z\s]+$/.test(name)) {
       nameError = "Please enter a valid full name 😊";
     }
-  
 
     setNameError(nameError);
     setEmailError(emailError);
@@ -123,8 +117,6 @@ const CustomerRegister = () => {
     setNameError(nameError);
     setConfirmPasswordError(confirmpasswordError);
     setPhoneError(phoneError);
-
-
 
     if (
       emailError ||
@@ -145,7 +137,10 @@ const CustomerRegister = () => {
         <MDBCard>
           <MDBRow className="g-0">
             <MDBCol md="6">
-              <img src="https://e1.pxfuel.com/desktop-wallpaper/344/686/desktop-wallpaper-european-and-american-trend-fashion-clothing-shop-industrial-decor-backgrounds-3d-teen-clothing-store-wall-paper-murals.jpg" className={register.img1} />
+              <img
+                src="https://e1.pxfuel.com/desktop-wallpaper/344/686/desktop-wallpaper-european-and-american-trend-fashion-clothing-shop-industrial-decor-backgrounds-3d-teen-clothing-store-wall-paper-murals.jpg"
+                className={register.img1}
+              />
             </MDBCol>
             <MDBCol md="6">
               <MDBCardBody className="d-flex flex-column">
@@ -159,72 +154,95 @@ const CustomerRegister = () => {
                   Register as Customer
                 </h5>
                 {nameError && <div className="text-danger">{nameError}</div>}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Full name"
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                <div className="mb-4">
+                  <label htmlFor="formControlLg" className="mb-1">
+                    Full name
+                  </label>
+                  <MDBInput
+                    id="formControlLg"
+                    type="text"
+                    size="lg"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
                 {emailError && <div className="text-danger">{emailError}</div>}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Email address"
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <div className="mb-4">
+                  <label htmlFor="emailFormControlLg" className="mb-1">
+                    Email address
+                  </label>
+                  <MDBInput
+                    id="emailFormControlLg"
+                    type="email"
+                    size="lg"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
                 {passwordError && (
                   <div className="text-danger">{passwordError}</div>
                 )}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Password"
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {confirmpasswordError && (
-  <div className="text-danger">{confirmpasswordError}</div>
-)}
-                <MDBInput
-  wrapperclassName="mb-4"
-  label="Confirm Password"
-  id="formControlLg"
-  type="password"
-  size="lg"
-  value={confirmpassword}
-  onChange={(e) => setConfirmPassword(e.target.value)}
-/>
+                <div className="mb-4">
+                  <label htmlFor="passwordFormControlLg" className="mb-1">
+                    Password
+                  </label>
+                  <MDBInput
+                    id="passwordFormControlLg"
+                    type="password"
+                    size="lg"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
 
+                {confirmpasswordError && (
+                  <div className="text-danger">{confirmpasswordError}</div>
+                )}
+                <div className="mb-4">
+                  <label
+                    htmlFor="confirmPasswordFormControlLg"
+                    className="mb-1"
+                  >
+                    Confirm Password
+                  </label>
+                  <MDBInput
+                    id="confirmPasswordFormControlLg"
+                    type="password"
+                    size="lg"
+                    value={confirmpassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
 
                 {phoneError && <div className="text-danger">{phoneError}</div>}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Phone No."
-                  id="formControlLg"
-                  type="number"
-                  size="lg"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                  
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="GST No."
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={gst}
-                  onChange={(e) => setGst(e.target.value)}
-                />
-                   
+                <div className="mb-4">
+                  <label htmlFor="phoneFormControlLg" className="mb-1">
+                    Phone No.
+                  </label>
+                  <MDBInput
+                    id="phoneFormControlLg"
+                    type="tel"
+                    size="lg"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="gstFormControlLg" className="mb-1">
+                    GST No.
+                  </label>
+                  <MDBInput
+                    id="gstFormControlLg"
+                    type="text"
+                    size="lg"
+                    value={gst}
+                    onChange={(e) => setGst(e.target.value)}
+                  />
+                </div>
+
                 <button
                   className="btn btn-dark"
                   color="dark"
@@ -233,7 +251,7 @@ const CustomerRegister = () => {
                 >
                   Register
                 </button>
-                
+
                 <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                   Already have an account?{" "}
                   <Link to="/login" style={{ color: "#393f81" }}>
@@ -256,7 +274,5 @@ const CustomerRegister = () => {
     </div>
   );
 };
-
-
 
 export default CustomerRegister;
