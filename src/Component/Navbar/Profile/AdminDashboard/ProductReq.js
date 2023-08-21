@@ -19,6 +19,8 @@ import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiSolidShoppingBags } from "react-icons/bi";
 import toast, { Toaster } from 'react-hot-toast';
+import { ScaleLoader } from "react-spinners";
+
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
   const [productdetails, setproductdetails] = useState(false);
@@ -27,6 +29,8 @@ export const ProductRequest = () => {
   const [pro, setPro] = useState({});
   const [modalShow, setModalShow] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const navigate = useNavigate();
 
@@ -46,6 +50,14 @@ export const ProductRequest = () => {
   useEffect(() => {
     getProducts();
   }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+  
 
   const addToShop = async (id) => {
     await httpService
@@ -165,10 +177,18 @@ export const ProductRequest = () => {
       {rowData.length !== 0 ? (
         <DataTable columns={header} rows={rowData} />
       ) : (
-        <div className="text-center">
-          <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692361382~exp=1692361982~hmac=ad51a1df0bb656b800860f3339a091ebf21dc19e7d3d334f2db23126f6c863e5" alt="Empty" />
-          <p>No data available.</p>
-        </div>
+        <div style={{margin:'auto'}} >
+        {isLoading ? (
+         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+           <ScaleLoader  animation="border" role="status" color="red">
+             <span className="visually-hidden">Loading...</span>
+           </ScaleLoader >
+         
+         </div>
+       ) : (
+         <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+       )}
+       </div>
       )}
       <ReasonModal
         product={deleteProductId}

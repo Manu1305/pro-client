@@ -10,6 +10,9 @@ import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
+import { ScaleLoader } from "react-spinners";
+
+
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -35,7 +38,7 @@ const SamplePrevArrow = (props) => {
 
 export const ReturnReq = () => {
   const [userData, setUserData] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
 
 
   const getReturnReq = async () => {
@@ -100,6 +103,14 @@ export const ReturnReq = () => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
+   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+  
 
   return (
     <>
@@ -107,14 +118,18 @@ export const ReturnReq = () => {
       {/* <p style={{ backgroundColor: "red" }}>AssignDelivery</p> */}
       <div>
       {userData.length === 0 ? (
-          <div className="text-center">
-            <img
-              src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692363284~exp=1692363884~hmac=de0b653face09fa8fe1906c821c1210f4e5d3f6c7e0386e48da337ae429b3d7f" // Replace with the path to your empty image
-              alt="No return requests"
-              
-            />
-            <p>No return requests available.</p>
-          </div>
+          <div style={{margin:'auto'}} >
+       {isLoading ? (
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <ScaleLoader  animation="border" role="status" color="red">
+            <span className="visually-hidden">Loading...</span>
+          </ScaleLoader >
+        
+        </div>
+      ) : (
+        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+      )}
+      </div>
         ) : (
         userData &&
           userData.map((order, index) => (

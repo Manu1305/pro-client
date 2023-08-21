@@ -108,15 +108,15 @@ import httpService from "../Error Handling/httpService";
         )}
 
         {user?.urType === "buyer" && (
-          <li>
+          <li >
             {user && user.email ? (
               <Link to="Wish" onClick={closeMenu}>
-                <AiOutlineHeart />
+                <AiOutlineHeart style={{height:"20px",width:'20px'}} />
                 {wishlist.length === 0 ? "" : wishlist.length}
               </Link>
             ) : (
-              <Link to="login" onClick={closeMenu}>
-                <AiOutlineHeart />
+              <Link to="login" onClick={closeMenu}  >
+                <AiOutlineHeart style={{height:"20px",width:'20px'}} />
                 {wishlist.length === 0 ? "" : wishlist.length}
               </Link>
             )}
@@ -127,7 +127,7 @@ import httpService from "../Error Handling/httpService";
           <li>
             {user && user.email ? (
               <Link to="cart" onClick={closeMenu}>
-                <CgShoppingCart />
+                <CgShoppingCart style={{height:"20px",width:'20px'}} />
                 {cartItems != 0 ? (
                   <span className={styles.length1}>
                     {cartItems === 0 ? "" : cartItems}
@@ -138,7 +138,7 @@ import httpService from "../Error Handling/httpService";
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}>
-                <CgShoppingCart />
+                <CgShoppingCart style={{height:"20px",width:'20px'}} />
                 <span>{cartItems === 0 ? "" : cartItems}</span>
               </Link>
             )}

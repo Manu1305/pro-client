@@ -73,19 +73,22 @@ const Header = ({ productItems }) => {
     <div>
       <div className={header.container2}>
         <div className={header.category1}>
-          <Slider {...settings}>
-            {cards.map((item) => (
-              // <div className='boxs'>
-              <div
-                key={item.id}
-                style={{ position: "relative", display: "inline-block" }}
-              >
-                <img src={item.image} alt="cover" width="100%" />
+        <Slider {...settings}>
+  {cards.map((item) => (
+    <div
+      key={item.id}
+      style={{ position: "relative", display: "inline-block" }}
+    >
+      <img src={item.image} alt="cover" width="100%" />
 
-                <div className={header.overlay}>{/* <Search /> */}</div>
-              </div>
-            ))}
-          </Slider>
+      <div className={header.overlay}>
+       {/* <h1 className="text-black">hello world</h1> */}
+        {/* <div className="image-text">{item.text}</div> */}
+      </div>
+    </div>
+  ))}
+</Slider>
+
         </div>
       </div>
       <Who />

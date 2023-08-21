@@ -6,9 +6,12 @@ import Slider from "react-slick";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { Footer } from "../../Footer/Footer";
+import { ScaleLoader } from "react-spinners";
 
 const WishList = () => {
   const [wishLists, setWishLists] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const getWishproduct = async () => {
     try {
       const config = {
@@ -30,11 +33,19 @@ const WishList = () => {
       console.log("API Error", error);
     }
   };
-
+  useEffect(() => {
+ 
+  }, []);
   
   useEffect(() => {
     getWishproduct();
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
+
   useEffect(() => {
  
   }, [wishLists]);
@@ -76,33 +87,18 @@ const WishList = () => {
 
   if (wishLists.length === 0) {
     return (
-      <div className="text-center" style={{ marginTop: "40px" }}>
-        <img
-          src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=1380&t=st=1690882926~exp=1690883526~hmac=2030a8545c54e6e343b9cebfd005b160e7674b66c502082855027ae9081c2cea"
-          alt="empty"
-          style={{ maxWidth: "100%", height: "auto" }}
-        />
-        <Link to="/shoppingPage">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "30px",
-            }}
-          >
-            <button
-              style={{
-                backgroundColor: "green",
-                height: "50px",
-                width: "100px",
-                borderRadius: "40px",
-              }}
-            >
-              Shop Now
-            </button>
-          </div>
-        </Link>
-      </div>
+      <div style={{margin:'auto'}} >
+        {isLoading ? (
+         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+           <ScaleLoader  animation="border" role="status" color="red">
+             <span className="visually-hidden">Loading...</span>
+           </ScaleLoader >
+         
+         </div>
+       ) : (
+         <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+       )}
+       </div>
     );
   }
 
@@ -110,7 +106,7 @@ const WishList = () => {
     <>
       <section
         className="h-100"
-        style={{ backgroundColor: "#eee", marginTop: "100px" }}
+        style={{ backgroundColor: "#eee"}}
       >
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
@@ -129,7 +125,7 @@ const WishList = () => {
                      
                     }}
                   >
-                    \
+                    
                     <div className="card-body p-4">
                       <div className="row d-flex justify-content-between align-items-center">
                         <Link to={`/ViewDetails/${item._id}`}>

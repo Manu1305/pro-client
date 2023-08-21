@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addorder } from "../../../../Redux/order/orderAction";
 import { apiURL } from "../../../../const/config";
 import httpService from "../../../Error Handling/httpService";
-
+import ClipLoader from "react-spinners/ClipLoader";
+import { ScaleLoader } from "react-spinners";
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
@@ -15,6 +16,7 @@ const BuyerOrder = () => {
   const [editingIndex, setEditingIndex] = useState(-1);
   const [updatedAddress, setUpdatedAddress] = useState({});
   const [updatedStatus, setUpdatedStatus] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
   const handleEditClick = (index) => {
     setEditingIndex(index);
@@ -71,38 +73,49 @@ const BuyerOrder = () => {
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
-          console.log(res);
-          return res.data;
+          console.log(res)
+          return res.data
         })
         .catch((err) => {
           console.log(err);
         });
-      console.log(res);
-      debugger;
+        console.log(res)
+        debugger
       dispatch(addorder(res));
       setOrders(res);
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
 
+    return () => clearTimeout(timer);
+  }, []);
+  
   useEffect(() => {
     getOrders();
   }, []);
 
   return (
     <div className={`d-flex flex-wrap ${styles.tableWrapper}`}>
-      {orders.length === 0 ? (
-        <div className="text-center">
-          <img
-            src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692363614~exp=1692364214~hmac=50fdc191d0505493b2c65c16d41980e4a57366ab2612b582d5f03af7c5576ac3" // Replace with the path to your empty image
-            alt="No orders"
-          />
-          <p>No orders available.</p>
+    {orders.length === 0 ? (
+      <div style={{margin:'auto'}} >
+       {isLoading ? (
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <ScaleLoader  animation="border" role="status" color="red">
+            <span className="visually-hidden">Loading...</span>
+          </ScaleLoader >
+          <p>Loading orders...</p>
         </div>
       ) : (
-        orders.length &&
-        orders.map((order, index) => {
+        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+      )}
+      </div>
+    ) : (
+      orders.length && orders.map((order, index) => {
           // const dateString = "2023-08-01T:36:25.914+00:00";
           const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
           const isExpRet = dateFromISOString > new Date();
@@ -190,10 +203,10 @@ const BuyerOrder = () => {
                     order.orderStatus !== "Return Successful" &&
                     order.orderStatus !== "confirm Return" && (
                       <>
-                        {/* <button className="btn btn-warning my-2">
+                        <button className="btn btn-warning my-2">
                           CHANGE ADDRESS
-                        </button> */}
-                        <button className="btn btn-danger" onClick={() => {alert("Need to work")}}>CANCEL ORDER</button>
+                        </button>
+                        <button className="btn btn-danger">CANCEL ORDER</button>
                       </>
                     )}
 
@@ -211,8 +224,7 @@ const BuyerOrder = () => {
               </Card.Body>
             </Card>
           );
-        })
-      )}
+        }))}
     </div>
   );
 };

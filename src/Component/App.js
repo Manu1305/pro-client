@@ -52,6 +52,7 @@ import ShoppingPage from "./Shopingsection/Shopping";
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
+import { ScaleLoader } from "react-spinners";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -105,7 +106,7 @@ const App = () => {
             {/* <Route path="/Cart" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyCart />
             </React.Suspense>} /> */}
 
-            <Route path="/Cart" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyCart />
+            <Route path="/Cart" element={<React.Suspense fallback={<div><ScaleLoader/></div>}> <LazyCart />
             </React.Suspense>} />
 
             <Route path="/dashboard" element={<React.Suspense fallback={<div>Loading... </div>}> <LazySellerDashboard />
@@ -157,7 +158,7 @@ const App = () => {
               element={<Changepassword />}
             />
             <Route path="/passwordupdate" element={<EmailCheck />} />
-            <Route path="Wish" element={<Wish />} />
+            <Route path="Wish" element={<Wish  setCartItems={setCartItems}  />} />
             <Route path="notifications" element={<Notification />} />
 
             {/* <Route path="AdminHome" element={<AdminDashboard />} /> */}

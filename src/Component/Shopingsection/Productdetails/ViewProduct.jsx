@@ -87,8 +87,9 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
     try {
+      
       await httpService.post(
-        "http://localhost:8000/wish/update-wish",
+        `${apiURL}/wish/update-wish`,
         {
           productId,
         },

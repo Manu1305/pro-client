@@ -5,12 +5,15 @@ import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import DataTable from "../../../../Data table/DataTable";
 import { useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
+
+
 
 const SellerOrder = () => {
   const user = useSelector((state) => state.userReducer.user);
   const [orders, setOrders] = useState([]);
   const [deleteProductId, setDeleteProductId] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const getOrders = async () => {
@@ -34,6 +37,15 @@ const SellerOrder = () => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
 
   const addToDelivery = async (id) => {
     await httpService
@@ -216,9 +228,22 @@ const SellerOrder = () => {
 
   return (
     <div style={{ marginLeft: "-150px"}}>
-      <div>
-        {rowData.length !== 0 && (
+       <div>
+        {rowData.length !== 0 ? (
           <DataTable columns={header} rows={rowData} autoHeight />
+        ) : (
+          <div style={{margin:'auto'}} >
+       {isLoading ? (
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <ScaleLoader  animation="border" role="status" color="red">
+            <span className="visually-hidden">Loading...</span>
+          </ScaleLoader
+ >
+        </div>
+      ) : (
+        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+      )}
+      </div>
         )}
       </div>
     </div>
