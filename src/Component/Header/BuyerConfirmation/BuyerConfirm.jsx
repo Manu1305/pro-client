@@ -279,12 +279,6 @@ const BuyerConfirm = () => {
     }
   };
 
- 
-
-  useEffect(() => {
-    console.log(payType);
-  }, [payType]);
-
   if (cartItems.length === 0) {
     return (
       <div className="spinner-border" style={{display:'flex',justifyContent:'center',alignItems:'center', height:'50px',width:'50px', margin:'auto'}} role="status">

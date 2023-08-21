@@ -12,7 +12,6 @@ import { AiOutlineStar } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
 import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
-import Review from "./Review/Review";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { Footer } from "../../Footer/Footer";
