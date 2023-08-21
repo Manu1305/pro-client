@@ -47,12 +47,6 @@ const Shopping = ({}) => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
-  // const handleNameFilterChange = (e) => {
-  //   setNameFilter(e.target.value);
-  // };
-  const navigate = useNavigate();
-  const userId = useSelector((state) => state.userReducer.user?.email);
-
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
       setCategories([]);
@@ -69,8 +63,8 @@ const Shopping = ({}) => {
     }
   }, [selectedCategory]);
 
-  useEffect(() => {
-    httpService
+  const getAllProducts = async () => {
+    await httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         setData(res.data);
@@ -79,7 +73,12 @@ const Shopping = ({}) => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  };
+  useEffect(() => {
+    getAllProducts();
   }, []);
+
+
 
   const sellingPrices = data.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
@@ -158,10 +157,7 @@ const Shopping = ({}) => {
                   </div>
                 </div>
               ) : (
-                <div
-                  className="m-2"
-                  style={{ fontWeight: "30px", }}
-                >
+                <div className="m-2" style={{ fontWeight: "30px" }}>
                   {data.productDetail.description}
                 </div>
               )}

@@ -3,18 +3,17 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styless from "./NewArrival.module.css";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdNavigateNext } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { apiURL } from "../../../../../const/config";
+import httpService from "../../../../Error Handling/httpService";
+
 const NewData = ({ productItems }) => {
-  const [count, setCount] = useState(0)
+
   const [data,setData]=useState([])
-  const increment = () => {
-    setCount(count + 1)
-  }
+
   const settings = {
     dots: true,
     infinite: true,
@@ -42,12 +41,11 @@ const NewData = ({ productItems }) => {
     ],
   };
   useEffect(() => {
-    axios
+    httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         
         console.log(res.data)
-        // dispatch(addProduct(res.data));
         const currentDate = new Date()
         const newProducts=res.data.filter(
           (product)=> new Date(product.createDate)<=currentDate
@@ -66,10 +64,6 @@ const NewData = ({ productItems }) => {
           {data &&
             data.map((productItems) => (
               <div className={styless.mains}>
-               
-
-               
-               
                 <div className={styless.customerheading}>
                    <Link  to={`/ViewDetails/${productItems._id}`} >
                   <div className={`${styless.card}`}>
@@ -79,13 +73,11 @@ const NewData = ({ productItems }) => {
                   </Link>
                 </div>
                 <h5 className={styless.title}>{productItems.productDetail.brand}</h5>
-                {/* <span className={styless.description}> */}
                 <Link style={{textDecoration:'none'}}>
                   <p>Explore Now!</p>
                 </Link>
                
               </div>
-              // </div>
             ))}
         </Slider>
       </div>
