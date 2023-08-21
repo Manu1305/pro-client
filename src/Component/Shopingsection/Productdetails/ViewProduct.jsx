@@ -419,13 +419,13 @@ const ViewProduct = ({ setCartItems }) => {
 
               <div className={`mb-3 mt-4 align-items-center`}>
                 <>
-                  <button
+                  {user?.email &&<button
                     className={`text-uppercase mr-2 ${styles.add_to_cart}`}
                     onClick={() => addtoCartButton(product)}
                   >
                     <BsHandbagFill className="mb-1 mr-3"/>
                     Add to Cart
-                  </button>
+                  </button>}
                   
                 </>
                 {offerBtn ? (
@@ -476,14 +476,15 @@ const ViewProduct = ({ setCartItems }) => {
 
             
           </div>
-          <div className="m-2">
+          {/* <div className="ml-3"> */}
             <div
-              // className={}
+              className='ml-3'
               onClick={() => setActiveTab("description")}
             >
               <h3 className={styles.activeHeading}>Description</h3>
             </div>
-          </div>
+          
+            <div style={{borderTop: "0.4rem solid #bf0a2a",width:"95%",margin:'auto'}}></div>
           <div className={styles.descrip}>
             <div>
               <p className={`about ${styles.about}`}>Product description</p>
@@ -500,6 +501,7 @@ const ViewProduct = ({ setCartItems }) => {
               </span>
             </div>
           </div>
+          {/* </div> */}
         </div>
       ))}
 
