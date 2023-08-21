@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import { apiURL } from "../../const/config";
 import httpService from "../Error Handling/httpService";
 import { Footer } from "../Footer/Footer";
-
+import { GridLoader,RiseLoader, ScaleLoader} from "react-spinners";
 const SampleNextArrow = (props) => {
   const { onClick } = props;
   return (
@@ -46,6 +46,7 @@ const Shopping = ({}) => {
   const [categories, setCategories] = useState([]);
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -64,17 +65,21 @@ const Shopping = ({}) => {
   }, [selectedCategory]);
 
   const getAllProducts = async () => {
-    await httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        setData(res.data);
-        dispatch(addProduct(res.data));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
+    await httpService.get(`${apiURL}/product/get-all-products`)
+    .then((res) => {
+      setData(res.data);
+      dispatch(addProduct(res.data));
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    })
+    .finally(() => {
+      setIsLoading(false); 
+    });
+  }
+
   useEffect(() => {
+    setIsLoading(true);
     getAllProducts();
   }, []);
 
@@ -115,11 +120,12 @@ const Shopping = ({}) => {
     // prevArrow: <SamplePrevArrow />,
   };
 
+  
+
   const usersPerpage = 5;
   const pagesVisited = pageNumber * usersPerpage;
 
   const displayUsers = filteredProducts
-
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
@@ -163,40 +169,7 @@ const Shopping = ({}) => {
               )}
             </div>
           </div>
-          {/* <div>
-            <div class="card">
-              <img src={data.images[0]} class="card-img-top" alt="img" />
-
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
-            </div>
-
-            <div class="card" aria-hidden="true">
-              <img src="..." class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title placeholder-glow">
-                  <span class="placeholder col-6"></span>
-                </h5>
-                <p class="card-text placeholder-glow">
-                  <span class="placeholder col-7"></span>
-                  <span class="placeholder col-4"></span>
-                  <span class="placeholder col-4"></span>
-                  <span class="placeholder col-6"></span>
-                  <span class="placeholder col-8"></span>
-                </p>
-                <a
-                  href="#"
-                  tabindex="-1"
-                  class="btn btn-primary disabled placeholder col-6"
-                ></a>
-              </div>
-            </div>
-          </div> */}
+          
         </div>
       );
     });
@@ -205,12 +178,16 @@ const Shopping = ({}) => {
     setPageNumber(selected);
   };
   return (
+    <div>
+    {isLoading ? ( // Conditionally render a loading spinner
+      <div className={styless.loadingSpinner}>
+        <ScaleLoader color="red" style={{display:"flex",justifyContent:'center',alignItems:'center',margin:'auto'}}
+ animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </ScaleLoader>
+      </div>
+    ) : (
     <div
-      style={
-        {
-          // background: "#f5f5f5",
-        }
-      }
     >
       <div className="container">
         <div className="row p-3">
@@ -342,6 +319,9 @@ const Shopping = ({}) => {
       </div>
       <Footer />
     </div>
+    )}
+    </div>
+    
   );
 };
 

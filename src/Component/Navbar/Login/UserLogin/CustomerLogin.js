@@ -136,6 +136,9 @@ const CustomerLogin = () => {
                         Sign into your account
                       </h5>
                       <div className="form-outline mb-4">
+                      <label className="form-label" for="form2Example17">
+                          Email address
+                        </label>
                         <input
                           type="email"
                           id="form2Example17"
@@ -143,12 +146,14 @@ const CustomerLogin = () => {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           error={emailError}
+                          placeholder="please enter your email address..."
                         />
-                        <label className="form-label" for="form2Example17">
-                          Email address
-                        </label>
+                        
                       </div>
                       <div className="form-outline mb-4">
+                      <label className="form-label" for="form2Example27">
+                          Password
+                        </label>
                         <input
                           type="password"
                           id="form2Example27"
@@ -156,10 +161,9 @@ const CustomerLogin = () => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           error={passwordError}
+                          placeholder="please enter your password..."
                         />
-                        <label className="form-label" for="form2Example27">
-                          Password
-                        </label>
+                        
                       </div>
                       <div className="pt-1 mb-4">
                         <button
