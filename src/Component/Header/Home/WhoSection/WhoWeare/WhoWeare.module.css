@@ -48,6 +48,9 @@ float: left;
 margin-top: 20px;
 }
 
+.mainheading:hover{
+    display: none;
+}
 
 @media (max-width: 1280px) {
     .one{

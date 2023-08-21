@@ -49,7 +49,9 @@
     margin-top: 30px;
     border-radius: 10px;
   }
-  
+  .one{
+    width: 500px;
+  }
   @media (max-width: 768px) {
     .main {
       width: 90%; 

@@ -7,9 +7,13 @@ import { apiURL } from "../../../const/config";
 import Styles from "./cart.module.css";
 import { BsTrash } from "react-icons/bs";
 import httpService from "../../Error Handling/httpService";
+import { ScaleLoader } from "react-spinners";
+ 
+
 
 const Cart = ({ setCartItems }) => {
   const [CartItem, setCartItem] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const removeFromCart = async (id) => {
     try {
@@ -46,10 +50,14 @@ const Cart = ({ setCartItems }) => {
      return await httpService
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
-          setCartItem(res.data);
-          setCartItems(res.data.items.length);
+          if (res.data.Message === "Your cart is empty...!") {
+            setCartItem([])
+          } else {
+            console.log(res.data);
+            setCartItem(res.data);
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.config.message));
     } catch (error) {
       console.log("API Error", error);
     }
@@ -57,9 +65,14 @@ const Cart = ({ setCartItems }) => {
 
   useEffect(() => {
     getCarts();
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  if (CartItem.length === 0) {
+  if (CartItem.subTotal === 0) {
     return (
       <div className="text-center">
         {/* <img
@@ -67,7 +80,7 @@ const Cart = ({ setCartItems }) => {
           alt="empty"
           style={{ maxWidth: "100%", height: "auto" }}
         /> */}
-        x
+        
         <Link to="/shoppingPage">
           <div
             style={{
@@ -76,7 +89,18 @@ const Cart = ({ setCartItems }) => {
               marginTop: "30px",
             }}
           >
-            <button
+             <div style={{margin:'auto'}} >
+        {isLoading ? (
+         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+           <ScaleLoader  animation="border" role="status" color="red">
+             {/* <span className="visually-hidden">Loading...</span> */}
+           </ScaleLoader >
+         
+         </div>
+       ) : (
+        <div>
+ <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+ <button
               style={{
                 backgroundColor: "green",
                 height: "50px",
@@ -86,6 +110,12 @@ const Cart = ({ setCartItems }) => {
             >
               Shop Now
             </button>
+        </div>
+        
+       
+       )}
+       </div>
+           
           </div>
         </Link>
       </div>
@@ -106,7 +136,7 @@ const Cart = ({ setCartItems }) => {
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-10" >
               {/* <h2>Total {totalPrice}</h2> */}
-              {CartItem.items.length > 0 &&
+              {CartItem.items?.length  &&
                 CartItem.items.map((item) => (
                   <div className={Styles.cartDiv} key={item._id}>
                     <div className="card-body p-4">
@@ -209,31 +239,38 @@ const Cart = ({ setCartItems }) => {
                       </div>
                     </div>
                   </div>
-                ))} 
-                
-              <h2 className="text-black font-extrabold">SubTotal: &#8377;{CartItem.subTotal}</h2>
+                ))}
 
-              <div
-                style={{ display: "flex",justifyContent:'center', alignItems: "center" }}
-              >
-                <div  className="mt-2" >
-                  <Link to={`/confirm/${CartItem.subTotal}`}>
-                    <button
-                      type="button"
-                      className="btn  btn-block btn-lg"
-                      style={{
-                        backgroundColor: "#BF0A2A",
-                        color: "white",
-                        fontSize: "1rem",
-                        borderRadius:"0",
-                        width:'300px'
-                      }}
-                    >
-                      Proceed to Pay
-                    </button>
-                  </Link>
-                </div>
+              {CartItem.items?.length &&
+              <><h2 className="text-black font-extrabold">
+              SubTotal: &#8377;{CartItem.subTotal}
+            </h2>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div className="mt-2">
+                <Link to={`/confirm/${CartItem.subTotal}`}>
+                  <button
+                    type="button"
+                    className="btn  btn-block btn-lg"
+                    style={{
+                      backgroundColor: "#BF0A2A",
+                      color: "white",
+                      fontSize: "1rem",
+                      borderRadius: "0",
+                      width: "300px",
+                    }}
+                  >
+                    Proceed to Pay
+                  </button>
+                </Link>
               </div>
+            </div></>}
             </div>
           </div>
         </div>

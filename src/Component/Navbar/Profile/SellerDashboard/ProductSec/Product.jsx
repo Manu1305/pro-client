@@ -13,12 +13,13 @@ import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import ReasonModal from "../../AdminDashboard/ReasonModal";
 import {toast} from 'react-toastify';
+import { ScaleLoader } from "react-spinners";
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
   const [quantityModal, setQuantityModal] = useState(false);
   const [modalShow, setModalShow] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
 
   const getProducts = async () => {
@@ -41,6 +42,14 @@ export const ProductSec = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
+    useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [])
 
   // add qunatity
 
@@ -90,16 +99,18 @@ export const ProductSec = () => {
         <div className="col-md-10">
           <div className="d-flex justify-content-center"></div>
            {reqProducts.length === 0 ? (
-            <div className="row p-2 bg-white border rounded mt-2">
-              <div className="col-md-12 text-center">
-                <img
-                 
-                  src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692361382~exp=1692361982~hmac=ad51a1df0bb656b800860f3339a091ebf21dc19e7d3d334f2db23126f6c863e5"
-                  alt="No products available"
-                />
-                <p>No products available</p>
-              </div>
-            </div>
+            <div style={{margin:'auto'}} >
+       {isLoading ? (
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <ScaleLoader  animation="border" role="status" color="red">
+            <span className="visually-hidden">Loading...</span>
+          </ScaleLoader >
+          
+        </div>
+      ) : (
+        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+      )}
+      </div>
           ) : (
           reqProducts.map((product) => (
             <div
