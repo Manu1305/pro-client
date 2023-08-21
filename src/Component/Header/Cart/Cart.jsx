@@ -8,7 +8,7 @@ import Styles from "./cart.module.css";
 import { BsTrash } from "react-icons/bs";
 import httpService from "../../Error Handling/httpService";
 import { ScaleLoader } from "react-spinners";
- 
+ import Swal from "sweetalert2";
 
 
 const Cart = ({ setCartItems }) => {
@@ -16,26 +16,44 @@ const Cart = ({ setCartItems }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const removeFromCart = async (id) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      await httpService
-        .delete(`${apiURL}/cart/delete-cart-item/${id}`, config)
-        .then((res) => {
-          console.log(res);
-          getCarts();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          };
+    
+           httpService
+            .delete(`${apiURL}/cart/delete-cart-item/${id}`, config)
+            .then((res) => {
+              console.log(res);
+              getCarts();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } catch (error) {
+          console.error("Error removing item from cart:", error);
+        }
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+    
   };
 
   const getCarts = async () => {

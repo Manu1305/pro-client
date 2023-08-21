@@ -208,7 +208,7 @@ body {
   }
   .descrip {
     margin: 40px;
-    border-top: 0.3rem solid rgb(235, 13, 13);
+    border-top: 0.3rem solid rgb(141, 137, 137);
     width: 80%;
     margin-right: 20px;
 
@@ -271,7 +271,6 @@ body {
 } */
 @media (min-width: 100px) and (max-width: 640px) {
   .tottal {
-    
     margin: 10px;
     margin-left: -1rem;
     display: flex;
@@ -299,7 +298,7 @@ body {
 .add_to_cart {
   display: flex;
   flex-direction: row;
-  background-color: #BF0A2A;
+  background-color: #bf0a2a;
   border-radius: 0rem;
   width: 370px;
   height: 65px;
@@ -308,10 +307,9 @@ body {
   align-items: center;
 }
 .descrip {
-  border-top: 0.4rem solid rgb(235, 13, 13);
-  /* width: 100%; */
-  width: 99%;
-  /* margin-right: 30rem; */
+  
+  margin-left: 12px;
+  width: 98%;
 }
 .text1 {
   font-weight: 0.1rem;
