@@ -94,17 +94,7 @@ const App = () => {
             }
           />
           <Route path="/dashboard" element={<SellerDashboard />} />
-          {/* <Route
-            path="/cart"
-            element={
-              <Cart
-                   
-              setCartItems={setCartItems}
-              />
-            }
-          /> */}
-            {/* <Route path="/Cart" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyCart />
-            </React.Suspense>} /> */}
+         
 
             <Route path="/Cart" element={<React.Suspense fallback={<div><ScaleLoader/></div>}> <LazyCart />
             </React.Suspense>} />

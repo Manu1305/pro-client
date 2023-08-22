@@ -145,7 +145,7 @@ const ViewProduct = ({ setCartItems }) => {
       };
     });
 
-    if(totalQuantity <= 5){
+    if(totalQuantity < 5){
       toast.warning("Minimum 5 quantity per order",{
         position: "top-center",
         autoClose: 2500,
