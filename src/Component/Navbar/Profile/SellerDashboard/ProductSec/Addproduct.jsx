@@ -331,16 +331,16 @@ const AddProduct = () => {
            
            <div   className={styles.respo} >
 
-         <div>
+         <div className={styles.labelinput}>
           
      
-            <label className="control-label font-extrabold" for="product_id">
+            <label className={styles.label} for="product_id">
               PRODUCT ID
             </label>
             {productIdError && (
                 <span className="help-block text-danger">{productIdError}</span>
               )}
-            <div className="input-wrapper">
+            <div >
               <input
                 id="product_id"
                 name="product_id"
@@ -357,13 +357,13 @@ const AddProduct = () => {
 
 
           <div className="ml-3">
-            <label className="control-label font-extrabold" for="product_name">
+            <label className={styles.label} for="product_name">
               PRODUCT BRAND
             </label>
             {brandError && (
                 <span className="help-block text-danger">{brandError}</span>
               )}
-            <div className="input-wrapper">
+            <div >
               <input
                 id="product_name"
                 name="product_name"
@@ -381,17 +381,17 @@ const AddProduct = () => {
           </div>
           </div>
           <div className="form-group">
-            <label className="control-label font-extrabold" for="product_description">
+            <label className={styles.label} for="product_description">
               PRODUCT DESCRIPTION
             </label>
-            <div className="input-wrapper">
+            <div className={styles.texareadiv}>
               <textarea
-                className="form-control"
+                className={styles.textarea}
                 id="product_description"
                 name="product_description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                style={{width:'400px',height:'200px', border:" 1px solid"}}
+                
               ></textarea>
               {descriptionError && (
                 <span className="help-block text-danger">{descriptionError}</span>
@@ -399,13 +399,13 @@ const AddProduct = () => {
             </div>
           </div>
           
-            <label className="font-extrabold"  for="product_category">
+            <label className={styles.label} for="product_category">
               PRODUCT CATEGORY
             </label>
             <div  className={styles.respo}  >
 
             
-            <div className="input-wrapper" style={{width:'400px'}}>
+            <div className={styles.categorydiv} >
               <select
                 id="product_category"
                 name="product_category"
@@ -425,10 +425,10 @@ const AddProduct = () => {
 
           {selectedCategory && (
             <div style={{marginLeft:'50px', width:'400px'}}>
-              <label className="control-label font-extrabold" for="product_subcategory">
+              <label className={styles.label} for="product_subcategory">
                 SUBCATEGORY
               </label>
-              <div>
+              <div className={styles.Subcategorydiv}>
                 <select
                   id="product_subcategory"
                   name="product_subcategory"
@@ -455,13 +455,13 @@ const AddProduct = () => {
 
           {selectedCategory && (
             <div className={`${styles.formGroup}`}>
-              <label className={styles.controlLabel} htmlFor="product_size">
+              <label className={styles.label}  htmlFor="product_size">
                 PRODUCT SIZE
               </label>
-              <div >
+              <div className={styles.sizeselect} >
                 <div className={`${styles.sizeButtons}`}>
                 <div>
-                  <h3>Total Quantity: {totalQuantity}</h3>
+                  <h3 >Total Quantity: {totalQuantity}</h3>
                   </div>
                   <div>
                   {categorySizes[selectedCategory].map((size, index) => (
@@ -501,13 +501,13 @@ const AddProduct = () => {
           )}
 
           <div >
-            <label className="control-label" htmlFor="product_price">
+            <label className={styles.label} htmlFor="product_price">
               PRODUCT PRICE
             </label>
             <div  className={styles.respo}  >
            
               <input
-
+                style={{textIndent:'10px'}}
                 id="product_real_price"
                 name="product_real_price"
                 placeholder="REAL PRICE"
@@ -529,6 +529,7 @@ const AddProduct = () => {
               )}
              
               <input
+               style={{textIndent:'10px'}}
                 id="product_selling_price"
                 name="product_selling_price"
                 placeholder="SELLING PRICE"
@@ -538,7 +539,7 @@ const AddProduct = () => {
                 // style={{ width: "45%", display: "inline-block" }}
                 value={sellingPrice}
                 onChange={handleSellingPriceChange}
-                style={{marginLeft:'20px'}}
+                
           
               />
               {sellingPriceError && (
@@ -546,7 +547,7 @@ const AddProduct = () => {
               )}
             </div>
           </div>
-          <div>
+          <div className={styles.label}>
             {realPrice !== "" &&
               sellingPrice !== "" &&
               sellingPrice <= realPrice && (
@@ -568,14 +569,14 @@ const AddProduct = () => {
                 </div>
               )}
           </div>
-          <div style={{display:'flex', flexDirection:'row',marginTop:'50px'}}
+          <div className={styles.colorsection}
            
           >
             <div
               className="form-group"
               style={{ display:'flex' ,flexDirection: "column" }}
             >
-              <label className="control-label" htmlFor="product_color">
+              <label className={styles.label} htmlFor="product_color">
                 PRIMARY COLOR
               </label>
               <div className="input-wrapper" style={{display:'flex' ,flexDirection:'column'}}>
@@ -589,7 +590,7 @@ const AddProduct = () => {
                   type="color"
                   value={primaryColor}
                   onChange={(e) => setPrimaryColor(e.target.value)}
-                  style={{ width: "400px" }}
+                  // style={{ width: "400px" }}
                 />
                 <h5>  <div style={{backgroundColor:primaryColor ,height:"30px",width:"30px"}}></div></h5>
                 {primaryColorError && (
@@ -600,9 +601,9 @@ const AddProduct = () => {
 
             <div
               className="form-group"
-              style={{ flexBasis: "100%", maxWidth: "100%" }}
+              // style={{ flexBasis: "100%", maxWidth: "100%" }}
             >
-              <label className="control-label font-extrabold" htmlFor="product_other_colors">
+              <label className={styles.label} htmlFor="product_other_colors">
                 OTHER COLOR
               </label>
               <div className="input-wrapper" style={{display:'flex',flexDirection:'column'}}>
@@ -613,7 +614,7 @@ const AddProduct = () => {
                   className={styles.inputField}
                   type="color"
                   value={otherColors}
-                  style={{ width: "50%%" }}
+                  // style={{ width: "50%" }}
                   onChange={(e) => setOtherColors(e.target.value)}
                 /> <h5>  <div style={{backgroundColor:otherColors,width:'30px',height:'30px'}}></div></h5>
                 {otherColorsError && (
@@ -624,17 +625,17 @@ const AddProduct = () => {
           </div>
 
           <div className="form-group">
-            <label className="control-label font-extrabold" for="product_care_instructions">
+            <label className={styles.label} for="product_care_instructions">
               WASHCARE INSTRUCTIONS
             </label>
             <div >
               <textarea
-                className="form-control"
+                className={styles.texareawash}
                 id="product_care_instructions"
                 name="product_care_instructions"
                 value={WashcareInstructions}
                 onChange={(e) => setCareInstructions(e.target.value)}
-                style={{width:'400px',height:'250px', border:" 1px solid"}}
+                
               ></textarea>
               {WashcareInstructionsError && (
                 <span className="help-block text-danger">{WashcareInstructionsError}</span>
@@ -642,16 +643,16 @@ const AddProduct = () => {
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="control-label font-extrabold" for="product_material">
+          <div   >
+            <label className={styles.label}for="product_material">
               MATERIAL
             </label>
-            <div className="input-wrapper">
-              <input
+            <div >
+              <input style={{textIndent:'10px'}}
                 id="product_material"
                 name="product_material"
-                // placeholder="MATERIAL"
-                className={styles.inputField}
+                placeholder="Add the material type..."
+                className={styles.inputFieldmaterial}
                 required=""
                 type="text"
                 value={material}
@@ -668,57 +669,7 @@ const AddProduct = () => {
        
             <div>
               <h3 className="font-extrabold">Upload images</h3>
-              {/* <div className="flex-col">
-                <div>
 
-              
-                <label htmlFor="">Main image</label>
-                <input
-      type="file"
-      accept="image/png/jpg/jpeg"
-      name="img1"
-      onChange={convertToBase64}
-      style={inputStyles}
-    />  </div>
-    <div>
-
-
-                <label className="font-extrabold" htmlFor="">2nd image</label>
-                <input
-                  type="file"
-                  accept="image/png/jpg/jpeg"
-                  name="img2"
-                  onChange={convertToBase64}
-                   style={inputStyles}
-                />
-                    </div>
-                    <div>
-
-                 
-                <label className="font-extrabold" htmlFor="">3rd image</label>
-                <input
-                  type="file"
-                  accept="image/png/jpg/jpeg"
-                  name="img3"
-                  onChange={convertToBase64}
-                  style={inputStyles}
-                  
-                />
-                   </div>
-
-                   <div>
-
-                  
-                <label className="font-extrabold" htmlFor="">4th image</label>
-                <input
-                  type="file"
-                  accept="image/png/jpg/jpeg"
-                  name="img4"
-                  onChange={convertToBase64}
-                  style={inputStyles}
-                />
-                 </div>
-              </div> */}
 
 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Main image</label>
 <input  onChange={convertToBase64} className="block w-full text-sm

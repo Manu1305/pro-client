@@ -17,13 +17,13 @@ const Cart = ({ setCartItems }) => {
 
   const removeFromCart = async (id) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Removing from cart.?',
+      // text: "Remove from cart",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Remove it'
     }).then((result) => {
       if (result.isConfirmed) {
         try {

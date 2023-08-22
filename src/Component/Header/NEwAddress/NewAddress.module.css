@@ -1,49 +1,11 @@
-/* .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    width: 400px;
-    max-width: 100%;
-  }
-  
-  .modal-form {
-    border: solid;
-  }
-  
-  .modal-form label {
-    font-weight: bold;
-  }
-  
-  .modal-form .form-control {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .modal-form button {
-    background-color: green;
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-   */
 
    .responsiveinput{
     text-indent: 10px;
+    height:48px;
+    width: 33.33%;
+    margin-top:11px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
    }
 
    .formdiv {
@@ -78,37 +40,33 @@
   }
   .responsiveinput1{
    text-indent: 10px;
+   height: 48px;
+   width: 33.33%;
+   margin-top: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   margin-left: 12px;
    }
 
-   
-  @media screen and (max-width:712px){
-    .formdiv {
-      margin: auto;
-      width:500px;
-      height: 100%;
-    }
-    .inputbox {
-      height: 50px;
-      width: 200px;
-      border-radius: 5px;
-      border: 1px solid #c0a7a7;
-      margin-top: 20px;
-      text-indent: 10px;
-    }
-    .divresponsive{
-      display: flex;
-      flex-direction: column;
-     }
-     .responsiveinput{
-      width: 500px
-      ;
-      height: 50px;
-      text-indent: 10px;
-     }
-     .responsiveinput1{
-      width: 200px
-      ;
-      height: 50px;
-      margin-left: 0;
-     }
+@media screen and (max-width: 712px) {
+  .formdiv {
+    margin: auto;
+    width: 100%; /* Adjust as needed */
+    height: auto; /* Adjust as needed */
+    padding: 20px; /* Add padding for better spacing */
   }
+  
+  .inputbox, .responsiveinput, .responsiveinput1 {
+    width: 100%;
+    height: 50px;
+    margin: 5px 0;
+  }
+  
+  .divresponsive {
+    flex-direction: column;
+  }
+  
+  .button {
+    width: 100%; /* Make the button full width */
+  }
+}

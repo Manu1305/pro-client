@@ -10,6 +10,20 @@
 
  border: 3px solid rgba(196, 222, 0, 0);
 }
+
+.label{
+  font-weight: bolder;
+}
+
+.textarea{
+  
+   height: 200px;
+   width: 500px;
+   border:" 1px solid black";
+}
+
+
+
 .inputField{
   width: 400px;
   border: 1px solid ;
@@ -17,7 +31,32 @@
 }
 
 
+.categorydiv{
+  width: 400px;
+}
 
+.Subcategorydiv{
+  width: 400px;
+}
+
+.colorsection{
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+}
+
+.texareawash{
+  width:400px;
+    height:250px;
+     border:1px solid
+}
+
+.inputFieldmaterial{
+  width: 400px;
+  border: 1px solid ;
+  border-radius: 5px;
+}
+/* //////////////////////////////////////////////// */
 
 .legend {
   font-size: 24px;
@@ -28,12 +67,6 @@
 
 .form-group {
   margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .input-wrapper {
@@ -59,9 +92,7 @@ select {
   padding-right: 30px;
 }
 
-textarea {
-  resize: vertical;
-}
+
 
 .input-file {
   display: none;
@@ -140,7 +171,7 @@ flex-direction: row;
 
 }
 
-@media only screen and (max-width: 518px) {
+/* @media only screen and (max-width: 518px) {
 
 .respo{
   display: flex;
@@ -149,19 +180,83 @@ flex-direction: column;
 }
 
  
- }
+ } */
 /* Example media query for screens up to 768px wide */
 @media only screen and (max-width: 768px) {
   .container {
     flex-direction: column; /* Stack items vertically on small screens */
     align-items: center;
   }
+  .respo{
+    display: flex;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  }
+  
+.label{
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  /* Adjust input fields to take up full width */
   .inputField {
-    width: 100%;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: 0;
   }
 
-  /* Adjust other styling for responsiveness */
-  /* ... */
+
+  .texareadiv{
+    width:'100px';
+    height:'100px';
+  }
+  .textarea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:300px;
+    height: 200px;
+    border: 1px solid
+  }
+  .categorydiv{
+    width: 200px;
+    margin: auto;
+  }
+  .Subcategorydiv{
+    width: 200px;
+    margin: auto;
+    margin-left: 75px;
+  }
+  .sizeselect{
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 170px;
+  }
+  .colorsection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  .texareawash{
+    width:300px;
+      height:200px;
+       border:1px solid
+  }
+
+  .inputFieldmaterial{
+    width: 200px;
+    border: 1px solid ;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: centery;
+  }
 }
+
