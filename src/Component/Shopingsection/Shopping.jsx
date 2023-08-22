@@ -4,36 +4,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
-import { useNavigate } from "react-router-dom";
 import { addProduct } from "../../Redux/product/productAction";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdNavigateNext } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { apiURL } from "../../const/config";
 import httpService from "../Error Handling/httpService";
 import { Footer } from "../Footer/Footer";
-import { GridLoader,RiseLoader, ScaleLoader} from "react-spinners";
-const SampleNextArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.next}>
-        <MdNavigateNext className={styless.icon} />
-      </button>
-    </div>
-  );
-};
-
-const SamplePrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.prev}>
-        <GrFormPrevious className={styless.icon} />
-      </button>
-    </div>
-  );
-};
+import { ScaleLoader } from "react-spinners";
+import { AiOutlineHeart } from "react-icons/ai";
+import { PiHeartLight } from "react-icons/pi";
 
 const Shopping = ({}) => {
   const { category } = useParams();
@@ -65,25 +43,24 @@ const Shopping = ({}) => {
   }, [selectedCategory]);
 
   const getAllProducts = async () => {
-    await httpService.get(`${apiURL}/product/get-all-products`)
-    .then((res) => {
-      setData(res.data);
-      dispatch(addProduct(res.data));
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    })
-    .finally(() => {
-      setIsLoading(false); 
-    });
-  }
+    await httpService
+      .get(`${apiURL}/product/get-all-products`)
+      .then((res) => {
+        setData(res.data);
+        dispatch(addProduct(res.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
     setIsLoading(true);
     getAllProducts();
   }, []);
-
-
 
   const sellingPrices = data.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
@@ -110,18 +87,6 @@ const Shopping = ({}) => {
       return productNameMatch && categoryMatch && priceMatch;
     });
 
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
-  };
-
-  
-
   const usersPerpage = 5;
   const pagesVisited = pageNumber * usersPerpage;
 
@@ -135,16 +100,27 @@ const Shopping = ({}) => {
         >
           {" "}
           <div className="shadow-md">
-            <div>
+            <div className={styless.container}>
               <Link
                 style={{ cursor: "pointer" }}
                 to={`/ViewDetails/${data._id}`}
-              >
+              ><div className={styless.like_button}>
+              <div>
+                <PiHeartLight
+                style={{marginTop:"2px",fontWeight:"30px"}}
+                  onClick={() => {
+                    console.log("Wish list");
+                  }}
+                />
+              </div>
+            </div>
+                
                 <img
                   src={data.images[0]}
-                  style={{ height: 320, width: 305 }}
+                  style={{ height: 320, width: 305, objectFit: "fill" }}
                   alt=""
                 />
+                
               </Link>
             </div>
             {/* Description */}
@@ -169,7 +145,6 @@ const Shopping = ({}) => {
               )}
             </div>
           </div>
-          
         </div>
       );
     });
@@ -179,122 +154,130 @@ const Shopping = ({}) => {
   };
   return (
     <div>
-    {isLoading ? ( // Conditionally render a loading spinner
-      <div className={styless.loadingSpinner}>
-        <ScaleLoader color="red" style={{display:"flex",justifyContent:'center',alignItems:'center',margin:'auto'}}
- animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </ScaleLoader>
-      </div>
-    ) : (
-    <div
-    >
-      <div className="container">
-        <div className="row p-3">
-          <div className="col-lg-3">
-            <div className="card mb-5">
-              <div className="card-body mb-7">
-                <div style={{ color: "black", fontWeight: "bolder" }}>
-                  PRODUCT CATEGORIES
-                </div>
-                <div>
-                  <div>
-                    <button
-                      className={`btn btn-white mb-1 px-1 ${
-                        categories.length === 0 ? "active" : ""
-                      }`}
-                      onClick={() => handleCategoryChange("all")}
-                    >
-                      All
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      className={`btn btn-white mb-1 px-1 ${
-                        categories[0] === "men" ? "active" : ""
-                      }`}
-                      onClick={() => handleCategoryChange("men")}
-                    >
-                      Men
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      className={`btn btn-white mb-1 px-1 ${
-                        categories[0] === "womens" ? "active" : ""
-                      }`}
-                      onClick={() => handleCategoryChange("womens")}
-                    >
-                      Womens
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      className={`btn btn-white mb-1 px-1 ${
-                        categories[0] === "kids" ? "active" : ""
-                      }`}
-                      onClick={() => handleCategoryChange("kids")}
-                    >
-                      Kids
-                    </button>
-                  </div>
-                </div>
-                {user && user.email ? (
-                  <div className={styless.pricefilterdiv}>
-                    <h1>FILTER BY PRICE</h1>
-                    <br />
-                    <input
-                      type="range"
-                      style={{ background: "red" }}
-                      min={lowestprice}
-                      max={highestPrice}
-                      onChange={(e) => {
-                        setPrice(e.target.value);
-                      }}
-                    />
-                    <br /> <br />
-                    <p>
-                      {" "}
-                      price {lowestprice}-{price}
-                    </p>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-around",
-                      }}
-                    >
+      {isLoading ? ( // Conditionally render a loading spinner
+        <div className={styless.loadingSpinner}>
+          <ScaleLoader
+            color="red"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "auto",
+            }}
+            animation="border"
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </ScaleLoader>
+        </div>
+      ) : (
+        <div>
+          <div className="container">
+            <div className="row p-3">
+              <div className="col-lg-3">
+                <div className="card mb-5">
+                  <div className="card-body mb-7">
+                    <div style={{ color: "black", fontWeight: "bolder" }}>
+                      PRODUCT CATEGORIES
+                    </div>
+                    <div>
                       <div>
                         <button
-                          style={{
-                            background: "#BF0A2A",
-                            color: "white",
-                            width: "250px",
-                            height: "52px",
-                          }}
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories.length === 0 ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("all")}
                         >
-                          Filter
+                          All
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories[0] === "men" ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("men")}
+                        >
+                          Men
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories[0] === "womens" ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("womens")}
+                        >
+                          Womens
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories[0] === "kids" ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("kids")}
+                        >
+                          Kids
                         </button>
                       </div>
                     </div>
+                    {user && user.email ? (
+                      <div className={styless.pricefilterdiv}>
+                        <h1>FILTER BY PRICE</h1>
+                        <br />
+                        <input
+                          type="range"
+                          style={{ background: "red" }}
+                          min={lowestprice}
+                          max={highestPrice}
+                          onChange={(e) => {
+                            setPrice(e.target.value);
+                          }}
+                        />
+                        <br /> <br />
+                        <p>
+                          {" "}
+                          price {lowestprice}-{price}
+                        </p>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          <div>
+                            <button
+                              style={{
+                                background: "#BF0A2A",
+                                color: "white",
+                                width: "250px",
+                                height: "52px",
+                              }}
+                            >
+                              Filter
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
-                ) : null}
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Content */}
-          <div className="col-lg-9">
-            <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
-              <strong className="d-block py-2">
-                Total {filteredProducts.length} items
-              </strong>
-            </header>
+              {/* Content */}
+              <div className="col-lg-9">
+                <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+                  <strong className="d-block py-2">
+                    Total {filteredProducts.length} items
+                  </strong>
+                </header>
 
-            <div
-              className={`row , ${styless.pages}`}
-              style={{ color: "black" }}
-            >
-              {/* 
+                <div
+                  className={`row , ${styless.pages}`}
+                  style={{ color: "black" }}
+                >
+                  {/* 
               <div>
                 {[1,2,3,4].map((ele) => {
                   return (
@@ -304,24 +287,23 @@ const Shopping = ({}) => {
                   )
                 })}
               </div> */}
-              {displayUsers}
+                  {displayUsers}
 
-              <ReactPaginate
-                previousLabel={"prev"}
-                nextLabel={"next"}
-                pageCount={pageCount}
-                onPageChange={changePage}
-              />
+                  <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    pageCount={pageCount}
+                    onPageChange={changePage}
+                  />
+                </div>
+                <hr />
+              </div>
             </div>
-            <hr />
           </div>
+          <Footer />
         </div>
-      </div>
-      <Footer />
+      )}
     </div>
-    )}
-    </div>
-    
   );
 };
 

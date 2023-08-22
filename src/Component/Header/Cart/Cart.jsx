@@ -163,7 +163,8 @@ const Cart = ({ setCartItems }) => {
                           <Slider {...settings}>
                             <img
                               src={item.productDetails.images}
-                              className="img-fluid img-responsive rounded product-image"
+                              className="img-fluid img-responsive rounded product-image "
+                              style={{objectFit:"fill"}}
                               alt="img"
                             />
                           </Slider>
