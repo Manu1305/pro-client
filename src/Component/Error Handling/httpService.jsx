@@ -8,16 +8,16 @@ axios.interceptors.response.use(null, (error) => {
 
 
 
-    console.log(error)
+    console.warn(error.response.config.url)
+    console.warn(error.response)
 
   if (!expectedError) {
     //console.log('Logging the error', error);
-    toast.error("An unexpected error occured!", {
+    toast.error(`error ${error.response.config.url}`, {
       position: "top-center",
       autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
-
       draggable: true,
       progress: undefined,
       theme: "dark",

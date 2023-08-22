@@ -65,7 +65,7 @@ const Cart = ({ setCartItems }) => {
         },
       };
 
-      return await httpService
+     return await httpService
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           if (res.data.Message === "Your cart is empty...!") {
@@ -152,7 +152,7 @@ const Cart = ({ setCartItems }) => {
       <section className="h-100" style={{ backgroundColor: "white" }}>
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-10">
+            <div className="col-10" >
               {/* <h2>Total {totalPrice}</h2> */}
               {CartItem.items?.length  &&
                 CartItem.items.map((item) => (
@@ -251,6 +251,7 @@ const Cart = ({ setCartItems }) => {
                             onClick={() => removeFromCart(item._id)}
                           >
                             <BsTrash className="h-10 w-10" />
+                            {/* <i className="fas fa-trash fa-lg"></i> */}
                           </button>
                         </div>
                       </div>

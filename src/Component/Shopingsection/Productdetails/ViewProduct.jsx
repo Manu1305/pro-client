@@ -123,16 +123,8 @@ const ViewProduct = ({ setCartItems }) => {
   const productDetails = storedProductData.filter(
     (product) => product._id === productId
   );
-
-  // const settings = {
-  //   infinite: true,
-  //   speed: 500,
-  //   dots: true,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  //   nextArrow: <SampleNextArrow />,
-  //   prevArrow: <SamplePrevArrow />,
-  // };
+  
+  // add to cart button
   const addtoCartButton = async (product) => {
     const config = {
       headers: {
