@@ -6,19 +6,23 @@
 .icon-hover:hover i {
   color: #3b71ca !important;
 }
+
 .card-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .card img {
   height: 20rem;
   border-radius: 10px 10px 0 0;
 }
+
 .image-container {
   position: relative;
   display: inline-block;
 }
+
 .bg23 {
   /* background-color: aliceblue; */
   border-radius: 1rem;
@@ -99,6 +103,7 @@
   left: 20px;
   z-index: 99;
 }
+
 .control-btn .icon {
   font-size: 25px;
 }
@@ -112,7 +117,6 @@
 
 /* CSS module */
 
-
 .pages a {
   color: black;
 }
@@ -120,12 +124,53 @@
   color: black;
 }
 
-
 .pricefilterdiv {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* wish icon */
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.3;
+  transition: 0.3s ease;
+  background-color: transparent;
+}
+
+.overlay:hover {
+  opacity: 0.7;
+}
+
+.like_button {
+  position: absolute;
+  height: 30px;
+  width: 33px;
+  border-radius: 50%;
+  z-index: 2;
+  color: black;
+  font-size: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #fbfbf9;
+  border: transparent;
+  margin-top: 275px;
+  margin-left: 240px;
+}
+
+.like_button :hover {
+  color: red;
 }
 
 /* input[type="range"]::-moz-range-track {

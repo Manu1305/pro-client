@@ -372,8 +372,8 @@ const BuyerConfirm = () => {
   };
 
   return (
-    <div>
-      <div className="row" style={{ marginTop: "100px" }}>
+    <div >
+      <div className="row" >
         <div className="col-md-6 mb-4">
           <div className="card mb-4">
             <div className="card-header py-3">

@@ -29,10 +29,7 @@ export const ProductRequest = () => {
     await httpService
       .post(`${apiURL}/product/requested-Products`, {
         type: user.urType,
-        seller: user.email,
-
-
-        
+        seller: user.email,        
       })
       .then((res) => {
         dispatch(addReqProduct(res.data));
@@ -44,12 +41,14 @@ export const ProductRequest = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
 
     return () => clearTimeout(timer);
+
   }, []);
   
 
@@ -160,6 +159,7 @@ export const ProductRequest = () => {
       seller: ele.seller,
     };
   });
+  
   return (
     <div className={styless.container}>
       <div className="d-flex justify-content-center mt-3">

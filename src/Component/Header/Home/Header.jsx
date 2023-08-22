@@ -67,28 +67,26 @@ const Header = ({ productItems }) => {
       },
     ],
   };
-  const [videoWidth, setVideoWidth] = useState(0);
-  const [videoHeight, setVideoHeight] = useState(0);
+
   return (
     <div>
       <div className={header.container2}>
         <div className={header.category1}>
-        <Slider {...settings}>
-  {cards.map((item) => (
-    <div
-      key={item.id}
-      style={{ position: "relative", display: "inline-block" }}
-    >
-      <img src={item.image} alt="cover" width="100%" />
-
-      <div className={header.overlay}>
-       {/* <h1 className="text-black">hello world</h1> */}
-        {/* <div className="image-text">{item.text}</div> */}
-      </div>
-    </div>
-  ))}
-</Slider>
-
+          <Slider {...settings}>
+            {cards.map((item) => (
+              <div
+                key={item.id}
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <img
+                  src={item.image}
+                  alt="cover"
+                  style={{ objectFit: "fill", width: "100%" }}
+                />
+                <div className={header.overlay}></div>
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
       <Who />
