@@ -99,7 +99,7 @@ import httpService from "../Error Handling/httpService";
             </Link>
           </li>
         )}
-        {(user?.urType === "buyer" || user?.urType === "seller") && (
+        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
           <li>
             <Link to="About" onClick={closeMenu}>
               ABOUT
