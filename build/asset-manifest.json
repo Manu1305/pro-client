@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8a5f2bdb.css",
+    "main.js": "/static/js/main.a9aed92b.js",
+    "static/media/2nd.png": "/static/media/2nd.6282b22873bab85ec703.png",
+    "static/media/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume 1.png": "/static/media/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume 1.acd9c9f1bf067043c83d.png",
+    "static/media/3rd.png": "/static/media/3rd.f86b786254695ce6684b.png",
+    "static/media/4th.png": "/static/media/4th.561e024ef210e652d5cc.png",
+    "static/media/top1.png": "/static/media/top1.a958e555dc784766b15f.png",
+    "static/media/banner1.png": "/static/media/banner1.311a52574da7a879b69f.png",
+    "static/media/Poppins-SemiBold.ttf": "/static/media/Poppins-SemiBold.090bd619384bb8d4c289.ttf",
+    "static/media/Poppins-Bold.ttf": "/static/media/Poppins-Bold.300a4da54f1e6258b6f7.ttf",
+    "static/media/top3.png": "/static/media/top3.3e8657f39c0b70c1cb9f.png",
+    "static/media/mencategory.png": "/static/media/mencategory.200dfcf96f6263e82e57.png",
+    "static/media/top2.png": "/static/media/top2.c17bfe31c8973f2b091e.png",
+    "static/media/banner3.png": "/static/media/banner3.45b0f7d6176bb863cb6f.png",
+    "static/media/kidscategory.png": "/static/media/kidscategory.e51a8d66a6d057891d84.png",
+    "static/media/womencategory.png": "/static/media/womencategory.6c8b5eb391b79c593f89.png",
+    "static/media/banner4.png": "/static/media/banner4.9486b3fbc8a59e6b3980.png",
+    "static/media/banner2.png": "/static/media/banner2.18cad87cc792dd77666e.png",
+    "static/media/LilitaOne-Regular.ttf": "/static/media/LilitaOne-Regular.e970d047065ed950bb8c.ttf",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "index.html": "/index.html",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "main.8a5f2bdb.css.map": "/static/css/main.8a5f2bdb.css.map",
+    "main.a9aed92b.js.map": "/static/js/main.a9aed92b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8a5f2bdb.css",
+    "static/js/main.a9aed92b.js"
+  ]
+}
