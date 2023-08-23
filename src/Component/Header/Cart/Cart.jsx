@@ -47,8 +47,8 @@ const Cart = ({ setCartItems }) => {
           console.error("Error removing item from cart:", error);
         }
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Removed',
+          'Your product removed from cart.',
           'success'
         )
       }

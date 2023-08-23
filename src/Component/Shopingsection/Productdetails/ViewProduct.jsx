@@ -154,29 +154,31 @@ const ViewProduct = ({ setCartItems }) => {
         theme: "dark",
       });
     } else {
-      try {
-        await httpService
-          .post(
-            `${apiURL}/cart/add-to-cart`,
-            {
-              productId: product._id,
-              sizeWithQuantity: sizeWithQuantity,
-              quantity: totalQuantity,
-            },
-            config
-          )
-          .then((res) => {
-            console.log(res);
+      
 
-            setCartItems(res.data.items.length);
-          })
-          .catch((err) => console.log(err));
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      await httpService
+        .post(
+          `${apiURL}/cart/add-to-cart`,
+          {
+            productId: product._id,
+            sizeWithQuantity: sizeWithQuantity,
+            quantity: totalQuantity,
+          },
+          config
+        )
+        .then((res) => {
+          console.log(res);
+
+          setCartItems(res.data.items.length);
+          toast.success('item added to cart')
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
     }
   };
-
+  }
   const offerBtnHandler = async () => {
     try {
       const message = {
@@ -457,5 +459,6 @@ const ViewProduct = ({ setCartItems }) => {
     </div>
   );
 };
+
 
 export default ViewProduct;

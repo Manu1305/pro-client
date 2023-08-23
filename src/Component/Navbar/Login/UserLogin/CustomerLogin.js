@@ -124,8 +124,9 @@ const CustomerLogin = () => {
                   <div className="card-body p-4 p-lg-5 text-black">
                     <form>
                       <div className="d-flex align-items-center mb-3 pb-1">
+                    
                         <i
-                          className="fas fa-smile-o  fa-2x me-3"
+                          className="fas fa-face-smile fa-2x me-3"
                           style={{ color: "red" }}
                         ></i>
                         <span className="h1 fw-bold mb-0">Login</span>
