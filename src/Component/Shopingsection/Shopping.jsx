@@ -10,10 +10,9 @@ import { apiURL } from "../../const/config";
 import httpService from "../Error Handling/httpService";
 import { Footer } from "../Footer/Footer";
 import { ScaleLoader } from "react-spinners";
-import { AiOutlineHeart } from "react-icons/ai";
 import { PiHeartLight } from "react-icons/pi";
 
-const Shopping = ({}) => {
+const Shopping = () => {
   const { category } = useParams();
   const selectedCategory = category ? category : "all";
   const dispatch = useDispatch();
@@ -64,16 +63,11 @@ const Shopping = ({}) => {
 
   const sellingPrices = data.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
-  // const lowestprice = Math.min(...sellingPrices);
   const lowestprice = 0;
+
   const filteredProducts =
     data &&
     data.filter((data) => {
-      const productNameMatch =
-        data.productDetail.description
-          .toLowerCase()
-          .includes(nameFilter.toLowerCase()) ||
-        data.selectedCategory.toLowerCase().includes(nameFilter.toLowerCase());
 
       const categoryMatch =
         categories.length === 0 ||
@@ -84,7 +78,7 @@ const Shopping = ({}) => {
       const priceMatch =
         data.sellingPrice >= lowestprice && data.sellingPrice <= price;
 
-      return productNameMatch && categoryMatch && priceMatch;
+      return  categoryMatch && priceMatch;
     });
 
   const usersPerpage = 5;
@@ -149,9 +143,11 @@ const Shopping = ({}) => {
       );
     });
   const pageCount = Math.ceil(data.length / usersPerpage);
+
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
   return (
     <div>
       {isLoading ? ( // Conditionally render a loading spinner
@@ -277,16 +273,7 @@ const Shopping = ({}) => {
                   className={`row , ${styless.pages}`}
                   style={{ color: "black" }}
                 >
-                  {/* 
-              <div>
-                {[1,2,3,4].map((ele) => {
-                  return (
-                    <div>
-
-                    </div>
-                  )
-                })}
-              </div> */}
+                  
                   {displayUsers}
 
                   <ReactPaginate
