@@ -138,7 +138,7 @@ const CustomerRegister = () => {
           <MDBRow className="g-0">
             <MDBCol md="6">
               <img
-                src="https://e1.pxfuel.com/desktop-wallpaper/344/686/desktop-wallpaper-european-and-american-trend-fashion-clothing-shop-industrial-decor-backgrounds-3d-teen-clothing-store-wall-paper-murals.jpg"
+                src="https://img.freepik.com/free-vector/online-school-platform-abstract-concept-vector-illustration-homeschooling-covid2019-qarantine-online-education-platform-digital-classes-virtual-courses-lms-school-abstract-metaphor_335657-5850.jpg?w=740&t=st=1692789217~exp=1692789817~hmac=a0b139faac079ad1e25e5e690d35a0c444261aa1f2cacb1eddc3acad93aba0e2"
                 className={register.img1}
               />
             </MDBCol>

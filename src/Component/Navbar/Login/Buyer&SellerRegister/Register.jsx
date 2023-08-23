@@ -24,20 +24,22 @@ const Register = () => {
         <div className="p-4 d-flex justify-around">
           <div>
             <button
-              className={`login-tab ${
+              className={`${
                 selectedLoginType === "customer" && "active"
               }`}
               onClick={() => handleLoginTypeChange("customer")}
+            style={{backgroundColor:'orangered',borderRadius:'5px'}}
             >
               CUSTOMER REGISTER
             </button>
           </div>
           <div>
             <button
-              className={`login-tab ${
+              className={` ${
                 selectedLoginType === "seller" && "active"
               }`}
               onClick={() => storepage()}
+              style={{backgroundColor:'orangered',borderRadius:'5px'}}
             >
               SELLER REGISTER
             </button>
