@@ -20,6 +20,7 @@ import { Dropdown } from "react-bootstrap";
 import { useEffect } from "react";
 import httpService from '../../../../../Error Handling/httpService'
 import { apiURL } from "../../../../../../const/config";
+import { toast } from "react-toastify";
 
  const SellerRegister = () => {
   // const history = useNavigate();
@@ -84,6 +85,8 @@ import { apiURL } from "../../../../../../const/config";
     USA: ["State A", "State B", "State C"],
     // Add more countries and states as needed
   };
+  const [showButton, setShowButton] = useState(true);
+  
   const navigate = useNavigate();
 
   const handleCountrySelect = (country) => {
@@ -137,14 +140,22 @@ import { apiURL } from "../../../../../../const/config";
 
   const sendOtp = () => {
     if (phone.length == 10) {
+      toast.success("otp sended successfuly")
+      setShowButton(false);
       httpService
         .post(`${apiURL}/user/send-otp`, { phone })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data+"this is data");
+          
         })
+        
+        
         .catch((error) => {
           console.error(error);
         });
+        setTimeout(() => {
+          setShowButton(true);
+        }, 20000);
     } else {
       alert("phone number should 10");
     }
@@ -366,12 +377,15 @@ import { apiURL } from "../../../../../../const/config";
                       onChange={onchangeHandler}
                       className="w-85"
                     />{" "}
+                    {showButton && (
                     <button
                       className="btn btn-link bg-warning text-dark"
                       onClick={sendOtp}
                     >
                       Send OTP
                     </button>
+                    ) }
+                    
                     {phoneError && (
                       <div className="text-danger">{phoneError}</div>
                     )}
@@ -399,7 +413,7 @@ import { apiURL } from "../../../../../../const/config";
                       className="btn btn-link bg-warning text-dark"
                       onClick={verifyOtp}
                     >
-                      Submit otp
+                      Submit OTP
                     </button>
                   </div>
 

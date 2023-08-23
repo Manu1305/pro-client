@@ -171,6 +171,7 @@ const ViewProduct = ({ setCartItems }) => {
           console.log(res);
 
           setCartItems(res.data.items.length);
+          toast.success('item added to cart')
         })
         .catch((err) => console.log(err));
     } catch (error) {

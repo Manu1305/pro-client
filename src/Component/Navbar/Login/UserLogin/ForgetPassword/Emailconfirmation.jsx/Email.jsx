@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import { apiURL } from "../../../../../../const/config";
 import httpService from "../../../../../Error Handling/httpService";
-
+import { ScaleLoader } from "react-spinners";
 
 function EmailCheck() {
   const [email, setEmail] = useState("");
@@ -34,6 +34,7 @@ function EmailCheck() {
               text: "Please create account ",
               footer: '<a href="/register">create Account?</a>',
             });
+            setLoading(false);
           }
         });
     } catch (error) {
@@ -69,7 +70,7 @@ function EmailCheck() {
         </div>
         <div className="sweet-loading">
           
-          <PropagateLoader color="#36d7b7" loading={loading} />
+          <ScaleLoader color="red" loading={loading} />
           
         </div>
       </div>
