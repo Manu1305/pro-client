@@ -64,7 +64,6 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
     try {
-      
       await httpService.post(
         `${apiURL}/wish/update-wish`,
         {
@@ -114,7 +113,7 @@ const ViewProduct = ({ setCartItems }) => {
       sum += Number(quantities[size]);
     }
     setTotalQuantity(sum);
-  },[quantities])
+  }, [quantities]);
 
   const storedProductData = useSelector(
     (state) => state.productReducer.product
@@ -123,7 +122,7 @@ const ViewProduct = ({ setCartItems }) => {
   const productDetails = storedProductData.filter(
     (product) => product._id === productId
   );
-  
+
   // add to cart button
   const addtoCartButton = async (product) => {
     const config = {
@@ -133,7 +132,7 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
 
-    console.log(totalQuantity)
+    console.log(totalQuantity);
 
     const sizeWithQuantity = {};
     Object.keys(quantities).forEach((key, index) => {
@@ -145,16 +144,17 @@ const ViewProduct = ({ setCartItems }) => {
       };
     });
 
-    if(totalQuantity < 5){
-      toast.warning("Minimum 5 quantity per order",{
+    if (totalQuantity < 5) {
+      toast.warning("Minimum 5 quantity per order", {
         position: "top-center",
         autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         draggable: true,
         theme: "dark",
-      })
+      });
     } else {
+      
 
     try {
       await httpService
@@ -177,9 +177,8 @@ const ViewProduct = ({ setCartItems }) => {
     } catch (error) {
       console.log(error);
     }
-  }
   };
-
+  }
   const offerBtnHandler = async () => {
     try {
       const message = {
@@ -310,43 +309,7 @@ const ViewProduct = ({ setCartItems }) => {
                   flexDirection: "row",
                   marginTop: "25px",
                 }}
-              >
-                {/* <div className={styles.color_Container}>
-                  <div className="m-1">
-                    <h4 className={`about ${styles.about}`}>Choose a color</h4>
-                  </div>
-                  <div
-                    style={{
-                      marginLeft: "-105px",
-                      display: "flex",
-                      alignItems: "start",
-                      gap: "13px",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <div
-                      className={styles.color_box}
-                      style={{ background: "#BBC1F8" }}
-                    ></div>
-                    <div
-                      className={styles.color_box}
-                      style={{ background: "#BBD278" }}
-                    ></div>
-                    <div
-                      className={styles.color_box}
-                      style={{ background: "#FFD3F8" }}
-                    ></div>
-                    <div
-                      className={styles.color_box}
-                      style={{ background: "#B2BE91" }}
-                    ></div>
-                    <div
-                      className={styles.color_box}
-                      style={{ background: "#124B88" }}
-                    ></div>
-                  </div>
-                </div> */}
-              </div>
+              ></div>
               <div className={`sizes ${styles.sizes}`}>
                 {product.selectedCategory && (
                   <div>
@@ -387,9 +350,7 @@ const ViewProduct = ({ setCartItems }) => {
                                         width: "20px",
                                         textAlign: "center",
                                       }}
-                                      value={
-                                        quantities[size]
-                                      }
+                                      value={quantities[size]}
                                       onChange={(e) =>
                                         handleQuantityChange(size, e)
                                       }
@@ -412,14 +373,15 @@ const ViewProduct = ({ setCartItems }) => {
 
               <div className={`mb-3 mt-4 align-items-center`}>
                 <>
-                  {user?.email &&<button
-                    className={`text-uppercase mr-2 ${styles.add_to_cart}`}
-                    onClick={() => addtoCartButton(product)}
-                  >
-                    <BsHandbagFill className="mb-1 mr-3"/>
-                    Add to Cart
-                  </button>}
-                  
+                  {user?.email && (
+                    <button
+                      className={`text-uppercase mr-2 ${styles.add_to_cart}`}
+                      onClick={() => addtoCartButton(product)}
+                    >
+                      <BsHandbagFill className="mb-1 mr-3" />
+                      Add to Cart
+                    </button>
+                  )}
                 </>
                 {offerBtn ? (
                   <div className="container m-4">
@@ -443,41 +405,37 @@ const ViewProduct = ({ setCartItems }) => {
                 ) : null}
               </div>
               <div className={styles.lasthead}>
-              <div className={styles.headone}>
-                <div className={styles.oneone}>
-                  <TbTruckDelivery />
+                <div className={styles.headone}>
+                  <div className={styles.oneone}>
+                    <TbTruckDelivery />
+                  </div>
+                  <div>
+                    <h4 className="font-bold mt-4">free delivery</h4>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold mt-4">free delivery</h4>
-                  {/* <input
-                    className="text-black"
-                    placeholder="enter your postal code"
-                  /> */}
-                </div>
-              </div>
-              <div className={styles.headone}>
-                <div className={styles.oneone}>
-                  <AiOutlineShopping />
-                </div>
-                <div className={styles.onetwo}>
-                  <h4 className="font-bold mt-4">Return delivery</h4>
-                  <span>Free 3 days Delivery Return</span>
+                <div className={styles.headone}>
+                  <div className={styles.oneone}>
+                    <AiOutlineShopping />
+                  </div>
+                  <div className={styles.onetwo}>
+                    <h4 className="font-bold mt-4">Return delivery</h4>
+                    <span>Free 3 days Delivery Return</span>
+                  </div>
                 </div>
               </div>
             </div>
-            </div>
-
-            
           </div>
-          {/* <div className="ml-3"> */}
-            <div
-              className='ml-3'
-              onClick={() => setActiveTab("description")}
-            >
-              <h3 className={styles.activeHeading}>Description</h3>
-            </div>
-          
-            <div style={{borderTop: "0.4rem solid #bf0a2a",width:"95%",margin:'auto'}}></div>
+          <div className="ml-3" onClick={() => setActiveTab("description")}>
+            <h3 className={styles.activeHeading}>Description</h3>
+          </div>
+
+          <div
+            style={{
+              borderTop: "0.4rem solid rgb(243,243,243)",
+              width: "95%",
+              margin: "auto",
+            }}
+          ></div>
           <div className={styles.descrip}>
             <div>
               <p className={`about ${styles.about}`}>Product description</p>
@@ -494,14 +452,13 @@ const ViewProduct = ({ setCartItems }) => {
               </span>
             </div>
           </div>
-          {/* </div> */}
         </div>
       ))}
 
       <SellerRelatedPro />
-      {/* <Footer /> */}
     </div>
   );
 };
+
 
 export default ViewProduct;
