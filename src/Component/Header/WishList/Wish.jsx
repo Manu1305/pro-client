@@ -115,7 +115,6 @@ const WishList = () => {
                 <h3 className="fw-normal mb-0 text-black">Wishlist</h3>
               </div>
 
-              {/* <h2>Total {totalPrice}</h2> */}
               {wishLists.length > 0 &&
                 wishLists?.map((item) => (
                   <div

@@ -1,9 +1,8 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
-function DataTable({rows, columns}) {
-
-    const {id,} =columns
-    console.log(columns)
+function DataTable({ rows, columns }) {
+  const { id } = columns;
+  console.log(columns);
   return (
     <DataGrid
       rows={rows}
@@ -19,6 +18,12 @@ function DataTable({rows, columns}) {
       pageSizeOptions={[5]}
       checkboxSelection
       disableRowSelectionOnClick
+      sx={{
+        "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer":
+          {
+            display: "none",
+          },
+      }}
     />
   );
 }

@@ -6,6 +6,7 @@ import httpService from "../../../../Error Handling/httpService";
 import DataTable from "../../../../Data table/DataTable";
 import { useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 
 
@@ -89,6 +90,8 @@ const SellerOrder = () => {
     }
   };
 
+
+
   useEffect(() => {
     getOrders();
   }, []);
@@ -96,7 +99,6 @@ const SellerOrder = () => {
   const header = [
     "Product",
     "Category",
-    "Selectedsize",
     "Status",
     "Trackingid",
     "amount",
@@ -109,6 +111,7 @@ const SellerOrder = () => {
       return {
         field: "Product",
         type: "image",
+        
         renderCell: (params) => {
           console.log("parmas*******************", params);
           return (
@@ -124,34 +127,12 @@ const SellerOrder = () => {
         field: "Action",
         type: "action",
         width: 150,
+        
         renderCell: (params) => {
           console.log("Check KR", params.row);
           return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              {params.row.Status === "Ready To PickUp" ? (
-                <button style={{padding:"10px",background:"rgb(248,249,250)"}} onClick={() => addToDelivery(params.row.id)}>
-                  <i className="bi bi-truck fa-2x"></i>
-                </button>
-              ) : (
-                (params.row.Status === "confirm Delivery" ||
-                  params.row.Status === "confirm Return") ? (
-                  <button>
-                    <i className="bi bi-check-circle-fill fa-2x"></i>
-                  </button>
-                  
-                ):  <button onClick={() => navigate(`/productVerification/${params.row.id}`)}><i className="bi bi-eye-fill fa-2xl"></i></button>
-              )}
-              <div
-                className="m-2"
-                onClick={() => {
-                  // setModalShow(true);
-                  console.log(params);
-                  setDeleteProductId({
-                    id: params.row.id,
-                    seller: params.row.seller,
-                  });
-                }}
-              ></div>
+            <div onMouseOver={() => alert("worked")} style={{alignItems:"center"}}>
+              <BiDotsVerticalRounded />
             </div>
           );
         },
@@ -162,6 +143,7 @@ const SellerOrder = () => {
         field: "Selectedsize",
         type: "Selectedsize",
         width: 200,
+        
         renderCell: (params) => (
           <select
             style={{
@@ -209,6 +191,7 @@ const SellerOrder = () => {
         headerName: string,
         width: 150,
         editable: true,
+        
       };
     }
   });
@@ -216,10 +199,9 @@ const SellerOrder = () => {
   const rowData = orders.map((ele) => {
     return {
       id: ele._id,
-      prdId:ele.productId,
+      prdId: ele.productId,
       Product: ele.prdDeta.images,
       Category: ele.prdDeta.category,
-      Selectedsize: ele.sizeWithQuantity,
       Status: ele.orderStatus,
       Trackingid: ele.trackId,
       amount: ele.ordPrc,
@@ -227,24 +209,24 @@ const SellerOrder = () => {
   });
 
   return (
-    <div style={{ marginLeft: "-150px"}}>
-       <div>
-        {rowData.length !== 0 ? (
+    <div style={{ marginLeft: "-150px",marginTop:"30px" }}>
+      <div>
+        {rowData.length !== 0 ?
           <DataTable columns={header} rows={rowData} autoHeight />
-        ) : (
-          <div style={{margin:'auto'}} >
-       {isLoading ? (
-        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-          <ScaleLoader  animation="border" role="status" color="red">
-            <span className="visually-hidden">Loading...</span>
-          </ScaleLoader
- >
-        </div>
-      ) : (
-        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
-      )}
-      </div>
-        )}
+          :
+          <div style={{ margin: 'auto' }} >
+            {isLoading ?
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <ScaleLoader animation="border" role="status" color="red">
+                  <span className="visually-hidden">Loading...</span>
+                </ScaleLoader
+                >
+              </div>
+              : (
+                <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded" />
+              )}
+          </div>
+        }
       </div>
     </div>
   );

@@ -11,46 +11,12 @@ import { ScaleLoader } from "react-spinners";
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
-  const orderss = useSelector((state) => state.orderReducer.order);
+  // const orderss = useSelector((state) => state.orderReducer.order);
+  // 
   const [orders, setOrders] = useState([]);
-  const [editingIndex, setEditingIndex] = useState(-1);
-  const [updatedAddress, setUpdatedAddress] = useState({});
-  const [updatedStatus, setUpdatedStatus] = useState("");
+
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
-  const handleEditClick = (index) => {
-    setEditingIndex(index);
-    setUpdatedAddress({
-      city: orders[index].address.city,
-      state: orders[index].address.state,
-    });
-    setUpdatedStatus(orders[index].status);
-  };
-  const handleAddressChange = (event) => {
-    setUpdatedAddress({
-      ...updatedAddress,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleStatusChange = (event) => {
-    setUpdatedStatus(event.target.value);
-  };
-
-  const handleSaveClick = (index) => {
-    const updatedOrders = [...orders];
-    updatedOrders[index] = {
-      ...updatedOrders[index],
-      address: { ...updatedAddress },
-      status: updatedStatus,
-    };
-
-    setOrders(updatedOrders);
-
-    setEditingIndex(-1);
-    setUpdatedAddress({});
-    setUpdatedStatus("");
-  };
 
   const returnButton = (order) => {
     alert(order.updatedAt);
@@ -80,9 +46,14 @@ const BuyerOrder = () => {
           console.log(err);
         });
         console.log(res)
-        debugger
       dispatch(addorder(res));
-      setOrders(res);
+
+      if(res.length == 0){
+        setOrders([])
+      } else {
+
+        setOrders(res);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -115,7 +86,7 @@ const BuyerOrder = () => {
       )}
       </div>
     ) : (
-      orders.length && orders.map((order, index) => {
+      orders.length !== 0 && orders.map((order, index) => {
           // const dateString = "2023-08-01T:36:25.914+00:00";
           const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
           const isExpRet = dateFromISOString > new Date();

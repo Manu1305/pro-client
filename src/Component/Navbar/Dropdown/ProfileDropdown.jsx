@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import { addUser } from "../../../Redux/user/userAction";
+import { currentUserData } from "../../../Redux/user/userAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { RiUserSmileFill } from "react-icons/ri";
@@ -20,8 +20,7 @@ import styless from "./profileDrop.module.css"
   const logout = () => {
     
     localStorage.clear();
-    sessionStorage.clear();
-    dispatch(addUser({}));
+    dispatch(currentUserData({}));
     navigation("/login");
   };
   return (

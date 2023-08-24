@@ -55,6 +55,7 @@
     "recharts": "^2.6.2",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.11",
     "sweetalert2": "^11.6.13",
