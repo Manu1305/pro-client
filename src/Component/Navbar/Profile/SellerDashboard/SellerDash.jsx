@@ -70,7 +70,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("product")}
               >
-                <i className="fa-solid fa-box-open"></i>
+               <i class="fa-brands fa-product-hunt"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -104,7 +104,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("order")}
               >
-                <i className="fa-solid fa-cart-shopping"></i>
+                <i class="fa-brands fa-first-order"></i>
                 <span className={dash.nombres}>
                   <button
                     className={`login-tab ${
@@ -157,7 +157,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("reversewith")}
               >
-                <i className="fa-solid fa-money-bill-transfer"></i>
+                <i class="fa-solid fa-user"></i>
                 <span className={dash.nombres}>
                   <button
                     //   to="/product"
@@ -195,8 +195,8 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("returndel")}
               >
-                <i className="fa-solid fa-money-bill-transfer"></i>
-                <span className={dash.nombres}>
+                <i class="fa-solid fa-rotate-left"></i>
+                  <span className={dash.nombres}>
                   <button
                     //   to="/product"
                     className={`login-tab ${
@@ -213,7 +213,7 @@ const SellerDashboard = () => {
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("return")}
               >
-                <i className="fa-sharp fa-solid fa-gears"></i>
+               <i class="fa-solid fa-rotate-left"></i>
                 <span className={dash.nombres}>
                   <button
                     //   to="/product"

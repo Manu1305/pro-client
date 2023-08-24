@@ -65,15 +65,17 @@ const ProductVerification = () => {
     setTotalQuantity(sum);
   };
 
-  useEffect(() => {}, [quantities]);
+  useEffect(() => { }, [quantities]);
 
   const storedProductData = useSelector(
     (state) => state.productReqReducer.productReq
   );
 
   const productDetails = storedProductData.filter(
-    (product) => product._id === id
-  );
+    (product) => product._id === id,
+  )
+  console.log(productDetails)
+  ;
 
   const settings = {
     infinite: true,
@@ -158,6 +160,33 @@ const ProductVerification = () => {
                   Total Quantity: {product.totalQuantity}
                 </h6>
               </div>
+              
+              <div className={`cart mt-4 align-items-center ${styles.cart}`}>
+  <h6 className={`text-uppercase ${styles["size-heading"]}`}>
+    {product.selectedCategory === "Women" &&
+      categorySizes.Womens.map(size => (
+        <span key={size}>
+          {size}: {1|| 0} | 
+        </span>
+      ))}
+    {product.selectedCategory === "Men" &&
+      categorySizes.Men.map(size => (
+        <span key={size}>
+          {size}: {1|| 0} | 
+        </span>
+      ))}
+    {product.selectedCategory === "Kids" &&
+      categorySizes.Kids.map(size => (
+        <span key={size}>
+          {size}: {1|| 0} | 
+        </span>
+      ))} 
+    {!(product.selectedCategory === "Women" || product.selectedCategory === "Men" || product.selectedCategory === "Kids") && (
+      <span>Select a category to see available sizes</span>
+    )}
+  </h6>
+</div>
+
             </div>
           </div>
         </div>

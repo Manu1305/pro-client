@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+ import React, { useEffect } from "react";
 import styless from "./Shopping.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -287,10 +287,12 @@ const Shopping = () => {
               </div>
             </div>
           </div>
-          <Footer />
+          
         </div>
       )}
+      
     </div>
+    
   );
 };
 
