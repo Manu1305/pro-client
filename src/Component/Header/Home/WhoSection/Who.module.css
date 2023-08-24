@@ -9,6 +9,7 @@
   height: 300px;
   width: 50%;
   cursor: pointer;
+  transition: width 2s;
 }
 
 .whiteBox {
@@ -44,12 +45,14 @@
   height: 40px;
   transition: height 2s;
   display: block;
+
 }
 
 .whiteBox.hovered {
   height: 40px;
   transition: height 2s;
   display: block;
+  
 }
 .whiteTextinner{
   text-align: center;

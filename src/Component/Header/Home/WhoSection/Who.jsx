@@ -10,8 +10,8 @@ function Who() {
         
         <div className={styles.redBox} onClick={()=>{navigate('whoweare')}}>
           <h1 className={`${styles.text} ${styles.whiteText}`}>WHO</h1>
-        
-        </div>
+
+              </div>
         
         <div className={styles.whiteBox}  onClick={()=>{navigate('whyus')}} >
           <h1 className={`${styles.text} ${styles.redText}`}>WHY</h1>

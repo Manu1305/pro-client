@@ -287,10 +287,12 @@ const Shopping = () => {
               </div>
             </div>
           </div>
-          <Footer />
+          
         </div>
       )}
+      
     </div>
+    
   );
 };
 

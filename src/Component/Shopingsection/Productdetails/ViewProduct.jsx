@@ -410,7 +410,7 @@ const ViewProduct = ({ setCartItems }) => {
                     <TbTruckDelivery />
                   </div>
                   <div>
-                    <h4 className="font-bold mt-4">free delivery</h4>
+                    <h4 className="font-bold mt-4">Delivery with in 5 days</h4>
                   </div>
                 </div>
                 <div className={styles.headone}>
