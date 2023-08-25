@@ -101,6 +101,10 @@ const SellerRelatedPro = ({ addToCart }) => {
               <div className={`${styless.card}`}>
                 <Slider {...settingsImageSlider}>
                   {product.images.map((img, index) => (
+                     <Link
+                     style={{ cursor: "pointer" }}
+                     to={`/ViewDetails/${product._id}`}
+                   >
                     <div key={index}>
                       <img
                         src={img}
@@ -108,6 +112,7 @@ const SellerRelatedPro = ({ addToCart }) => {
                         alt=""
                       />
                     </div>
+                    </Link>
                   ))}
                 </Slider>
                 <h5 className={styless.title}>{product.productDetail.brand}</h5>

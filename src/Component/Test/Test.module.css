@@ -1,0 +1,34 @@
+.headingdiv{
+    width: 100%;
+  height: 100px;
+
+}
+.headingText{
+    font-weight: bold;
+    margin-right: 1000px;
+    margin-top: 50px;
+}
+.maindiv{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(247, 251, 255);
+}
+.mainone{
+    margin-left: 100px;
+     width: 50%;
+background-color: rgb(247, 251, 255);
+}
+.maintwo{
+    width: 50%;
+    background-color: rgb(247, 251, 255);
+}
+.inputDiv{
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+.inputField{
+    text-indent: 10px;
+}
