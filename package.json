@@ -55,11 +55,8 @@
     "recharts": "^2.7.3",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
-<<<<<<< HEAD
     "redux-persist": "^6.0.0",
-=======
     "sass": "^1.66.1",
->>>>>>> 87f525e5b16fb2e6ea0f798d3c269938711cfa95
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.11",
     "sweetalert2": "^11.6.13",
