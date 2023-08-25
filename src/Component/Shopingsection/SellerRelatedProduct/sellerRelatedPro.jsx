@@ -40,7 +40,7 @@ const SellerRelatedPro = ({ addToCart }) => {
     httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        setProductItems(res.data);
+        // setProductItems(res.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

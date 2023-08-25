@@ -136,12 +136,7 @@ body {
   flex-direction: row;
   margin-top: 20px;
 }
-.percentagetext {
-  margin-left: 15px;
-  display: flex;
-  flex-direction: row;
-  font-weight: lighter;
-}
+
 
 .form-group {
   width: 80px;
@@ -184,6 +179,7 @@ body {
   margin-left: 45rem;
 }
 .color_Container {
+  margin-top: 30px;
   width: 485px;
   height: 127px;
   display: flex;
@@ -201,9 +197,10 @@ body {
   margin: left -10px;;
 }
 
-.color_box :hover {
-  padding: 10px;
-  border: 5px solid rgb(143, 72, 236);
+.color_box:hover {
+  /* background:black; */
+  /* padding: 10px; */
+  border: 5px solid rgb(5, 0, 10);
 }
 @media (min-width: 100px) and (max-width: 900px) {
   .sizeresponsive {
@@ -255,14 +252,12 @@ body {
 
 .desgin {
   color: red;
-  height: 50px;
-  /* margin-left: 10rem; */
-  width: 4rem;
-  /* margin-top: 6rem; */
+  height: 60px;
+  width: 5rem;
   margin-left: 27px;
-  justify-content: 1rem;
   font-weight: bold;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -388,6 +383,7 @@ body {
 }
 .percentagetext {
   margin-left: 15px;
+  margin-top: -5px;
   display: flex;
   flex-direction: row;
   font-weight: lighter;

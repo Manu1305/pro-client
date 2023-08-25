@@ -110,7 +110,7 @@ const Shopping = () => {
             </div>
                 
                 <img
-                  src={data.images[0]}
+                  src={data.productDetails[0].images[0]}
                   style={{ height: 320, width: 305, objectFit: "fill" }}
                   alt=""
                 />
@@ -124,7 +124,7 @@ const Shopping = () => {
                 className="cart-title m-1"
                 style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
               >
-                {data.productDetail.brand}
+                {data.brand}
               </div>
               {user && user.email ? (
                 <div className="m-2 d-flex justify-content-between">
@@ -134,7 +134,7 @@ const Shopping = () => {
                 </div>
               ) : (
                 <div className="m-2" style={{ fontWeight: "30px" }}>
-                  {data.productDetail.description}
+                  {data.description}
                 </div>
               )}
             </div>

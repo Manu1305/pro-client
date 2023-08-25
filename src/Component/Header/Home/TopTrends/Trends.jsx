@@ -105,11 +105,11 @@ const TrendingItems = ({ addToCart }) => {
                 <div className={styless.customerheading}>
                 <Link  to={`/ViewDetails/${productItems._id}`} >
                   <div className={`${styless.card}`}>
-                    <img src={productItems.images[0]} alt="imge" />
+                    <img src={productItems.productDetails[0].images[0]} alt="imge" />
                   </div>
                   </Link>
                 </div>
-                <h5 className={styless.title}>{productItems.productDetail.brand}</h5>
+                <h5 className={styless.title}>{productItems.brand}</h5>
                 {/* <span className={styless.description}> */}
                 <Link style={{ textDecoration: "none" }}>
                   <p>Explore Now!</p>

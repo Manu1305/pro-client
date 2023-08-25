@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { GrFormPrevious } from "react-icons/gr";
-// import {  MdNavigateNext } from "react-icons/md";
 import styles from "./Product.module.css";
 import SellerRelatedPro from "../SellerRelatedProduct/sellerRelatedPro";
 import { AiOutlineHeart, AiOutlineMinusCircle } from "react-icons/ai";
@@ -17,12 +15,6 @@ import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
 
 const ViewProduct = ({ setCartItems }) => {
-  const categorySizes = {
-    Men: ["S", "M", "L", "XL"],
-    Womens: ["XS", "S", "M", "L"],
-    Kids: ["3-4 Yr", "5-6 Yr", "7-8 Yr", "9-10 Yr"],
-    size: ["size1", "size2", "size3", "size4"],
-  };
   const { productId } = useParams();
   const user = useSelector((state) => state.userReducer.user);
 
@@ -34,6 +26,7 @@ const ViewProduct = ({ setCartItems }) => {
   const [isWishItem, setisWishItem] = useState(false);
 
   const [imgPreview, setimgPreview] = useState("");
+  const [prdDetails, setPrdDetails] = useState(0);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -74,7 +67,7 @@ const ViewProduct = ({ setCartItems }) => {
 
   const handleQuantityChange = (size, event) => {
     const { value } = event.target;
-    const updatedQuantities = { ...quantities, [size]: value };
+    const updatedQuantities = { ...quantities, [size]: Number(value) };
     setQuantities(updatedQuantities);
 
     let sum = 0;
@@ -109,6 +102,8 @@ const ViewProduct = ({ setCartItems }) => {
       sum += Number(quantities[size]);
     }
     setTotalQuantity(sum);
+
+    console.log(quantities);
   }, [quantities]);
 
   useEffect(() => {
@@ -223,19 +218,26 @@ const ViewProduct = ({ setCartItems }) => {
           <div className={`col-md-6 ${styles.images}`}>
             <div className={`text-center p-4`}>
               <img
-                src={!imgPreview ? product.images[0] : imgPreview}
+                src={
+                  !imgPreview
+                    ? product.productDetails[prdDetails].images[0]
+                    : imgPreview
+                }
                 className={`img-fluid img-responsive rounded product-image ${styles.image} `}
                 style={{ height: "400px", width: "770px" }}
                 alt="img"
               />
             </div>
             <div className="ml-5" style={{ display: "flex" }}>
-              {product.images.map((img) => (
+              {product.productDetails[prdDetails].images.map((img) => (
                 <div className="m-2">
                   <img
                     style={{ height: "70px", width: "70px" }}
                     src={img}
-                    onClick={() => setimgPreview(img)}
+                    onClick={() => {
+                      setimgPreview(img);
+                      console.log(product.productDetails);
+                    }}
                     alt=""
                   />
                 </div>
@@ -243,14 +245,13 @@ const ViewProduct = ({ setCartItems }) => {
             </div>
           </div>
 
-         
           <div className="col-md-6">
             <div className={`product`}>
               <div className={"mt-4"}>
                 <div className={styles.heads}>
                   <div>
                     <h5 className={`text-uppercase brand ${styles.brand}`}>
-                      {product.productDetail.brand}
+                      {product.brand}
                     </h5>
                   </div>
                   <div className={`m-1 ${styles.icons}`}>
@@ -274,7 +275,7 @@ const ViewProduct = ({ setCartItems }) => {
                   </div>
                 </div>
 
-                <span>{product.productDetail.description}</span>
+                <span>{product.description}</span>
 
                 <div
                   className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
@@ -297,7 +298,7 @@ const ViewProduct = ({ setCartItems }) => {
 
                 <div className={styles.priceandpercentage}>
                   <div>
-                    <p className="line-through" style={{ color: "red" }}>
+                    <p className="line-through" style={{ color: "black" ,marginTop:"-5px",fontSize:"13px"}}>
                       ₹{product.realPrice}
                     </p>
                   </div>
@@ -307,98 +308,102 @@ const ViewProduct = ({ setCartItems }) => {
                   </div>
                 </div>
               </div>
-              
-              <h4 style={{fontSize:'2rem'}} className={`about ${styles.about}`}>Choose a color</h4>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                 
-                }}
-              >
-                     {/* color container */}
-                   
-          <div className={styles.color_Container}>
-         
-            <div style={{display:'flex',flexDirection:'row',gap:'10px',marginBottom:'20px'}}>
-            
 
-              <select
-                className={styles.color_box}
-                style={{ background: "#BBC1F8" }}
-              ></select>
-              <select
-                className={styles.color_box}
-                style={{ background: "#BBD278" }}
-              ></select>
-              <select
-                className={styles.color_box}
-                style={{ background: "#FFD3F8" }}
-              ></select>
-              <select
-                className={styles.color_box}
-                style={{ background: "#B2BE91" }}
-              ></select>
-              <select
-                className={styles.color_box}
-                style={{ background: "#124B88" }}
-              ></select>
-            </div>
-          </div>
+              {/* color selection */}
+              <div style={{ marginTop: "30px" }}>
+                <h5
+                  style={{ fontSize: "2rem" }}
+                  className={`about ${styles.about}`}
+                >
+                  Choose a color
+                </h5>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <div className={styles.color_Container}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        marginBottom: "20px",
+                      }}
+                    >
+                      {product.productDetails?.map((ele, index) => (
+                        <div
+                          className={styles.color_box}
+                          style={{ background: `${ele.color}` }}
+                          onClick={() => setPrdDetails(index)}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-          
-              
+
               <div className={`sizes ${styles.sizes}`}>
-                {product.selectedCategory && (
+                {/* size quantity changes */}
+                {product.productDetails && (
                   <div>
                     <label htmlFor="product_size">CHOOSE SIZE</label>
                     <div>
                       <div className={`mt-1 ${styles.sizeresponsive}`}>
-                        {product.selectedCategory &&
-                          categorySizes[product.selectedCategory].map(
-                            (size, index) => (
-                              <div key={index} className={styles.tottal}>
-                                <div
-                                  className={styles.desgin}
-                                  style={{
-                                    borderRadius: "0px",
-                                    backgroundColor: "rgb(243,243,243)",
-                                  }}
-                                >
-                                  {size}
+                        {product.productDetails &&
+                          Object.entries(
+                            product.productDetails[prdDetails].qtyAndSizes
+                          ).map(([size, quantity]) => (
+                            <div key={size} className={styles.tottal}>
+                              {quantity !== 0 && (
+                                <div>
+                                  <div
+                                    className={styles.desgin}
+                                    style={{
+                                      borderRadius: "0px",
+                                      backgroundColor: "rgb(243,243,243)",
+                                    }}
+                                  >
+                                    <div>{size}</div>
+                                    <div style={{ fontSize: "11px",color:"black" }}>
+                                      {quantity} left
+                                    </div>
+                                  </div>
+                                  <div className="mt-1 ml-8 d-flex flex-row align-items-center">
+                                <div>
+                                  <AiOutlineMinusCircle
+                                  className="mr-1"
+                                    onClick={() => decreaseHandler(size)}
+                                  />
                                 </div>
 
-                                {/* <IoAddCircle/> */}
-                                <div className="mt-2 ml-8 d-flex flex-row align-items-center">
-                                  <div>
-                                    <AiOutlineMinusCircle
-                                      onClick={() => decreaseHandler(size)}
-                                    />
-                                  </div>
-
-                                  <div style={{ width: "20px" }}>
-                                    <input
-                                      type="text"
-                                      placeholder="Enter"
-                                      style={{
-                                        width: "20px",
-                                        textAlign: "center",
-                                      }}
-                                      value={quantities[size]}
-                                      onChange={(e) =>
-                                        handleQuantityChange(size, e)
-                                      }
-                                    />
-                                  </div>
-                                  <div>
-                                    <BsPlusCircle
-                                      onClick={() => increaseHandler(size)}
-                                    />
-                                  </div>
+                                <div style={{ width: "20px", marginLeft:"5px"}}>
+                                  <input
+                                    type="text"
+                                    placeholder="0"
+                                    style={{
+                                      width: "20px",
+                                      textAlign: "center",
+                                    }}
+                                    value={quantities[size]}
+                                    onChange={(e) =>
+                                      handleQuantityChange(size, e)
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  <BsPlusCircle
+                                  className="m-3"
+                                    onClick={() => increaseHandler(size)}
+                                  />
                                 </div>
                               </div>
-                            )
-                          )}
+                                </div>
+                              )}
+                              
+                            </div>
+                          ))}
                       </div>
                     </div>
                   </div>
@@ -473,17 +478,13 @@ const ViewProduct = ({ setCartItems }) => {
           <div className={styles.descrip}>
             <div>
               <p className={`about ${styles.about}`}>Product description</p>
-              <span className={styles["text1"]}>
-                {product.productDetail.description}
-              </span>
+              <span className={styles["text1"]}>{product.description}</span>
               <p className={`about ${styles.about}`}>WashcareInstructions</p>
               <span className={styles["text1"]}>
                 {product.WashcareInstructions}
               </span>
               <p className={`about ${styles.about}`}>Material </p>
-              <span className={styles["text1"]}>
-                {product.productDetail.material}
-              </span>
+              <span className={styles["text1"]}>{product.material}</span>
             </div>
           </div>
         </div>
