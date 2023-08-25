@@ -181,7 +181,6 @@ const ViewProduct = ({ setCartItems }) => {
       }
     }
   };
-
   const offerBtnHandler = async () => {
     try {
       const message = {
@@ -243,6 +242,8 @@ const ViewProduct = ({ setCartItems }) => {
               ))}
             </div>
           </div>
+
+         
           <div className="col-md-6">
             <div className={`product`}>
               <div className={"mt-4"}>
@@ -306,13 +307,47 @@ const ViewProduct = ({ setCartItems }) => {
                   </div>
                 </div>
               </div>
+              
+              <h4 style={{fontSize:'2rem'}} className={`about ${styles.about}`}>Choose a color</h4>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  marginTop: "25px",
+                 
                 }}
-              ></div>
+              >
+                     {/* color container */}
+                   
+          <div className={styles.color_Container}>
+         
+            <div style={{display:'flex',flexDirection:'row',gap:'10px',marginBottom:'20px'}}>
+            
+
+              <select
+                className={styles.color_box}
+                style={{ background: "#BBC1F8" }}
+              ></select>
+              <select
+                className={styles.color_box}
+                style={{ background: "#BBD278" }}
+              ></select>
+              <select
+                className={styles.color_box}
+                style={{ background: "#FFD3F8" }}
+              ></select>
+              <select
+                className={styles.color_box}
+                style={{ background: "#B2BE91" }}
+              ></select>
+              <select
+                className={styles.color_box}
+                style={{ background: "#124B88" }}
+              ></select>
+            </div>
+          </div>
+              </div>
+          
+              
               <div className={`sizes ${styles.sizes}`}>
                 {product.selectedCategory && (
                   <div>
