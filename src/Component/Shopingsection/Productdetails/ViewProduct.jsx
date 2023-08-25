@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 // import { GrFormPrevious } from "react-icons/gr";
 // import {  MdNavigateNext } from "react-icons/md";
@@ -26,10 +26,10 @@ const ViewProduct = ({ setCartItems }) => {
   const { productId } = useParams();
   const user = useSelector((state) => state.userReducer.user);
 
-  const [selectedSizes, setSelectedSizes] = useState([]);
+  const navigate = useNavigate();
+
   const [quantities, setQuantities] = useState({});
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const [activeTab, setActiveTab] = useState("description");
   const [offerBtn, setofferBtn] = useState(false);
   const [isWishItem, setisWishItem] = useState(false);
 
@@ -48,15 +48,11 @@ const ViewProduct = ({ setCartItems }) => {
     } else {
     }
   };
-  useEffect(() => {
-    if (totalQuantity >= 100) {
-      setofferBtn(true);
-    } else {
-      setofferBtn(false);
-    }
-  }, [totalQuantity]);
 
   const wishUpdate = async (productId) => {
+    if (!user?.name) {
+      return navigate("/login");
+    }
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -114,6 +110,14 @@ const ViewProduct = ({ setCartItems }) => {
     }
     setTotalQuantity(sum);
   }, [quantities]);
+
+  useEffect(() => {
+    if (totalQuantity >= 100) {
+      setofferBtn(true);
+    } else {
+      setofferBtn(false);
+    }
+  }, [totalQuantity]);
 
   const storedProductData = useSelector(
     (state) => state.productReducer.product
@@ -358,11 +362,7 @@ const ViewProduct = ({ setCartItems }) => {
                                   className={styles.desgin}
                                   style={{
                                     borderRadius: "0px",
-                                    backgroundColor: selectedSizes.includes(
-                                      size
-                                    )
-                                      ? "rgb(237,240,248)"
-                                      : "rgb(243,243,243)",
+                                    backgroundColor: "rgb(243,243,243)",
                                   }}
                                 >
                                   {size}
@@ -459,7 +459,7 @@ const ViewProduct = ({ setCartItems }) => {
               </div>
             </div>
           </div>
-          <div className="ml-3" onClick={() => setActiveTab("description")}>
+          <div className="ml-3">
             <h3 className={styles.activeHeading}>Description</h3>
           </div>
 

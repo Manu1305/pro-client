@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../../../Redux/user/userAction";
+import { currentUserData } from "../../../../Redux/user/userAction";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../const/config";
 import httpService from "../../../Error Handling/httpService";
+
+
 const CustomerLogin = () => {
   const history = useNavigate();
   const localStorage = window.localStorage;
@@ -15,7 +17,6 @@ const CustomerLogin = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
-  const pandaRef = useRef(null);
 
   const handleCustomerLogin = async (e) => {
     e.preventDefault();
@@ -43,10 +44,19 @@ const CustomerLogin = () => {
               "warning"
             );
           }
+
         });
-      if (response && response.data && response.data.user)
-        dispatch(addUser(response.data.user));
-      sessionStorage.setItem("user", JSON.stringify(response.data.user));
+
+
+
+      if (response && response.data && response.data.user) {
+
+        console.log("CHECK", response.data.user)
+        dispatch(currentUserData(response.data.user));
+        // sessionStorage.setItem("user", JSON.stringify(response.data.user));
+      }
+
+
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
@@ -75,7 +85,7 @@ const CustomerLogin = () => {
     }
   };
 
-  
+
   const validate = () => {
     let emailError = "";
     let passwordError = "";
@@ -124,7 +134,7 @@ const CustomerLogin = () => {
                   <div className="card-body p-4 p-lg-5 text-black">
                     <form>
                       <div className="d-flex align-items-center mb-3 pb-1">
-                    
+
                         <i
                           className="fas fa-face-smile fa-2x me-3"
                           style={{ color: "red" }}
@@ -138,7 +148,7 @@ const CustomerLogin = () => {
                         Sign into your account
                       </h5>
                       <div className="form-outline mb-4">
-                      <label className="form-label" for="form2Example17">
+                        <label className="form-label" for="form2Example17">
                           Email address
                         </label>
                         <input
@@ -150,10 +160,10 @@ const CustomerLogin = () => {
                           error={emailError}
                           placeholder="please enter your email address..."
                         />
-                        
+
                       </div>
                       <div className="form-outline mb-4">
-                      <label className="form-label" for="form2Example27">
+                        <label className="form-label" for="form2Example27">
                           Password
                         </label>
                         <input
@@ -165,7 +175,7 @@ const CustomerLogin = () => {
                           error={passwordError}
                           placeholder="please enter your password..."
                         />
-                        
+
                       </div>
                       <div className="pt-1 mb-4">
                         <button

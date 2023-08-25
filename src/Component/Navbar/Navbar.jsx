@@ -3,36 +3,19 @@ import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { CgShoppingCart } from "react-icons/cg";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import  Profile  from "./Dropdown/ProfileDropdown";
-import { addUser } from "../../Redux/user/userAction";
 import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
-import { MdMarkEmailRead, MdOutlineNotificationsNone } from "react-icons/md";
-import { apiURL } from "../../const/config";
-import httpService from "../Error Handling/httpService";
+import {  MdOutlineNotificationsNone } from "react-icons/md";
 
- const Navbar = ({ wishlist, cartItems }) => {
+
+ const Navbar = ({  cartItems }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
   let user = useSelector((state) => state.userReducer.user);
-
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    if (user && !user.name) {
-      try {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
-        dispatch(addUser(userData));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, []);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -112,12 +95,10 @@ import httpService from "../Error Handling/httpService";
             {user && user.email ? (
               <Link to="Wish" onClick={closeMenu}>
                 <AiOutlineHeart style={{height:"20px",width:'20px'}} />
-                {wishlist.length === 0 ? "" : wishlist.length}
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}  >
                 <AiOutlineHeart style={{height:"20px",width:'20px'}} />
-                {wishlist.length === 0 ? "" : wishlist.length}
               </Link>
             )}
           </li>

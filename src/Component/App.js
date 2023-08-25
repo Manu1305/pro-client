@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, {  useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
 import ScrollToTop from "../Scrolltotop";
-import Cart from "./Header/Cart/Cart";
 import Login from "./Navbar/Login/UserLogin/Login";
 import Navbar from "./Navbar/Navbar";
 import Header from "./Header/Home/Header";
 import BlogHome from "./Pages/BlogHome/BlogHome";
-import { Footer } from "./Footer/Footer";
-import TrendingData from "./Body/TrendingBlog/TrendingData";
 import DetailsPages from "./Pages/Details/DetailsPages";
 import SellerDashboard from "./Navbar/Profile/SellerDashboard/SellerDash";
 import Register from "./Navbar/Login/Buyer&SellerRegister/Register";
@@ -48,11 +45,11 @@ import EmailCheck from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmatio
 import Changepassword from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmation.jsx/CHangepassword";
 import Notification from "./Navbar/Notificatios/Notification";
 import ShoppingPage from "./Shopingsection/Shopping";
-
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 import { ScaleLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -68,35 +65,33 @@ const LazyMainPage = React.lazy(() =>
 const App = () => {
   const { productItems } = cards;
 
-  const [wishlist, setWishlist] = useState([]);
-
   const [cartItems, setCartItems] = useState(0);
+
+  const user = useSelector(state => state.userReducer.user)
+
 
   return (
     <Router>
-            <ScrollToTop>
+      <ScrollToTop>
 
-      <div className="fontClass">
-    
-        <Navbar 
-            wishlist={wishlist} cartItems={cartItems} />
-        <Routes>
-        <Route path="*" element={<Error404/>} />
-          <Route path="login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <Header
-                productItems={productItems}
-              
-                   
-              />
-            }
-          />
-          <Route path="/dashboard" element={<SellerDashboard />} />
-         
+        <div className="fontClass">
 
-            <Route path="/Cart" element={<React.Suspense fallback={<div><ScaleLoader/></div>}> <LazyCart />
+          <Navbar cartItems={cartItems} />
+          <Routes>
+            <Route path="*" element={<Error404 />} />
+            <Route path="login" element={!user?.name ? <Login /> : <Header/>} />
+            <Route
+              path="/"
+              element={
+                <Header
+                  productItems={productItems}
+                />
+              }
+            />
+            <Route path="/dashboard" element={<SellerDashboard />} />
+
+
+            <Route path="/cart" element={<React.Suspense fallback={<div><ScaleLoader /></div>}> { user?.name ? <LazyCart /> : <Login/>}
             </React.Suspense>} />
 
             <Route path="/dashboard" element={<React.Suspense fallback={<div>Loading... </div>}> <LazySellerDashboard />
@@ -107,7 +102,7 @@ const App = () => {
 
             <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
             </React.Suspense>} />
-        <Route path="/ViewDetails/:productId" element={<ViewProduct setCartItems={setCartItems} />} />
+            <Route path="/ViewDetails/:productId" element={<ViewProduct setCartItems={setCartItems} />} />
 
             <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
             <Route path="thankyou" element={<Thankyou />} />
@@ -148,10 +143,9 @@ const App = () => {
               element={<Changepassword />}
             />
             <Route path="/passwordupdate" element={<EmailCheck />} />
-            <Route path="Wish" element={<Wish  setCartItems={setCartItems}  />} />
+            <Route path="Wish" element={<Wish setCartItems={setCartItems} />} />
             <Route path="notifications" element={<Notification />} />
 
-            {/* <Route path="AdminHome" element={<AdminDashboard />} /> */}
             <Route path="/profile/:id " element={<Profile />} />
             <Route path="/Profilepage/:id" element={<SellerProSettings />} />
             <Route path="/editprofile" element={<Editprofile />} />
