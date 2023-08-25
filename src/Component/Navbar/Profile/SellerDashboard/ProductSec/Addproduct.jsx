@@ -26,6 +26,13 @@ const AddProduct = () => {
     Kids: ["3-4 Years", "5-6 Years", "7-8 Years", "9-10 Years"],
   };
 
+
+  const Collections = {
+    Men: ["S", "M", "L", "XL"],
+    Womens: ["XS", "S", "M", "L"],
+    Kids: ["3-4 Years", "5-6 Years", "7-8 Years", "9-10 Years"],
+  };
+
   const categoriesWithSubcategories = {
     Men: ["Casual Shirts", "Formal Shirts",  "T-shirts",
     "Polo shirts",
