@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./Product.module.css";
 import SellerRelatedPro from "../SellerRelatedProduct/sellerRelatedPro";
 import { AiOutlineHeart, AiOutlineMinusCircle } from "react-icons/ai";
@@ -13,20 +13,24 @@ import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
+import { addCartItem } from "../../../Redux/cart/cartAction";
 
 const ViewProduct = ({ setCartItems }) => {
   const { productId } = useParams();
   const user = useSelector((state) => state.userReducer.user);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [quantities, setQuantities] = useState({});
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [offerBtn, setofferBtn] = useState(false);
   const [isWishItem, setisWishItem] = useState(false);
 
-  const [imgPreview, setimgPreview] = useState("");
+  const [imgPreview, setImgPreview] = useState("");
   const [prdDetails, setPrdDetails] = useState(0);
+
+  const [carts, setCarts] = useState([]);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -132,6 +136,7 @@ const ViewProduct = ({ setCartItems }) => {
     };
 
     console.log(totalQuantity);
+    console.log(quantities);
 
     const sizeWithQuantity = {};
     Object.keys(quantities).forEach((key, index) => {
@@ -154,28 +159,38 @@ const ViewProduct = ({ setCartItems }) => {
       });
     } else {
       try {
-        await httpService
-          .post(
-            `${apiURL}/cart/add-to-cart`,
-            {
-              productId: product._id,
-              sizeWithQuantity: sizeWithQuantity,
-              quantity: totalQuantity,
-            },
-            config
-          )
-          .then((res) => {
-            console.log(res);
+        // await httpService
+        //   .post(
+        //     `${apiURL}/cart/add-to-cart`,
+        //     {
+        //       productId: product._id,
+        //       sizeWithQuantity: sizeWithQuantity,
+        //       quantity: totalQuantity,
+        //     },
+        //     config
+        //   )
+        //   .then((res) => {
+        //     console.log(res);
 
-            setCartItems(res.data.items.length);
-            toast.success("item added to cart");
-          })
-          .catch((err) => console.log(err));
+        //     setCartItems(res.data.items.length);
+        //     toast.success("item added to cart");
+        //   })
+        //   .catch((err) => console.log(err));
+        dispatch(addCartItem({"productDetails" :product.productDetails,userEmail:user.email}));
+
+        // temp local storage
+        // setCarts((prv) => [...prv, product]);
       } catch (error) {
         console.log(error);
       }
     }
   };
+
+  useEffect(() => {
+    console.log(carts);
+    localStorage.setItem('cart_item',JSON.stringify)
+  }, [carts]);
+
   const offerBtnHandler = async () => {
     try {
       const message = {
@@ -211,10 +226,14 @@ const ViewProduct = ({ setCartItems }) => {
     }
   };
 
+  useEffect(() => {
+    setImgPreview(null);
+  }, [prdDetails]);
+
   return (
     <div className={`card ${styles.card}`}>
       {productDetails.map((product) => (
-        <div className="row">
+        <div className="row" key={product._id}>
           <div className={`col-md-6 ${styles.images}`}>
             <div className={`text-center p-4`}>
               <img
@@ -223,8 +242,8 @@ const ViewProduct = ({ setCartItems }) => {
                     ? product.productDetails[prdDetails].images[0]
                     : imgPreview
                 }
-                className={`img-fluid img-responsive rounded product-image ${styles.image} `}
-                style={{ height: "400px", width: "770px" }}
+                className={`img-fluid img-responsive rounded product-image`}
+                style={{ height: "400px", width: "770px", objectFit: "fill" }}
                 alt="img"
               />
             </div>
@@ -235,8 +254,7 @@ const ViewProduct = ({ setCartItems }) => {
                     style={{ height: "70px", width: "70px" }}
                     src={img}
                     onClick={() => {
-                      setimgPreview(img);
-                      console.log(product.productDetails);
+                      setImgPreview(img);
                     }}
                     alt=""
                   />
@@ -298,7 +316,14 @@ const ViewProduct = ({ setCartItems }) => {
 
                 <div className={styles.priceandpercentage}>
                   <div>
-                    <p className="line-through" style={{ color: "black" ,marginTop:"-5px",fontSize:"13px"}}>
+                    <p
+                      className="line-through"
+                      style={{
+                        color: "black",
+                        marginTop: "-5px",
+                        fontSize: "13px",
+                      }}
+                    >
                       ₹{product.realPrice}
                     </p>
                   </div>
@@ -366,42 +391,51 @@ const ViewProduct = ({ setCartItems }) => {
                                     }}
                                   >
                                     <div>{size}</div>
-                                    <div style={{ fontSize: "11px",color:"black" }}>
+                                    <div
+                                      style={{
+                                        fontSize: "11px",
+                                        color: "black",
+                                      }}
+                                    >
                                       {quantity} left
                                     </div>
                                   </div>
                                   <div className="mt-1 ml-8 d-flex flex-row align-items-center">
-                                <div>
-                                  <AiOutlineMinusCircle
-                                  className="mr-1"
-                                    onClick={() => decreaseHandler(size)}
-                                  />
-                                </div>
+                                    <div>
+                                      <AiOutlineMinusCircle
+                                        className="mr-1"
+                                        onClick={() => decreaseHandler(size)}
+                                      />
+                                    </div>
 
-                                <div style={{ width: "20px", marginLeft:"5px"}}>
-                                  <input
-                                    type="text"
-                                    placeholder="0"
-                                    style={{
-                                      width: "20px",
-                                      textAlign: "center",
-                                    }}
-                                    value={quantities[size]}
-                                    onChange={(e) =>
-                                      handleQuantityChange(size, e)
-                                    }
-                                  />
-                                </div>
-                                <div>
-                                  <BsPlusCircle
-                                  className="m-3"
-                                    onClick={() => increaseHandler(size)}
-                                  />
-                                </div>
-                              </div>
+                                    <div
+                                      style={{
+                                        width: "20px",
+                                        marginLeft: "5px",
+                                      }}
+                                    >
+                                      <input
+                                        type="text"
+                                        placeholder="0"
+                                        style={{
+                                          width: "20px",
+                                          textAlign: "center",
+                                        }}
+                                        value={quantities[size]}
+                                        onChange={(e) =>
+                                          handleQuantityChange(size, e)
+                                        }
+                                      />
+                                    </div>
+                                    <div>
+                                      <BsPlusCircle
+                                        className="m-3"
+                                        onClick={() => increaseHandler(size)}
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                               )}
-                              
                             </div>
                           ))}
                       </div>

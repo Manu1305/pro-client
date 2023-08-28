@@ -18,7 +18,6 @@ const Shopping = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
 
-  const [nameFilter, setNameFilter] = useState("");
   const [price, setPrice] = useState(10000);
   const [categories, setCategories] = useState([]);
   const [data, setData] = useState([]);
@@ -87,6 +86,7 @@ const Shopping = () => {
   const displayUsers = filteredProducts
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
+
       return (
         <div
           key={data.id}
@@ -152,6 +152,7 @@ const Shopping = () => {
     <div>
       {isLoading ? ( // Conditionally render a loading spinner
         <div className={styless.loadingSpinner}>
+          <div>
           <ScaleLoader
             color="red"
             style={{
@@ -165,6 +166,7 @@ const Shopping = () => {
           >
             <span className="visually-hidden">Loading...</span>
           </ScaleLoader>
+          </div>
         </div>
       ) : (
         <div>

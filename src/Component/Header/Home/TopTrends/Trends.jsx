@@ -36,7 +36,7 @@ const SamplePrevArrow = (props) => {
 };
 const TrendingItems = ({ addToCart }) => {
   const [count, setCount] = useState(0);
-  const [data, setData]=useState([])
+  const [data, setData] = useState([]);
   const increment = () => {
     setCount(count + 1);
   };
@@ -67,12 +67,12 @@ const TrendingItems = ({ addToCart }) => {
     ],
   };
 
-
-
-  useEffect(() => {
-   httpService
+  const apiCall = async () => {
+    await httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
+
+        console.log(res.data)
         const shuffledData = shuffleArray(res.data); // Shuffle the data
         setData(shuffledData);
         console.log(shuffledData);
@@ -80,19 +80,25 @@ const TrendingItems = ({ addToCart }) => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  };
 
+  useEffect(() => {
+    apiCall();
+  }, []);
 
   const shuffleArray = (array) => {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
     }
     return shuffledArray;
   };
 
-
+  console.log(data);
 
   return (
     <div className={`${styless.bg}`}>
@@ -103,10 +109,13 @@ const TrendingItems = ({ addToCart }) => {
             data.map((productItems) => (
               <div>
                 <div className={styless.customerheading}>
-                <Link  to={`/ViewDetails/${productItems._id}`} >
-                  <div className={`${styless.card}`}>
-                    <img src={productItems.productDetails[0].images[0]} alt="imge" />
-                  </div>
+                  <Link to={`/ViewDetails/${productItems._id}`}>
+                    <div className={`${styless.card}`}>
+                      <img
+                        src={productItems.productDetails[0].images[0]}
+                        alt="imge"
+                      />
+                    </div>
                   </Link>
                 </div>
                 <h5 className={styless.title}>{productItems.brand}</h5>
