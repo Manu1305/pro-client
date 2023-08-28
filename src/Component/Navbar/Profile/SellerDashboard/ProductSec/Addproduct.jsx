@@ -21,86 +21,239 @@ const AddProduct = () => {
   const history = useNavigate();
 
   const categorySizes = {
-    Men: ["S", "M", "L", "XL"],
-    Womens: ["XS", "S", "M", "L"],
-    Kids: ["3-4 Years", "5-6 Years", "7-8 Years", "9-10 Years"],
-  };
-
-
-  const Collections = {
-    Men: ["S", "M", "L", "XL"],
-    Womens: ["XS", "S", "M", "L"],
-    Kids: ["3-4 Years", "5-6 Years", "7-8 Years", "9-10 Years"],
-  };
-
-  const categoriesWithSubcategories = {
-    Men: ["Casual Shirts", "Formal Shirts",  "T-shirts",
-    "Polo shirts",
-    "Button-down shirts",
-    "Flannel shirts",
-    "Henley shirts",
-    "Sweatshirts",
-    "Hoodies",
-    "Tank tops",
-    "Long-sleeve shirts",
-    "Short-sleeve shirts",
-    "Oxford shirts",
-    "Chambray shirts",
-    "Denim shirts",
-    "Plaid shirts",
-    "Striped shirts",
-    "Printed shirts",
-    "Graphic shirts",
-    "Sport shirts",
-    "Work shirts",
-    "Dress shirts"],
-    Womens: ["Casual Dresses", "Maxi Dresses", "Pinafore Dresses", "T-shirts",
-    "Blouses",
-    "Tank tops",
-    "Crop tops",
-    "Button-down shirts",
-    "Tunics",
-    "Peplum tops",
-    "Off-the-shoulder tops",
-    "Wrap tops",
-    "Polo shirts",
-    "Sweatshirts",
-    "Hoodies",
-    "Bodysuits",
-    "Kimono tops",
-    "Cami tops",
-    "Bell sleeve tops",
-    "Cold shoulder tops",
-    "Ruffled tops",
-    "Lace tops",
-    "Embroidered tops"],
-    Kids: ["Cartoon Dresses", "Printed Dresses",  "Casual dresses",
-    "Party dresses",
-    "Formal dresses",
-    "Summer dresses",
-    "Maxi dresses",
-    "Floral dresses",
-    "Tutu dresses",
-    "Sundresses",
-    "A-line dresses",
-    "Pinafore dresses",
-    "Smock dresses",
-    "Denim dresses",
-    "Ruffle dresses",
-    "Embroidered dresses",
-    "Printed dresses",
-    "Princess dresses",
-    "Holiday dresses",
-    "Special occasion dresses",
-    "Birthday dresses",
-    "Prom dresses",
-    "Christening dresses",
-    "Pageant dresses",
-    "Wedding dresses",
-    "Costume dresses"],
+    Men: [],
+    Womens: [],
+    Kids: [],
   };
   
+  const sizeSelected={
+    Shirts: ["S", "M", "L", "XL","XXL"],
+    Pants: [28, 30, 32, 34, 36, 38, 40],
+    top:[
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "XXXL",
+      "4XL",
+      "5XL"
+  ],
+    Bottom: [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "XXXL",
+      "4XL",
+      "5XL"
+  ],
+    Sarees: [
+      "5.5 meters",
+      "6 meters",
+      "6.5 meters",
+      "7 meters",
+      "9 yards"
+  ],
+    KidsShirt:  [
+      "2T",   
+      "3T",  
+      "4T",  
+      "XS",        "S",   "M",    "L",   "XL",    ],
+      kidspants:[
+      "2T",
+      "3T",
+      "4T",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+  ]
+  ,
+    shorts: [
+      "2T",
+      "3T",
+      "4T",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+  ],
+  }
+
+  const categoriesWithSubcategories = {
+    Men: [  "Shirts","Pants",
+   ],
+   Womens:["top","Bottom","Sarees"],
+   Kids:["KidsShirt","KidsBaniyans","kidspants","shorts"]
+ };
+
+  const Collections = {
+    Shirts: [
+      "Dress Shirts",
+      "T-Shirts",
+      "Polo Shirts",
+      "Casual Button-Up Shirts",
+      "Flannel Shirts",
+      "Henley Shirts",
+      "Sweatshirts",
+      "Hoodies"
+  ],
+    Pants:  [
+      "Jeans",
+      "Chinos",
+      "Dress Pants",
+      "Cargo Pants",
+      "Sweatpants",
+      "Joggers",
+      "Track Pants",
+      "Corduroy Pants"
+  ],
+    top: [
+      "Blouses",
+      "T-Shirts",
+      "Tank Tops",
+      "Crop Tops",
+      "Sweaters",
+      "Cardigans",
+      "Hoodies",
+      "Peplum Tops",
+      "Tunics",
+      "Button-Up Shirts",
+      "Bodysuits",
+      "Off-the-Shoulder Tops",
+      "Wrap Tops",
+      "Tube Tops",
+      "Kimono Tops",
+      "Polo Shirts",
+      "Camisoles",
+      "Cold Shoulder Tops",
+      "Cowl Neck Tops",
+      "Ruffle Tops"
+  ],
+    Bottom:  [
+      "Jeans",
+      "Leggings",
+      "Trousers",
+      "Skirts",
+      "Shorts",
+      "Culottes",
+      "Palazzo Pants",
+      "Joggers",
+      "Capri Pants",
+      "Wide-Leg Pants",
+      "Cargo Pants",
+      "Pencil Skirts",
+      "A-line Skirts",
+      "Maxi Skirts",
+      "Mini Skirts",
+      "Flared Skirts",
+      "Denim Skirts",
+      "Pleated Skirts",
+      "High-Waisted Pants",
+      "Harem Pants"
+  ],
+    Sarees:  [
+      "Silk Sarees",
+      "Cotton Sarees",
+      "Chiffon Sarees",
+      "Georgette Sarees",
+      "Banarasi Sarees",
+      "Kanjivaram Sarees",
+      "Designer Sarees",
+      "Bridal Sarees",
+      "Linen Sarees",
+      "Printed Sarees",
+      "Net Sarees",
+      "Half-and-Half Sarees",
+      "Satin Sarees",
+      "Embroidered Sarees",
+      "Saree with Blouse Sets",
+      "Traditional Sarees",
+      "Bollywood Sarees",
+      "Party Wear Sarees",
+      "Casual Sarees",
+      "Lehenga Sarees"
+  ],
+    KidsShirt: [
+      "T-Shirts",
+      "Polo Shirts",
+      "Button-Up Shirts",
+      "Graphic Tees",
+      "Long Sleeve Shirts",
+      "Hoodies",
+      "Sweatshirts",
+      "Tank Tops",
+      "Henley Shirts",
+      "Flannel Shirts",
+      "Sport Jerseys",
+      "Printed Shirts",
+      "Casual Shirts",
+      "Dress Shirts",
+      "Chambray Shirts",
+      "Uniform Shirts",
+      "Ruffle Tops (for girls)",
+      "Peplum Tops (for girls)",
+      "Bodysuits (for infants)"
+  ],
+    
+    kidspants:  [
+      "Jeans",
+      "Leggings",
+      "Trousers",
+      "Shorts",
+      "Cargo Pants",
+      "Sweatpants",
+      "Joggers",
+      "Track Pants",
+      "Corduroy Pants",
+      "Khaki Pants",
+      "Chinos",
+      "Capri Pants",
+      "Denim Pants",
+      "Athletic Pants",
+      "Overalls",
+      "School Uniform Pants",
+      "Printed Pants",
+      "Convertible Pants (with zip-off legs)",
+      "Dress Pants",
+      "Stretch Pants"
+  ],
+    shorts:[
+      "Denim Shorts",
+      "Athletic Shorts",
+      "Cargo Shorts",
+      "Bermuda Shorts",
+      "Chino Shorts",
+      "Board Shorts",
+      "Cotton Shorts",
+      "Khaki Shorts",
+      "Printed Shorts",
+      "Linen Shorts",
+      "Track Shorts",
+      "Pull-On Shorts",
+      "School Uniform Shorts",
+      "Sweat Shorts",
+      "Jogger Shorts",
+      "Running Shorts",
+      "Basketball Shorts",
+      "Active Shorts",
+      "Pleated Shorts",
+      "Swim Shorts"
+  ]
+  ,
+    
+  };
+
+
+  
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCollections, setselectedCollections] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const productCategories = Object.keys(categorySizes);
   const [productId, setProductId] = useState("");
@@ -200,6 +353,7 @@ const AddProduct = () => {
           quantities: quantities,
           description,
           selectedSubcategory,
+          // selectedCollections,
           realPrice,
           totalQuantity,
           WashcareInstructions,
@@ -398,6 +552,7 @@ const AddProduct = () => {
                 name="product_description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                style={{border: '2px solid black'}}
                 
               ></textarea>
               {descriptionError && (
@@ -452,15 +607,42 @@ const AddProduct = () => {
                     )
                   )}
                 </select>
-                {selectedSubcategoryError && (
+                {selectedSubcategory && (
                   <span className="help-block text-danger">{selectedSubcategoryError}</span>
                 )}
               </div>
             </div>
           )}
           </div>
-
-          {selectedCategory && (
+          {selectedSubcategory && (
+            <div style={{marginLeft:'50px', width:'400px'}}>
+              <label className={styles.label} for="product_subcategory">
+                COLLECTIONS
+              </label>
+              <div className={styles.Subcategorydiv}>
+                <select
+                  id="product_subcategory"
+                  name="product_subcategory"
+                  className="form-control"
+                  value={selectedCollections}
+                  onChange={(e) => setselectedCollections(e.target.value)}
+                >
+                  <option value="">Select Collection</option>
+                  {Collections[selectedSubcategory].map(
+                    (selectedCollections, index) => (
+                      <option key={index} value={selectedCollections}>
+                        {selectedCollections}
+                      </option>
+                    )
+                  )}
+                </select>
+                {selectedSubcategoryError && (
+                  <span className="help-block text-danger">{selectedSubcategoryError}</span>
+                )}
+              </div>
+            </div>
+          )}
+          {selectedSubcategory && (
             <div className={`${styles.formGroup}`}>
               <label className={styles.label}  htmlFor="product_size">
                 PRODUCT SIZE
@@ -471,7 +653,7 @@ const AddProduct = () => {
                   <h3 >Total Quantity: {totalQuantity}</h3>
                   </div>
                   <div>
-                  {categorySizes[selectedCategory].map((size, index) => (
+                  {sizeSelected[selectedSubcategory].map((size, index) => (
                     <div key={index} className={styles.sizeContainer} style={{display:'flex',flexDirection:'row'}}>
                       <div style={{width:'100px', display:'flex', flexDirection:'row'}}>
                       <h5
@@ -514,7 +696,7 @@ const AddProduct = () => {
             <div  className={styles.respo}  >
            
               <input
-                style={{textIndent:'10px'}}
+                style={{textIndent:'10px',border:'1px solid black'}}
                 id="product_real_price"
                 name="product_real_price"
                 placeholder="REAL PRICE"
@@ -536,7 +718,7 @@ const AddProduct = () => {
               )}
              
               <input
-               style={{textIndent:'10px'}}
+               style={{textIndent:'10px',marginLeft:'10px',border:'1px solid black'}}
                 id="product_selling_price"
                 name="product_selling_price"
                 placeholder="SELLING PRICE"
@@ -613,7 +795,7 @@ const AddProduct = () => {
               <label className={styles.label} htmlFor="product_other_colors">
                 OTHER COLOR
               </label>
-              <div className="input-wrapper" style={{display:'flex',flexDirection:'column'}}>
+              <div className="input-wrapper" style={{display:'flex',flexDirection:'column',marginLeft:'10px'}}>
                 <input
                   id="product_other_colors"
                   name="product_other_colors"
@@ -631,7 +813,7 @@ const AddProduct = () => {
             </div>
           </div>
 
-          <div className="form-group">
+          <div >
             <label className={styles.label} for="product_care_instructions">
               WASHCARE INSTRUCTIONS
             </label>
