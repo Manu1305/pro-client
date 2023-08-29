@@ -22,15 +22,13 @@ const ViewProduct = ({ setCartItems }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [quantities, setQuantities] = useState({});
-  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [sizeAndQua, setSizeAndQua] = useState({});
+  const [totalItems, setTotalItems] = useState(0);
   const [offerBtn, setofferBtn] = useState(false);
   const [isWishItem, setisWishItem] = useState(false);
 
   const [imgPreview, setImgPreview] = useState("");
-  const [prdDetails, setPrdDetails] = useState(0);
-
-  const [carts, setCarts] = useState([]);
+  const [prdDetInd, setPrdDetInd] = useState(0);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -69,21 +67,26 @@ const ViewProduct = ({ setCartItems }) => {
     }
   };
 
-  const handleQuantityChange = (size, event) => {
-    const { value } = event.target;
-    const updatedQuantities = { ...quantities, [size]: Number(value) };
-    setQuantities(updatedQuantities);
+  const handleQuantityChange = (event) => {
+    const { name, value } = event.target;
 
-    let sum = 0;
-    for (const size in updatedQuantities) {
-      sum += Number(updatedQuantities[size]);
-    }
-    setTotalQuantity(sum);
+    setSizeAndQua((prev) => {
+
+      // deleting size if quantity is 0
+
+        if (Number(value) === 0) {
+            const updatedSizeAndQua = { ...prev };
+            delete updatedSizeAndQua[name];
+            return updatedSizeAndQua;
+        } else {
+            return { ...prev, [name]: Number(value) };
+        }
+    });
   };
 
   const increaseHandler = (size) => {
-    console.log(quantities);
-    setQuantities((prev) => {
+    console.log(sizeAndQua);
+    setSizeAndQua((prev) => {
       return {
         ...prev,
         [size]: !prev[size] ? 1 : Number(prev[size]) + 1,
@@ -92,7 +95,7 @@ const ViewProduct = ({ setCartItems }) => {
   };
 
   const decreaseHandler = (size) => {
-    setQuantities((prev) => {
+    setSizeAndQua((prev) => {
       return {
         ...prev,
         [size]: !prev[size] && prev[size] === 0 ? 0 : Number(prev[size]) - 1,
@@ -101,22 +104,24 @@ const ViewProduct = ({ setCartItems }) => {
   };
 
   useEffect(() => {
-    let sum = 0;
-    for (const size in quantities) {
-      sum += Number(quantities[size]);
-    }
-    setTotalQuantity(sum);
-
-    console.log(quantities);
-  }, [quantities]);
+    const sum = Object.values(sizeAndQua).reduce((acc, cuu) => {
+      return acc + cuu;
+    }, 0);
+    console.log(sum);
+    setTotalItems(sum);
+  }, [sizeAndQua]);
 
   useEffect(() => {
-    if (totalQuantity >= 100) {
+    console.log(sizeAndQua);
+  }, [sizeAndQua]);
+
+  useEffect(() => {
+    if (totalItems >= 100) {
       setofferBtn(true);
     } else {
       setofferBtn(false);
     }
-  }, [totalQuantity]);
+  }, [totalItems]);
 
   const storedProductData = useSelector(
     (state) => state.productReducer.product
@@ -135,20 +140,29 @@ const ViewProduct = ({ setCartItems }) => {
       },
     };
 
-    console.log(totalQuantity);
-    console.log(quantities);
+    console.log(product);
 
-    const sizeWithQuantity = {};
-    Object.keys(quantities).forEach((key, index) => {
-      const sizeKey = `size${index + 1}`;
+    const { color, images } = product.productDetails[prdDetInd];
+    const { brand, sellingPrice, selectedCategory, description, seller } =
+      product;
 
-      sizeWithQuantity[sizeKey] = {
-        selectedSizes: key,
-        quantities: parseInt(quantities[key]),
-      };
-    });
+    const item = {
+      productId: product._id,
+      productDetails: {
+        color,
+        images: images[0],
+        brand,
+        category: selectedCategory,
+        price: sellingPrice,
+        description,
+        seller,
+      },
+      sizeAndQua,
+      totalItems,
+    };
+    console.log(item);
 
-    if (totalQuantity < 5) {
+    if (totalItems < 5) {
       toast.warning("Minimum 5 quantity per order", {
         position: "top-center",
         autoClose: 2500,
@@ -159,44 +173,33 @@ const ViewProduct = ({ setCartItems }) => {
       });
     } else {
       try {
-        // await httpService
-        //   .post(
-        //     `${apiURL}/cart/add-to-cart`,
-        //     {
-        //       productId: product._id,
-        //       sizeWithQuantity: sizeWithQuantity,
-        //       quantity: totalQuantity,
-        //     },
-        //     config
-        //   )
-        //   .then((res) => {
-        //     console.log(res);
-
-        //     setCartItems(res.data.items.length);
-        //     toast.success("item added to cart");
-        //   })
-        //   .catch((err) => console.log(err));
-        dispatch(addCartItem({"productDetails" :product.productDetails,userEmail:user.email}));
-
-        // temp local storage
-        // setCarts((prv) => [...prv, product]);
+        // send prdDetInd,total quantity ,color quantity
+        await httpService
+          .post(
+            `${apiURL}/cart/add-to-cart`,
+            {
+              ...item,
+            },
+            config
+          )
+          .then((res) => {
+            console.log(res);
+            setCartItems(res.data.items.length);
+            toast.success("item added to cart");
+          })
+          .catch((err) => console.log(err));
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  useEffect(() => {
-    console.log(carts);
-    localStorage.setItem('cart_item',JSON.stringify)
-  }, [carts]);
-
   const offerBtnHandler = async () => {
     try {
       const message = {
         for: "admin",
         heading: `Super Shopper ${user.name}: 100+ Quantity Purchase Unlocked! 🎉🛒`,
-        desc: `Admin Action Required: ${user.name} 100+ quantities purchase.Reach out to ${user.name} at their contact number: ${user.phone}, or email them at ${user.email} to share the exclusive deal.`,
+        desc: `Admin Action Required: ${user.name} 100+ quansdtities purchase.Reach out to ${user.name} at their contact number: ${user.phone}, or email them at ${user.email} to share the exclusive deal.`,
       };
       const config = {
         headers: {
@@ -228,7 +231,7 @@ const ViewProduct = ({ setCartItems }) => {
 
   useEffect(() => {
     setImgPreview(null);
-  }, [prdDetails]);
+  }, [prdDetInd]);
 
   return (
     <div className={`card ${styles.card}`}>
@@ -239,7 +242,7 @@ const ViewProduct = ({ setCartItems }) => {
               <img
                 src={
                   !imgPreview
-                    ? product.productDetails[prdDetails].images[0]
+                    ? product.productDetails[prdDetInd].images[0]
                     : imgPreview
                 }
                 className={`img-fluid img-responsive rounded product-image`}
@@ -248,7 +251,7 @@ const ViewProduct = ({ setCartItems }) => {
               />
             </div>
             <div className="ml-5" style={{ display: "flex" }}>
-              {product.productDetails[prdDetails].images.map((img) => (
+              {product.productDetails[prdDetInd].images.map((img) => (
                 <div className="m-2">
                   <img
                     style={{ height: "70px", width: "70px" }}
@@ -337,7 +340,7 @@ const ViewProduct = ({ setCartItems }) => {
               {/* color selection */}
               <div style={{ marginTop: "30px" }}>
                 <h5
-                  style={{ fontSize: "2rem" }}
+                  style={{ fontSize: "18px",fontWeight:10 }}
                   className={`about ${styles.about}`}
                 >
                   Choose a color
@@ -361,7 +364,7 @@ const ViewProduct = ({ setCartItems }) => {
                         <div
                           className={styles.color_box}
                           style={{ background: `${ele.color}` }}
-                          onClick={() => setPrdDetails(index)}
+                          onClick={() => setPrdDetInd(index)}
                         ></div>
                       ))}
                     </div>
@@ -369,7 +372,7 @@ const ViewProduct = ({ setCartItems }) => {
                 </div>
               </div>
 
-              <div className={`sizes ${styles.sizes}`}>
+              <div className={`sizes`}>
                 {/* size quantity changes */}
                 {product.productDetails && (
                   <div>
@@ -378,7 +381,7 @@ const ViewProduct = ({ setCartItems }) => {
                       <div className={`mt-1 ${styles.sizeresponsive}`}>
                         {product.productDetails &&
                           Object.entries(
-                            product.productDetails[prdDetails].qtyAndSizes
+                            product.productDetails[prdDetInd].qtyAndSizes
                           ).map(([size, quantity]) => (
                             <div key={size} className={styles.tottal}>
                               {quantity !== 0 && (
@@ -421,9 +424,10 @@ const ViewProduct = ({ setCartItems }) => {
                                           width: "20px",
                                           textAlign: "center",
                                         }}
-                                        value={quantities[size]}
+                                        value={sizeAndQua[size]}
+                                        name={size}
                                         onChange={(e) =>
-                                          handleQuantityChange(size, e)
+                                          handleQuantityChange(e)
                                         }
                                       />
                                     </div>
@@ -442,41 +446,42 @@ const ViewProduct = ({ setCartItems }) => {
                     </div>
                   </div>
                 )}
-              </div>
 
-              <div className={`mb-3 mt-4 align-items-center`}>
-                <>
-                  {user?.email && (
-                    <button
-                      className={`text-uppercase mr-2 ${styles.add_to_cart}`}
-                      onClick={() => addtoCartButton(product)}
-                    >
-                      <BsHandbagFill className="mb-1 mr-3" />
-                      Add to Cart
-                    </button>
-                  )}
-                </>
-                {offerBtn ? (
-                  <div className="container m-4">
-                    <div className="row justify-content-center">
-                      <div className="col-md-6 text-center">
-                        <h3 className="text-danger">
-                          Your Bulk Buying Deal Is a Click Away - Don't Miss
-                          Out!
-                        </h3>
-                      </div>
-                      <div className="col-md-6 text-center">
-                        <button
-                          className="btn btn-success"
-                          onClick={offerBtnHandler}
-                        >
-                          Offers
-                        </button>
+                <div className={`mb-3 mt-4 align-items-center`}>
+                  <>
+                    {user?.email && (
+                      <button
+                        className={`text-uppercase mr-2 ${styles.add_to_cart}`}
+                        onClick={() => addtoCartButton(product)}
+                      >
+                        <BsHandbagFill className="mb-1 mr-3" />
+                        Add to Cart
+                      </button>
+                    )}
+                  </>
+                  {offerBtn ? (
+                    <div className="container m-4">
+                      <div className="row justify-content-center">
+                        <div className="col-md-6 text-center">
+                          <h3 className="text-danger">
+                            Your Bulk Buying Deal Is a Click Away - Don't Miss
+                            Out!
+                          </h3>
+                        </div>
+                        <div className="col-md-6 text-center">
+                          <button
+                            className="btn btn-success"
+                            onClick={offerBtnHandler}
+                          >
+                            Offers
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : null}
+                  ) : null}
+                </div>
               </div>
+
               <div className={styles.lasthead}>
                 <div className={styles.headone}>
                   <div className={styles.oneone}>

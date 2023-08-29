@@ -8,7 +8,7 @@ import { addReqProduct } from "../../../../Redux/productBefore/productReqAction"
 import { useSelector, useDispatch } from "react-redux";
 import ReasonModal from "./ReasonModal";
 import { apiURL } from "../../../../const/config";
-import DataTable from "../../../Data table/DataTable";
+import DataTable from "../../../Reuseable Comp/DataTable";
 import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiSolidShoppingBags } from "react-icons/bi";

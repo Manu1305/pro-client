@@ -16,6 +16,7 @@ axios.interceptors.response.use(null, (error) => {
     toast.error(`error ${error.response.config.url}`, {
       position: "top-center",
       autoClose: 2500,
+      
       hideProgressBar: false,
       closeOnClick: true,
       draggable: true,

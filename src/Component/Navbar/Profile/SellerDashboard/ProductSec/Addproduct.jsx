@@ -331,7 +331,7 @@ const AddProduct = () => {
   }, [images]);
 
   // add product btn
-  const addToCart = async (e) => {
+  const addProductHandler = async (e) => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
@@ -883,7 +883,7 @@ const AddProduct = () => {
                   id="singlebutton"
                   name="singlebutton"
                   className="btn btn-danger"
-                  onClick={addToCart}
+                  onClick={addProductHandler}
                   
                 >
                   Click me to Add

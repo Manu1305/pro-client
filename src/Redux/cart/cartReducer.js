@@ -1,19 +1,14 @@
-import { AddItem, removeItem } from './cartAction'
+import { userCartItem, } from './cartAction'
 
 let InitialState = {
-    cart: []
+    userCartItems: []
 };
 
 
 export const cartReducer = (state = InitialState, action) => {
     switch (action.type) {
-        case AddItem:
-            return {
-                ...state,
-                cart: [...state.cart, action.payload]
-            }
-        case removeItem:
-            return state
+        case userCartItem:
+            return { ...state, userCartItems: action.payload }
         default:
             return state
     }

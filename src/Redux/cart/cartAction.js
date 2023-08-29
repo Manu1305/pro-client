@@ -1,11 +1,9 @@
-export const AddItem = "ADD_CART_ITEM";
+export const USER_CART = "USER_CART";
 export const removeItem = "REMOVE_CART_ITEM";
 
-export const addCartItem = (item) => {
-    return { type: AddItem, payload: item }
+export const userCartItem = (item) => {
+    return { type: USER_CART, payload: item }
 }
 
-export const removeCartItem = (item) => {
-    return { type: removeItem, payload: item }
-}
+
 

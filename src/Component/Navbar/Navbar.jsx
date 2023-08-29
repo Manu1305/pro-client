@@ -18,7 +18,7 @@ import {  MdOutlineNotificationsNone } from "react-icons/md";
   const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer.user);
 
-  const userCart = cart.filter((ele) => ele.userEmail === user.email)
+  // const userCart = cart.filter((ele) => ele.userEmail === user.email)
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -112,18 +112,18 @@ import {  MdOutlineNotificationsNone } from "react-icons/md";
             {user && user.email ? (
               <Link to="cart" onClick={closeMenu}>
                 <CgShoppingCart style={{height:"20px",width:'20px'}} />
-                {userCart != 0 ? (
+                {/* {userCart != 0 ? (
                   <span className={styles.length1}>
                     {userCart === 0 ? "" : userCart}
                   </span>
                 ) : (
                   ""
-                )}
+                )} */}
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}>
                 <CgShoppingCart style={{height:"20px",width:'20px'}} />
-                <span>{userCart === 0 ? "" : userCart}</span>
+                {/* <span>{userCart === 0 ? "" : userCart}</span> */}
               </Link>
             )}
           </li>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
@@ -10,17 +9,15 @@ import httpService from "../../Error Handling/httpService";
 import { ScaleLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import SizeAndQuantity from "../../Reuseable Comp/SizeAndQuantity";
 
 const Cart = () => {
   const [CartItem, setCartItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const cart = useSelector((state) => state.cartReducer.cart);
-  const user = useSelector((state) => state.userReducer.user);
 
-  // const userCart = cart.filter((ele) => ele.userEmail === user.email)
-
-  // console.log(userCart);
+  console.log(cart);
 
   const removeFromCart = async (id) => {
     Swal.fire({
@@ -95,12 +92,7 @@ const Cart = () => {
   if (CartItem.subTotal === 0) {
     return (
       <div className="text-center">
-        {/* <img
-          src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
-          alt="empty"
-          style={{ maxWidth: "100%", height: "auto" }}
-        /> */}
-
+       
         <Link to="/shoppingPage">
           <div
             style={{
@@ -119,7 +111,6 @@ const Cart = () => {
                   }}
                 >
                   <ScaleLoader animation="border" role="status" color="red">
-                    {/* <span className="visually-hidden">Loading...</span> */}
                   </ScaleLoader>
                 </div>
               ) : (
@@ -146,40 +137,25 @@ const Cart = () => {
       </div>
     );
   }
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
 
   return (
     <div>
-      <section className="h-100" style={{ backgroundColor: "white" }}>
+      <section className={`h-100 `} style={{ backgroundColor: "white" }}>
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-10">
-              {/* <h2>Total {totalPrice}</h2> */}
               {CartItem.items?.length &&
                 CartItem.items.map((item) => (
-                  <div className={Styles.cartDiv} key={item._id}>
+                  <div className="shadow-xl h-25 mb-3" key={item._id}>
                     <div className="card-body p-4">
                       <div className="row d-flex justify-content-between align-items-center">
                         <div className="col-md-2 col-lg-2 col-xl-2">
-                          <Slider {...settings}>
-                            <img
-                              src={item.productDetails.images}
-                              className="img-fluid img-responsive rounded product-image "
-                              style={{ objectFit: "fill" }}
-                              alt="img"
-                            />
-                          </Slider>
+                          <img src={item.productDetails.images} alt="item" />
                         </div>
 
                         <div className="col-md-3 col-lg-3 col-xl-3">
                           <p className="font-bold text-xl text-black">
-                            {item.productDetails.barnd}
+                            {item.productDetails.brand}
                           </p>
 
                           <p>
@@ -189,45 +165,10 @@ const Cart = () => {
                           </p>
 
                           <div>
-                            <label>Size</label>
-                            <select
-                              className={Styles.select}
-                              style={{
-                                appearance: "none",
-                                width: "100px",
-                                marginLeft: "10px",
-                                WebkitAppearance: "none",
-                              }}
-                            >
-                              {Object.entries(item.sizeWithQuantity).map(
-                                ([key, value]) => (
-                                  <option key={key} value={key}>
-                                    {value.selectedSizes ? (
-                                      <p
-                                        style={{
-                                          fontSize: 13,
-                                          color: "GrayText",
-                                        }}
-                                      >
-                                        {value.selectedSizes}
-                                      </p>
-                                    ) : null}{" "}
-                                    -
-                                    {value.quantities ? (
-                                      <p
-                                        style={{
-                                          fontSize: 13,
-                                          color: "GrayText",
-                                        }}
-                                      >
-                                        {value.quantities}
-                                      </p>
-                                    ) : null}
-                                  </option>
-                                )
-                              )}
-                            </select>
-
+                            <SizeAndQuantity
+                              obj={item.sizeAndQua}
+                              select={Styles.select}
+                            />
                             <div>
                               <span
                                 className="text-muted"
@@ -244,7 +185,15 @@ const Cart = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-md-3 col-lg-3 col-xl-2 d-flex"></div>
+
+                        <div
+                          className="col-md-3 col-lg-3 col-xl-2 d-flex"
+                          style={{
+                            background: `${item.productDetails.color}`,
+                            height: "50px",
+                            width: "50px",
+                          }}
+                        ></div>
                         <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                           <div className={Styles.hideprice}>
                             <span className="text-red-600 text-xl font-bold">
@@ -259,7 +208,6 @@ const Cart = () => {
                             onClick={() => removeFromCart(item._id)}
                           >
                             <BsTrash className="h-10 w-10" />
-                            {/* <i className="fas fa-trash fa-lg"></i> */}
                           </button>
                         </div>
                       </div>
@@ -288,9 +236,10 @@ const Cart = () => {
                           style={{
                             backgroundColor: "#BF0A2A",
                             color: "white",
-                            fontSize: "1rem",
+                            fontSize: "19px",
                             borderRadius: "0",
                             width: "300px",
+                            padding:"20px"
                           }}
                         >
                           Proceed to Pay

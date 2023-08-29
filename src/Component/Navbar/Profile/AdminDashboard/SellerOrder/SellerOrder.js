@@ -3,10 +3,10 @@ import styles from "./sellerOrder.module.css";
 import { useSelector } from "react-redux";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
-import DataTable from "../../../../Data table/DataTable";
 import { useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import DataTable from "../../../../Reuseable Comp/DataTable";
 
 
 

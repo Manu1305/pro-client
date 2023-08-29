@@ -23,7 +23,6 @@ const BuyerConfirm = () => {
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [payType, setPayType] = useState("");
-  const [errMsg,setErrMsg] = useState(false)
 
   // selected delivery addrees
   const [deliveryAddress, setDeliveryAddress] = useState({});
@@ -76,6 +75,9 @@ const BuyerConfirm = () => {
     }
   };
 
+
+
+
   useEffect(() => {
     getCartCarts();
   }, []);
@@ -89,6 +91,16 @@ const BuyerConfirm = () => {
     toast.warning(message)
   }
   const placeOrderButton = async (paymentId, amount) => {
+
+    const data = {
+      products: cartItems,
+            address: deliveryAddress.addressDetails,
+            paymentId,
+            orderStatus: "Success",
+            totalAmount: amount,
+    }
+
+    console.log(data)
     try {
       const config = {
         headers: {
