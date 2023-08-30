@@ -1,14 +1,14 @@
 import { userCartItem, } from './cartAction'
 
 let InitialState = {
-    userCartItems: []
+    userCart: []
 };
 
 
 export const cartReducer = (state = InitialState, action) => {
     switch (action.type) {
         case userCartItem:
-            return { ...state, userCartItems: action.payload }
+            return { ...state, userCart: action.payload }
         default:
             return state
     }

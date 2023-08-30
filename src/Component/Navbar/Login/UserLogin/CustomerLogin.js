@@ -62,7 +62,7 @@ const CustomerLogin = () => {
             ? !response.data.user?.storeSetup
               ? "/StorePage"
               : "/dashboard"
-            : `/Profilepage/${email}`;
+            : `/`;
         history(route, {
           state: {
             id: email,

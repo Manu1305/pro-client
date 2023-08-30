@@ -72,6 +72,8 @@ const App = () => {
 
   const user = useSelector(state => state.userReducer.user)
 
+  const dispatch = useDispatch()
+
 
   return (
     <Router>
