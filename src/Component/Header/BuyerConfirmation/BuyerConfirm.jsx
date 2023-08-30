@@ -17,7 +17,6 @@ const BuyerConfirm = () => {
   // getting user info
   const user = useSelector((state) => state.userReducer.user);
 
-
   const [cartItems, setCartItems] = useState([]);
 
   const [addresses, setAddresses] = useState([]);
@@ -75,9 +74,6 @@ const BuyerConfirm = () => {
     }
   };
 
-
-
-
   useEffect(() => {
     getCartCarts();
   }, []);
@@ -86,21 +82,12 @@ const BuyerConfirm = () => {
 
   const GST = (5 * totalPrice) / 100;
 
-
   const warningMsg = (message) => {
-    toast.warning(message)
-  }
+    toast.warning(message);
+  };
+
   const placeOrderButton = async (paymentId, amount) => {
-
-    const data = {
-      products: cartItems,
-            address: deliveryAddress.addressDetails,
-            paymentId,
-            orderStatus: "Success",
-            totalAmount: amount,
-    }
-
-    console.log(data)
+    
     try {
       const config = {
         headers: {
@@ -113,7 +100,7 @@ const BuyerConfirm = () => {
         .post(
           `${apiURL}/orders/placeOrder`,
           {
-            products: cartItems,
+            products: cartItems.items,
             address: deliveryAddress.addressDetails,
             paymentId,
             orderStatus: "Success",
@@ -127,7 +114,7 @@ const BuyerConfirm = () => {
         .catch((err) => {
           console.log(err);
         });
-
+console.log(res)
       return res;
     } catch (error) {
       console.log(error);
@@ -158,18 +145,16 @@ const BuyerConfirm = () => {
       });
   };
 
-  // cash on delivery
+  
+  // cash on delivery verifiaction
   const cashHandler = async () => {
+
     let keys = getApiKey();
 
-    const valid = Object.keys(deliveryAddress).length > 0
+    const valid = Object.keys(deliveryAddress).length > 0;
 
-
-    console.log(valid)
-    if (
-      valid &&
-      payType !== ""
-    ) {
+    console.log(valid);
+    if (valid && payType !== "") {
       let cashbaby = (totalPrice * 10) / 100 + sum + GST;
 
       let payment = await makePayment(parseInt(cashbaby));
@@ -190,9 +175,9 @@ const BuyerConfirm = () => {
         order_id: payment.data.id,
         callback_url: `${apiURL}/payment/payment-verification/${orderStoreInDB.ids}?pType=cash`,
         prefill: {
-          name: user.name, 
-          email: user.email, 
-          contact: user.phone, 
+          name: user.name,
+          email: user.email,
+          contact: user.phone,
           order: orderStoreInDB,
           pTyp: "Cash",
         },
@@ -209,6 +194,8 @@ const BuyerConfirm = () => {
       if (orderStoreInDB.ids) {
         return razor.open();
       }
+
+      //on razorpay error
       razor.on("payment.failed", function (response) {
         alert(response.error.code);
         alert(response.error.description);
@@ -218,25 +205,26 @@ const BuyerConfirm = () => {
         alert(response.error.metadata.order_id);
         alert(response.error.metadata.payment_id);
       });
+
+
+      razor.on('payment.success',function(response){
+        alert("Success payment")
+      })
+
     } else {
-      // alert("address or payment method")
-      warningMsg("Plese selete address or add address")
-
-
+      warningMsg("Plese selete address or add address");
     }
   };
 
-  // online payment
+
+  // online payment verifiaction
   const onlineHandler = async () => {
     // api keys
     let keys = getApiKey();
 
-    const valid = Object.keys(deliveryAddress).length > 0 
-    console.log(valid)
-    if (
-       valid &&
-      payType !== ""
-    ) {
+    const valid = Object.keys(deliveryAddress).length > 0;
+    console.log(valid);
+    if (valid && payType !== "") {
       // payment checkout
       let payment = await makePayment(parseInt(totalPrice) + GST + sum);
 
@@ -286,249 +274,260 @@ const BuyerConfirm = () => {
       });
     } else {
       // return  <Alert/>
-      warningMsg("Plese selete address or add address")
-      
+      warningMsg("Plese selete address or add address");
     }
   };
 
   if (cartItems.length === 0) {
     return (
-      <div className="spinner-border" style={{display:'flex',justifyContent:'center',alignItems:'center', height:'50px',width:'50px', margin:'auto'}} role="status">
-      <span className="sr-only">Loading...</span>
-    </div>
+      <div
+        className="spinner-border"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "50px",
+          width: "50px",
+          margin: "auto",
+        }}
+        role="status"
+      >
+        <span className="sr-only">Loading...</span>
+      </div>
     );
   }
 
   return (
     <div style={{ backgroundColor: "yellow" }}>
-     {
-       <div className="row" style={{ backgroundColor: "white" }}>
-       <div className="col-md-1"></div>
-       <div
-         className="col-md-6 mb-4 mw-100"
-         style={{ overflowX: "auto", backgroundColor: "#eeeeee" }}
-       >
-         <div
-           className="row justify-content-center"
-           style={{ marginTop: "45px" }}
-         >
-           <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>Deliver to</h1>
-         </div>
-         <div className="card mb-4 m-2">
-           <div className="card-header p-3">
-             <h5 className="mb-0">Select Address or add new address</h5>
-           </div>
-         </div>
-         <button
-           className="btn btn-danger w-90 border m-2"
-           style={{
-             color: "#fff7e9",
-             borderRadius: "0px",
-             backgroundColor: "#bf0a2a",
-             cursor: "pointer",
-           }}
-           onClick={handleAddAddress}
-         >
-           Add new Address
-         </button>
-         {/* saved Address */}
-         <div
-           className="card mb-4"
-           style={{ backgroundColor: "#eeeeee", borderRadius: 0, border: 0 }}
-         >
-           {!showForm ? (
-             <div style={{ display: "flex", flexDirection: "column" }}>
-               {addresses.map((address) => (
-                 <div
-                   key={address._id}
-                   style={{
-                     cursor: "pointer",
-                     backgroundColor: "#ffffff",
-                     margin: "20px",
-                     alignItems: "center",
-                   }}
-                   // getting address
-                   onClick={() => setDeliveryAddress(address)}
-                 >
-                   <div style={{ display: "flex", alignItems: "center" }}>
-                     <div
-                       style={{
-                         cursor: "pointer",
-                       }}
-                     >
-                       <MDBRadio
-                         name={address.area}
-                         id={address._id}
-                         inline
-                         checked={deliveryAddress._id === address._id}
-                       />
-                     </div>
-                     <div className="m-3">
-                       <p>
-                         <span>
-                           Locality: {address.addressDetails.locality}
-                         </span>
-                       </p>
-                       <p>
-                         <span>Area: {address.addressDetails.area}</span>
-                       </p>
-                       <p>
-                         <span>
-                           Landmark: {address.addressDetails.landmark}
-                         </span>
-                       </p>
-                       <p>
-                         <span>City: {address.addressDetails.city}</span>
-                       </p>
-                       <p>
-                         <span>State: {address.addressDetails.state}</span>
-                       </p>
-                       <p>
-                         <span>Pincode: {address.addressDetails.pincode}</span>{" "}
-                       </p>
-                       <p>
-                         <span>Phone: {address.addressDetails.phone}</span>
-                       </p>
-                     </div>
-                   </div>
-                 </div>
-               ))}
-             </div>
-           ) : (
-             <NewAddress getSavedAddress={getSavedAddress}  />
-           )}
-         </div>
-       </div>
+      {
+        <div className="row" style={{ backgroundColor: "white" }}>
+          <div className="col-md-1"></div>
+          <div
+            className="col-md-6 mb-4 mw-100"
+            style={{ overflowX: "auto", backgroundColor: "#eeeeee" }}
+          >
+            <div
+              className="row justify-content-center"
+              style={{ marginTop: "45px" }}
+            >
+              <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>Deliver to</h1>
+            </div>
+            <div className="card mb-4 m-2">
+              <div className="card-header p-3">
+                <h5 className="mb-0">Select Address or add new address</h5>
+              </div>
+            </div>
+            <button
+              className="btn btn-danger w-90 border m-2"
+              style={{
+                color: "#fff7e9",
+                borderRadius: "0px",
+                backgroundColor: "#bf0a2a",
+                cursor: "pointer",
+              }}
+              onClick={handleAddAddress}
+            >
+              Add new Address
+            </button>
+            {/* saved Address */}
+            <div
+              className="card mb-4"
+              style={{ backgroundColor: "#eeeeee", borderRadius: 0, border: 0 }}
+            >
+              {!showForm ? (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {addresses.map((address) => (
+                    <div
+                      key={address._id}
+                      style={{
+                        cursor: "pointer",
+                        backgroundColor: "#ffffff",
+                        margin: "20px",
+                        alignItems: "center",
+                      }}
+                      // getting address
+                      onClick={() => setDeliveryAddress(address)}
+                    >
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <div
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        >
+                          <MDBRadio
+                            name={address.area}
+                            id={address._id}
+                            inline
+                            checked={deliveryAddress._id === address._id}
+                          />
+                        </div>
+                        <div className="m-3">
+                          <p>
+                            <span>
+                              Locality: {address.addressDetails.locality}
+                            </span>
+                          </p>
+                          <p>
+                            <span>Area: {address.addressDetails.area}</span>
+                          </p>
+                          <p>
+                            <span>
+                              Landmark: {address.addressDetails.landmark}
+                            </span>
+                          </p>
+                          <p>
+                            <span>City: {address.addressDetails.city}</span>
+                          </p>
+                          <p>
+                            <span>State: {address.addressDetails.state}</span>
+                          </p>
+                          <p>
+                            <span>
+                              Pincode: {address.addressDetails.pincode}
+                            </span>{" "}
+                          </p>
+                          <p>
+                            <span>Phone: {address.addressDetails.phone}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <NewAddress getSavedAddress={getSavedAddress} />
+              )}
+            </div>
+          </div>
 
-       {/* Order summary */}
-       <div className="col-md-4" style={{ borderRadius: 0 }}>
-         <div
-           className="card "
-           style={{ backgroundColor: "#EEEEEE", borderRadius: 0, border: 0 }}
-         >
-           <div className="row justify-content-center m-3">
-             <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>Pay With</h1>
-           </div>
-           {["Cash on delivery", "Online Payment"].map((type, index) => (
-             <div
-               style={{
-                 display: "flex",
-                 margin: "10px",
-                 justifyContent: "center",
-                 alignItems: "center",
-                 cursor: "pointer",
-               }}
-               key={`reverse-${index}`}
-             >
-               <MDBRadio
-                 name="inlineRadio"
-                 id={`inlineRadio${index}`}
-                 value={type}
-                 onChange={() => setPayType(type)}
-                 inline
-               />
-               <div style={{ display: "flex" }}>{type}</div>
-             </div>
-           ))}
+          {/* Order summary */}
+          <div className="col-md-4" style={{ borderRadius: 0 }}>
+            <div
+              className="card "
+              style={{ backgroundColor: "#EEEEEE", borderRadius: 0, border: 0 }}
+            >
+              <div className="row justify-content-center m-3">
+                <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>Pay With</h1>
+              </div>
+              {["Cash on delivery", "Online Payment"].map((type, index) => (
+                <div
+                  style={{
+                    display: "flex",
+                    margin: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                  key={`reverse-${index}`}
+                >
+                  <MDBRadio
+                    name="inlineRadio"
+                    id={`inlineRadio${index}`}
+                    value={type}
+                    onChange={() => setPayType(type)}
+                    inline
+                  />
+                  <div style={{ display: "flex" }}>{type}</div>
+                </div>
+              ))}
 
-           {payType === "Cash on delivery" ? (
-             <div
-               style={{
-                 "font-weight": 10,
-                 margin: "10px",
-                 display: "inline-block",
-                 color: "red",
-               }}
-             >
-               <span>
-                 For Cash on Delivery You need to pay Minimum 10% of the real
-                 Product Price. GST + Shippment Charge will be Included
-               </span>
-             </div>
-           ) : null}
-         </div>
+              {payType === "Cash on delivery" ? (
+                <div
+                  style={{
+                    fontWeight: 10,
+                    fontSize:14,
+                    margin: "10px",
+                    display: "inline-block",
+                    color: "red",
+                  }}
+                >
+                  <span>
+                    For Cash on Delivery You need to pay Minimum 10% of the real
+                    Product Price. GST + Shippment Charge will be Included
+                  </span>
+                </div>
+              ) : null}
+            </div>
 
-         {/* order summ */}
-         <div
-           className="card mb-4"
-           style={{
-             backgroundColor: "#EEEEEE",
-             borderRadius: 0,
-             border: 0,
-             fontFamily: "Inter,sans-serif",
-           }}
-         >
-           <div className="container h-100 py-5">
-             <div className="row d-flex justify-content-center align-items-center">
-               <div className="row justify-content-center mb-4 mt-0">
-                 <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>
-                   Order Summary
-                 </h1>
-               </div>
-               <div className="col-10">
-                 <div className="d-flex justify-content-between m-3">
-                   <div className="font-weight-bold">Items</div>
-                   <div>{totalPrice}</div>
-                 </div>
-                 <div className="d-flex justify-content-between m-3">
-                   <div>Delivery</div>
-                   <div>{sum}</div>
-                 </div>
-                 <div className="d-flex justify-content-between m-3">
-                   <div>GST- (5%)</div>
-                   <div>{GST}</div>
-                 </div>
-               </div>
-               <div>
-                 <hr className="hr" />
-               </div>
-               <div
-                 className="d-flex justify-content-between m-3"
-                 style={{ color: "#bf0a2a" }}
-               >
-                 <div
-                   className="font-weight-bold"
-                   style={{ marginLeft: "30px" }}
-                 >
-                   <b>Order Total:</b>
-                 </div>
-                 <div
-                   className="font-weight-bold"
-                   style={{ marginRight: "46px" }}
-                 >
-                   <b>{parseInt(totalPrice) + GST + sum}</b>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-         <div>
-           <button
-             className="btn btn-danger w-100 border p-3"
-             style={{
-               color: "#fff7e9",
-               borderRadius: "0px",
-               backgroundColor: "#bf0a2a",
-             }}
-             onClick={() => {
-               if (payType === "Cash on delivery") {
-                 cashHandler();
-               } else if (payType === "Online Payment") {
-                 onlineHandler();
-               } else {
-                warningMsg("Please select Payement type")
-
-               }
-             }}
-           >
-             
-             Place Order
-           </button>
-         </div>
-       </div>
-       <div className="col-md-1"></div>
-     </div>
-     }
+            {/* order summ */}
+            <div
+              className="card mb-4"
+              style={{
+                backgroundColor: "#EEEEEE",
+                borderRadius: 0,
+                border: 0,
+                fontFamily: "Inter,sans-serif",
+              }}
+            >
+              <div className="container h-100 py-5">
+                <div className="row d-flex justify-content-center align-items-center">
+                  <div className="row justify-content-center mb-4 mt-0">
+                    <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>
+                      Order Summary
+                    </h1>
+                  </div>
+                  <div className="col-10">
+                    <div className="d-flex justify-content-between m-3">
+                      <div className="font-weight-bold">Items</div>
+                      <div>{totalPrice}</div>
+                    </div>
+                    <div className="d-flex justify-content-between m-3">
+                      <div>Delivery</div>
+                      <div>{sum}</div>
+                    </div>
+                    <div className="d-flex justify-content-between m-3">
+                      <div>GST- (5%)</div>
+                      <div>{GST}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <hr className="hr" />
+                  </div>
+                  <div
+                    className="d-flex justify-content-between m-3"
+                    style={{ color: "#bf0a2a" }}
+                  >
+                    <div
+                      className="font-weight-bold"
+                      style={{ marginLeft: "30px" }}
+                    >
+                      <b>Order Total:</b>
+                    </div>
+                    <div
+                      className="font-weight-bold"
+                      style={{ marginRight: "46px" }}
+                    >
+                      <b>{parseInt(totalPrice) + GST + sum}</b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                className="btn btn-danger w-100 border p-3"
+                style={{
+                  color: "#fff7e9",
+                  borderRadius: "0px",
+                  backgroundColor: "#bf0a2a",
+                }}
+                onClick={() => {
+                  if (payType === "Cash on delivery") {
+                    cashHandler();
+                  } else if (payType === "Online Payment") {
+                    onlineHandler();
+                  } else {
+                    warningMsg("Please select Payement type");
+                  }
+                }}
+              >
+                Place Order
+              </button>
+            </div>
+          </div>
+          <div className="col-md-1"></div>
+        </div>
+      }
     </div>
   );
 };
