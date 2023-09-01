@@ -99,13 +99,13 @@ const TrendingItems = ({ addToCart }) => {
       <h2>TOP TRENDS</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          {data &&
+          { data &&
             data.map((productItems) => (
               <div>
                 <div className={styless.customerheading}>
                 <Link  to={`/ViewDetails/${productItems._id}`} >
                   <div className={`${styless.card}`}>
-                    <img src={productItems.productDetails[0].images[0]} alt="imge" />
+                    <img src={productItems.images} alt="imge" />
                   </div>
                   </Link>
                 </div>

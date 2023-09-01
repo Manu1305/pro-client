@@ -46,6 +46,7 @@ const Shopping = () => {
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         setData(res.data);
+        console.log(res.data);
         dispatch(addProduct(res.data));
       })
       .catch((error) => {
@@ -73,7 +74,7 @@ const Shopping = () => {
         categories.length === 0 ||
         categories.some(
           (categoryy) =>
-            data.selectedCategory.toLowerCase() === categoryy.toLowerCase()
+            data.selectedCategory === categoryy
         );
       const priceMatch =
         data.sellingPrice >= lowestprice && data.sellingPrice <= price;
@@ -190,9 +191,9 @@ const Shopping = () => {
                       <div>
                         <button
                           className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "men" ? "active" : ""
+                            categories[0] === "Mens" ? "active" : ""
                           }`}
-                          onClick={() => handleCategoryChange("men")}
+                          onClick={() => handleCategoryChange("Mens")}
                         >
                           Men
                         </button>
