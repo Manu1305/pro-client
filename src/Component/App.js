@@ -102,8 +102,8 @@ const App = () => {
             <Route path="/dashboard" element={<React.Suspense fallback={<div>Loading... </div>}> <LazySellerDashboard />
             </React.Suspense>} />
 
-            <Route path="/dashboard/Addproduct" element={<React.Suspense fallback={<div> </div>}> <LazyAddProduct />
-            </React.Suspense>} />
+            {/* <Route path="/dashboard/Addproduct" element={<React.Suspense fallback={<div> </div>}> <LazyAddProduct /> */}
+            {/* </React.Suspense>} /> */}
 
             <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
             </React.Suspense>} />

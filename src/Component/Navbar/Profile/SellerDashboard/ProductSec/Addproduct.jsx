@@ -1513,45 +1513,59 @@ function AddProduct() {
            
             {selectedSubcategory && (
             <div className={`${styles.formGroup}`}>
-              <label className={styles.label}  htmlFor="product_size">
+              <label className={styles.label} htmlFor="product_size">
                 PRODUCT SIZE
               </label>
-              <div className={styles.sizeselect} >
+              <div className={styles.sizeselect}>
                 <div className={`${styles.sizeButtons}`}>
-                <div>
-                  <h3 >Total Quantity: {totalQuantity}</h3>
+                  <div>
+                    <h3>Total Quantity: {totalQuantity}</h3>
                   </div>
                   <div>
-                  {sizeSelected[selectedSubcategory].map((size, index) => (
-                    <div key={index} className={styles.sizeContainer} style={{display:'flex',flexDirection:'row'}}>
-                      <div style={{width:'100px', display:'flex', flexDirection:'row'}}>
-                      <h5
-                        className={`${styles.sizeButton} ${
-                          selectedSizes.includes(size)
-                            ? styles.blue
-                            : styles.blue
-                        }`}
-                        style={{width:'100px', display:'flex', flexDirection:'row'}}
+                    {sizeSelected[selectedSubcategory].map((size, index) => (
+                      <div
+                        key={index}
+                        className={styles.sizeContainer}
+                        style={{ display: "flex", flexDirection: "row" }}
                       >
-
-                       
-
-                        {size}
-                      </h5>
+                        <div
+                          style={{
+                            width: "100px",
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <h5
+                            className={`${styles.sizeButton} ${
+                              selectedSizes.includes(size)
+                                ? styles.blue
+                                : styles.blue
+                            }`}
+                            style={{
+                              width: "100px",
+                              display: "flex",
+                              flexDirection: "row",
+                            }}
+                          >
+                            {size}
+                          </h5>
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            // placeholder="Enter quantity"
+                            value={quantities[size]}
+                            onChange={(e) => handleQuantityChange(size, e)}
+                            className={styles.quantityInput}
+                            style={{
+                              border: "1px solid black",
+                              display: "flex",
+                              flexDirection: "row",
+                            }}
+                          />
+                        </div>
                       </div>
-                      <div>           
-                                   <input
-                        type="text"
-                        // placeholder="Enter quantity"
-                        value={quantities[size]}
-                        onChange={(e) => handleQuantityChange(size, e)}
-                        className={styles.quantityInput}
-                        style={{border:'1px solid black', display:'flex', flexDirection:'row'}}
-                      />
-</div>
-
-                    </div>
-                  ))}
+                    ))}
                   </div>
                 </div>
               </div>
