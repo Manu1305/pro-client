@@ -15,10 +15,8 @@ import {  MdOutlineNotificationsNone } from "react-icons/md";
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
-  const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer.user);
 
-  // const userCart = cart.filter((ele) => ele.userEmail === user.email)
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
