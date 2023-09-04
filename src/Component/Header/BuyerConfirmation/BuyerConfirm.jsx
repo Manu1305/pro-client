@@ -153,10 +153,13 @@ console.log(res)
 
     const valid = Object.keys(deliveryAddress).length > 0;
 
-    console.log(valid);
-    if (valid && payType !== "") {
-      let cashbaby = (totalPrice * 10) / 100 + sum + GST;
 
+    console.log(valid)
+    if (
+      valid &&
+      payType !== ""
+    ) {
+      let cashbaby = (totalPrice * 10) / 100 + sum + ((((totalPrice*10)/100)*5)/100);
       let payment = await makePayment(parseInt(cashbaby));
 
       let orderStoreInDB = await placeOrderButton(
@@ -431,23 +434,73 @@ console.log(res)
                 </div>
               ))}
 
-              {payType === "Cash on delivery" ? (
-                <div
-                  style={{
-                    fontWeight: 10,
-                    fontSize:14,
-                    margin: "10px",
-                    display: "inline-block",
-                    color: "red",
-                  }}
-                >
-                  <span>
-                    For Cash on Delivery You need to pay Minimum 10% of the real
-                    Product Price. GST + Shippment Charge will be Included
-                  </span>
-                </div>
-              ) : null}
-            </div>
+           {payType === "Cash on delivery" ? (
+             <div
+               style={{
+                 "font-weight": 10,
+                 margin: "10px",
+                 display: "inline-block",
+                 color: "red",
+               }}
+             >
+             <div className="container h-100 py-5">
+                    <div className="row d-flex justify-content-center align-items-center">
+                      <div className="row justify-content-center mb-4 mt-0">
+                        <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>
+                          Order Summary
+                        </h1>
+                      </div>
+                        
+                      <div className="col-10">
+                      
+                        <div className="d-flex justify-content-between m-3">
+                          <div className="font-weight-bold">Items</div>
+                          <div>{totalPrice}</div>
+                        </div>
+<hr></hr>
+                        <div className="d-flex justify-content-between m-3">
+                          <div className="font-weight-bold">Items(10%)</div>
+                          <div>{(parseInt(totalPrice)*10/100)}</div>
+                        </div>
+
+                        <div className="d-flex justify-content-between m-3">
+                          <div>Delivery</div>
+                          <div>{sum}</div>
+                        </div>
+                        <div className="d-flex justify-content-between m-3">
+                          <div>GST- (5%)</div>
+                          <div>{(parseInt(totalPrice)*10/100)*5/100}</div>
+                        </div>
+                      </div>
+                      <div>
+                        <hr className="hr" />
+                      </div>
+                      <div
+                        className="d-flex justify-content-between m-3"
+                        style={{ color: "#bf0a2a" }}
+                      >
+                        <div
+                          className="font-weight-bold"
+                          style={{ marginLeft: "30px" }}
+                        >
+                          <b>Order Total:</b>
+                        </div>
+                        <div
+                          className="font-weight-bold"
+                          style={{ marginRight: "46px" }}
+                        >
+                          <b>{(parseInt(totalPrice)*10/100) +  ((((parseInt(totalPrice)*10)/100)*5)/100) + sum}</b>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               <span>
+                 For Cash on Delivery You need to pay Minimum 10% of the real
+                 Product Price. GST + Shippment Charge will be Included
+               </span>
+             </div>
+           ) : null}
+         </div>
 
             {/* order summ */}
             <div

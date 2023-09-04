@@ -22,6 +22,8 @@ export const ProductSec = () => {
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
 
+
+
   const getProducts = async () => {
     await httpService
       .get(`${apiURL}/product/get-all-products`, {
@@ -39,6 +41,8 @@ export const ProductSec = () => {
       });
   };
 
+
+  
   useEffect(() => {
     getProducts();
   }, []);
@@ -117,6 +121,7 @@ export const ProductSec = () => {
               key={product.Id}
               className="row p-2 bg-white border rounded mt-2"
             >
+              {console.log('dkcmksdmc', product)}
               <div className="col-md-3 mt-1">
                 <Slider {...settings}>
                   {product.images.map((image, index) => {

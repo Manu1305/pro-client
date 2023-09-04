@@ -105,7 +105,7 @@ const TrendingItems = ({ addToCart }) => {
       <h2>TOP TRENDS</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          {data &&
+          { data &&
             data.map((productItems) => (
               <div>
                 <div className={styless.customerheading}>
@@ -118,12 +118,15 @@ const TrendingItems = ({ addToCart }) => {
                     </div>
                   </Link>
                 </div>
-                <h5 className={styless.title}>{productItems.brand}</h5>
+                <div>
+                 <h5 className={styless.title}>{productItems.brand}</h5>
                 {/* <span className={styless.description}> */}
                 <Link style={{ textDecoration: "none" }}>
                   <p>Explore Now!</p>
                 </Link>
               </div>
+              </div>
+             
               // </div>
             ))}
         </Slider>
