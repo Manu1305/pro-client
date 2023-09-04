@@ -30,11 +30,13 @@ function Editprofile() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         };
+        
         const response = await httpService.patch(
           `${apiURL}/user/updateProfile`,
           { name, phone },
           config
         );
+       
 
         if (response && response.data && response.data.user) {
           dispatch(currentUserData(response.data.user));

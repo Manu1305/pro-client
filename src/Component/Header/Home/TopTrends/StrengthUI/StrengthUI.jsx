@@ -4,7 +4,7 @@ function Strength() {
   return (
     <div className="bg-white">
       <div>
-        <h1 className="w-100% font-extrabold">OUR KEY STRENGHTS</h1>
+        <h1 className="w-100% font-extrabold">OUR KEY STRENGTHS</h1>
       </div>
       <div className={styles.main}>
         <div className={styles.one}>

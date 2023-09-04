@@ -13,7 +13,7 @@ export const CategoryNew = () => {
   const categories = [
     {
       cate: "MENS",
-      category:'Men',
+      category:'Mens',
       imgUrl:mensCatIMG    },
     {
       cate: "WOMENS",

@@ -1530,7 +1530,7 @@ function AddProduct() {
                       >
                         <div
                           style={{
-                            width: "100px",
+                            width: "200px",
                             display: "flex",
                             flexDirection: "row",
                           }}
@@ -1542,7 +1542,7 @@ function AddProduct() {
                                 : styles.blue
                             }`}
                             style={{
-                              width: "100px",
+                              width: "300px",
                               display: "flex",
                               flexDirection: "row",
                             }}
@@ -1558,7 +1558,7 @@ function AddProduct() {
                             onChange={(e) => handleQuantityChange(size, e)}
                             className={styles.quantityInput}
                             style={{
-                              border: "1px solid black",
+                              border: "1px solid #DDDDDD",
                               display: "flex",
                               flexDirection: "row",
                             }}

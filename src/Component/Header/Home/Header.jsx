@@ -15,7 +15,6 @@ import { cards } from "./BigOfferData";
 import { Logoslider } from "./LogoSlider/LogoSlider";
 import { CustomerReview } from "./ReviewVideo/ReviewVideo/CustomerVideo";
 import { CategoryNew } from "./Goodcards/Category/CategoryNew";
-import ShortAbout from "./AboutHome/AboutinHome";
 import Who from "./WhoSection/Who";
 import TrendingItems from "./TopTrends/Trends";
 import BigDeals from "./BigDeals/Bigdeals";

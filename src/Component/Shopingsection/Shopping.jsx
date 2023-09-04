@@ -293,7 +293,7 @@ const Shopping = () => {
           
         </div>
       )}
-      
+      <Footer/>
     </div>
     
   );

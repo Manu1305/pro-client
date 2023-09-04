@@ -14,6 +14,7 @@ import httpService from "../../Error Handling/httpService";
 import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { addCartItem } from "../../../Redux/cart/cartAction";
+import { Footer } from "../../Footer/Footer";
 
 const ViewProduct = ({ setCartItems }) => {
   const { productId } = useParams();
@@ -234,7 +235,7 @@ const ViewProduct = ({ setCartItems }) => {
   }, [prdDetInd]);
 
   return (
-    <div className={`card ${styles.card}`}>
+    <div className={`${styles.card}`}>
       {productDetails.map((product) => (
         <div className="row" key={product._id}>
           <div className={`col-md-6 ${styles.images}`}>
@@ -530,6 +531,10 @@ const ViewProduct = ({ setCartItems }) => {
       ))}
 
       <SellerRelatedPro />
+      <div  className={styles.footer} >
+
+      <Footer/>
+      </div>
     </div>
   );
 };

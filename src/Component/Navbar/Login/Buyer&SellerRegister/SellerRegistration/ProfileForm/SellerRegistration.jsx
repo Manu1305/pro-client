@@ -22,7 +22,7 @@ import httpService from '../../../../../Error Handling/httpService'
 import { apiURL } from "../../../../../../const/config";
 import { toast } from "react-toastify";
 
- const SellerRegister = () => {
+ const  SellerRegister = () => {
   // const history = useNavigate();
   const dispatch = useDispatch();
   const [phone, setPhone] = useState("");
@@ -198,7 +198,7 @@ import { toast } from "react-toastify";
     let otpError = "";
 
     if (!userFilledData.name) {
-      nameError = "Email address is required";
+      nameError = " Name is required";
     } else if (!/\S+@\S+\.\S+/.test(userFilledData.email)) {
       emailError = "Email address is invalid";
     }
@@ -543,18 +543,21 @@ import { toast } from "react-toastify";
                               id="formControlLg"
                               size="lg"
                               className="w-85 bg-warning"
+                              
                             >
-                              {selectedCountry || "Select Country"}
+                             {selectedCountry || "Select Country"}
                             </Dropdown.Toggle>
-                            <Dropdown.Menu>
+                            <Dropdown.Menu >
+                            
                               {countries.map((country, index) => (
                                 <Dropdown.Item
                                   key={index}
+                                  
                                   onClick={() =>
                                     setUserFilledData((prev) => {
                                       return { ...prev, ["country"]: country };
                                     })
-                                  }
+                                  }                       
                                 >
                                   {country}
                                 </Dropdown.Item>
@@ -585,6 +588,7 @@ import { toast } from "react-toastify";
                                   (state, index) => (
                                     <Dropdown.Item
                                       key={index}
+                                      
                                       onClick={() =>
                                         setUserFilledData((prev) => {
                                           return { ...prev, ["state"]: state };
