@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,7 +11,6 @@ import httpService from "../../Error Handling/httpService";
 import { toast } from "react-toastify";
 
 const BuyerConfirm = () => {
-  const navigate = useNavigate();
   const params = useParams();
 
   // getting user info
@@ -54,7 +53,8 @@ const BuyerConfirm = () => {
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           setCartItems(res.data);
-          // console.log("Quantity",res.data.items[0].totalQuantity)
+
+          console.log("User Cart", res.data);
           return res.data;
         })
         .catch((err) => {
@@ -86,8 +86,8 @@ const BuyerConfirm = () => {
     toast.warning(message);
   };
 
-  const placeOrderButton = async (paymentId, amount) => {
-    
+  // place order
+  const placeOrder = async (paymentId, amount) => {
     try {
       const config = {
         headers: {
@@ -100,7 +100,7 @@ const BuyerConfirm = () => {
         .post(
           `${apiURL}/orders/placeOrder`,
           {
-            products: cartItems.items,
+            products: cartItems,
             address: deliveryAddress.addressDetails,
             paymentId,
             orderStatus: "Success",
@@ -114,7 +114,7 @@ const BuyerConfirm = () => {
         .catch((err) => {
           console.log(err);
         });
-console.log(res)
+      console.log(res);
       return res;
     } catch (error) {
       console.log(error);
@@ -133,7 +133,7 @@ console.log(res)
       });
   };
 
-  // payment
+  // payment razorpay
   const makePayment = async (amount) => {
     return await httpService
       .post(`${apiURL}/payment/pay`, { amount })
@@ -145,30 +145,27 @@ console.log(res)
       });
   };
 
-  
   // cash on delivery verifiaction
   const cashHandler = async () => {
-
-    let keys = getApiKey();
-
     const valid = Object.keys(deliveryAddress).length > 0;
 
+    if (valid && payType !== "") {
+      let cashbaby =
+        (totalPrice * 10) / 100 + sum + (((totalPrice * 10) / 100) * 5) / 100;
+      // get api keys
+      let keys = getApiKey();
 
-    console.log(valid)
-    if (
-      valid &&
-      payType !== ""
-    ) {
-      let cashbaby = (totalPrice * 10) / 100 + sum + ((((totalPrice*10)/100)*5)/100);
+      // make payment
       let payment = await makePayment(parseInt(cashbaby));
 
-      let orderStoreInDB = await placeOrderButton(
+      let orderStoreInDB = await placeOrder(
         payment.data.id,
         payment.data.amount
       );
 
+      // payment verification
       const options = {
-        key: keys.key,
+        key: "rzp_test_EvyMmsf90H0SWx",
         amount: payment.data.amount,
         currency: "INR",
         name: "Hitech Mart",
@@ -209,16 +206,13 @@ console.log(res)
         alert(response.error.metadata.payment_id);
       });
 
-
-      razor.on('payment.success',function(response){
-        alert("Success payment")
-      })
-
+      razor.on("payment.success", function (response) {
+        alert("Success payment");
+      });
     } else {
       warningMsg("Plese selete address or add address");
     }
   };
-
 
   // online payment verifiaction
   const onlineHandler = async () => {
@@ -231,13 +225,17 @@ console.log(res)
       // payment checkout
       let payment = await makePayment(parseInt(totalPrice) + GST + sum);
 
-      let orderStoreInDB = await placeOrderButton(
+      let orderStoreInDB = await placeOrder(
         payment.data.id,
         payment.data.amount
       );
 
+      console.log("Order Ids", orderStoreInDB);
+      console.log("keys", keys);
+      console.log("payment", payment);
+
       const options = {
-        key: keys.key,
+        key: "rzp_test_EvyMmsf90H0SWx",
         amount: payment.data.amount,
         currency: "INR",
         name: "Hitech Mart",
@@ -434,33 +432,32 @@ console.log(res)
                 </div>
               ))}
 
-           {payType === "Cash on delivery" ? (
-             <div
-               style={{
-                 "font-weight": 10,
-                 margin: "10px",
-                 display: "inline-block",
-                 color: "red",
-               }}
-             >
-             <div className="container h-100 py-5">
+              {payType === "Cash on delivery" ? (
+                <div
+                  style={{
+                    "font-weight": 10,
+                    margin: "10px",
+                    display: "inline-block",
+                    color: "red",
+                  }}
+                >
+                  <div className="container h-100 py-5">
                     <div className="row d-flex justify-content-center align-items-center">
                       <div className="row justify-content-center mb-4 mt-0">
                         <h1 style={{ color: "#bf0a2a", fontSize: "23px" }}>
                           Order Summary
                         </h1>
                       </div>
-                        
+
                       <div className="col-10">
-                      
                         <div className="d-flex justify-content-between m-3">
                           <div className="font-weight-bold">Items</div>
                           <div>{totalPrice}</div>
                         </div>
-<hr></hr>
+                        <hr></hr>
                         <div className="d-flex justify-content-between m-3">
                           <div className="font-weight-bold">Items(10%)</div>
-                          <div>{(parseInt(totalPrice)*10/100)}</div>
+                          <div>{(parseInt(totalPrice) * 10) / 100}</div>
                         </div>
 
                         <div className="d-flex justify-content-between m-3">
@@ -469,7 +466,9 @@ console.log(res)
                         </div>
                         <div className="d-flex justify-content-between m-3">
                           <div>GST- (5%)</div>
-                          <div>{(parseInt(totalPrice)*10/100)*5/100}</div>
+                          <div>
+                            {(((parseInt(totalPrice) * 10) / 100) * 5) / 100}
+                          </div>
                         </div>
                       </div>
                       <div>
@@ -489,18 +488,22 @@ console.log(res)
                           className="font-weight-bold"
                           style={{ marginRight: "46px" }}
                         >
-                          <b>{(parseInt(totalPrice)*10/100) +  ((((parseInt(totalPrice)*10)/100)*5)/100) + sum}</b>
+                          <b>
+                            {(parseInt(totalPrice) * 10) / 100 +
+                              (((parseInt(totalPrice) * 10) / 100) * 5) / 100 +
+                              sum}
+                          </b>
                         </div>
                       </div>
                     </div>
                   </div>
-               <span>
-                 For Cash on Delivery You need to pay Minimum 10% of the real
-                 Product Price. GST + Shippment Charge will be Included
-               </span>
-             </div>
-           ) : null}
-         </div>
+                  <span>
+                    For Cash on Delivery You need to pay Minimum 10% of the real
+                    Product Price. GST + Shippment Charge will be Included
+                  </span>
+                </div>
+              ) : null}
+            </div>
 
             {/* order summ */}
             <div

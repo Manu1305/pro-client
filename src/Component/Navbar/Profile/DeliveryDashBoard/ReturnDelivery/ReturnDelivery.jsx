@@ -157,17 +157,17 @@ export const ReturnDelivery = () => {
 
                     <div key={index} className="col-md-12 mt-1">
                       <img
-                        src={order.prdDeta.images}
+                        src={order.prdData.images}
                         alt=""
                         className={styles.imges}
                       />
                     </div>
                     <div className="d-flex align-items-center mb-3">
                       <div className="ms-3">
-                        <p className="fw-bold mb-1">{order.prdDeta.barnd}</p>
+                        <p className="fw-bold mb-1">{order.prdData.barnd}</p>
                       </div>
                     </div>
-                    <p className="text-muted mb-0">{order.prdDeta.category}</p>
+                    <p className="text-muted mb-0">{order.prdData.category}</p>
                     <p className="text-muted mb-0">
                       {" "}
                       <h2>Pick Up!</h2>

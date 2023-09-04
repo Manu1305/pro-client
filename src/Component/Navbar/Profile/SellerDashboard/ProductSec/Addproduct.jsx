@@ -1,4 +1,3 @@
-// newwwwwwwwwwwwwwwwwwwwwwwwwww
 
 import React, { useEffect } from "react";
 import styles from "./Addproduct.module.css";
@@ -7,15 +6,13 @@ import Swal from "sweetalert2";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 function AddProduct() {
-  const user = useSelector((state) => state.userReducer.user);
   const history = useNavigate();
 
   const categorySizes = {
-    Men: [],
+    Mens: [],
     Womens: [],
     Kids: [],
   };
@@ -241,7 +238,6 @@ function AddProduct() {
 
   const addNewProduct = async (e) => {
     e.preventDefault();
-    // const isValid = validate();
     const isValid = true;
 
     if (isValid) {
@@ -260,7 +256,8 @@ function AddProduct() {
             config
           )
           .then((res) => {
-            if (res.StatusCode === 200) {
+            console.log(res.data)
+            if (res.status === 200) {
               
               toast.success("Product Added")
             } 

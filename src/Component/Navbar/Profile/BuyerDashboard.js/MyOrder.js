@@ -28,6 +28,9 @@ const BuyerOrder = () => {
     console.log("Check difference ", currentDate < order.updatedAt);
   };
 
+
+  // const user = useSelector((state) => state.userReducer.user)
+  console.log("user",user)
   const getOrders = async () => {
     try {
       const config = {
@@ -102,15 +105,15 @@ const BuyerOrder = () => {
                 />
                 <div key={order.id} className="d-flex align-items-center mb-3">
                   <img
-                    src={order.prdDeta.images}
+                    src={order.prdData.images}
                     alt=""
                     style={{ width: "45px", height: "45px" }}
                     className="rounded-circle"
                   />
 
                   <div className="ms-3">
-                    <p className="fw-bold mb-1">{order.prdDeta.barnd}</p>
-                    <p className="text-muted mb-0">{order.prdDeta.category}</p>
+                    <p className="fw-bold mb-1">{order.prdData.barnd}</p>
+                    <p className="text-muted mb-0">{order.prdData.category}</p>
                   </div>
                   <select>
                     {order.sizeWithQuantity &&
