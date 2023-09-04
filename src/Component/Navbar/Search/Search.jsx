@@ -26,7 +26,6 @@ function SearchBar() {
       .then((res) => {
         setData(res.data);
         dispatch(addProduct(res.data));
-      
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -38,9 +37,10 @@ function SearchBar() {
       return items;
     }
 
-    return items.filter((data) =>
-      data.productDetail.brand.includes(query)
-    );
+    return items.filter((data) => {
+      console.log("data",data)
+     return data.brand.includes(query);
+    });
   }
 
   useEffect(() => {

@@ -4,7 +4,6 @@ import {
 } from "../actionContName";
 
 export const currentUserData = (item) => {
-    console.log("Action",item)
   return { type: loginSuccess, payload: item };
 };
 

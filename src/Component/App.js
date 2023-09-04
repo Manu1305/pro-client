@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
 import ScrollToTop from "../Scrolltotop";
 import Login from "./Navbar/Login/UserLogin/Login";
@@ -49,7 +49,10 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 import { ScaleLoader } from "react-spinners";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import httpService from "./Error Handling/httpService";
+import { apiURL } from "../const/config";
+import { userCartItem } from "../Redux/cart/cartAction";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -69,6 +72,8 @@ const App = () => {
 
   const user = useSelector(state => state.userReducer.user)
 
+  const dispatch = useDispatch()
+
 
   return (
     <Router>
@@ -79,7 +84,7 @@ const App = () => {
           <Navbar cartItems={cartItems} />
           <Routes>
             <Route path="*" element={<Error404 />} />
-            <Route path="login" element={!user?.name ? <Login /> : <Header/>} />
+            <Route path="login" element={!user?.name ? <Login /> : <Header />} />
             <Route
               path="/"
               element={
@@ -91,7 +96,7 @@ const App = () => {
             <Route path="/dashboard" element={<SellerDashboard />} />
 
 
-            <Route path="/cart" element={<React.Suspense fallback={<div><ScaleLoader /></div>}> { user?.name ? <LazyCart /> : <Login/>}
+            <Route path="/cart" element={<React.Suspense fallback={<div><ScaleLoader /></div>}> {user?.name ? <LazyCart /> : <Login />}
             </React.Suspense>} />
 
             <Route path="/dashboard" element={<React.Suspense fallback={<div>Loading... </div>}> <LazySellerDashboard />

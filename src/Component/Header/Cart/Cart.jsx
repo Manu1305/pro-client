@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
@@ -8,22 +7,27 @@ import Styles from "./cart.module.css";
 import { BsTrash } from "react-icons/bs";
 import httpService from "../../Error Handling/httpService";
 import { ScaleLoader } from "react-spinners";
- import Swal from "sweetalert2";
+import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import SizeAndQuantity from "../../Reuseable Comp/SizeAndQuantity";
 
-
-const Cart = ({ setCartItems }) => {
+const Cart = () => {
   const [CartItem, setCartItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const cart = useSelector((state) => state.cartReducer);
+
+  console.log(cart);
+
   const removeFromCart = async (id) => {
     Swal.fire({
-      title: 'Removing from cart.?',
+      title: "Removing from cart.?",
       // text: "Remove from cart",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Remove it'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Remove it",
     }).then((result) => {
       if (result.isConfirmed) {
         try {
@@ -33,8 +37,8 @@ const Cart = ({ setCartItems }) => {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           };
-    
-           httpService
+
+          httpService
             .delete(`${apiURL}/cart/delete-cart-item/${id}`, config)
             .then((res) => {
               console.log(res);
@@ -46,14 +50,9 @@ const Cart = ({ setCartItems }) => {
         } catch (error) {
           console.error("Error removing item from cart:", error);
         }
-        Swal.fire(
-          'Removed',
-          'Your product removed from cart.',
-          'success'
-        )
+        Swal.fire("Removed", "Your product removed from cart.", "success");
       }
-    })
-    
+    });
   };
 
   const getCarts = async () => {
@@ -65,11 +64,11 @@ const Cart = ({ setCartItems }) => {
         },
       };
 
-     return await httpService
+      return await httpService
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           if (res.data.Message === "Your cart is empty...!") {
-            setCartItem([])
+            setCartItem([]);
           } else {
             console.log(res.data);
             setCartItem(res.data);
@@ -93,12 +92,7 @@ const Cart = ({ setCartItems }) => {
   if (CartItem.subTotal === 0) {
     return (
       <div className="text-center">
-        {/* <img
-          src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png"
-          alt="empty"
-          style={{ maxWidth: "100%", height: "auto" }}
-        /> */}
-        
+       
         <Link to="/shoppingPage">
           <div
             style={{
@@ -107,72 +101,61 @@ const Cart = ({ setCartItems }) => {
               marginTop: "30px",
             }}
           >
-             <div style={{margin:'auto'}} >
-        {isLoading ? (
-         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-           <ScaleLoader  animation="border" role="status" color="red">
-             {/* <span className="visually-hidden">Loading...</span> */}
-           </ScaleLoader >
-         
-         </div>
-       ) : (
-        <div>
- <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
- <button
-              style={{
-                backgroundColor: "green",
-                height: "50px",
-                width: "100px",
-                borderRadius: "40px",
-              }}
-            >
-              Shop Now
-            </button>
-        </div>
-        
-       
-       )}
-       </div>
-           
+            <div style={{ margin: "auto" }}>
+              {isLoading ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ScaleLoader animation="border" role="status" color="red">
+                  </ScaleLoader>
+                </div>
+              ) : (
+                <div>
+                  <img
+                    src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                    alt="Loaded"
+                  />
+                  <button
+                    style={{
+                      backgroundColor: "green",
+                      height: "50px",
+                      width: "100px",
+                      borderRadius: "40px",
+                    }}
+                  >
+                    Shop Now
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </Link>
       </div>
     );
   }
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
 
   return (
     <div>
-      <section className="h-100" style={{ backgroundColor: "white" }}>
+      <section className={`h-100 `} style={{ backgroundColor: "white" }}>
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-10" >
-              {/* <h2>Total {totalPrice}</h2> */}
-              {CartItem.items?.length  &&
+            <div className="col-10">
+              {CartItem.items?.length &&
                 CartItem.items.map((item) => (
-                  <div className={Styles.cartDiv} key={item._id}>
+                  <div className="shadow-xl h-25 mb-3" key={item._id}>
                     <div className="card-body p-4">
                       <div className="row d-flex justify-content-between align-items-center">
                         <div className="col-md-2 col-lg-2 col-xl-2">
-                          <Slider {...settings}>
-                            <img
-                              src={item.productDetails.images}
-                              className="img-fluid img-responsive rounded product-image "
-                              style={{objectFit:"fill"}}
-                              alt="img"
-                            />
-                          </Slider>
+                          <img src={item.productDetails.images} alt="item" />
                         </div>
 
                         <div className="col-md-3 col-lg-3 col-xl-3">
                           <p className="font-bold text-xl text-black">
-                            {item.productDetails.barnd}
+                            {item.productDetails.brand}
                           </p>
 
                           <p>
@@ -182,45 +165,10 @@ const Cart = ({ setCartItems }) => {
                           </p>
 
                           <div>
-                            <label>Size</label>
-                            <select
-                              className={Styles.select}
-                              style={{
-                                appearance: "none",
-                                width: "100px",
-                                marginLeft: "10px",
-                                WebkitAppearance: "none",
-                              }}
-                            >
-                              {Object.entries(item.sizeWithQuantity).map(
-                                ([key, value]) => (
-                                  <option key={key} value={key}>
-                                    {value.selectedSizes ? (
-                                      <p
-                                        style={{
-                                          fontSize: 13,
-                                          color: "GrayText",
-                                        }}
-                                      >
-                                        {value.selectedSizes}
-                                      </p>
-                                    ) : null}{" "}
-                                    -
-                                    {value.quantities ? (
-                                      <p
-                                        style={{
-                                          fontSize: 13,
-                                          color: "GrayText",
-                                        }}
-                                      >
-                                        {value.quantities}
-                                      </p>
-                                    ) : null}
-                                  </option>
-                                )
-                              )}
-                            </select>
-
+                            <SizeAndQuantity
+                              obj={item.sizeAndQua}
+                              select={Styles.select}
+                            />
                             <div>
                               <span
                                 className="text-muted"
@@ -237,7 +185,15 @@ const Cart = ({ setCartItems }) => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-md-3 col-lg-3 col-xl-2 d-flex"></div>
+
+                        <div
+                          className="col-md-3 col-lg-3 col-xl-2 d-flex"
+                          style={{
+                            background: `${item.productDetails.color}`,
+                            height: "50px",
+                            width: "50px",
+                          }}
+                        ></div>
                         <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                           <div className={Styles.hideprice}>
                             <span className="text-red-600 text-xl font-bold">
@@ -252,7 +208,6 @@ const Cart = ({ setCartItems }) => {
                             onClick={() => removeFromCart(item._id)}
                           >
                             <BsTrash className="h-10 w-10" />
-                            {/* <i className="fas fa-trash fa-lg"></i> */}
                           </button>
                         </div>
                       </div>
@@ -260,36 +215,40 @@ const Cart = ({ setCartItems }) => {
                   </div>
                 ))}
 
-              {CartItem.items?.length &&
-              <><h2 className="text-black font-extrabold">
-              SubTotal: &#8377;{CartItem.subTotal}
-            </h2>
+              {CartItem.items?.length && (
+                <>
+                  <h2 className="text-black font-extrabold">
+                    SubTotal: &#8377;{CartItem.subTotal}
+                  </h2>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div className="mt-2">
-                <Link to={`/confirm/${CartItem.subTotal}`}>
-                  <button
-                    type="button"
-                    className="btn  btn-block btn-lg"
+                  <div
                     style={{
-                      backgroundColor: "#BF0A2A",
-                      color: "white",
-                      fontSize: "1rem",
-                      borderRadius: "0",
-                      width: "300px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    Proceed to Pay
-                  </button>
-                </Link>
-              </div>
-            </div></>}
+                    <div className="mt-2">
+                      <Link to={`/confirm/${CartItem.subTotal}`}>
+                        <button
+                          type="button"
+                          className="btn  btn-block btn-lg"
+                          style={{
+                            backgroundColor: "#BF0A2A",
+                            color: "white",
+                            fontSize: "19px",
+                            borderRadius: "0",
+                            width: "300px",
+                            padding:"20px"
+                          }}
+                        >
+                          Proceed to Pay
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

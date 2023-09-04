@@ -14,14 +14,11 @@ const CustomerLogin = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
 
   const handleCustomerLogin = async (e) => {
     e.preventDefault();
 
-    const isValid = validate();
 
     try {
       const response = await httpService
@@ -65,7 +62,7 @@ const CustomerLogin = () => {
             ? !response.data.user?.storeSetup
               ? "/StorePage"
               : "/dashboard"
-            : `/Profilepage/${email}`;
+            : `/`;
         history(route, {
           state: {
             id: email,
@@ -78,38 +75,7 @@ const CustomerLogin = () => {
       console.log(error);
     }
 
-    if (isValid) {
-      //   Perform login logic using email and password
-      // console.log("Email:", email);
-      // console.log("Password:", password);
-    }
-  };
-
-
-  const validate = () => {
-    let emailError = "";
-    let passwordError = "";
-
-    if (!email) {
-      emailError = "Email address is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      emailError = "Email address is invalid";
-    }
-
-    if (!password) {
-      passwordError = "Password is required";
-    } else if (password.length < 6) {
-      passwordError = "Password must be at least 6 characters long";
-    }
-
-    setEmailError(emailError);
-    setPasswordError(passwordError);
-
-    if (emailError || passwordError) {
-      return false;
-    }
-
-    return true;
+    
   };
 
   return (
@@ -157,7 +123,7 @@ const CustomerLogin = () => {
                           className="form-control form-control-lg"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          error={emailError}
+                          // error={emailError}
                           placeholder="please enter your email address..."
                         />
 
@@ -172,7 +138,7 @@ const CustomerLogin = () => {
                           className="form-control form-control-lg"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          error={passwordError}
+                          // error={passwordError}
                           placeholder="please enter your password..."
                         />
 
