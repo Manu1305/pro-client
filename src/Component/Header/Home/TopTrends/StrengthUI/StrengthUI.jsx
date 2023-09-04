@@ -10,7 +10,7 @@ function Strength() {
         <div className={styles.one}>
           <div className={styles.innerone}>
             <h4 className={styles.headingtext}>1000 +</h4>
-            <h5 className={styles.subheading}>Active retailers</h5>
+            <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Active retailers</h4>
             <h6 className={styles.content}>
               We have 1000+ Retails from pan
               <br />
@@ -20,8 +20,8 @@ function Strength() {
           </div>
           <div className={styles.innertwo}>
             <h4 className={styles.headingtext}>60000 +</h4>
-            <h5 className={styles.subheading}>Product delivered</h5>
-            <h6 className={styles.content}>
+            <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Product delivered</h4>
+            <h6  className={styles.content}>
               6000+ Products Successfully
               <br />
               Delivered to the retailers in pan
@@ -34,7 +34,7 @@ function Strength() {
         <div className={styles.two}>
           <div className={styles.innerone}>
             <h4 className={styles.headingtext}>500+</h4>
-            <h5 className={styles.subheading}>Manufactures</h5>
+            <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Manufactures</h4>
             <h6 className={styles.content}>
               We have 500+ Active
               <br />
@@ -45,7 +45,7 @@ function Strength() {
 
           <div className={styles.innertwo}>
             <h4 className={styles.headingtext}>50 +</h4>
-            <h5 className={styles.subheading}>Franchise partners </h5>
+            <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Franchise partners </h4>
             <h6 className={styles.content}>
               We have 50+ franchise partners
               <br />

@@ -44,13 +44,8 @@ const NewData = ({ productItems }) => {
     httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        
-        console.log(res.data)
-        const currentDate = new Date()
-        const newProducts=res.data.filter(
-          (product)=> new Date(product.createDate)<=currentDate
-        )
-        setData(newProducts);
+        console.log(res.data +"this is responsedata")
+        setData(res.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -68,11 +63,11 @@ const NewData = ({ productItems }) => {
                    <Link  to={`/ViewDetails/${productItems._id}`} >
                   <div className={`${styless.card}`}>
 
-                    <img src={productItems.images[0]} alt="imge" />
+                    <img  src={productItems.productDetails[0].images[0]} alt="imge" />
                   </div>
                   </Link>
                 </div>
-                <h5 className={styless.title}>{productItems.productDetail.brand}</h5>
+                <h5 className={styless.title}>{productItems.brand}</h5>
                 <Link style={{textDecoration:'none'}}>
                   <p>Explore Now!</p>
                 </Link>
