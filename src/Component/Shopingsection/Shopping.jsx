@@ -1,4 +1,4 @@
- import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import styless from "./Shopping.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -68,17 +68,13 @@ const Shopping = () => {
   const filteredProducts =
     data &&
     data.filter((data) => {
-
       const categoryMatch =
         categories.length === 0 ||
-        categories.some(
-          (categoryy) =>
-            data.selectedCategory === categoryy
-        );
+        categories.some((categoryy) => data.selectedCategory === categoryy);
       const priceMatch =
         data.sellingPrice >= lowestprice && data.sellingPrice <= price;
 
-      return  categoryMatch && priceMatch;
+      return categoryMatch && priceMatch;
     });
 
   const usersPerpage = 5;
@@ -87,7 +83,6 @@ const Shopping = () => {
   const displayUsers = filteredProducts
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
-
       return (
         <div
           key={data.id}
@@ -99,23 +94,23 @@ const Shopping = () => {
               <Link
                 style={{ cursor: "pointer" }}
                 to={`/ViewDetails/${data._id}`}
-              ><div className={styless.like_button}>
-              <div>
-                <PiHeartLight
-                style={{marginTop:"2px",fontWeight:"30px"}}
-                  onClick={() => {
-                    console.log("Wish list");
-                  }}
-                />
-              </div>
-            </div>
-                
+              >
+                <div className={styless.like_button}>
+                  <div>
+                    <PiHeartLight
+                      style={{ marginTop: "2px", fontWeight: "30px" }}
+                      onClick={() => {
+                        console.log("Wish list");
+                      }}
+                    />
+                  </div>
+                </div>
+
                 <img
                   src={data.productDetails[0].images[0]}
                   style={{ height: 320, width: 305, objectFit: "fill" }}
                   alt=""
                 />
-                
               </Link>
             </div>
             {/* Description */}
@@ -154,19 +149,19 @@ const Shopping = () => {
       {isLoading ? ( // Conditionally render a loading spinner
         <div className={styless.loadingSpinner}>
           <div>
-          <ScaleLoader
-            color="red"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: "auto",
-            }}
-            animation="border"
-            role="status"
-          >
-            <span className="visually-hidden">Loading...</span>
-          </ScaleLoader>
+            <ScaleLoader
+              color="red"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: "auto",
+              }}
+              animation="border"
+              role="status"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </ScaleLoader>
           </div>
         </div>
       ) : (
@@ -276,7 +271,6 @@ const Shopping = () => {
                   className={`row , ${styless.pages}`}
                   style={{ color: "black" }}
                 >
-                  
                   {displayUsers}
 
                   <ReactPaginate
@@ -290,12 +284,9 @@ const Shopping = () => {
               </div>
             </div>
           </div>
-          
         </div>
       )}
-      
     </div>
-    
   );
 };
 

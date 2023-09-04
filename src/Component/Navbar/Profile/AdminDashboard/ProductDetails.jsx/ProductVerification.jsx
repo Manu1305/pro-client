@@ -65,17 +65,16 @@ const ProductVerification = () => {
     setTotalQuantity(sum);
   };
 
-  useEffect(() => { }, [quantities]);
+  useEffect(() => {}, [quantities]);
 
   const storedProductData = useSelector(
     (state) => state.productReqReducer.productReq
   );
 
   const productDetails = storedProductData.filter(
-    (product) => product._id === id,
-  )
-  console.log(productDetails)
-  ;
+    (product) => product._id === id
+  );
+  console.log(productDetails);
 
   const settings = {
     infinite: true,
@@ -94,7 +93,7 @@ const ProductVerification = () => {
           <div className={`col-md-6 ${styles.images}`}>
             <div className={`text-center p-4 ${styles.thumbnail}`}>
               <Slider {...settings}>
-                {product.images.map((img) => (
+                {product.productDetails[0].images.map((img) => (
                   <img
                     src={img}
                     className={`img-fluid img-responsive rounded product-image ${styles.image}`}
@@ -105,9 +104,7 @@ const ProductVerification = () => {
               </Slider>
               <div className={styles.descrip}>
                 <p className={`about ${styles.about}`}>Description: </p>
-                <span className={styles["text1"]}>
-                  {product.productDetail.description}
-                </span>
+                <span className={styles["text1"]}>{product.description}</span>
                 <p className={`about ${styles.about}`}>
                   WashcareInstructions:{" "}
                 </p>
@@ -115,9 +112,7 @@ const ProductVerification = () => {
                   {product.WashcareInstructions}
                 </span>
                 <p className={`about ${styles.about}`}>Material: </p>
-                <span className={styles["text1"]}>
-                  {product.productDetail.material}
-                </span>
+                <span className={styles["text1"]}>{product.material}</span>
               </div>
             </div>
           </div>
@@ -129,10 +124,10 @@ const ProductVerification = () => {
                 <h5
                   className={`text-uppercase text-muted brand ${styles.brand}`}
                 >
-                  {product.productDetail.brand}
+                  {product.brand}
                 </h5>
 
-                <span>{product.productDetail.description}</span>
+                <span>{product.description}</span>
                 <hr></hr>
                 <div
                   className={`price d-flex flex-row align-items-center ${styles.price}`}
@@ -144,7 +139,6 @@ const ProductVerification = () => {
                     <small className={`${styles["dis-price"]}`}>
                       MRP <s>₹{product.realPrice}</s>
                     </small>
-                    <span>{product.discountPercentage}</span>
                   </div>
                 </div>
               </div>
@@ -160,33 +154,34 @@ const ProductVerification = () => {
                   Total Quantity: {product.totalQuantity}
                 </h6>
               </div>
-              
-              <div className={`cart mt-4 align-items-center ${styles.cart}`}>
-  <h6 className={`text-uppercase ${styles["size-heading"]}`}>
-    {product.selectedCategory === "Women" &&
-      categorySizes.Womens.map(size => (
-        <span key={size}>
-          {size}: {1|| 0} | 
-        </span>
-      ))}
-    {product.selectedCategory === "Men" &&
-      categorySizes.Men.map(size => (
-        <span key={size}>
-          {size}: {1|| 0} | 
-        </span>
-      ))}
-    {product.selectedCategory === "Kids" &&
-      categorySizes.Kids.map(size => (
-        <span key={size}>
-          {size}: {1|| 0} | 
-        </span>
-      ))} 
-    {!(product.selectedCategory === "Women" || product.selectedCategory === "Men" || product.selectedCategory === "Kids") && (
-      <span>Select a category to see available sizes</span>
-    )}
-  </h6>
-</div>
 
+              <div className={`cart mt-4 align-items-center ${styles.cart}`}>
+                <h6 className={`text-uppercase ${styles["size-heading"]}`}>
+                  {product.selectedCategory === "Women" &&
+                    categorySizes.Womens.map((size) => (
+                      <span key={size}>
+                        {size}: {1 || 0} |
+                      </span>
+                    ))}
+                  {product.selectedCategory === "Men" &&
+                    categorySizes.Men.map((size) => (
+                      <span key={size}>
+                        {size}: {1 || 0} |
+                      </span>
+                    ))}
+                  {product.selectedCategory === "Kids" &&
+                    categorySizes.Kids.map((size) => (
+                      <span key={size}>
+                        {size}: {1 || 0} |
+                      </span>
+                    ))}
+                  {!(
+                    product.selectedCategory === "Women" ||
+                    product.selectedCategory === "Men" ||
+                    product.selectedCategory === "Kids"
+                  ) && <span>Select a category to see available sizes</span>}
+                </h6>
+              </div>
             </div>
           </div>
         </div>

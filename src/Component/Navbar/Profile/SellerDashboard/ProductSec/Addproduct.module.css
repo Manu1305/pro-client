@@ -1,60 +1,55 @@
-
 .container {
-   /* background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg"); */
-   box-shadow: inset 10px 5px 5px rgb(255, 1, 1);
-   border-radius: 5px;
- padding-left: 0px;
- display: flex;
- justify-content: center;
- align-items: center;
+  /* background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg"); */
+  box-shadow: inset 10px 5px 5px rgb(255, 1, 1);
+  border-radius: 5px;
+  padding-left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
- border: 3px solid rgba(196, 222, 0, 0);
+  border: 3px solid rgba(196, 222, 0, 0);
 }
 
-.label{
+.label {
   font-weight: bolder;
 }
 
-.textarea{
-  
-   height: 200px;
-   width: 500px;
-   border:" 1px solid black";
+.textarea {
+  height: 200px;
+  width: 500px;
+  border: " 1px solid black";
 }
 
-
-
-.inputField{
+.inputField {
   width: 400px;
-  border: 1px solid ;
+  border: 1px solid;
   border-radius: 5px;
 }
 
-
-.categorydiv{
+.categorydiv {
   width: 400px;
 }
 
-.Subcategorydiv{
+.Subcategorydiv {
   width: 400px;
 }
 
-.colorsection{
+.colorsection {
   display: flex;
   flex-direction: row;
   margin-top: 50px;
 }
 
-.texareawash{
-  width:800px;
-    height:100px;
-     border:2px solid black
-     ;border-radius: 5px;
+.texareawash {
+  width: 800px;
+  height: 100px;
+  border: 2px solid black;
+  border-radius: 5px;
 }
 
-.inputFieldmaterial{
+.inputFieldmaterial {
   width: 400px;
-  border: 1px solid ;
+  border: 1px solid;
   border-radius: 5px;
 }
 /* //////////////////////////////////////////////// */
@@ -93,8 +88,6 @@ select {
   padding-right: 30px;
 }
 
-
-
 .input-file {
   display: none;
 }
@@ -110,7 +103,6 @@ select {
   border-radius: 5px;
   cursor: pointer;
 }
-
 
 .image-box {
   display: inline-block;
@@ -128,7 +120,6 @@ select {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
- 
 }
 
 .sizeContainer {
@@ -137,39 +128,40 @@ select {
   flex-wrap: wrap;
   flex: 0 0 100px;
   margin: 10px;
-
 }
 
 .sizeButton {
-
-width: 20%;
+  width: 20%;
   /* Add your size button styles */
 }
 
 .blue {
-  border-radius: 5px;
-  background-color: rgb(148, 151, 144);
+  border-radius: 0px;
+  border: 1px solid #DDDDDD;
   display: flex;
   flex-direction: row;
+  height: 40px;
+  width: 300px;
+  text-indent: 10px;
 }
-
 
 .quantityInput {
-  width: 20%;
+  width: 30%;
+  height: 40px;
+  margin-left: 10px;
 }
-.imgeupload{
-  width: '300px';
-  height: '100%';
-  border: '2px solid #ccc';
-  border-radius: '5px';
-  background-color: '#f8f8f8';
-  color: '#333';
-  padding: '5px';
+.imgeupload {
+  width: "300px";
+  height: "100%";
+  border: "2px solid #ccc";
+  border-radius: "5px";
+  background-color: "#f8f8f8";
+  color: "#333";
+  padding: "5px";
 }
-.respo{
+.respo {
   display: flex;
-flex-direction: row;
-
+  flex-direction: row;
 }
 
 /* @media only screen and (max-width: 518px) {
@@ -188,20 +180,20 @@ flex-direction: column;
     flex-direction: column; /* Stack items vertically on small screens */
     align-items: center;
   }
-  .respo{
+  .respo {
     display: flex;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;  
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  
-.label{
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
+  .label {
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .inputField {
     width: 200px;
@@ -209,51 +201,50 @@ flex-direction: column;
     margin-left: 0;
   }
 
-
-  .texareadiv{
-    width:'100px';
-    height:'100px';
+  .texareadiv {
+    width: "100px";
+    height: "100px";
   }
-  .textarea{
+  .textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    width:300px;
+    width: 300px;
     height: 200px;
-    border: 1px solid
+    border: 1px solid;
   }
-  .categorydiv{
+  .categorydiv {
     width: 200px;
     margin: auto;
   }
-  .Subcategorydiv{
+  .Subcategorydiv {
     width: 200px;
     margin: auto;
     margin-left: 75px;
   }
-  .sizeselect{
+  .sizeselect {
     font-weight: bolder;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-left: 170px;
   }
-  .colorsection{
+  .colorsection {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
   }
-  .texareawash{
-    width:300px;
-      height:200px;
-       border:1px solid
+  .texareawash {
+    width: 300px;
+    height: 200px;
+    border: 1px solid;
   }
 
-  .inputFieldmaterial{
+  .inputFieldmaterial {
     width: 200px;
-    border: 1px solid ;
+    border: 1px solid;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -261,53 +252,48 @@ flex-direction: column;
   }
 }
 
-
-
-
 /* -------------latest------------- */
 
-.headingdiv{
+.headingdiv {
   width: 100%;
-height: 70px;
-
+  height: 70px;
 }
-.headingText{
+.headingText {
   font-weight: bold;
   margin-right: 1000px;
   margin-top: 10px;
 }
-.maindiv{
+.maindiv {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
   background-color: rgb(247, 251, 255);
 }
-.mainone{
+.mainone {
   margin-left: 100px;
-   width: 50%;
-background-color: rgb(247, 251, 255);
-}
-.maintwo{
   width: 50%;
   background-color: rgb(247, 251, 255);
 }
-.inputDiv{
+.maintwo {
+  width: 50%;
+  background-color: rgb(247, 251, 255);
+}
+.inputDiv {
   display: flex;
   flex-direction: column;
   width: 1000px;
 }
-.inputField{
+.inputField {
   text-indent: 10px;
 }
 
-
 @media only screen and (max-width: 600px) {
-  .maindiv{
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
-      background-color: rgb(247, 251, 255);
+  .maindiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(247, 251, 255);
   }
 }

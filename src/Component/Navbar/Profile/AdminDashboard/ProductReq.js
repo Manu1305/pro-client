@@ -33,6 +33,7 @@ export const ProductRequest = () => {
       })
       .then((res) => {
         dispatch(addReqProduct(res.data));
+        console.log("Prod Req",res.data)
         setProduct(res.data);
       })
       .catch((Err) => console.log(Err));
@@ -152,8 +153,8 @@ export const ProductRequest = () => {
   const rowData = products.map((ele) => {
     return {
       id: ele._id,
-      images: ele.images[0],
-      brand: ele.productDetail.brand,
+      images: ele.productDetails[0].images[0],
+      brand: ele.brand,
       quantity: ele.totalQuantity,
       price: ele.sellingPrice,
       seller: ele.seller,
