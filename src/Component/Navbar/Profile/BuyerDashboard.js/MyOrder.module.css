@@ -95,7 +95,7 @@
     }
   }
   .tableWrapper{
-    margin-top: 5rem;
+    margin: 20px;
   }
   @media (max-width: 767px) {
     .orderCard {
