@@ -85,7 +85,7 @@ const BuyerOrder = () => {
           <p>Loading orders...</p>
         </div>
       ) : (
-        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded Image" />
+        <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded" />
       )}
       </div>
     ) : (
@@ -169,7 +169,7 @@ const BuyerOrder = () => {
                   <h6>Amount: {order.ordPrc}</h6>
                 </div>
                 <div className="mb-3">
-                  {order.orderStatus !== "Shipped" &&
+                  {/* {order.orderStatus !== "Shipped" &&
                     order.orderStatus !== "Dispatched 1" &&
                     order.orderStatus !== "Dispatced 1" &&
                     order.orderStatus !== "Delivered" &&
@@ -182,7 +182,7 @@ const BuyerOrder = () => {
                         </button>
                         <button className="btn btn-danger">CANCEL ORDER</button>
                       </>
-                    )}
+                    )} */}
 
                   {order.orderStatus === "Delivered" && isExpRet ? (
                     <Link to={`/returnPro/${order._id}`}>
