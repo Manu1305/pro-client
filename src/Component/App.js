@@ -116,7 +116,7 @@ const App = () => {
             <Route path="/details/:id" element={<DetailsPages />} />
             <Route path="sellerplans" element={<Plans />} />
             <Route path="StorePage" element={<StorePage />} />
-            <Route path="dashboard/Addproduct" element={<AddProduct />} />
+            <Route path="/dashboard/Addproduct" element={<AddProduct />} />
             <Route path="storeset" element={<MainPage />} />
             <Route path="store" element={<Store />} />
             <Route path="payment" element={<SellerPayment />} />

@@ -6,7 +6,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
   border: 3px solid rgba(196, 222, 0, 0);
 }
 
@@ -52,7 +51,6 @@
   border: 1px solid;
   border-radius: 5px;
 }
-/* //////////////////////////////////////////////// */
 
 .legend {
   font-size: 24px;
@@ -132,12 +130,11 @@ select {
 
 .sizeButton {
   width: 20%;
-  /* Add your size button styles */
 }
 
 .blue {
   border-radius: 0px;
-  border: 1px solid #DDDDDD;
+  border: 1px solid #dddddd;
   display: flex;
   flex-direction: row;
   height: 40px;

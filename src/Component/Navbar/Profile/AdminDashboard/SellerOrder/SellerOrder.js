@@ -5,14 +5,16 @@ import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import { useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { BiDotsVerticalRounded, BiSolidShoppingBags } from "react-icons/bi";
 import DataTable from "../../../../Reuseable Comp/DataTable";
+import { IconButton, Tooltip } from "@mui/material";
+import DeliveryDiningSharpIcon from '@mui/icons-material/DeliveryDiningSharp';
+import { toast } from "react-toastify";
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
 const SellerOrder = () => {
-  const user = useSelector((state) => state.userReducer.user);
   const [orders, setOrders] = useState([]);
-  const [deleteProductId, setDeleteProductId] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const getOrders = async () => {
@@ -36,6 +38,7 @@ const SellerOrder = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -51,6 +54,16 @@ const SellerOrder = () => {
       .put(`${apiURL}/delivery/assign-delivery-product/${id}`)
       .then((res) => {
         getOrders();
+        toast('Assigned Delivery', {
+          position: "top-center",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          // draggable: true,
+          // progress: undefined,
+          theme: "light",
+        });
       })
       .catch((err) => {
         console.log("ERROR", err);
@@ -79,6 +92,16 @@ const SellerOrder = () => {
         })
         .then((json) => {
           getOrders();
+          toast('Product Delivered', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            // draggable: true,
+            // progress: undefined,
+            theme: "light",
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -89,17 +112,16 @@ const SellerOrder = () => {
   };
 
 
-
   useEffect(() => {
     getOrders();
   }, []);
 
   const header = [
     "Product",
-    "Category",
+    "Price",
     "Status",
-    "Trackingid",
-    "amount",
+    "Tracking Id",
+    "Orderd On",
     "Action",
   ].map((ele) => {
     let string = ele;
@@ -109,12 +131,12 @@ const SellerOrder = () => {
       return {
         field: "Product",
         type: "image",
-        
+
         renderCell: (params) => {
           console.log("parmas*******************", params);
           return (
             <div>
-              <img src={params.row.Product} alt="" />
+              <img src={params.row.Product} alt="" width={30} />
             </div>
           );
         },
@@ -124,90 +146,67 @@ const SellerOrder = () => {
       return {
         field: "Action",
         type: "action",
-        width: 150,
-        
         renderCell: (params) => {
-          console.log("Check KR", params.row);
+          // console.log("Check KR", params.row);
           return (
-            <div  style={{alignItems:"center"}}>
-              <BiDotsVerticalRounded />
+            <div style={{ alignItems: "center" }}>
+              {params.row.Status === "Ready To PickUp" ?
+                <div>
+                  <Tooltip title="Assign Delivery" onClick={() => addToDelivery(params.row.id)}>
+                    <IconButton>
+                      <DeliveryDiningSharpIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                :
+                <div>
+                  {
+                    params.row.Status === "confirm Delivery" ?
+                      <div>
+                        <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
+                          <IconButton>
+                            <ThumbUpAltIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                      : <BiDotsVerticalRounded />
+                  }
+                </div>
+              }
+
+
             </div>
           );
         },
       };
     }
-    if (ele === "Selectedsize") {
-      return {
-        field: "Selectedsize",
-        type: "Selectedsize",
-        width: 200,
-        
-        renderCell: (params) => (
-          <select
-            style={{
-              padding: "8px",
-              margin: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              fontSize: "14px",
-              appearance: "none", // This removes the default dropdown arrow/icon
-              WebkitAppearance: "none", // For Safari
-            }}
-          >
-            {Object.entries(params.row.Selectedsize).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value.selectedSizes ? (
-                  <span
-                    style={{
-                      fontSize: 13,
-                      color: "GrayText",
-                    }}
-                  >
-                    {value.selectedSizes}
-                  </span>
-                ) : null}{" "}
-                -{" "}
-                {value.quantities ? (
-                  <span
-                    style={{
-                      fontSize: 13,
-                      color: "GrayText",
-                    }}
-                  >
-                    {value.quantities}
-                  </span>
-                ) : null}
-              </option>
-            ))}
-          </select>
-        ),
-      };
-    } else {
+    else {
       return {
         id: ele,
         field: ele,
         headerName: string,
         width: 150,
         editable: true,
-        
+
       };
     }
   });
 
   const rowData = orders.map((ele) => {
+    const date = new Date(ele.createdAt).toISOString().split('T')[0]
     return {
       id: ele._id,
       prdId: ele.productId,
       Product: ele.prdData.images,
-      Category: ele.prdData.category,
+      "Orderd On": date,
       Status: ele.orderStatus,
-      Trackingid: ele.trackId,
-      amount: ele.ordPrc,
+      "Tracking Id": ele.trackId,
+      Price: ele.ordPrc,
     };
   });
 
   return (
-    <div style={{ marginLeft: "-150px",marginTop:"30px" }}>
+    <div style={{ marginLeft: "-150px", marginTop: "30px" }}>
       <div>
         {rowData.length !== 0 ?
           <DataTable columns={header} rows={rowData} autoHeight />
@@ -231,3 +230,5 @@ const SellerOrder = () => {
 };
 
 export default SellerOrder;
+
+
