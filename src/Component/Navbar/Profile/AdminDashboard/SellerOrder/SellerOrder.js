@@ -8,8 +8,6 @@ import { ScaleLoader } from "react-spinners";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import DataTable from "../../../../Reuseable Comp/DataTable";
 
-
-
 const SellerOrder = () => {
   const user = useSelector((state) => state.userReducer.user);
   const [orders, setOrders] = useState([]);
