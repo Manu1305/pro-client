@@ -95,26 +95,19 @@ const SellerRelatedPro = ({ addToCart }) => {
     <div className={`${styless.bg}`}>
       <h2>Related Products </h2>
       <div className={`${styless.sliderContainer}`}>
+
         <Slider {...settings}>
           {productItems.map((product) => (
             <div key={product.id} className={styless.customerheading}>
               <div className={`${styless.card}`}>
-                <Slider {...settingsImageSlider}>
-                  {product.images.map((img, index) => (
-                     <Link
-                     style={{ cursor: "pointer" }}
-                     to={`/ViewDetails/${product._id}`}
-                   >
-                    <div key={index}>
+               <Link to={`/ViewDetails/${product._id}`}>
+                    <div className={`${styless.card}`}>
                       <img
-                        src={img}
-                        className={styless.mage}
-                        alt=""
+                        src={product.productDetails[0].images[0]}
+                        alt="imge"
                       />
                     </div>
-                    </Link>
-                  ))}
-                </Slider>
+                  </Link>
                 <h5 className={styless.title}>{product.productDetail.brand}</h5>
                 <span className={styless.description}>
                   {product.productDetail.description}
