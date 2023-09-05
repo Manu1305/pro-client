@@ -66,15 +66,15 @@ const OrderHistory = () => {
               />
               <div className="d-flex align-items-center mb-3">
                 <img
-                  src={order.prdDeta.images}
+                  src={order.prdData.images}
                   alt=""
                   style={{ width: "45px", height: "45px" }}
                   className="rounded-circle"
                 />
 
                 <div className="ms-3">
-                  <p className="fw-bold mb-1">{order.prdDeta.brand}</p>
-                  <p className="text-muted mb-0">{order.prdDeta.category}</p>
+                  <p className="fw-bold mb-1">{order.prdData.brand}</p>
+                  <p className="text-muted mb-0">{order.prdData.category}</p>
                 </div>
                 <select>
                   {order.sizeWithQuantity &&

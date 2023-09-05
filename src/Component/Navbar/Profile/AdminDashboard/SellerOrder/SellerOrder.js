@@ -131,7 +131,7 @@ const SellerOrder = () => {
         renderCell: (params) => {
           console.log("Check KR", params.row);
           return (
-            <div onMouseOver={() => alert("worked")} style={{alignItems:"center"}}>
+            <div  style={{alignItems:"center"}}>
               <BiDotsVerticalRounded />
             </div>
           );
@@ -200,8 +200,8 @@ const SellerOrder = () => {
     return {
       id: ele._id,
       prdId: ele.productId,
-      Product: ele.prdDeta.images,
-      Category: ele.prdDeta.category,
+      Product: ele.prdData.images,
+      Category: ele.prdData.category,
       Status: ele.orderStatus,
       Trackingid: ele.trackId,
       amount: ele.ordPrc,

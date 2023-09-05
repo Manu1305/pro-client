@@ -33,7 +33,7 @@ export const ProductSec = () => {
           (product) => product.seller === user.email
         );
         console.log("seller Produc", filteredProducts);
-        setRequestedProducts(res.data);
+        setRequestedProducts(filteredProducts);
       })
       .catch((err) => {
         console.log("ERROR", err);
