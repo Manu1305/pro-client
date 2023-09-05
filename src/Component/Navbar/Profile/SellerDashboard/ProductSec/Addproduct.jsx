@@ -260,6 +260,13 @@ function AddProduct() {
             config
           )
           .then((res) => {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'The product successfully added',
+              showConfirmButton: false,
+              timer: 1500
+            })
             if (res.StatusCode === 200) {
               
               toast.success("Product Added")

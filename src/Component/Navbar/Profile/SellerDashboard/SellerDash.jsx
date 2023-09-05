@@ -30,7 +30,7 @@ const SellerDashboard = () => {
       {/* <div className={dash.body}> */}
         <div className={dash.sidebar}>
           <div className={dash.sidebar_items}>
-            {(user?.urType === "admin" || user?.urType === "seller") && (
+            {/* {(user?.urType === "admin" || user?.urType === "seller") && (
               <li
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("dashboard")}
@@ -46,7 +46,7 @@ const SellerDashboard = () => {
                   </button>
                 </span>
               </li>
-            )}
+            )} */}
             {user?.urType === "admin" && (
               <li
                 className={dash.item}
