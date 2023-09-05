@@ -9,14 +9,19 @@ import  Profile  from "./Dropdown/ProfileDropdown";
 import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
 import {  MdOutlineNotificationsNone } from "react-icons/md";
-
+import { apiURL } from "../../const/config";
+import httpService from "../Error Handling/httpService";
+import axios from "axios";
 
  const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
+  // const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer.user);
-
+  const [cart, setCart] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  // const userCart = cart.filter((ele) => ele.userEmail === user.email)
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -25,6 +30,44 @@ import {  MdOutlineNotificationsNone } from "react-icons/md";
   const closeMenu = () => {
     setShowMenu(false);
   };
+
+  const getCarts = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      return await axios
+        .get(`${apiURL}/cart/user-cart`, config)
+        .then((res) => {
+          if (res.data.Message === "Your cart is empty...!") {
+            setCart([]);
+            setTotalItems(0);
+          } else {
+            // console.log(res.data);
+            const cartData = res.data;
+            console.log( Object.keys(res.data.items).length+"qwerty");
+            const itemsCount =Object.keys(res.data.items).length;
+            setCart(cartData);
+        setTotalItems(itemsCount);
+        // console.log('total'+itemsCount)
+ 
+          }
+        })
+        .catch((err) => console.log(err.config.message));
+    } catch (error) {
+      console.log("API Error", error);
+    }
+  };
+;
+  // useEffect(()=>{
+  //   getCarts()
+  // },[cart.items]);
+
+  
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
@@ -110,13 +153,9 @@ import {  MdOutlineNotificationsNone } from "react-icons/md";
             {user && user.email ? (
               <Link to="cart" onClick={closeMenu}>
                 <CgShoppingCart style={{height:"20px",width:'20px'}} />
-                {/* {userCart != 0 ? (
-                  <span className={styles.length1}>
-                    {userCart === 0 ? "" : userCart}
-                  </span>
-                ) : (
-                  ""
-                )} */}
+             {totalItems > 0 && (
+          <h2>{totalItems}</h2>
+        )}
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}>
@@ -126,8 +165,8 @@ import {  MdOutlineNotificationsNone } from "react-icons/md";
             )}
           </li>
         )}
-
-        <li style={{ height: "20px" }} >
+ 
+          <li style={{ height: "20px" }} >
           {user && user.email ? (
             <Profile closemenu={closeMenu} />
           ) : (

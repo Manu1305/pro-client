@@ -106,6 +106,7 @@
   .listhead {
     color: white;
     text-decoration: none;
+    font-weight: bolder;
   
    
   }
@@ -184,7 +185,8 @@
   }
   .links{
     text-decoration: none;
-    color: white
+    color: white;
+    opacity: .5;
   }
   
   @keyframes shake {

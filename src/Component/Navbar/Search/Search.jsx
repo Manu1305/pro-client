@@ -69,11 +69,11 @@ function SearchBar() {
           {filteredItems.map((value) => (
             <div
               className={styles.link}
-              key={value.productDetail.brand}
+              key={value.brand}
               onClick={clear}
             >
               <Link to={`/ViewDetails/${value._id}`}>
-                {value.productDetail.brand}
+                {value.brand}
               </Link>
             </div>
           ))}

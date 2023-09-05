@@ -7,6 +7,7 @@ import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { Footer } from "../../Footer/Footer";
 import { ScaleLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 const WishList = () => {
   const [wishLists, setWishLists] = useState([]);
@@ -26,6 +27,7 @@ const WishList = () => {
         .then((res) => {
         
           setWishLists(res.data);
+          console.log(JSON.stringify(res.data)+"this is wishlsit");
        
         })
         .catch((err) => console.log(err));
@@ -74,6 +76,7 @@ const WishList = () => {
           config
         )
         .then((response) => {
+          toast.warning("item removed successfully")
           getWishproduct();
          
         })
@@ -128,21 +131,14 @@ const WishList = () => {
                     <div className="card-body p-4">
                       <div className="row d-flex justify-content-between align-items-center">
                         <Link to={`/ViewDetails/${item._id}`}>
-                          <div className="col-md-2 col-lg-2 col-xl-2">
-                            <Slider {...settings}>
-                              {item.images?.map((imgurl) => (
-                                <img
-                                  src={imgurl}
-                                  className="img-fluid img-responsive rounded product-image"
-                                  alt="img"
-                                />
-                              ))}
-                            </Slider>
-                          </div>
+                        <div className="col-md-2 col-lg-2 col-xl-2">
+                          <img src={item.productDetails[0].images[0]} alt="item" />
+                        </div>
+
                         </Link>
                         <div className="col-md-3 col-lg-3 col-xl-3">
                           <p className="lead fw-normal mb-2">
-                            {item.productDetail.brand}
+                            {item.brand}
                           </p>
 
                           <p>

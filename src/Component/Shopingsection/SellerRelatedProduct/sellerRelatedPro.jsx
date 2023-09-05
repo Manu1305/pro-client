@@ -93,35 +93,30 @@ const SellerRelatedPro = ({ addToCart }) => {
   };
   return (
     <div className={`${styless.bg}`}>
-      <h2>Related Products </h2>
+      {/* <h2>Related Products </h2> */}
       <div className={`${styless.sliderContainer}`}>
+
         <Slider {...settings}>
-          {productItems.map((product) => (
-            <div key={product.id} className={styless.customerheading}>
-              <div className={`${styless.card}`}>
-                <Slider {...settingsImageSlider}>
-                  {product.images.map((img, index) => (
-                     <Link
-                     style={{ cursor: "pointer" }}
-                     to={`/ViewDetails/${product._id}`}
-                   >
-                    <div key={index}>
-                      <img
-                        src={img}
-                        className={styless.mage}
-                        alt=""
-                      />
-                    </div>
-                    </Link>
-                  ))}
-                </Slider>
-                <h5 className={styless.title}>{product.productDetail.brand}</h5>
-                <span className={styless.description}>
-                  {product.productDetail.description}
-                </span>
-                <p className={styless["prices"]}>Rs. {product.sellingPrice}</p>
-              </div>
+          {productItems && productItems.map((productItems) => (
+            <div>
+            <div className={styless.customerheading}>
+              <Link to={`/ViewDetails/${productItems._id}`}>
+                <div className={`${styless.card}`}>
+                  <img
+                    src={productItems.productDetails[0].images[0]}
+                    alt="imge"
+                  />
+                </div>
+              </Link>
             </div>
+            <div>
+             <h5 className={styless.title}>{productItems.brand}</h5>
+            {/* <span className={styless.description}> */}
+            <Link style={{ textDecoration: "none" }}>
+              <p>Explore Now!</p>
+            </Link>
+          </div>
+          </div>
           ))}
         </Slider>
       </div>

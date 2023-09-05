@@ -286,7 +286,7 @@ const Shopping = () => {
           </div>
         </div>
       )}
-      {/* <Footer */}
+      <Footer/>
     </div>
   );
 };

@@ -256,11 +256,14 @@ function AddProduct() {
             config
           )
           .then((res) => {
-            console.log(res.data)
-            if (res.status === 200) {
-              
-              toast.success("Product Added")
-            } 
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'The product successfully added',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            
           });
       } catch (error) {
         console.log("Couldn't add product: ", error);
