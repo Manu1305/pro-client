@@ -150,7 +150,7 @@ const SellerOrder = () => {
           // console.log("Check KR", params.row);
           return (
             <div style={{ alignItems: "center" }}>
-              {params.row.Status === "Ready To PickUp" ?
+              {params.row.Status === "Ready To PickUp" &&
                 <div>
                   <Tooltip title="Assign Delivery" onClick={() => addToDelivery(params.row.id)}>
                     <IconButton>
@@ -158,24 +158,39 @@ const SellerOrder = () => {
                     </IconButton>
                   </Tooltip>
                 </div>
-                :
+              }
+              {
+                params.row.Status === "confirm Delivery" &&
                 <div>
-                  {
-                    params.row.Status === "confirm Delivery" ?
-                      <div>
-                        <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
-                          <IconButton>
-                            <ThumbUpAltIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </div>
-                      : <BiDotsVerticalRounded />
-                  }
+                  <div>
+                    <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
+                      <IconButton>
+                        <ThumbUpAltIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                  <BiDotsVerticalRounded />
+                </div>
+              }
+              {
+                params.row.Status === "confirm Delivery" &&
+                <div>
+                  <div>
+                    <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
+                      <IconButton>
+                        <ThumbUpAltIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                  <BiDotsVerticalRounded />
                 </div>
               }
 
 
             </div>
+
+
+
           );
         },
       };
