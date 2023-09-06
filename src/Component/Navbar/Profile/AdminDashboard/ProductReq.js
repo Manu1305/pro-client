@@ -13,6 +13,7 @@ import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiSolidShoppingBags } from "react-icons/bi";
 import { ScaleLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
@@ -58,6 +59,7 @@ export const ProductRequest = () => {
       .put(`${apiURL}/product/allow-requested-product/${id}`)
       .then((res) => {
         console.log(res.data);
+        toast("Product Added")
         getProducts();
       })
       .catch((err) => {
@@ -72,6 +74,8 @@ export const ProductRequest = () => {
       })
       .then((res) => {
         console.log(res.data);
+        toast("Deleted Product")
+
         getProducts();
       })
       .catch((err) => {
@@ -97,7 +101,7 @@ export const ProductRequest = () => {
         renderCell: (params) => {
           return (
             <div>
-              <img src={params.row.images} alt="" />
+              <img src={params.row.images} alt="dfs" width={30} />
             </div>
           );
         },
@@ -163,7 +167,7 @@ export const ProductRequest = () => {
 
   return (
     <div className={styless.container}>
-      
+
       {rowData.length !== 0 ? (
         <DataTable columns={header} rows={rowData} />
       ) : (

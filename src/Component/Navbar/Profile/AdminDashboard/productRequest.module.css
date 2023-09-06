@@ -1,6 +1,6 @@
 .sliderContainer {
   margin: 20px;
-  max-width: 500px;
+  /* max-width: 500px; */
   padding: 0 20px;
 }
 
@@ -18,7 +18,8 @@
 }
 .container {
   margin-left: 70px;
-  width: auto;
+  margin-top: 20px;
+  /* width: auto; */
 }
 
 .control-btn button {

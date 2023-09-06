@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styless from "./ProductSec.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
@@ -15,7 +14,6 @@ import ReasonModal from "../../AdminDashboard/ReasonModal";
 import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
 import DataTable from "../../../../Reuseable Comp/DataTable";
-import { BiSolidShoppingBags } from "react-icons/bi";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 
@@ -24,7 +22,11 @@ export const ProductSec = () => {
   const [quantityModal, setQuantityModal] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [product, setProduct] = useState({});
   const user = useSelector((state) => state.userReducer.user);
+
+  const navigate = useNavigate();
 
   const getProducts = async () => {
     await httpService
@@ -60,16 +62,7 @@ export const ProductSec = () => {
 
   const quantityHandler = (product) => {
     setQuantityModal(true);
-  };
-
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
+    setProduct(product);
   };
 
   const notify = () => {
@@ -99,74 +92,80 @@ export const ProductSec = () => {
     console.log("check", reqProducts);
   }, [reqProducts]);
 
-  const header = [
-    "seller",
-    "images",
-    "brand",
-    "quantity",
-    "price",
-    "action",
-  ].map((ele) => {
-    let string = ele;
-    string.replace(/^./, string[0].toUpperCase());
+  const header = ["seller", "images", "brand", "stock", "price", "action"].map(
+    (ele) => {
+      let string = ele;
+      string.replace(/^./, string[0].toUpperCase());
 
-    if (ele === "images") {
-      return {
-        field: "image",
-        type: "image",
-        renderCell: (params) => {
-          return (
-            <div>
-              <img src={params.row.images} alt="" width={30} />
-            </div>
-          );
-        },
-      };
+      if (ele === "images") {
+        return {
+          field: "image",
+          type: "image",
+          renderCell: (params) => {
+            return (
+              <div>
+                <img
+                  src={params.row.images}
+                  onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
+                  alt=""
+                  width={30}
+                />
+              </div>
+            );
+          },
+        };
+      }
+      if (ele === "action") {
+        return {
+          field: "Action",
+          type: "action",
+          width: "150px",
+          renderCell: (params) => {
+            console.log("Check here", params.row);
+            return (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div className="mr-5" onClick={() => setModalShow(true)}>
+                  <RiDeleteBin6Fill />
+                </div>
+                <div onClick={() => quantityHandler(params.row)}>
+                  <FiEdit />
+                </div>
+              </div>
+            );
+          },
+        };
+      } else {
+        return {
+          field: ele,
+          headerName: string,
+          width: 150,
+          editable: true,
+        };
+      }
     }
-    if (ele === "action") {
-      return {
-        field: "Action",
-        type: "action",
-        width: "150px",
-        renderCell: (params) => {
-          return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div className="m-2"><RiDeleteBin6Fill /></div>
-              <div className="m-2"><FiEdit /></div>
-            </div>
-          );
-        },
-      };
-    } else {
-      return {
-        field: ele,
-        headerName: string,
-        width: 150,
-        editable: true,
-      };
-    }
-  });
+  );
 
   const rowData = reqProducts.map((ele) => {
     return {
       id: ele._id,
       images: ele.productDetails[0].images[0],
       brand: ele.brand,
-      quantity: ele.totalQuantity,
+      stock: ele.totalQuantity,
       price: ele.sellingPrice,
       seller: ele.seller,
     };
   });
+
   return (
     <div className="container">
       <div className="d-flex justify-content-center row">
-        <div className='d-flex justify-content-center mt-4'>
+        <div className="d-flex justify-content-center mt-4">
           <Link to="/dashboard/Addproduct" className="btn btn-danger">
             Add Product
           </Link>
         </div>
 
-        <div className="col-md-10">
+        <div>
           {reqProducts.length === 0 ? (
             <div>
               {isLoading ? (
@@ -219,6 +218,20 @@ export const ProductSec = () => {
             </>
           )}
         </div>
+
+        <ReasonModal
+          product={{ id: product.id, seller: product.seller }}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          removeFromShop={removeFromShop}
+        />
+
+        {/* <SizeModal
+          getProducts={getProducts}
+          setQuantityModal={setQuantityModal}
+          quantityModal={quantityModal}
+          product={product}
+        /> */}
       </div>
     </div>
   );

@@ -18,7 +18,6 @@ function DataTable({ rows, columns }) {
       pageSizeOptions={[20]}
       disableRowSelectionOnClick
       sx={{
-        // boxShadow: 2,
         border: 2,
         background: "#ffffff",
         borderColor:"#ffffff",
