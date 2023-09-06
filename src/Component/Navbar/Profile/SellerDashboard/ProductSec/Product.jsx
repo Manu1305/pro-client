@@ -208,12 +208,12 @@ export const ProductSec = () => {
                       Add Quantity
                     </button>
                   </div>
-                  {/* <SizeModal
+                  <SizeModal
                     getProducts={getProducts}
                     setQuantityModal={setQuantityModal}
                     quantityModal={quantityModal}
                     product={product}
-                  /> */}
+                  />
                 </div>
               </div>
             ))

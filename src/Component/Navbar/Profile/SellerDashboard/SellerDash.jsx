@@ -30,14 +30,14 @@ const SellerDashboard = () => {
       {/* <div className={dash.body}> */}
         <div className={dash.sidebar}>
           <div className={dash.sidebar_items}>
-            {/* {(user?.urType === "admin" || user?.urType === "seller") && (
+            {(user?.urType === "admin" || user?.urType === "seller") && (
               <li
                 className={dash.item}
                 onClick={() => handleLoginTypeChange("dashboard")}
               >
                 <i className="fa fa-dashboard"></i>
                 <span className={dash.nombres}>
-                  <button
+                  <button 
                     className={`login-tab ${
                       selectedLoginType === "dashboard" && "active"
                     }`}
@@ -46,7 +46,7 @@ const SellerDashboard = () => {
                   </button>
                 </span>
               </li>
-            )} */}
+            )}
             {user?.urType === "admin" && (
               <li
                 className={dash.item}
@@ -231,7 +231,7 @@ const SellerDashboard = () => {
         <div className={dash.content}>
           {selectedLoginType === "dashboard" && (
             <div className={dash["dashboard-login"]}>
-              <VendorDashboard />
+              <VendorDashboard handleLoginTypeChange={handleLoginTypeChange} />
             </div>
           )}
           {selectedLoginType === "product" && (

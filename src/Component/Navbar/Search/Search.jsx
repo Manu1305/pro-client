@@ -39,7 +39,7 @@ function SearchBar() {
 
     return items.filter((data) => {
       console.log("data",data)
-     return data.brand.includes(query);
+     return data.selectedSubcategory.includes(query);
     });
   }
 
@@ -69,11 +69,11 @@ function SearchBar() {
           {filteredItems.map((value) => (
             <div
               className={styles.link}
-              key={value.brand}
+              key={value.selectedSubcategory}
               onClick={clear}
             >
               <Link to={`/ViewDetails/${value._id}`}>
-                {value.brand}
+                {value.selectedSubcategory}
               </Link>
             </div>
           ))}

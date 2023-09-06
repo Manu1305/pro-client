@@ -27,7 +27,11 @@ const SellerOrder = () => {
       };
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
-        .then((res) => res.data)
+        .then((res) => res.data
+        ,
+        console.log("this is data"+res.data)
+        )
+        
         .catch((err) => {
           console.log(err);
         });
