@@ -190,8 +190,8 @@ const Shopping = () => {
           <div>
             <div className="container">
               <div className="row p-3">
-                <div className="col-lg-3">
-                  <div className="card mb-5">
+                {/* <div className="col-lg-3"> */}
+                  <div className="card mb-5" style={{width: "18rem",height:"20rem"}}>
                     <div className="card-body mb-7 shadow-xl">
                       <div style={{ color: "black", fontWeight: "bolder" }}>
                         PRODUCT CATEGORIES
@@ -279,7 +279,7 @@ const Shopping = () => {
                       ) : null}
                     </div>
                   </div>
-                </div>
+                {/* </div> */}
 
                 {/* Content */}
                 <div className="col-lg-9">

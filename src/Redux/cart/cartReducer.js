@@ -1,4 +1,4 @@
-import { userCartItem } from './cartAction';
+import { USER_CART } from './cartAction';
 
 const initialState = {
     userCart: {},
@@ -6,7 +6,8 @@ const initialState = {
 
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-        case userCartItem:
+        case USER_CART:
+            console.log("Reducer",action.payload)
             return {
                 ...state,
                 userCart: { ...action.payload }, 

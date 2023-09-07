@@ -101,7 +101,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    // dispatch(userCartItem([]))
     getCarts()
   },[])
 
