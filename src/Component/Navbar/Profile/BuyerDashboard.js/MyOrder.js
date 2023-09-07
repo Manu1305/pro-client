@@ -169,7 +169,7 @@ const BuyerOrder = () => {
                   <h6>Amount: {order.ordPrc}</h6>
                 </div>
                 <div className="mb-3">
-                  {/* {order.orderStatus !== "Shipped" &&
+                  {order.orderStatus !== "Shipped" &&
                     order.orderStatus !== "Dispatched 1" &&
                     order.orderStatus !== "Dispatced 1" &&
                     order.orderStatus !== "Delivered" &&
@@ -178,11 +178,11 @@ const BuyerOrder = () => {
                     order.orderStatus !== "confirm Return" && (
                       <>
                         <button className="btn btn-warning my-2">
-                          CHANGE ADDRESS
+                          Cancel Order
                         </button>
                         <button className="btn btn-danger">CANCEL ORDER</button>
                       </>
-                    )} */}
+                    )}
 
                   {order.orderStatus === "Delivered" && isExpRet ? (
                     <Link to={`/returnPro/${order._id}`}>
