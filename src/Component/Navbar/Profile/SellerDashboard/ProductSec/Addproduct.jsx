@@ -6,9 +6,20 @@ import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { MdDeleteSweep } from 'react-icons/md';
 function AddProduct() {
   const history = useNavigate();
+  // const [ProductIdError, setProductIdError] = useState("");
+  // const [productdescriptionError, setproductdescriptionError] = useState("");
+  // const [materialError, setMetierialError] = useState("");
+  // const [brandError, sebrandError] = useState("");
+  // const [orginalpriceError, setOrginalPriceError] = useState("");
+  // const [sellingpriceError, setSellingPriceError] = useState("");
+  // const [colorError, setColorError] = useState("");
+  // const [pincodeError, setPincodeError] = useState("");
+  // const [cityError, setCityError] = useState("");
+  // const [GstError, setGstError] = useState("");
+  // const [otpError, setOtperror] = useState("");
 
   const categorySizes = {
     Mens: [],
@@ -190,9 +201,14 @@ function AddProduct() {
   const [prviewProdcts, setprviewProdcts] = useState([]);
   const [base64Images, setBase64Images] = useState([]);
   const [totalStocks, setTotalStocks] = useState(0);
+  const [errors, setErrors] = useState({});
+  const [colorError, setColorError] = useState("");
+  const [imageError, setimageError] = useState("");
+  const [validation,setvalidation]=useState(false)
+
 
   const categoriesWithSubcategories = {
-    Men: ["Shirts", "Pants"],
+    Mens: ["Shirts", "Pants"],
     Womens: ["top", "Bottom", "Sarees"],
     Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
   };
@@ -220,6 +236,11 @@ function AddProduct() {
         console.error("Error converting image to base64:", error)
       );
   };
+  const handleDeleteImage = (index) => {
+    const updatedImages = [...base64Images];
+    updatedImages.splice(index, 1);
+    setBase64Images(updatedImages);
+  };
 
   useEffect(() => {
     console.log("ProductInfo", productInfo);
@@ -238,43 +259,48 @@ function AddProduct() {
 
   const addNewProduct = async (e) => {
     e.preventDefault();
-    const isValid = true;
-
-    if (isValid) {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      try {
-        await httpService
-          .post(
-            `${apiURL}/product/add-new-product`,
-            {
-              ...productInfo,
-              productDetails: prviewProdcts,
-              stock: totalStocks,
+    const isValid = validateForm();
+  if (validation){
+    
+        if (isValid ) {
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            config
-          )
-          .then((res) => {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "The product successfully added",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          });
-      } catch (error) {
-        console.log("Couldn't add product: ", error);
-      }
-    } else {
-      Swal.fire("Fill the all fields", "All field should be filled", "error");
-    }
-    history("/dashboard");
+          };
+    
+          try {
+            await httpService
+              .post(
+                `${apiURL}/product/add-new-product`,
+                {
+                  ...productInfo,
+                  productDetails: prviewProdcts,
+                  stock: totalStocks,
+                },
+                config
+              )
+              .then((res) => {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "The product successfully added",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              });
+            history("/dashboard");
+          } catch (error) {
+            console.log("Couldn't add product: ", error);
+          }
+        } else {
+          Swal.fire("Fill the all fields", "All field should be filled", "error");
+        }
+
+  }else {
+    Swal.fire("Fill the all fields", "All field should be filled", "error");
+  }
   };
 
   const onchangeHandler = (e) => {
@@ -282,6 +308,68 @@ function AddProduct() {
     setProductInfo((prev) => {
       return { ...prev, [name]: value };
     });
+  };
+  const validateFormcolorandimage = () => {
+    let success = true;
+  
+    if (!color) {
+      setColorError("Color is required");
+      success = false;
+    } else {
+      setColorError("");
+    }
+  
+    if (base64Images.length === 0) {
+    
+      setimageError("Please upload at least one image");
+      success = false;
+    } else {
+      setimageError("");
+    }
+  
+ 
+    return success;
+  };
+  
+  const validateForm = () => {
+
+    const newErrors = {};
+    if (!productInfo.productId) {
+      newErrors.productId = "Add Product Id ";
+    }
+    if (!productInfo.description) {
+      newErrors.description = "Add description about the product";
+    }
+
+    if (!productInfo.material) {
+      newErrors.material = "Material name is required";
+    }
+
+    if (!productInfo.brand) {
+      newErrors.brand = "Brand name is required";
+    }
+    if (!productInfo.realPrice) {
+      newErrors.realPrice = "Product real price required";
+    }
+    if (!productInfo.sellingPrice) {
+      newErrors.sellingPrice = "sellingPrice is required";
+    }
+    if (!productInfo.selectedCategory) {
+      newErrors.selectedCategory = "Please select a category";
+    }
+    if (!productInfo.selectedSubcategory) {
+      newErrors.selectedSubcategory = "Please select subcategroy";
+    } else if (!productInfo.collections) {
+      newErrors.collections = "Please add collection name of your product";
+    }
+    if (!productInfo.WashcareInstructions) {
+      newErrors.WashcareInstructions = "Add some washcare instructions";
+    }
+
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
   };
 
   let totalQuantity = 0;
@@ -293,7 +381,11 @@ function AddProduct() {
     totalQuantity += value;
   }, [qtyAndSizes]);
 
+
+
   const addColorsHandler = () => {
+    const success=validateFormcolorandimage()
+    if (success) {
     setprviewProdcts((prev) => [
       ...prev,
       {
@@ -302,12 +394,20 @@ function AddProduct() {
         qtyAndSizes,
       },
     ]);
+    setvalidation(true)
     setBase64Images([]);
     setColor("");
     setQtyAndSizes({});
     setTotalStocks((prev) => prev + Number(totalQuantity));
-  };
+    toast.success("color varient addeded successfully")
 
+  }
+else{
+   toast.warn('please add the image and color and size')
+}};
+
+
+  
   useEffect(() => {
     console.log("Stocks", totalStocks);
   }, [totalStocks]);
@@ -317,6 +417,8 @@ function AddProduct() {
   useEffect(() => {
     console.log("prview", prviewProdcts);
   }, [prviewProdcts]);
+
+ 
   return (
     <div className="bg-gray">
       <div className={styles.headingdiv}>
@@ -332,6 +434,9 @@ function AddProduct() {
               >
                 Product Id
               </label>
+              {errors.productId && (
+                <p className="text-red-500 text-sm mt-1">{errors.productId}</p>
+              )}
               <input
                 type="text"
                 id="title"
@@ -345,9 +450,13 @@ function AddProduct() {
 
             <form style={{ marginTop: "10px" }}>
               <label htmlFor="editor" className="m-1">
-                {" "}
                 product description
               </label>
+              {errors.description && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.description}
+                </p>
+              )}
               <div className="w-full mb-4 border border-gray-200  p-2 dark:bg-gray-700 dark:border-gray-600">
                 <div className="px-4 py-2  rounded-b-lg ">
                   <textarea
@@ -373,6 +482,9 @@ function AddProduct() {
               >
                 Meterial
               </label>
+              {errors.material && (
+                <p className="text-red-500 text-sm mt-1">{errors.material}</p>
+              )}
               <input
                 type="text"
                 id="title"
@@ -389,6 +501,9 @@ function AddProduct() {
                 for="brand"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
+                {errors.brand && (
+                  <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
+                )}
                 Brand
               </label>
               <input
@@ -408,6 +523,9 @@ function AddProduct() {
               >
                 Orginal price
               </label>
+              {errors.realPrice && (
+                <p className="text-red-500 text-sm mt-1">{errors.realPrice}</p>
+              )}
               <input
                 type="number"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -424,6 +542,9 @@ function AddProduct() {
               >
                 Selling price
               </label>
+              {errors.sellingPrice && (
+                <p className="text-red-500 text-sm mt-1">{errors.material}</p>
+              )}
               <input
                 type="number"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -436,12 +557,17 @@ function AddProduct() {
           </div>
           <br />
           <div className="bg-white mt-2 p-2">
+         
             <label
               for="color"
               className="block m-2 text-sm fw-bolder font-medium text-gray-900 dark:text-white"
             >
               Colors
             </label>
+            {colorError && (
+          <p className="text-red-500 text-sm mt-1">{colorError}</p>
+        )}
+
 
             <input
               style={{ height: "50px", width: "300px" }}
@@ -521,6 +647,9 @@ function AddProduct() {
           <div className="bg-white mt-3 p-1">
             <div style={{ marginTop: "30px" }}>
               <h3 className="m-1 fw-bold">Product image</h3>
+              {imageError && (
+          <p className="text-red-500 text-sm mt-1">{imageError}</p>
+        )}
               <br />
               <h4>Add the product main image</h4>
               <div className="flex items-center justify-center w-full">
@@ -561,10 +690,23 @@ function AddProduct() {
                     multiple
                   />
                 </label>
+                {base64Images.map((base64Image, index) => (
+                  <div >
+
+                    <img
+                      key={index}
+                      src={base64Image}
+                      alt={`Image ${index}`}
+                      style={{ maxWidth: '100px', maxHeight: '100px', margin: '10px'  }}
+                    />
+                     <button  onClick={() => handleDeleteImage(index)}><MdDeleteSweep style={{display:'flex',height:'40px',alignItems:'center',color:'red'}}/></button>
+                  </div>
+      ))}
               </div>
+            
             </div>
 
-            <div style={{ marginTop: "30px" }}>
+            {/* <div style={{ marginTop: "30px" }}>
               <h3>Add additional product image </h3>
               <br />
 
@@ -606,7 +748,7 @@ function AddProduct() {
                   />
                 </label>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex justify-center items-center m-2">
@@ -626,6 +768,11 @@ function AddProduct() {
               for="countries"
               className="mt-2 mb-2 block text-sm font-medium text-gray-900 dark:text-white"
             >
+              {errors.selectedCategory && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.selectedCategory}
+                </p>
+              )}
               Select product category
             </label>
             <select
@@ -652,6 +799,11 @@ function AddProduct() {
               >
                 Select product Subcategory
               </label>
+              {errors.selectedSubcategory && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.selectedSubcategory}
+                </p>
+              )}
               <select
                 id="category"
                 name="selectedSubcategory"
@@ -677,6 +829,11 @@ function AddProduct() {
               >
                 Select collection
               </label>
+              {errors.collections && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.collections}
+                </p>
+              )}
               <select
                 id="subcategory"
                 name="collections"
@@ -702,6 +859,11 @@ function AddProduct() {
             >
               Washcare information
             </label>
+            {errors.WashcareInstructions && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.WashcareInstructions}
+              </p>
+            )}
             <textarea
               name="WashcareInstructions"
               onChange={(e) => onchangeHandler(e)}
@@ -735,7 +897,7 @@ function AddProduct() {
                 <h2>
                   {prviewProdcts.length >= 0
                     ? productInfo.selectedCategory
-                    : "Mens"}
+                    : "Men"}
                 </h2>{" "}
               </div>
               <div style={{ display: "flex", flexDirection: "row" }}>
