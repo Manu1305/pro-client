@@ -10,20 +10,20 @@ function DataTable({ rows, columns }) {
       initialState={{
         pagination: {
           paginationModel: {
-            pageSize: 5,
+            pageSize: 20,
           },
         },
       }}
       slots={{ toolbar: GridToolbar }}
-      pageSizeOptions={[5]}
-      checkboxSelection
+      pageSizeOptions={[20]}
       disableRowSelectionOnClick
       sx={{
-        "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer":
-          {
-            display: "none",
-          },
+        border: 2,
+        background: "#ffffff",
+        borderColor:"#ffffff",
+        width:"auto"
       }}
+      
     />
   );
 }

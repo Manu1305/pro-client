@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { persistor, store } from './Redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import Test from "./Component/Test/Test";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +15,7 @@ root.render(
     <App />
     {/* <Test/> */}
     <ToastContainer
-      position="top-right"
+      position="top-center"
       autoClose={2500}
       hideProgressBar={false}
       newestOnTop={false}

@@ -13,6 +13,7 @@ import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiSolidShoppingBags } from "react-icons/bi";
 import { ScaleLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
@@ -29,11 +30,11 @@ export const ProductRequest = () => {
     await httpService
       .post(`${apiURL}/product/requested-Products`, {
         type: user.urType,
-        seller: user.email,        
+        seller: user.email,
       })
       .then((res) => {
         dispatch(addReqProduct(res.data));
-        console.log("Prod Req",res.data)
+        console.log("Prod Req", res.data)
         setProduct(res.data);
       })
       .catch((Err) => console.log(Err));
@@ -51,13 +52,14 @@ export const ProductRequest = () => {
     return () => clearTimeout(timer);
 
   }, []);
-  
+
 
   const addToShop = async (id) => {
     await httpService
       .put(`${apiURL}/product/allow-requested-product/${id}`)
       .then((res) => {
         console.log(res.data);
+        toast("Product Added")
         getProducts();
       })
       .catch((err) => {
@@ -72,6 +74,8 @@ export const ProductRequest = () => {
       })
       .then((res) => {
         console.log(res.data);
+        toast("Deleted Product")
+
         getProducts();
       })
       .catch((err) => {
@@ -97,7 +101,7 @@ export const ProductRequest = () => {
         renderCell: (params) => {
           return (
             <div>
-              <img src={params.row.images} alt="" />
+              <img src={params.row.images} alt="dfs" width={30} />
             </div>
           );
         },
@@ -160,29 +164,25 @@ export const ProductRequest = () => {
       seller: ele.seller,
     };
   });
-  
+
   return (
     <div className={styless.container}>
-      <div className="d-flex justify-content-center mt-3">
-        <Link to="Addproduct" className="btn btn-warning">
-          Add New Product
-        </Link>
-      </div>
+
       {rowData.length !== 0 ? (
         <DataTable columns={header} rows={rowData} />
       ) : (
-        <div style={{margin:'auto'}} >
-        {isLoading ? (
-         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-           <ScaleLoader  animation="border" role="status" color="red">
-             <span className="visually-hidden">Loading...</span>
-           </ScaleLoader >
-         
-         </div>
-       ) : (
-         <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded" />
-       )}
-       </div>
+        <div style={{ margin: 'auto' }} >
+          {isLoading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <ScaleLoader animation="border" role="status" color="red">
+                <span className="visually-hidden">Loading...</span>
+              </ScaleLoader >
+
+            </div>
+          ) : (
+            <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded" />
+          )}
+        </div>
       )}
       <ReasonModal
         product={deleteProductId}

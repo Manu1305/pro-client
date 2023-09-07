@@ -252,14 +252,14 @@ const SamplePrevArrow = (props) => {
                     </div>
                     <div className="d-flex align-items-center mb-3">
                       <div className="ms-3">
-                        <p className="fw-bold mb-1">{order.prdData.barnd}</p>
+                        <p className="fw-bold mb-1">{order.prdData.brand}</p>
                         <p className="text-muted mb-0">
                           <h2>Delivery Location!</h2>
                         </p>
                       </div>
                     </div>
                     <p className="text-muted mb-0">{order.prdData.category}</p>
-                    <select>
+                    {/* <select>
                       {order.sizeWithQuantity &&
                         Object.entries(order.sizeWithQuantity)?.map(
                           ([key, value]) => (
@@ -288,7 +288,7 @@ const SamplePrevArrow = (props) => {
                             </option>
                           )
                         )}
-                    </select>
+                    </select> */}
                     <div className={`mb-3 ${styles.addressSection}`}>
                       <h6>Phone No.: {order.dlvAddr.phone}</h6>
                       <h6 className="text-muted">

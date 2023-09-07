@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styless from "./ProductSec.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GrFormPrevious } from "react-icons/gr";
@@ -14,13 +13,20 @@ import httpService from "../../../../Error Handling/httpService";
 import ReasonModal from "../../AdminDashboard/ReasonModal";
 import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
+import DataTable from "../../../../Reuseable Comp/DataTable";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
   const [quantityModal, setQuantityModal] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [product, setProduct] = useState({});
   const user = useSelector((state) => state.userReducer.user);
+
+  const navigate = useNavigate();
 
   const getProducts = async () => {
     await httpService
@@ -56,16 +62,7 @@ export const ProductSec = () => {
 
   const quantityHandler = (product) => {
     setQuantityModal(true);
-  };
-
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
+    setProduct(product);
   };
 
   const notify = () => {
@@ -94,13 +91,83 @@ export const ProductSec = () => {
   useEffect(() => {
     console.log("check", reqProducts);
   }, [reqProducts]);
+
+  const header = ["seller", "images", "brand", "stock", "price", "action"].map(
+    (ele) => {
+      let string = ele;
+      string.replace(/^./, string[0].toUpperCase());
+
+      if (ele === "images") {
+        return {
+          field: "image",
+          type: "image",
+          renderCell: (params) => {
+            return (
+              <div>
+                <img
+                  src={params.row.images}
+                  onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
+                  alt=""
+                  width={30}
+                />
+              </div>
+            );
+          },
+        };
+      }
+      if (ele === "action") {
+        return {
+          field: "Action",
+          type: "action",
+          width: "150px",
+          renderCell: (params) => {
+            console.log("Check here", params.row);
+            return (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div className="mr-5" onClick={() => setModalShow(true)}>
+                  <RiDeleteBin6Fill />
+                </div>
+                <div onClick={() => quantityHandler(params.row)}>
+                  <FiEdit />
+                </div>
+              </div>
+            );
+          },
+        };
+      } else {
+        return {
+          field: ele,
+          headerName: string,
+          width: 150,
+          editable: true,
+        };
+      }
+    }
+  );
+
+  const rowData = reqProducts.map((ele) => {
+    return {
+      id: ele._id,
+      images: ele.productDetails[0].images[0],
+      brand: ele.brand,
+      stock: ele.totalQuantity,
+      price: ele.sellingPrice,
+      seller: ele.seller,
+    };
+  });
+
   return (
-    <div className="container mb-5 ml-3">
+    <div className="container">
       <div className="d-flex justify-content-center row">
-        <div className="col-md-10">
-          <div className="d-flex justify-content-center"></div>
+        <div className="d-flex justify-content-center mt-4">
+          <Link to="/dashboard/Addproduct" className="btn btn-danger">
+            Add Product
+          </Link>
+        </div>
+
+        <div>
           {reqProducts.length === 0 ? (
-            <div style={{ margin: "auto" }}>
+            <div>
               {isLoading ? (
                 <div
                   style={{
@@ -121,109 +188,50 @@ export const ProductSec = () => {
               )}
             </div>
           ) : (
-            reqProducts.length !== 0 &&
-            reqProducts.map((product) => (
-              <div
-                key={product.Id}
-                className="row p-2 bg-white border rounded mt-2"
-              >
-                <div className="col-md-3 mt-1">
-                    
-                      <img
-                        // key={index}
-                        className={styless.imgsg}
-                        src={product.productDetails[0].images[0]}
-                        alt={product.name}
-                      />
-
-                      {/* {console.log()}/ */}
+            <>
+              {rowData.length !== 0 ? (
+                <div className="mt-3">
+                  <DataTable columns={header} rows={rowData} />
                 </div>
-                <div className="col-md-6 mt-1">
-                  <h4>ProductId: {product.productId}</h4>
-
-                  <h5>Brand: {product.brand}</h5>
-                  <span>Description: {product.description}</span>
-                  <div className="d-flex flex-row"></div>
-
-                  <div className="my-2">
-                    <label>Remaining Product According to there Size :</label>
-                    {/* <select>
-                      {product.productDetail.selectedSizes &&
-                        Object.entries(product.productDetail.selectedSizes).map(
-                          ([key, value]) => (
-                            <option key={key} value={key}>
-                              {value.selectedSizes ? (
-                                <p
-                                  style={{
-                                    fontSize: 13,
-                                    color: "GrayText",
-                                  }}
-                                >
-                                  {value.selectedSizes}
-                                </p>
-                              ) : null}{" "}
-                              -
-                              {value.quantities ? (
-                                <p
-                                  style={{
-                                    fontSize: 13,
-                                    color: "GrayText",
-                                  }}
-                                >
-                                  {value.quantities}
-                                </p>
-                              ) : null}
-                            </option>
-                          )
-                        )}
-                    </select> */}
-                  </div>
-                </div>
-                <div className="align-items-center align-content-center col-md-3 border-left mt-1">
-                  <div className="d-flex flex-row align-items-center">
-                    <h4 className="mr-1">₹{product.sellingPrice}</h4>
-                    <s className="strike-text">{product.realPrice}</s>
-                  </div>
-
-                  <div className="d-flex flex-column mt-4">
-                    <button
-                      className="btn btn-danger bg-dark text-white"
-                      type="button"
-                      onClick={() => setModalShow(true)}
+              ) : (
+                <div style={{ margin: "auto" }}>
+                  {isLoading ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
-                      Remove Product
-                    </button>
-
-                    <ReasonModal
-                      product={{ id: product._id, seller: product.seller }}
-                      show={modalShow}
-                      onHide={() => setModalShow(false)}
-                      removeFromShop={removeFromShop}
+                      <ScaleLoader animation="border" role="status" color="red">
+                        <span className="visually-hidden">Loading...</span>
+                      </ScaleLoader>
+                    </div>
+                  ) : (
+                    <img
+                      src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                      alt="Loaded"
                     />
-                    <button
-                      className="btn btn-outline-success btn-sm mt-2"
-                      type="button"
-                      onClick={() => quantityHandler(product)}
-                    >
-                      Add Quantity
-                    </button>
-                  </div>
-                  <SizeModal
-                    getProducts={getProducts}
-                    setQuantityModal={setQuantityModal}
-                    quantityModal={quantityModal}
-                    product={product}
-                  />
+                  )}
                 </div>
-              </div>
-            ))
+              )}
+            </>
           )}
         </div>
-      </div>
-      <div className="d-flex justify-content-center mt-3">
-        <Link to="Addproduct" className="btn btn-warning">
-          Add New Product
-        </Link>
+
+        <ReasonModal
+          product={{ id: product.id, seller: product.seller }}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          removeFromShop={removeFromShop}
+        />
+
+        {/* <SizeModal
+          getProducts={getProducts}
+          setQuantityModal={setQuantityModal}
+          quantityModal={quantityModal}
+          product={product}
+        /> */}
       </div>
     </div>
   );

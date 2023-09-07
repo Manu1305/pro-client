@@ -28,8 +28,8 @@ const SellerDashboard = () => {
   return (
     <div className={dash.mainDiv}>
       {/* <div className={dash.body}> */}
-        <div className={dash.sidebar}>
-          <div className={dash.sidebar_items}>
+        <div  className={dash.sidebar}>
+          <div  className={dash.sidebar_items}>
             {(user?.urType === "admin" || user?.urType === "seller") && (
               <li
                 className={dash.item}
@@ -228,6 +228,7 @@ const SellerDashboard = () => {
             )}
           </div>
         </div>
+
         <div className={dash.content}>
           {selectedLoginType === "dashboard" && (
             <div className={dash["dashboard-login"]}>

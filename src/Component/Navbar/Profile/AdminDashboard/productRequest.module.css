@@ -1,70 +1,67 @@
 .sliderContainer {
-    margin: 0 auto;
-    max-width: 500px;
-    padding: 0 20px;
-  }
-  
-  .card {
-    display: flex;
-    flex-direction: column;
-    width: 16rem;
-    margin-left: 1.2rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    background-color:#fff;
-    height: 400px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(196, 38, 38, 0.878);
-    
-  }
-  .container{
-    overflow-y: scroll;
-    margin-left: 100px;
-  }
+  margin: 20px;
+  /* max-width: 500px; */
+  padding: 0 20px;
+}
 
-  .control-btn button {
-    background: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.5s;
-    padding: 2px;
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 16rem;
+  margin-left: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  height: 400px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(196, 38, 38, 0.878);
+}
+.container {
+  margin-left: 70px;
+  margin-top: 20px;
+  /* width: auto; */
+}
+
+.control-btn button {
+  background: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  padding: 2px;
+}
+
+.control-btn .next {
+  position: absolute;
+  top: 40%;
+  right: 20px;
+}
+
+.control-btn .prev {
+  position: absolute;
+  top: 40%;
+  left: 20px;
+  z-index: 99;
+}
+.control-btn .icon {
+  font-size: 25px;
+}
+.imgeee {
+  height: 200px;
+  width: 200px;
+}
+@media only screen and (max-width: 589px) {
+  .imgeee {
+    height: 20rem;
+    width: 25rem;
   }
-  
-  .control-btn .next {
-    position: absolute;
-    top: 40%;
-    right: 20px;
+  .container {
+    overflow-y: scroll;
+    margin-left: 0px;
   }
-  
-  .control-btn .prev {
-    position: absolute;
-    top: 40%;
-    left: 20px;
-    z-index: 99;
-  }
-  .control-btn .icon {
-    font-size: 25px;
-  }
-  .imgeee{
-    height: 200px;
-    width:200px
-  }
-  @media only screen and (max-width: 589px) {
-    .imgeee{
-      height: 20rem;
-      width:25rem
-    }
-    .container{
-      overflow-y: scroll;
-      margin-left: 0px
-    }
-  
-  
-  }
-  
+}
