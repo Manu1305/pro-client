@@ -276,6 +276,7 @@ const ViewProduct = ({ setCartItems }) => {
                       {product.brand}
                     </h5>
                   </div>
+                  {user?.email && user?.urType === "buyer" && (
                   <div className={`m-1 ${styles.icons}`}>
                     <div
                       className={styles.wishicon}
@@ -283,6 +284,7 @@ const ViewProduct = ({ setCartItems }) => {
                         wishUpdate(product._id);
                       }}
                     >
+                      
                       <div onClick={() => setisWishItem(!isWishItem)}>
                         {isWishItem ? (
                           <AiFillHeart className={styles.mainicon} />
@@ -290,11 +292,13 @@ const ViewProduct = ({ setCartItems }) => {
                           <AiOutlineHeart className={styles.mainicon} />
                         )}
                       </div>
+                    
                     </div>
                     <div className={styles.tagandshare}>
                       <BiShareAlt onClick={handleShare} />
                     </div>
                   </div>
+                  )}
                 </div>
 
                 <span>{product.description}</span>
@@ -305,7 +309,7 @@ const ViewProduct = ({ setCartItems }) => {
                   <h5 className={styles["act-price"]}>
                     ₹{product.sellingPrice}
                   </h5>
-                  <div className={styles.starreviewmain}>
+                  {/* <div className={styles.starreviewmain}>
                     <div className={styles.star}>
                       <AiOutlineStar />
                       <p>4.8</p>
@@ -315,7 +319,7 @@ const ViewProduct = ({ setCartItems }) => {
 
                       <p className={styles.reviewtext}> 67 reviews</p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className={styles.priceandpercentage}>
@@ -331,10 +335,11 @@ const ViewProduct = ({ setCartItems }) => {
                       ₹{product.realPrice}
                     </p>
                   </div>
+                  {user?.email && user?.urType === "buyer" && (
                   <div className={styles.percentagetext}>
                     <h5 className="text-success">93%</h5>
                     <p> &nbsp; of buyers have reccomented this.</p>
-                  </div>
+                  </div> )}
                 </div>
               </div>
 
@@ -375,6 +380,7 @@ const ViewProduct = ({ setCartItems }) => {
 
               <div className={`sizes`}>
                 {/* size quantity changes */}
+                
                 {product.productDetails && (
                   <div>
                     <label htmlFor="product_size">CHOOSE SIZE</label>
@@ -404,6 +410,7 @@ const ViewProduct = ({ setCartItems }) => {
                                       {quantity} left
                                     </div>
                                   </div>
+                                  {user?.email && user?.urType === "buyer" && (
                                   <div className="mt-1 ml-8 d-flex flex-row align-items-center">
                                     <div>
                                       <AiOutlineMinusCircle
@@ -411,6 +418,7 @@ const ViewProduct = ({ setCartItems }) => {
                                         onClick={() => decreaseHandler(size)}
                                       />
                                     </div>
+                                    
 
                                     <div
                                       style={{
@@ -432,13 +440,14 @@ const ViewProduct = ({ setCartItems }) => {
                                         }
                                       />
                                     </div>
+                                   
                                     <div>
                                       <BsPlusCircle
                                         className="m-3"
                                         onClick={() => increaseHandler(size)}
                                       />
                                     </div>
-                                  </div>
+                                  </div> )}
                                 </div>
                               )}
                             </div>
@@ -450,7 +459,7 @@ const ViewProduct = ({ setCartItems }) => {
 
                 <div className={`mb-3 mt-4 align-items-center`}>
                   <>
-                    {user?.email && (
+                  {user?.email && user?.urType === "buyer" && (
                       <button
                         className={`text-uppercase mr-2 ${styles.add_to_cart}`}
                         onClick={() => addtoCartButton(product)}
@@ -482,7 +491,7 @@ const ViewProduct = ({ setCartItems }) => {
                   ) : null}
                 </div>
               </div>
-
+              {user?.email && user?.urType === "buyer" && (
               <div className={styles.lasthead}>
                 <div className={styles.headone}>
                   <div className={styles.oneone}>
@@ -492,6 +501,7 @@ const ViewProduct = ({ setCartItems }) => {
                     <h4 className="font-bold mt-4">Delivery with in 5 days</h4>
                   </div>
                 </div>
+               
                 <div className={styles.headone}>
                   <div className={styles.oneone}>
                     <AiOutlineShopping />
@@ -501,7 +511,9 @@ const ViewProduct = ({ setCartItems }) => {
                     <span>Free 3 days Delivery Return</span>
                   </div>
                 </div>
+              
               </div>
+                )}
             </div>
           </div>
           <div className="ml-3">
@@ -529,8 +541,9 @@ const ViewProduct = ({ setCartItems }) => {
           </div>
         </div>
       ))}
+                {user?.email && user?.urType === "buyer" && (
 
-      <SellerRelatedPro />
+      <SellerRelatedPro /> )}
       <div  className={styles.footer} >
 
       <Footer/>

@@ -70,10 +70,12 @@ import styless from "./profileDrop.module.css"
             </Dropdown.Item>
           </Link>
         )}
+<Link to="/editprofile" className="bg-white text-black">
 
         <Dropdown.Item href="/editprofile" className="bg-white text-black">
           <GrUpdate onClick={closemenu} /> Update Profile
         </Dropdown.Item>
+</Link>
 
         <Link to="/Login" className="bg-white text-black">
           <Dropdown.Item href="#/action-3" className="bg-white text-black">

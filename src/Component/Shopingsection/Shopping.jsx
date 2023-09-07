@@ -24,13 +24,11 @@ const Shopping = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-
   const categoriesWithSubcategories = {
     Mens: ["Shirts", "Pants"],
     Womens: ["top", "Bottom", "Sarees"],
     Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
   };
-
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -52,9 +50,11 @@ const Shopping = () => {
     await httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        setData(res.data);
         console.log(res.data);
+
         dispatch(addProduct(res.data));
+        const filByStaus = res.data.filter((prd) => prd.status === true)
+        setData(filByStaus);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -92,58 +92,66 @@ const Shopping = () => {
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
-        <div
-          key={data.id}
-          className="col-lg-4 col-md-6 d-flex shadow-xl flex-wrap mb-5"
-        >
-          {" "}
-          <div className="shadow-md">
-            <div className={styless.container}>
-              <Link
-                style={{ cursor: "pointer" }}
-                to={`/ViewDetails/${data._id}`}
-              >
-                <div className={styless.like_button}>
-                  <div>
-                    <PiHeartLight
-                      style={{ marginTop: "2px", fontWeight: "30px" }}
-                      onClick={() => {
-                        console.log("Wish list");
-                      }}
-                    />
-                  </div>
-                </div>
+        <div key={data.id} className="col-lg-3 col-md-4 mb-5">
+        <div className="d-flex flex-column">
+        <div className={styless.container}>
+  <Link style={{ cursor: "pointer", position: "relative", display: "inline-block" }} to={`/ViewDetails/${data._id}`}>
+    <div style={{ position: "relative" }}>
+      <img
+        src={data.productDetails[0].images[0]}
+        style={{ height: 320, width: 305, objectFit: "fill" }}
+        alt=""
+      />
+       <div className={styless.like}>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          margin: "5px",
+        }}
+      >
+        <PiHeartLight
+        className={styless.like_button}
+          style={{
+           
+            height:'30px',
+            width:'30px',
+            fontWeight: "50px",
+          }}
+          onClick={() => {
+            console.log("Wish list");
+          }}
+        />
+      </div>
+      </div>
+    </div>
+  </Link>
+</div>
 
-                <img
-                  src={data.productDetails[0].images[0]}
-                  style={{ height: 320, width: 305, objectFit: "fill" }}
-                  alt=""
-                />
-              </Link>
+          {/* Description */}
+          <div className="card-body">
+            <div
+              className="cart-title m-1"
+              style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
+            >
+              {data.brand}
             </div>
-            {/* Description */}
-
-            <div className={`card-body d-flex flex-column `}>
-              <div
-                className="cart-title m-1"
-                style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
-              >
-                {data.brand}
+            {user && user.email ? (
+              <div className="m-2 d-flex justify-content-between">
+                <div className="mb-1 me-1 mx-4" style={{ fontSize: "bold" }}>
+                  &#8377; {data.sellingPrice}{" "}
+                </div>
               </div>
-              {user && user.email ? (
-                <div className="m-2 d-flex justify-content-between">
-                  <div className="mb-1 me-1 mx-4" style={{ fontSize: "bolt" }}>
-                    &#8377; {data.sellingPrice}{" "}
-                  </div>
-                </div>
-              ) : (
-                <div className="m-2" style={{ fontWeight: "30px" }}>
-                  {data.description}
-                </div>
-              )}
-            </div>
+            ) : (
+              <div className="m-2" style={{ fontWeight: "30px" }}>
+                {data.description}
+              </div>
+            )}
           </div>
         </div>
+      </div>
+      
       );
     });
   const pageCount = Math.ceil(data.length / usersPerpage);
@@ -153,150 +161,156 @@ const Shopping = () => {
   };
 
   return (
-    <div>
-      {isLoading ? ( // Conditionally render a loading spinner
-        <div className={styless.loadingSpinner}>
-          <div>
-            <ScaleLoader
-              color="red"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: "auto",
-              }}
-              animation="border"
-              role="status"
-            >
-              <span className="visually-hidden">Loading...</span>
-            </ScaleLoader>
+    <>
+      <div style={{ background: "#ffffff" }}>
+        {isLoading ? ( // Conditionally render a loading spinner
+          <div className={styless.loadingSpinner}>
+            <div>
+              <ScaleLoader
+                color="red"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: "auto",
+                }}
+                animation="border"
+                role="status"
+              >
+                <span className="visually-hidden">Loading...</span>
+              </ScaleLoader>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>
-          <div className="container">
-            <div className="row p-3">
-              <div className="col-lg-3">
-                <div className="card mb-5">
-                  <div className="card-body mb-7">
-                    <div style={{ color: "black", fontWeight: "bolder" }}>
-                      PRODUCT CATEGORIES
-                    </div>
-                    <div>
-                      <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories.length === 0 ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("all")}
-                        >
-                          All
-                        </button>
-                      </div>
-                      <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "Mens" ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("Mens")}
-                        >
-                          Men
-                        </button>
-                      </div>
-                      <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "Womens" ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("Womens")}
-                        >
-                          Womens
-                        </button>
-                      </div>
-                      <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "kids" ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("kids")}
-                        >
-                          Kids
-                        </button>
-                      </div>
+        ) : (
+          <div>
+            <div className="container">
+              <div className="row p-3">
+                <div className="col-lg-3">
+                  <div className="card mb-5">
+                    <div
                      
-                    </div>
-                    {user && user.email ? (
-                      <div className={styless.pricefilterdiv}>
-                        <h1>FILTER BY PRICE</h1>
-                        <br />
-                        <input
-                          type="range"
-                          style={{ background: "red" }}
-                          min={lowestprice}
-                          max={highestPrice}
-                          onChange={(e) => {
-                            setPrice(e.target.value);
-                          }}
-                        />
-                        <br /> <br />
-                        <p>
-                          {" "}
-                          price {lowestprice}-{price}
-                        </p>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-around",
-                          }}
-                        >
-                          <div>
-                            <button
-                              style={{
-                                background: "#BF0A2A",
-                                color: "white",
-                                width: "250px",
-                                height: "52px",
-                              }}
-                            >
-                              Filter
-                            </button>
-                          </div>
+                      className="card-body mb-7 shadow-xl"
+                    >
+                      <div style={{ color: "black", fontWeight: "bolder" }}>
+                        PRODUCT CATEGORIES
+                      </div>
+                      <div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories.length === 0 ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("all")}
+                          >
+                            All
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories[0] === "Mens" ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("Mens")}
+                          >
+                            Men
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories[0] === "Womens" ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("Womens")}
+                          >
+                            Womens
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories[0] === "kids" ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("kids")}
+                          >
+                            Kids
+                          </button>
                         </div>
                       </div>
-                    ) : null}
+                      {user && user.email ? (
+                        <div className={styless.pricefilterdiv}>
+                          <h1>FILTER BY PRICE</h1>
+                          <br />
+                          <input
+                            type="range"
+                            style={{ background: "red" }}
+                            min={lowestprice}
+                            max={highestPrice}
+                            onChange={(e) => {
+                              setPrice(e.target.value);
+                            }}
+                          />
+                          <br /> <br />
+                          <p>
+                            {" "}
+                            price {lowestprice}-{price}
+                          </p>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                            }}
+                          >
+                            <div>
+                              <button
+                                style={{
+                                  background: "#BF0A2A",
+                                  color: "white",
+                                  width: "250px",
+                                  height: "52px",
+                                }}
+                              >
+                                Filter
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="col-lg-9">
-                <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
-                  <strong className="d-block py-2">
-                    Total {filteredProducts.length} items
-                  </strong>
-                </header>
+                {/* Content */}
+                <div className="col-lg-9">
+                  <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+                    <strong className="d-block py-2">
+                      Total {filteredProducts.length} items
+                    </strong>
+                  </header>
 
-                <div
-                  className={`row , ${styless.pages}`}
-                  style={{ color: "black" }}
-                >
-                  {displayUsers}
+                  <div
+                    className={`row , ${styless.pages}`}
+                    style={{ color: "black", position: "relative" }}
+                  >
+                    {displayUsers}
 
-                  <ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                  />
+                    <ReactPaginate
+                      previousLabel={"prev"}
+                      nextLabel={"next"}
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                    />
+                  </div>
+                  <hr />
                 </div>
-                <hr />
               </div>
             </div>
           </div>
-        </div>
-      )}
-      <Footer/>
-    </div>
+        )}
+      </div>
+      <div style={{ overflow:"hidden" }}>
+        <Footer />
+      </div>
+    </>
   );
 };
 

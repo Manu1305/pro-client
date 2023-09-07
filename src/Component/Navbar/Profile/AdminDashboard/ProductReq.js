@@ -14,6 +14,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { BiSolidShoppingBags } from "react-icons/bi";
 import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export const ProductRequest = () => {
   const [products, setProduct] = useState([]);
@@ -55,17 +56,33 @@ export const ProductRequest = () => {
 
 
   const addToShop = async (id) => {
-    await httpService
-      .put(`${apiURL}/product/allow-requested-product/${id}`)
-      .then((res) => {
-        console.log(res.data);
-        toast("Product Added")
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "Are you sure to add this product to shop..?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Add to Shop'
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        const response = await httpService.put(`${apiURL}/product/allow-requested-product/${id}`);
+        console.log(response.data);
+        toast("Product Added");
         getProducts();
-      })
-      .catch((err) => {
+        Swal.fire(
+          'Added 😊',
+          'Product successfully added.',
+          'success'
+        );
+      } catch (err) {
         console.log("ERROR", err);
-      });
+      }
+    }
   };
+  
 
   const removeFromShop = async (id, obj) => {
     await httpService
@@ -113,11 +130,13 @@ export const ProductRequest = () => {
         type: "action",
         width: "150px",
         renderCell: (params) => {
+
+          console.log(params.row)
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div
                 onClick={() =>
-                  navigate(`/productVerification/${params.row.id}`)
+                  navigate(`/ViewDetails/${params.row.id}`)
                 }
                 className="m-2"
               >
