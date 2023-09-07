@@ -150,28 +150,36 @@
   opacity: 0.7;
 }
 
-.like_button {
-  position: absolute;
-  height: 30px;
-  width: 33px;
-  border-radius: 50%;
-  z-index: 2;
-  color: black;
-  font-size: 25px;
-  border-radius: 50%;
+.like{
+  position: "absolute";
+  bottom: 0;
+  right: 0;
+  margin: "5px";
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  background-color: #fbfbf9;
-  border: transparent;
-  margin-top: 275px;
-  margin-left: 240px;
+
+  
 }
 
-.like_button :hover {
-  color: red;
+.like_button{
+  height: 30px;
+  width: 33px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  padding: 3px;
+  background-color:#fbfbf9;
+  font-size: 25px;
+  margin-top: 3px;
+  
+
+
 }
+
+/* .like_button :hover {
+  color: red;
+} */
 .loadingSpinner {
   margin-top: 20%;
   display: flex;
