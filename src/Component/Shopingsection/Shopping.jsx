@@ -24,6 +24,14 @@ const Shopping = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
+
+  const categoriesWithSubcategories = {
+    Mens: ["Shirts", "Pants"],
+    Womens: ["top", "Bottom", "Sarees"],
+    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
+  };
+
+
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
       setCategories([]);
@@ -198,9 +206,9 @@ const Shopping = () => {
                       <div>
                         <button
                           className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "womens" ? "active" : ""
+                            categories[0] === "Womens" ? "active" : ""
                           }`}
-                          onClick={() => handleCategoryChange("womens")}
+                          onClick={() => handleCategoryChange("Womens")}
                         >
                           Womens
                         </button>
@@ -215,6 +223,7 @@ const Shopping = () => {
                           Kids
                         </button>
                       </div>
+                     
                     </div>
                     {user && user.email ? (
                       <div className={styless.pricefilterdiv}>
