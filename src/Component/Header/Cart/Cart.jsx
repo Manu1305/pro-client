@@ -12,12 +12,12 @@ import { useSelector } from "react-redux";
 import SizeAndQuantity from "../../Reuseable Comp/SizeAndQuantity";
 
 const Cart = () => {
-  const [CartItem, setCartItem] = useState([]);
+  // const [CartItem, setCartItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const cart = useSelector((state) => state.cartReducer);
+  const CartItem = useSelector((state) => state);
 
-  console.log(cart);
+  console.log(CartItem);
 
   const removeFromCart = async (id) => {
     Swal.fire({
@@ -42,7 +42,7 @@ const Cart = () => {
             .delete(`${apiURL}/cart/delete-cart-item/${id}`, config)
             .then((res) => {
               console.log(res);
-              getCarts();
+              // getCarts();
             })
             .catch((err) => {
               console.log(err);
@@ -55,33 +55,33 @@ const Cart = () => {
     });
   };
 
-  const getCarts = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
+  // const getCarts = async () => {
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     };
 
-      return await httpService
-        .get(`${apiURL}/cart/user-cart`, config)
-        .then((res) => {
-          if (res.data.Message === "Your cart is empty...!") {
-            setCartItem([]);
-          } else {
-            console.log(res.data);
-            setCartItem(res.data);
-          }
-        })
-        .catch((err) => console.log(err.config.message));
-    } catch (error) {
-      console.log("API Error", error);
-    }
-  };
+  //     return await httpService
+  //       .get(`${apiURL}/cart/user-cart`, config)
+  //       .then((res) => {
+  //         if (res.data.Message === "Your cart is empty...!") {
+  //           setCartItem([]);
+  //         } else {
+  //           console.log(res.data);
+  //           setCartItem(res.data);
+  //         }
+  //       })
+  //       .catch((err) => console.log(err.config.message));
+  //   } catch (error) {
+  //     console.log("API Error", error);
+  //   }
+  // };
 
   useEffect(() => {
-    getCarts();
+    // getCarts();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);

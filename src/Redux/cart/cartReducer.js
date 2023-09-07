@@ -1,15 +1,17 @@
-import { userCartItem, } from './cartAction'
+import { userCartItem } from './cartAction';
 
-let InitialState = {
-    userCart: []
+const initialState = {
+    userCart: {},
 };
 
-
-export const cartReducer = (state = InitialState, action) => {
+export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case userCartItem:
-            return { ...state, userCart: action.payload }
+            return {
+                ...state,
+                userCart: { ...action.payload }, 
+            };
         default:
-            return state
+            return state;
     }
-}
+};

@@ -87,7 +87,7 @@ export const ProductRequest = () => {
     "seller",
     "images",
     "brand",
-    "quantity",
+    "Stock",
     "price",
     "action",
   ].map((ele) => {
@@ -101,7 +101,7 @@ export const ProductRequest = () => {
         renderCell: (params) => {
           return (
             <div>
-              <img src={params.row.images} alt="dfs" width={30} />
+              <img src={!params.row.images ? "" : params.row.images} alt="dfs" width={30} />
             </div>
           );
         },
@@ -159,7 +159,7 @@ export const ProductRequest = () => {
       id: ele._id,
       images: ele.productDetails[0].images[0],
       brand: ele.brand,
-      quantity: ele.totalQuantity,
+      Stock: ele.stock,
       price: ele.sellingPrice,
       seller: ele.seller,
     };

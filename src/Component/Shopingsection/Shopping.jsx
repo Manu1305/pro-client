@@ -116,7 +116,7 @@ const Shopping = () => {
 
                 <img
                   src={data.productDetails[0].images[0]}
-                  style={{ height: 320, width: 305, objectFit: "fill" }}
+                  style={{ height: 320, width: 305  ,overflow: "hidden",}}
                   alt=""
                 />
               </Link>

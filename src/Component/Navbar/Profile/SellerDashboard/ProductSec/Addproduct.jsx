@@ -192,7 +192,7 @@ function AddProduct() {
   const [totalStocks, setTotalStocks] = useState(0);
 
   const categoriesWithSubcategories = {
-    Men: ["Shirts", "Pants"],
+    Mens: ["Shirts", "Pants"],
     Womens: ["top", "Bottom", "Sarees"],
     Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
   };

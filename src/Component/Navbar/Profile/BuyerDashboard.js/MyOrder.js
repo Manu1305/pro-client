@@ -177,9 +177,9 @@ const BuyerOrder = () => {
                     order.orderStatus !== "Return Successful" &&
                     order.orderStatus !== "confirm Return" && (
                       <>
-                        <button className="btn btn-warning my-2">
-                          Cancel Order
-                        </button>
+                        {/* <button className="btn btn-warning my-2">
+                          CHANGE ADDRESS
+                        </button> */}
                         <button className="btn btn-danger">CANCEL ORDER</button>
                       </>
                     )}

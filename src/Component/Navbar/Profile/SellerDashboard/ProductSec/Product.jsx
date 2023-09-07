@@ -150,14 +150,14 @@ export const ProductSec = () => {
       id: ele._id,
       images: ele.productDetails[0].images[0],
       brand: ele.brand,
-      stock: ele.totalQuantity,
+      stock: ele.stock,
       price: ele.sellingPrice,
       seller: ele.seller,
     };
   });
 
   return (
-    <div className="container">
+    <div className="container ml-5 mr-0">
       <div className="d-flex justify-content-center row">
         <div className="d-flex justify-content-center mt-4">
           <Link to="/dashboard/Addproduct" className="btn btn-danger">
