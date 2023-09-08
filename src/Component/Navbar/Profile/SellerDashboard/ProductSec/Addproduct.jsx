@@ -193,6 +193,7 @@ function AddProduct() {
     KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
   };
 
   const [productInfo, setProductInfo] = useState({});

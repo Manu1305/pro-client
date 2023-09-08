@@ -26,14 +26,19 @@ function Saleandrevenue({ userLength,totalsales,ordersLength,handleLoginTypeChan
       value: ordersLength,
       link:'order'
     },
-    {
-      icon: "fa-solid fa-users fa-3x text-danger",
-      label: "Total Users",
-      value: userLength,
-      link:'reversewith'
-    },
-    // <i class="fa-solid fa-users"></i>
   ];
+  if(user&&user.urType!='seller') {
+
+    data.push({
+      
+        icon: "fa-solid fa-users fa-3x text-danger",
+        label: "Total Users",
+        value: userLength,
+        link:'reversewith'
+      
+  })  
+    
+  }
 
   return (
     <div>

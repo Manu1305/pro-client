@@ -68,7 +68,7 @@ const Header = ({ productItems }) => {
   };
 
   return (
-    <div>
+    <div style={{overflow:'hidden'}}>
       <div className={header.container2}>
         <div className={header.category1}>
           <Slider {...settings}>

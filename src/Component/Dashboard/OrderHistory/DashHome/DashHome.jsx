@@ -8,6 +8,7 @@ import { apiURL } from "../../../../const/config";
 import CategoryPieChart from "./Dashdata/CategoryPieChart";
 import { useSelector } from "react-redux";
 import styles from './DashHome.module.css'
+import UserChart from "./UsersChart";
 
 
 function DashHome({handleLoginTypeChange}) {
@@ -15,6 +16,8 @@ function DashHome({handleLoginTypeChange}) {
   const [ordersLength, setOrdersLength] = useState([]);
 const [totalsales,setTotalSales]=useState('')
 const [userLength,setUsersLength]=useState('')
+const[customerLength,setCustomerLength]=useState('')
+const[sellerLength,setSellerLength]=useState('')
 const[Allproductlength,setAllproductlength]=useState('')
 const[productrequestlength,setproductrequestlength]=useState('')
   const user = useSelector((state) => state.userReducer.user);
@@ -60,6 +63,12 @@ const[productrequestlength,setproductrequestlength]=useState('')
       const res = await httpService.get(`${apiURL}/user/allUserData`);
       console.log("users", res.data);
       setUsersLength(res.data.length);
+      if(res.data.urType=='buyer'){
+        setCustomerLength(res.data.length)
+      }
+      if(res.data.urType=='seller'){
+        setSellerLength(res.data)
+      }
     } catch (error) {
       console.log(error);
     }
@@ -117,7 +126,7 @@ const[productrequestlength,setproductrequestlength]=useState('')
 <Recentsales />
       <CategoryPieChart/>
 </div>
-
+{/* <UserChart customerLength={customerLength} sellerLength={sellerLength}/> */}
     </div>
   );
 }

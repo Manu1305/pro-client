@@ -57,8 +57,11 @@ function SearchBar() {
         type="text"
         onChange={(e) => setQuery(e.target.value)}
         className={styles.input}
+        // onKeyUp={() => alert("worked")}
+        // onKeyPress={}
+        
       />
-      <CiSearch className={styles.searchIcon} />
+      {/* <CiSearch className={styles.searchIcon} />
       {query && !isSearching && filteredItems.length === 0 && (
         <ul className={styles.resultsContainer}>
           <li>No results found</li>
@@ -78,7 +81,7 @@ function SearchBar() {
             </div>
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 }

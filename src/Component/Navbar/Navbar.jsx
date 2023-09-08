@@ -5,15 +5,15 @@ import { FiUser } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { CgShoppingCart } from "react-icons/cg";
-import  Profile  from "./Dropdown/ProfileDropdown";
+import Profile from "./Dropdown/ProfileDropdown";
 import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
-import {  MdOutlineNotificationsNone } from "react-icons/md";
+import { MdOutlineNotificationsNone } from "react-icons/md";
 import { apiURL } from "../../const/config";
 import httpService from "../Error Handling/httpService";
 import axios from "axios";
 
- const Navbar = () => {
+const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
@@ -49,12 +49,11 @@ import axios from "axios";
           } else {
             // console.log(res.data);
             const cartData = res.data;
-            console.log( Object.keys(res.data.items).length+"qwerty");
-            const itemsCount =Object.keys(res.data.items).length;
+            console.log(Object.keys(res.data.items).length + "qwerty");
+            const itemsCount = Object.keys(res.data.items).length;
             setCart(cartData);
-        setTotalItems(itemsCount);
-        // console.log('total'+itemsCount)
- 
+            setTotalItems(itemsCount);
+            // console.log('total'+itemsCount)
           }
         })
         .catch((err) => console.log(err.config.message));
@@ -62,12 +61,10 @@ import axios from "axios";
       console.log("API Error", error);
     }
   };
-;
   // useEffect(()=>{
   //   getCarts()
   // },[cart.items]);
 
-  
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
@@ -90,11 +87,11 @@ import axios from "axios";
         <Link to="/" onClick={closeMenu} className={styles.heading}>
           {/* HITEC MART */}
           <img
-                src="../Image/loho.jpeg"
-                alt=""
-                style={{ width: "140px", height: "50px" }}
-                className={`rounded-circle ${styles.imgcircle}`}
-              />
+            src="../Image/loho.jpeg"
+            alt=""
+            style={{ width: "140px", height: "50px" }}
+            className={`rounded-circle ${styles.imgcircle}`}
+          />
         </Link>
       </li>
       <SearchBar />
@@ -102,7 +99,7 @@ import axios from "axios";
         <i className="fas fa-bars"></i>
       </div>
       <ul className={`${styles["navbar-menu"]} ${showMenu ? styles.show : ""}`}>
-        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
+        {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="/" onClick={closeMenu}>
               HOME
@@ -119,14 +116,14 @@ import axios from "axios";
               </Link>
             </li>
           )}
-        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
+        {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="bloghome" onClick={closeMenu}>
               BLOG
             </Link>
           </li>
         )}
-        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
+        {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="About" onClick={closeMenu}>
               ABOUT
@@ -135,14 +132,14 @@ import axios from "axios";
         )}
 
         {user?.urType === "buyer" && (
-          <li >
+          <li>
             {user && user.email ? (
               <Link to="Wish" onClick={closeMenu}>
-                <AiOutlineHeart style={{height:"20px",width:'20px'}} />
+                <AiOutlineHeart style={{ height: "20px", width: "20px" }} />
               </Link>
             ) : (
-              <Link to="login" onClick={closeMenu}  >
-                <AiOutlineHeart style={{height:"20px",width:'20px'}} />
+              <Link to="login" onClick={closeMenu}>
+                <AiOutlineHeart style={{ height: "20px", width: "20px" }} />
               </Link>
             )}
           </li>
@@ -152,40 +149,38 @@ import axios from "axios";
           <li>
             {user && user.email ? (
               <Link to="cart" onClick={closeMenu}>
-                <CgShoppingCart style={{height:"20px",width:'20px'}} />
-             {totalItems > 0 && (
-          <h2>{totalItems}</h2>
-        )}
+                <CgShoppingCart style={{ height: "20px", width: "20px" }} />
+                {totalItems > 0 && <h2>{totalItems}</h2>}
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}>
-                <CgShoppingCart style={{height:"20px",width:'20px'}} />
+                <CgShoppingCart style={{ height: "20px", width: "20px" }} />
                 {/* <span>{userCart === 0 ? "" : userCart}</span> */}
               </Link>
             )}
           </li>
         )}
- 
-          <li style={{ height: "20px" }} >
+
+        <li style={{ height: "20px" }}>
           {user && user.email ? (
             <Profile closemenu={closeMenu} />
           ) : (
-            <Link to="login"  onClick={closeMenu} style={{marginTop:'5px'}}  >
-              <FiUser style={{height:"20px",width:'20px'}} />
+            <Link to="login" onClick={closeMenu} style={{ marginTop: "5px" }}>
+              <FiUser style={{ height: "20px", width: "20px" }} />
             </Link>
           )}
         </li>
-     {
-(user?.urType === "seller" || user?.urType === "admin") && <li style={{ height: "20px" }}>
-<MdOutlineNotificationsNone className='fa-lg' onClick={() => navigation('/notifications')} />
-
-   </li>
-
-}   
-</ul>
-     
+        {(user?.urType === "seller" || user?.urType === "admin") && (
+          <li style={{ height: "20px" }}>
+            <MdOutlineNotificationsNone
+              className="fa-lg"
+              onClick={() => navigation("/notifications")}
+            />
+          </li>
+        )}
+      </ul>
     </nav>
   );
 };
 
-export default Navbar
+export default Navbar;

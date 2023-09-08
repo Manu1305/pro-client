@@ -23,12 +23,9 @@ const Shopping = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  
 
-  const categoriesWithSubcategories = {
-    Mens: ["Shirts", "Pants"],
-    Womens: ["top", "Bottom", "Sarees"],
-    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
-  };
+  
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -79,11 +76,14 @@ const Shopping = () => {
       const categoryMatch =
         categories.length === 0 ||
         categories.some((categoryy) => data.selectedCategory === categoryy);
-      const priceMatch =
-        data.sellingPrice >= lowestprice && data.sellingPrice <= price;
-
-      return categoryMatch && priceMatch;
+    
+      return categoryMatch
     });
+
+
+
+
+// const filteredProducts = data && data.filter((data) => data.collection.includes()
 
   const usersPerpage = 5;
   const pagesVisited = pageNumber * usersPerpage;
@@ -154,8 +154,8 @@ const Shopping = () => {
       
       );
     });
-  const pageCount = Math.ceil(data.length / usersPerpage);
-
+  const pageCount = Math.ceil(filteredProducts.length / usersPerpage);
+  
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
@@ -293,12 +293,24 @@ const Shopping = () => {
                   >
                     {displayUsers}
 
-                    <ReactPaginate
-                      previousLabel={"prev"}
-                      nextLabel={"next"}
-                      pageCount={pageCount}
-                      onPageChange={changePage}
-                    />
+                <div>
+
+                </div>
+                {filteredProducts && filteredProducts.length !== 0 && (
+  <ReactPaginate
+    className={styless.pagination}
+    previousLabel={"<-prev"}
+    nextLabel={" next->"}
+    pageCount={pageCount}
+    onPageChange={changePage}
+    containerClassName={"pagination"}
+    
+  />
+)}
+
+                
+
+                   
                   </div>
                   <hr />
                 </div>

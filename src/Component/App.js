@@ -141,6 +141,7 @@ const App = () => {
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
             <Route path="/shoppingPage" element={<ShoppingPage />} />
             <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
+            <Route path="/shoppingPage/:search" element={<ShoppingPage />} />
             <Route path="About" element={<AboutUs />} />
             <Route
               path="/forgotpassword/:id/:token"
