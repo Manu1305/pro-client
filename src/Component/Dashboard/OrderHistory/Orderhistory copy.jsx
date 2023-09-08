@@ -26,6 +26,7 @@ const OrderHistory = () => {
         `${apiURL}/orders/get-all-orders`,
         config
       );
+      console.log("mmmmmmm", res.data);
       const filteredProducts = res.data.filter(
         (product) => product.seller === user.email
       );
@@ -44,7 +45,6 @@ const OrderHistory = () => {
 
     return () => clearTimeout(timer);
   }, []);
-
   return (
     <div className={styles.tableWrapper}>
       <div className={`d-flex  ${styles.tableWrapper}`}>
@@ -79,6 +79,36 @@ const OrderHistory = () => {
                     <p className="fw-bold mb-1">{order.prdData.brand}</p>
                     <p className="text-muted mb-0">{order.prdData.category}</p>
                   </div>
+                  <select>
+                    {order.sizeWithQuantity &&
+                      Object.entries(order.sizeWithQuantity).map(
+                        ([key, value]) => (
+                          <option key={key} value={key}>
+                            {value.selectedSizes ? (
+                              <p
+                                style={{
+                                  fontSize: 13,
+                                  color: "GrayText",
+                                }}
+                              >
+                                {value.selectedSizes}
+                              </p>
+                            ) : null}{" "}
+                            -
+                            {value.quantities ? (
+                              <p
+                                style={{
+                                  fontSize: 13,
+                                  color: "GrayText",
+                                }}
+                              >
+                                {value.quantities}
+                              </p>
+                            ) : null}
+                          </option>
+                        )
+                      )}
+                  </select>
                 </div>
                 {user.urType === "admin" ? (
                   <div className={`mb-3 ${styles.addressSection}`}>

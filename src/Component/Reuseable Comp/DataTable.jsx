@@ -16,14 +16,16 @@ function DataTable({ rows, columns }) {
       }}
       slots={{ toolbar: GridToolbar }}
       pageSizeOptions={[20]}
-      disableRowSelectionOnClick
+      // autoHeight={true}
       sx={{
-        border: 2,
+        m: 2,
         background: "#ffffff",
-        borderColor:"#ffffff",
-        width:"auto"
+        width: "100%",
+        height: "530px",
+        fontFamily: "Plus Jakarta Sans, sans-serif",
+        color: "black",
+        p:3,
       }}
-      
     />
   );
 }

@@ -7,7 +7,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    whitelist:["cartReducer",'userReducer']
+    whitelist:['userReducer']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers)

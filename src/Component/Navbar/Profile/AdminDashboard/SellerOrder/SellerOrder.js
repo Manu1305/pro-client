@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styles from "./sellerOrder.module.css";
-import { useSelector } from "react-redux";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import { useNavigate } from "react-router-dom";
@@ -27,16 +25,10 @@ const SellerOrder = () => {
       };
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
-        .then((res) => res.data
-        ,
-        console.log("this is data"+res.data)
-        )
-        
+        .then((res) => res.data)
         .catch((err) => {
           console.log(err);
         });
-
-      console.log("all order response", res);
       setOrders(res);
     } catch (error) {
       console.log(error);
@@ -122,10 +114,11 @@ const SellerOrder = () => {
 
   const header = [
     "Product",
-    "Price",
-    "Status",
-    "Tracking Id",
+    "Order Id",
     "Orderd On",
+    "Payment Method",
+    "Price",
+    "Delivery Status",
     "Action",
   ].map((ele) => {
     let string = ele;
@@ -140,7 +133,7 @@ const SellerOrder = () => {
           console.log("parmas*******************", params);
           return (
             <div>
-              <img src={params.row.Product} alt="" width={30} />
+              <img src={params.row.Product} alt="refresh" width={30} onClick={() => navigate(`/ViewDetails/${params.row.prdId}`)} />
             </div>
           );
         },
@@ -154,7 +147,7 @@ const SellerOrder = () => {
           // console.log("Check KR", params.row);
           return (
             <div style={{ alignItems: "center" }}>
-              {params.row.Status === "Ready To PickUp" &&
+              {params.row["Delivery Status"] === "Ready To PickUp" &&
                 <div>
                   <Tooltip title="Assign Delivery" onClick={() => addToDelivery(params.row.id)}>
                     <IconButton>
@@ -164,7 +157,7 @@ const SellerOrder = () => {
                 </div>
               }
               {
-                params.row.Status === "confirm Delivery" &&
+                params.row["Delivery Status"] === "confirm Delivery" &&
                 <div>
                   <div>
                     <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
@@ -177,7 +170,7 @@ const SellerOrder = () => {
                 </div>
               }
               {
-                params.row.Status === "confirm Delivery" &&
+                params.row["Delivery Status"] === "confirm Delivery" &&
                 <div>
                   <div>
                     <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
@@ -198,8 +191,7 @@ const SellerOrder = () => {
           );
         },
       };
-    }
-    else {
+    } else {
       return {
         id: ele,
         field: ele,
@@ -211,22 +203,26 @@ const SellerOrder = () => {
     }
   });
 
+
+
   const rowData = orders.map((ele) => {
     const date = new Date(ele.createdAt).toISOString().split('T')[0]
     return {
       id: ele._id,
+      "Order Id": ele._id,
       prdId: ele.productId,
       Product: ele.prdData.images,
       "Orderd On": date,
-      Status: ele.orderStatus,
-      "Tracking Id": ele.trackId,
       Price: ele.ordPrc,
+      "Payment Method": ele.pType,
+      "Delivery Status": ele.orderStatus,
     };
   });
 
   return (
-    <div style={{ marginLeft: "-150px", marginTop: "30px" }}>
+    <div style={{ marginLeft: "-150px", marginTop: "30px", }}>
       <div>
+        {/* <h1>Seller</h1> */}
         {rowData.length !== 0 ?
           <DataTable columns={header} rows={rowData} autoHeight />
           :

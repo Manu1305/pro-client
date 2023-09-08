@@ -8,16 +8,19 @@ import { BsTrash } from "react-icons/bs";
 import httpService from "../../Error Handling/httpService";
 import { ScaleLoader } from "react-spinners";
 import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SizeAndQuantity from "../../Reuseable Comp/SizeAndQuantity";
+import { userCartItem } from "../../../Redux/cart/cartAction";
 
 const Cart = () => {
-  const [CartItem, setCartItem] = useState([]);
+  // const [CartItem, setCartItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const cart = useSelector((state) => state.cartReducer);
+  const CartItem = useSelector((state) => state.cartReducer.userCart);
 
-  console.log(cart);
+  console.log(CartItem);
+
+  const dispatch = useDispatch();
 
   const removeFromCart = async (id) => {
     Swal.fire({
@@ -41,8 +44,9 @@ const Cart = () => {
           httpService
             .delete(`${apiURL}/cart/delete-cart-item/${id}`, config)
             .then((res) => {
-              console.log(res);
-              getCarts();
+              console.log("User CArt", res.data);
+              dispatch(userCartItem(res.data));
+              Swal.fire("Removed", "Your product removed from cart.", "success");
             })
             .catch((err) => {
               console.log(err);
@@ -50,38 +54,11 @@ const Cart = () => {
         } catch (error) {
           console.error("Error removing item from cart:", error);
         }
-        Swal.fire("Removed", "Your product removed from cart.", "success");
       }
     });
   };
 
-  const getCarts = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      return await httpService
-        .get(`${apiURL}/cart/user-cart`, config)
-        .then((res) => {
-          if (res.data.Message === "Your cart is empty...!") {
-            setCartItem([]);
-          } else {
-            console.log(res.data);
-            setCartItem(res.data);
-          }
-        })
-        .catch((err) => console.log(err.config.message));
-    } catch (error) {
-      console.log("API Error", error);
-    }
-  };
-
   useEffect(() => {
-    getCarts();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
@@ -92,7 +69,6 @@ const Cart = () => {
   if (CartItem.subTotal === 0) {
     return (
       <div className="text-center">
-       
         <Link to="/shoppingPage">
           <div
             style={{
@@ -110,8 +86,11 @@ const Cart = () => {
                     alignItems: "center",
                   }}
                 >
-                  <ScaleLoader animation="border" role="status" color="red">
-                  </ScaleLoader>
+                  <ScaleLoader
+                    animation="border"
+                    role="status"
+                    color="red"
+                  ></ScaleLoader>
                 </div>
               ) : (
                 <div>
@@ -239,7 +218,7 @@ const Cart = () => {
                             fontSize: "19px",
                             borderRadius: "0",
                             width: "300px",
-                            padding:"20px"
+                            padding: "20px",
                           }}
                         >
                           Proceed to Pay

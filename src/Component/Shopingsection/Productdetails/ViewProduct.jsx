@@ -13,10 +13,10 @@ import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
-import { addCartItem } from "../../../Redux/cart/cartAction";
+import { addCartItem, userCartItem } from "../../../Redux/cart/cartAction";
 import { Footer } from "../../Footer/Footer";
 
-const ViewProduct = ({ setCartItems }) => {
+const ViewProduct = () => {
   const { productId } = useParams();
   const user = useSelector((state) => state.userReducer.user);
 
@@ -184,8 +184,8 @@ const ViewProduct = ({ setCartItems }) => {
           )
           .then((res) => {
             console.log(res);
-            setCartItems(res.data.items.length);
             toast.success("item added to cart");
+            dispatch(userCartItem(res.data))
           })
           .catch((err) => console.log(err));
       } catch (error) {

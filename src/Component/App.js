@@ -67,12 +67,42 @@ const LazyMainPage = React.lazy(() =>
 const App = () => {
   const { productItems } = cards;
 
-  const [cartItems, setCartItems] = useState(0);
+  // const [cartItems, setCartItems] = useState(0);
 
   const user = useSelector(state => state.userReducer.user)
 
   const dispatch = useDispatch()
 
+
+  const getCarts = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      return await httpService
+        .get(`${apiURL}/cart/user-cart`, config)
+        .then((res) => {
+          if (res.data.Message === "Your cart is empty...!") {
+            // setCartItem([]);
+          } else {
+            console.log("UserCARt",res.data);
+            dispatch(userCartItem(res.data))
+            // setCartItem(res.data);
+          }
+        })
+        .catch((err) => console.log(err.config.message));
+    } catch (error) {
+      console.log("API Error", error);
+    }
+  };
+
+  useEffect(() => {
+    getCarts()
+  },[])
 
   return (
     <Router>
@@ -80,7 +110,7 @@ const App = () => {
 
         <div className="fontClass">
 
-          <Navbar cartItems={cartItems} />
+          <Navbar />
           <Routes>
             <Route path="*" element={<Error404 />} />
             <Route path="login" element={!user?.name ? <Login /> : <Header />} />
@@ -106,7 +136,7 @@ const App = () => {
 
             <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
             </React.Suspense>} />
-            <Route path="/ViewDetails/:productId" element={<ViewProduct setCartItems={setCartItems} />} />
+            <Route path="/ViewDetails/:productId" element={<ViewProduct />} />
 
             <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
             <Route path="thankyou" element={<Thankyou />} />
@@ -148,7 +178,7 @@ const App = () => {
               element={<Changepassword />}
             />
             <Route path="/passwordupdate" element={<EmailCheck />} />
-            <Route path="Wish" element={<Wish setCartItems={setCartItems} />} />
+            <Route path="Wish" element={<Wish />} />
             <Route path="notifications" element={<Notification />} />
 
             <Route path="/profile/:id " element={<Profile />} />

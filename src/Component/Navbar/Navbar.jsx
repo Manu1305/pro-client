@@ -9,19 +9,17 @@ import Profile from "./Dropdown/ProfileDropdown";
 import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
 import { MdOutlineNotificationsNone } from "react-icons/md";
-import { apiURL } from "../../const/config";
-import httpService from "../Error Handling/httpService";
-import axios from "axios";
+import { Badge } from "@mui/material";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
-  // const cart = useSelector((state) => state.cartReducer.cart);
   const user = useSelector((state) => state.userReducer.user);
-  const [cart, setCart] = useState([]);
-  const [totalItems, setTotalItems] = useState(0);
-  // const userCart = cart.filter((ele) => ele.userEmail === user.email)
+  const CartItem = useSelector((state) => state.cartReducer.userCart);
+
+  console.log("cart", CartItem);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -30,40 +28,6 @@ const Navbar = () => {
   const closeMenu = () => {
     setShowMenu(false);
   };
-
-  const getCarts = async () => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      };
-
-      return await axios
-        .get(`${apiURL}/cart/user-cart`, config)
-        .then((res) => {
-          if (res.data.Message === "Your cart is empty...!") {
-            setCart([]);
-            setTotalItems(0);
-          } else {
-            // console.log(res.data);
-            const cartData = res.data;
-            console.log(Object.keys(res.data.items).length + "qwerty");
-            const itemsCount = Object.keys(res.data.items).length;
-            setCart(cartData);
-            setTotalItems(itemsCount);
-            // console.log('total'+itemsCount)
-          }
-        })
-        .catch((err) => console.log(err.config.message));
-    } catch (error) {
-      console.log("API Error", error);
-    }
-  };
-  // useEffect(()=>{
-  //   getCarts()
-  // },[cart.items]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -132,7 +96,7 @@ const Navbar = () => {
         )}
 
         {user?.urType === "buyer" && (
-          <li>
+          <li style={{ marginTop: "3px" }}>
             {user && user.email ? (
               <Link to="Wish" onClick={closeMenu}>
                 <AiOutlineHeart style={{ height: "20px", width: "20px" }} />
@@ -146,16 +110,24 @@ const Navbar = () => {
         )}
 
         {user?.urType === "buyer" && (
-          <li>
+          <li style={{ marginTop: "2px" }}>
             {user && user.email ? (
               <Link to="cart" onClick={closeMenu}>
-                <CgShoppingCart style={{ height: "20px", width: "20px" }} />
-                {totalItems > 0 && <h2>{totalItems}</h2>}
+                <Badge
+                  badgeContent={
+                    Object.values(CartItem).length === 0 || CartItem === undefined
+                      ? null
+                      : CartItem.items.length 
+                  }
+                  color="error"
+                >
+                  <ShoppingCartOutlinedIcon />
+                </Badge>
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}>
                 <CgShoppingCart style={{ height: "20px", width: "20px" }} />
-                {/* <span>{userCart === 0 ? "" : userCart}</span> */}
+ 
               </Link>
             )}
           </li>
