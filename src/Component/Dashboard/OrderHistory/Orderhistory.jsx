@@ -1,17 +1,51 @@
 import React, { useEffect, useState } from "react";
-// import styles from "./Orderhistory.module.css";
-import styles from "./Orderhistory.module.css";
 import { useSelector } from "react-redux";
-import { Card } from "react-bootstrap";
-import RedyToPick from "./seller/RedyToPick";
+import { Button, Card, Container, Form, Modal, Row } from "react-bootstrap";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
+import DataTable from "../../Reuseable Comp/DataTable";
+
+import { useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 
 const OrderHistory = () => {
   const user = useSelector((state) => state.userReducer.user);
 
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
+  const [show, setShow] = useState(false);
+  const [id, setId] = useState("");
+  const handleClose = () => setShow(false);
+  const handleShow = (orderId) => {
+    setShow(true);
+    setId(orderId);
+  };
+  const [packageDetails, setPackageDetails] = useState({});
+  const changeHandler = (e) => {
+    setPackageDetails((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const updateStatus = async (event) => {
+    event.preventDefault();
+    try {
+      await httpService
+        .put(`${apiURL}/status/redayToPickup/${id}`, {
+          packageDetails,
+        })
+        .then((res) => {
+          handleClose();
+          getOrders();
+          return res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getOrders = async () => {
     try {
@@ -37,78 +71,187 @@ const OrderHistory = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
 
+    getOrders();
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <div className={styles.tableWrapper}>
-      <div className={`d-flex  ${styles.tableWrapper}`}>
-        {orders.length === 0 ? (
-          <div className="text-center">
-            <img
-              src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg?w=740&t=st=1692361382~exp=1692361982~hmac=ad51a1df0bb656b800860f3339a091ebf21dc19e7d3d334f2db23126f6c863e5" // Replace with the path to your empty image
-              alt="No orders"
-            />
-            <p>No orders available.</p>
-          </div>
-        ) : (
-          orders.map((order, index) => (
-            <Card key={index} className={`m-2 ${styles.orderCard}`}>
-              <Card.Body>
-                <Card.Title>Order: {index + 1}</Card.Title>
-                <img
-                  src="../Image/hiLogo.jpg"
-                  alt=""
-                  style={{ width: "45px", height: "45px" }}
-                  className={`rounded-circle ${styles.imgcircle}`}
-                />
-                <div className="d-flex align-items-center mb-3">
-                  <img
-                    src={order.prdData.images}
-                    alt=""
-                    style={{ width: "45px", height: "45px" }}
-                    className="rounded-circle"
-                  />
+  const header = [
+    "Product",
+    "Order Id",
+    "Orderd On",
+    "Payment Method",
+    "Price",
+    "Collect",
+    "Delivery Status",
+    "Action",
+  ].map((ele) => {
+    let string = ele;
+    string.replace(/^./, string[0].toUpperCase());
 
-                  <div className="ms-3">
-                    <p className="fw-bold mb-1">{order.prdData.brand}</p>
-                    <p className="text-muted mb-0">{order.prdData.category}</p>
+    if (ele === "Product") {
+      return {
+        field: "Product",
+        type: "image",
+
+        renderCell: (params) => {
+          console.log("parmas*******************", params);
+          return (
+            <div>
+              <img
+                src={params.row.Product}
+                alt="refresh"
+                width={30}
+                onClick={() => navigate(`/ViewDetails/${params.row.prdId}`)}
+              />
+            </div>
+          );
+        },
+      };
+    }
+    if (ele === "Action") {
+      return {
+        field: "Action",
+        type: "action",
+        width: 150,
+        renderCell: (params) => {
+          console.log("Check KR", params.row);
+          return (
+            <div style={{ alignItems: "center" }}>
+              {params.row["Delivery Status"] === "Placed" && (
+                <div>
+                  <p
+                    className="btn btn-success btn-sm"
+                    onClick={() => handleShow(params.row["Order Id"])}
+                  >
+                    Dipatch
+                  </p>
+                </div>
+              )}
+
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title className="text-center">
+                    Fill Package Details
+                  </Modal.Title>
+                </Modal.Header>
+                <Form className="mt-2 mb-2 border-0">
+                  <Container>
+                    <Row>
+                      <Form.Group className="mt-0">
+                        <Form.Label>Size</Form.Label>
+                        <Form.Control
+                          type="number"
+                          name="size"
+                          placeholder="Enter size"
+                          onChange={changeHandler}
+                        />
+                      </Form.Group>
+                    </Row>
+
+                    <Form.Group className="mb-1">
+                      <Form.Label>Weight</Form.Label>
+                      <Form.Control
+                        type="number"
+                        name="weight"
+                        placeholder="Enter Weight"
+                        onChange={changeHandler}
+                      />
+                    </Form.Group>
+
+                    <Row>
+                      <Form.Group className="mb-1">
+                        <Form.Label>Height</Form.Label>
+                        <Form.Control
+                          type="number"
+                          name="height"
+                          placeholder="Packge Height"
+                          onChange={changeHandler}
+                        />
+                      </Form.Group>
+                    </Row>
+                  </Container>
+
+                  <div className=" m-2 d-grid d-md-flex justify-content-md-center align-items-center">
+                    <button
+                      className="btn btn-primary me-md-2"
+                      onClick={updateStatus}
+                    >
+                      confrim
+                    </button>
+                    <button
+                      className="btn btn-danger me-md-2"
+                      onClick={handleClose}
+                    >
+                      Cancel
+                    </button>
                   </div>
-                </div>
-                {user.urType === "admin" ? (
-                  <div className={`mb-3 ${styles.addressSection}`}>
-                    <h6 className="text-muted">
-                      Address: {order.dlvAddr.locality}, {order.dlvAddr.area},{" "}
-                      {order.dlvAddr.city}, {order.dlvAddr.state},{" "}
-                      {order.dlvAddr.pincode}
-                    </h6>
-                  </div>
-                ) : null}
-                <div className="mb-3">
-                  <h6 className="text-green-500">
-                    Status: {order.orderStatus}
-                  </h6>
-                  <h2>Tracking ID: {order.trackId}</h2>
-                  {order.pType === "cash" ? (
-                    <h2>Collect {(parseInt(order.ordPrc) * 90) / 100}</h2>
-                  ) : null}
-                </div>
-                <div className="mb-3">
-                  <h6>Amount: {order.ordPrc}</h6>
-                </div>
-                {order.orderStatus === "Placed" && (
-                  <RedyToPick id={order._id} getOrders={getOrders} />
-                )}
-              </Card.Body>
-            </Card>
-          ))
-        )}
-      </div>
+                </Form>
+              </Modal>
+            </div>
+          );
+        },
+      };
+    } else {
+      return {
+        id: ele,
+        field: ele,
+        headerName: string,
+        width: 150,
+        editable: true,
+      };
+    }
+  });
+
+  const rowData = orders.map((ele) => {
+    const date = new Date(ele.createdAt).toISOString().split("T")[0];
+    const collect = ((parseInt(ele.ordPrc) * 90) / 100) + (((parseInt(ele.ordPrc) * 90) / 100)*5)/100
+    return {
+      id: ele._id,
+      "Order Id": ele._id,
+      prdId: ele.productId,
+      Product: ele.prdData.images,
+      "Orderd On": date,
+      Price: ele.ordPrc,
+      Collect:ele.pType === "cash" ? collect : null,
+      "Payment Method": ele.pType,
+      "Delivery Status": ele.orderStatus,
+    };
+  });
+
+  return (
+    <div>
+      <h1>Seller</h1>
+      {rowData.length !== 0 ? (
+        <DataTable columns={header} rows={rowData} autoHeight />
+      ) : (
+        <div style={{ margin: "auto" }}>
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ScaleLoader animation="border" role="status" color="red">
+                <span className="visually-hidden">Loading...</span>
+              </ScaleLoader>
+            </div>
+          ) : (
+            <img
+              src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+              alt="Loaded"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };
