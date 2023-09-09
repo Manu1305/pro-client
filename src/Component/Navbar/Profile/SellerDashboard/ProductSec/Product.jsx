@@ -20,6 +20,8 @@ import { FiEdit } from "react-icons/fi";
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
   const [quantityModal, setQuantityModal] = useState(false);
+const [deleteId,setDeleteId]=  useState(null)
+const [seller, setSellerName] = useState('')
   const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -124,12 +126,16 @@ export const ProductSec = () => {
             console.log("Check here", params.row);
             return (
               <div style={{ display: "flex", flexDirection: "row" }}>
-                <div className="mr-5" onClick={() => setModalShow(true)}>
+                <div className="mr-5" onClick={() => {
+                  setDeleteId(params.row.id);
+                  setSellerName(params.row.seller)
+                  setModalShow(true)
+                  }}>
                   <RiDeleteBin6Fill />
                 </div>
-                <div onClick={() => quantityHandler(params.row)}>
+                {/* <div onClick={() => quantityHandler(params.row)}>
                   <FiEdit />
-                </div>
+                </div> */}
               </div>
             );
           },
@@ -220,7 +226,7 @@ export const ProductSec = () => {
         </div>
 
         <ReasonModal
-          product={{ id: product.id, seller: product.seller }}
+          product={{ id: deleteId, seller: seller }}
           show={modalShow}
           onHide={() => setModalShow(false)}
           removeFromShop={removeFromShop}

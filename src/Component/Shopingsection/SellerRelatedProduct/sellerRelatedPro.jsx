@@ -121,7 +121,7 @@ const SellerRelatedPro = ({ addToCart }) => {
         </Slider>
       </div>
       <Link to="/shoppingPage">
-        <button className={styless.seeMore}>SEE MORE...</button>
+        <button className={styless.seeMore}>Go to shop...</button>
       </Link>
     </div>
   );

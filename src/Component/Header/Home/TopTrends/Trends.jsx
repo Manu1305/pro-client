@@ -34,7 +34,7 @@ const SamplePrevArrow = (props) => {
     </div>
   );
 };
-const TrendingItems = ({ addToCart }) => {
+const TrendingItems = (  ) => {
   const [count, setCount] = useState(0);
   const [data, setData] = useState([]);
   const increment = () => {

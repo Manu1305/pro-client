@@ -50,10 +50,10 @@ const Navbar = () => {
         <Link to="/" onClick={closeMenu} className={styles.heading}>
           {/* HITEC MART */}
           <img
-            src="../Image/loho.jpeg"
+            src="../Image/logo.png"
             alt=""
-            style={{ width: "140px", height: "50px" }}
-            className={`rounded-circle ${styles.imgcircle}`}
+            style={{ width: "100px", height: "50px" }}
+            className={` ${styles.imgcircle}`}
           />
         </Link>
       </li>
@@ -79,13 +79,13 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-        {(user?.urType !== "admin" || user?.urType !== "seller") && (
+        {/* {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="bloghome" onClick={closeMenu}>
               BLOG
             </Link>
           </li>
-        )}
+        )} */}
         {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="About" onClick={closeMenu}>

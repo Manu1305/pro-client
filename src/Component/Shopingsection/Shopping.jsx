@@ -15,14 +15,21 @@ import { PiHeartLight } from "react-icons/pi";
 const Shopping = () => {
   const { category } = useParams();
   const selectedCategory = category ? category : "all";
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
 
   const [price, setPrice] = useState(10000);
   const [categories, setCategories] = useState([]);
+  const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  
 
-  const product = useSelector((state) => state.productReducer.product);
+  const categoriesWithSubcategories = {
+    Mens: ["Shirts", "Pants"],
+    Womens: ["top", "Bottom", "Sarees"],
+    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
+  };
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -40,22 +47,46 @@ const Shopping = () => {
     }
   }, [selectedCategory]);
 
-  const sellingPrices =
-    product.length > 0 && product.map((item) => item.sellingPrice);
+  const getAllProducts = async () => {
+    await httpService
+      .get(`${apiURL}/product/get-all-products`)
+      .then((res) => {
+        console.log(res.data);
+
+        dispatch(addProduct(res.data));
+        const filByStaus = res.data.filter((prd) => prd.status === true)
+        setData(filByStaus);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    getAllProducts();
+  }, []);
+
+  const sellingPrices = data.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
   const lowestprice = 0;
 
   const filteredProducts =
-    product.length > 0 &&
-    product.filter((data) => {
+    data &&
+    data.filter((data) => {
       const categoryMatch =
         categories.length === 0 ||
         categories.some((categoryy) => data.selectedCategory === categoryy);
+      const priceMatch =
+        data.sellingPrice >= lowestprice && data.sellingPrice <= price;
 
-      return categoryMatch;
+      return categoryMatch && priceMatch;
     });
 
-  const usersPerpage = 40;
+  const usersPerpage = 5;
   const pagesVisited = pageNumber * usersPerpage;
 
   const displayUsers = filteredProducts
@@ -63,74 +94,69 @@ const Shopping = () => {
     .map((data) => {
       return (
         <div key={data.id} className="col-lg-3 col-md-4 mb-5">
-          <div className="d-flex flex-column">
-            <div className={styless.container}>
-              <Link
-                style={{
-                  cursor: "pointer",
-                  position: "relative",
-                  display: "inline-block",
-                }}
-                to={`/ViewDetails/${data._id}`}
-              >
-                <div style={{ position: "relative" }}>
-                  <img
-                    src={data.productDetails[0].images[0]}
-                    style={{ height: 320, width: 305, objectFit: "fill" }}
-                    alt=""
-                  />
-                  <div className={styless.like}>
-                    <div
-                      style={{
-                        position: "absolute",
-                        bottom: 0,
-                        right: 0,
-                        margin: "5px",
-                      }}
-                    >
-                      <PiHeartLight
-                        className={styless.like_button}
-                        style={{
-                          height: "30px",
-                          width: "30px",
-                          fontWeight: "50px",
-                        }}
-                        onClick={() => {
-                          console.log("Wish list");
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
+        <div className="d-flex flex-column">
+        <div className={styless.container}>
+  <Link style={{ cursor: "pointer", position: "relative", display: "inline-block" }} to={`/ViewDetails/${data._id}`}>
+    <div style={{ position: "relative" }}>
+      <img
+        src={data.productDetails[0].images[0]}
+        style={{ height: 320, width: 305, objectFit: "fill" }}
+        alt=""
+      />
+       <div className={styless.like}>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          margin: "5px",
+        }}
+      >
+        <PiHeartLight
+        className={styless.like_button}
+          style={{
+           
+            height:'30px',
+            width:'30px',
+            fontWeight: "50px",
+          }}
+          onClick={() => {
+            console.log("Wish list");
+          }}
+        />
+      </div>
+      </div>
+    </div>
+  </Link>
+</div>
 
-            {/* Description */}
-            <div className="card-body">
-              <div
-                className="cart-title m-1"
-                style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
-              >
-                {data.brand}
-              </div>
-              {user && user.email ? (
-                <div className="m-2 d-flex justify-content-between">
-                  <div className="mb-1 me-1 mx-4" style={{ fontSize: "bold" }}>
-                    &#8377; {data.sellingPrice}{" "}
-                  </div>
-                </div>
-              ) : (
-                <div className="m-2" style={{ fontWeight: "30px" }}>
-                  {data.description}
-                </div>
-              )}
+          {/* Description */}
+          <div className="card-body">
+            <div
+              className="cart-title m-1"
+              style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
+            >
+              {data.brand}
             </div>
+            {user && user.email ? (
+              <div className="m-2 d-flex justify-content-between">
+                <div className="mb-1 me-1 mx-4" style={{ fontSize: "bold" }}>
+                  &#8377; {data.sellingPrice}{" "}
+                </div>
+              </div>
+            ) : (
+              <div className="m-2" style={{ fontWeight: "30px" }}>
+                {data.description}
+              </div>
+            )}
           </div>
         </div>
+      </div>
+      
       );
     });
   const pageCount = Math.ceil(filteredProducts.length / usersPerpage);
-
+  
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
@@ -162,7 +188,10 @@ const Shopping = () => {
               <div className="row p-3">
                 <div className="col-lg-3">
                   <div className="card mb-5">
-                    <div className="card-body mb-7 shadow-xl">
+                    <div
+                     
+                      className="card-body mb-7 shadow-xl"
+                    >
                       <div style={{ color: "black", fontWeight: "bolder" }}>
                         PRODUCT CATEGORIES
                       </div>
@@ -265,17 +294,24 @@ const Shopping = () => {
                   >
                     {displayUsers}
 
-                    <div></div>
-                    {filteredProducts && filteredProducts.length !== 0 && (
-                      <ReactPaginate
-                        className={styless.pagination}
-                        previousLabel={"<-prev"}
-                        nextLabel={" next->"}
-                        pageCount={pageCount}
-                        onPageChange={changePage}
-                        containerClassName={"pagination"}
-                      />
-                    )}
+                <div>
+
+                </div>
+                {filteredProducts && filteredProducts.length !== 0 && (
+  <ReactPaginate
+    className={styless.pagination}
+    previousLabel={"<-prev"}
+    nextLabel={" next->"}
+    pageCount={pageCount}
+    onPageChange={changePage}
+    containerClassName={"pagination"}
+    
+  />
+)}
+
+                
+
+                   
                   </div>
                   <hr />
                 </div>
@@ -284,7 +320,7 @@ const Shopping = () => {
           </div>
         )}
       </div>
-      <div style={{ overflow: "hidden" }}>
+      <div style={{ overflow:"hidden" }}>
         <Footer />
       </div>
     </>
