@@ -72,16 +72,15 @@ const ViewProduct = () => {
     const { name, value } = event.target;
 
     setSizeAndQua((prev) => {
-
       // deleting size if quantity is 0
 
-        if (Number(value) === 0) {
-            const updatedSizeAndQua = { ...prev };
-            delete updatedSizeAndQua[name];
-            return updatedSizeAndQua;
-        } else {
-            return { ...prev, [name]: Number(value) };
-        }
+      if (Number(value) === 0) {
+        const updatedSizeAndQua = { ...prev };
+        delete updatedSizeAndQua[name];
+        return updatedSizeAndQua;
+      } else {
+        return { ...prev, [name]: Number(value) };
+      }
     });
   };
 
@@ -272,32 +271,33 @@ const ViewProduct = () => {
               <div className={"mt-4"}>
                 <div className={styles.heads}>
                   <div>
+                    {user?.email && user?.urType === "admin" && (
+                      <button> go back</button>
+                    )}
                     <h5 className={`text-uppercase brand ${styles.brand}`}>
                       {product.brand}
                     </h5>
                   </div>
                   {user?.email && user?.urType === "buyer" && (
-                  <div className={`m-1 ${styles.icons}`}>
-                    <div
-                      className={styles.wishicon}
-                      onClick={() => {
-                        wishUpdate(product._id);
-                      }}
-                    >
-                      
-                      <div onClick={() => setisWishItem(!isWishItem)}>
-                        {isWishItem ? (
-                          <AiFillHeart className={styles.mainicon} />
-                        ) : (
-                          <AiOutlineHeart className={styles.mainicon} />
-                        )}
+                    <div className={`m-1 ${styles.icons}`}>
+                      <div
+                        className={styles.wishicon}
+                        onClick={() => {
+                          wishUpdate(product._id);
+                        }}
+                      >
+                        <div onClick={() => setisWishItem(!isWishItem)}>
+                          {isWishItem ? (
+                            <AiFillHeart className={styles.mainicon} />
+                          ) : (
+                            <AiOutlineHeart className={styles.mainicon} />
+                          )}
+                        </div>
                       </div>
-                    
+                      <div className={styles.tagandshare}>
+                        <BiShareAlt onClick={handleShare} />
+                      </div>
                     </div>
-                    <div className={styles.tagandshare}>
-                      <BiShareAlt onClick={handleShare} />
-                    </div>
-                  </div>
                   )}
                 </div>
 
@@ -336,17 +336,18 @@ const ViewProduct = () => {
                     </p>
                   </div>
                   {user?.email && user?.urType === "buyer" && (
-                  <div className={styles.percentagetext}>
-                    <h5 className="text-success">93%</h5>
-                    <p> &nbsp; of buyers have reccomented this.</p>
-                  </div> )}
+                    <div className={styles.percentagetext}>
+                      <h5 className="text-success">93%</h5>
+                      <p> &nbsp; of buyers have reccomented this.</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* color selection */}
               <div style={{ marginTop: "30px" }}>
                 <h5
-                  style={{ fontSize: "18px",fontWeight:10 }}
+                  style={{ fontSize: "18px", fontWeight: 10 }}
                   className={`about ${styles.about}`}
                 >
                   Choose a color
@@ -377,13 +378,10 @@ const ViewProduct = () => {
                   </div>
                 </div>
               </div>
-
-              <div className={`sizes`}>
-                {/* size quantity changes */}
-                
-                {product.productDetails && (
-                  <div>
-                    <label htmlFor="product_size">CHOOSE SIZE</label>
+              <div>
+                <label htmlFor="product_size">CHOOSE SIZE</label>
+                <div className={styles.sizes}>
+                  {product.productDetails && (
                     <div>
                       <div className={`mt-1 ${styles.sizeresponsive}`}>
                         {product.productDetails &&
@@ -411,111 +409,114 @@ const ViewProduct = () => {
                                     </div>
                                   </div>
                                   {user?.email && user?.urType === "buyer" && (
-                                  <div className="mt-1 ml-8 d-flex flex-row align-items-center">
-                                    <div>
-                                      <AiOutlineMinusCircle
-                                        className="mr-1"
-                                        onClick={() => decreaseHandler(size)}
-                                      />
-                                    </div>
-                                    
+                                    <div className="mt-1 ml-8 d-flex flex-row align-items-center">
+                                      <div>
+                                        <AiOutlineMinusCircle
+                                          className="mr-1"
+                                          onClick={() => decreaseHandler(size)}
+                                        />
+                                      </div>
 
-                                    <div
-                                      style={{
-                                        width: "20px",
-                                        marginLeft: "5px",
-                                      }}
-                                    >
-                                      <input
-                                        type="text"
-                                        placeholder="0"
+                                      <div
                                         style={{
                                           width: "20px",
-                                          textAlign: "center",
+                                          marginLeft: "5px",
                                         }}
-                                        value={sizeAndQua[size]}
-                                        name={size}
-                                        onChange={(e) =>
-                                          handleQuantityChange(e)
-                                        }
-                                      />
+                                      >
+                                        <input
+                                          type="text"
+                                          placeholder="0"
+                                          style={{
+                                            width: "20px",
+                                            textAlign: "center",
+                                          }}
+                                          value={sizeAndQua[size]}
+                                          name={size}
+                                          onChange={(e) =>
+                                            handleQuantityChange(e)
+                                          }
+                                        />
+                                      </div>
+
+                                      <div>
+                                        <BsPlusCircle
+                                          className="m-3"
+                                          onClick={() => increaseHandler(size)}
+                                        />
+                                      </div>
                                     </div>
-                                   
-                                    <div>
-                                      <BsPlusCircle
-                                        className="m-3"
-                                        onClick={() => increaseHandler(size)}
-                                      />
-                                    </div>
-                                  </div> )}
+                                  )}
                                 </div>
                               )}
                             </div>
                           ))}
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                <div className={`mb-3 mt-4 align-items-center`}>
-                  <>
-                  {user?.email && user?.urType === "buyer" && (
-                      <button
-                        className={`text-uppercase mr-2 ${styles.add_to_cart}`}
-                        onClick={() => addtoCartButton(product)}
-                      >
-                        <BsHandbagFill className="mb-1 mr-3" />
-                        Add to Cart
-                      </button>
-                    )}
-                  </>
-                  {offerBtn ? (
-                    <div className="container m-4">
-                      <div className="row justify-content-center">
-                        <div className="col-md-6 text-center">
-                          <h3 className="text-danger">
-                            Your Bulk Buying Deal Is a Click Away - Don't Miss
-                            Out!
-                          </h3>
-                        </div>
-                        <div className="col-md-6 text-center">
-                          <button
-                            className="btn btn-success"
-                            onClick={offerBtnHandler}
-                          >
-                            Offers
-                          </button>
+                  <div className={`mb-3 mt-4 align-items-center`}>
+                    <>
+                      {user?.email && user?.urType === "buyer" && (
+                        <button
+                          className={`text-uppercase mr-2 ${styles.add_to_cart}`}
+                          onClick={() => addtoCartButton(product)}
+                        >
+                          <BsHandbagFill className="mb-1 mr-3" />
+                          Add to Cart
+                        </button>
+                      )}
+                    </>
+                    {offerBtn ? (
+                      <div className="container m-4">
+                        <div className="row justify-content-center">
+                          <div className="col-md-6 text-center">
+                            <h3 className="text-danger">
+                              Your Bulk Buying Deal Is a Click Away - Don't Miss
+                              Out!
+                            </h3>
+                          </div>
+                          <div className="col-md-6 text-center">
+                            <button
+                              className="btn btn-success"
+                              onClick={offerBtnHandler}
+                            >
+                              Offers
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : null}
+                    ) : null}
+                  </div>
                 </div>
               </div>
+
               {user?.email && user?.urType === "buyer" && (
-              <div className={styles.lasthead}>
-                <div className={styles.headone}>
-                  <div className={styles.oneone}>
-                    <TbTruckDelivery />
+                <div className={styles.lasthead}>
+                  <div className={styles.headone}>
+                    <div className={styles.oneone}>
+                      <TbTruckDelivery />
+                    </div>
+                    <div>
+                      <h4 className="font-bold mt-4">
+                        Delivery with in 5 days
+                      </h4>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold mt-4">Delivery with in 5 days</h4>
+
+                  <div className={styles.headone}>
+                    <div className={styles.oneone}>
+                      <AiOutlineShopping />
+                    </div>
+                    <div className={styles.onetwo}>
+                      <h4 className="font-bold mt-4">Return delivery</h4>
+                      <span>Free 3 days Delivery Return</span>
+                    </div>
                   </div>
                 </div>
-               
-                <div className={styles.headone}>
-                  <div className={styles.oneone}>
-                    <AiOutlineShopping />
-                  </div>
-                  <div className={styles.onetwo}>
-                    <h4 className="font-bold mt-4">Return delivery</h4>
-                    <span>Free 3 days Delivery Return</span>
-                  </div>
-                </div>
-              
-              </div>
-                )}
+              )}
             </div>
           </div>
+          <div style={{marginLeft:'10px'}}>
           <div className="ml-3">
             <h3 className={styles.activeHeading}>Description</h3>
           </div>
@@ -539,14 +540,13 @@ const ViewProduct = () => {
               <span className={styles["text1"]}>{product.material}</span>
             </div>
           </div>
+          </div>
+
         </div>
       ))}
-                {user?.email && user?.urType === "buyer" && (
-
-      <SellerRelatedPro /> )}
-      <div  className={styles.footer} >
-
-      <Footer/>
+      {user?.email && user?.urType === "buyer" && <SellerRelatedPro />}
+      <div className={styles.footer}>
+        <Footer />
       </div>
     </div>
   );

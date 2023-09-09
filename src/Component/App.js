@@ -52,6 +52,7 @@ import { useDispatch, useSelector } from "react-redux";
 import httpService from "./Error Handling/httpService";
 import { apiURL } from "../const/config";
 import { userCartItem } from "../Redux/cart/cartAction";
+import { addProduct } from "../Redux/product/productAction";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -73,7 +74,7 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-
+// Cart
   const getCarts = async () => {
     try {
       const config = {
@@ -100,8 +101,27 @@ const App = () => {
     }
   };
 
+
+  // all products
+  const getAllProducts = async () => {
+    await httpService
+      .get(`${apiURL}/product/get-all-products`)
+      .then((res) => {
+        console.log(res.data);
+
+        const filByStaus = res.data.filter((prd) => prd.status === true);
+        dispatch(addProduct(filByStaus));
+
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      })
+      
+  };
+
   useEffect(() => {
-    getCarts()
+    getCarts();
+    getAllProducts()
   },[])
 
   return (
@@ -171,6 +191,7 @@ const App = () => {
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
             <Route path="/shoppingPage" element={<ShoppingPage />} />
             <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
+            <Route path="/shoppingPage/:search" element={<ShoppingPage />} />
             <Route path="About" element={<AboutUs />} />
             <Route
               path="/forgotpassword/:id/:token"

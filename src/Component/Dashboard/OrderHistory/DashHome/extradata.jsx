@@ -90,13 +90,20 @@ const [userLength,setUsersLength]=useState('')
       value: ordersLength,
       link:''
     },
-    {
-      icon: "fa fa-chart-pie fa-3x text-danger",
-      label: "Total Users",
-      value: userLength,
-      link:''
-    },
+   
   ];
+  if(user&&user.urType!='seller') {
+
+    data.push({
+      
+        icon: "fa-solid fa-users fa-3x text-danger",
+        label: "Total Users",
+        value: userLength,
+        link:'reversewith'
+      
+  })  
+    
+  }
 
   return (
     <div>

@@ -15,20 +15,14 @@ import { PiHeartLight } from "react-icons/pi";
 const Shopping = () => {
   const { category } = useParams();
   const selectedCategory = category ? category : "all";
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
 
   const [price, setPrice] = useState(10000);
   const [categories, setCategories] = useState([]);
-  const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const categoriesWithSubcategories = {
-    Mens: ["Shirts", "Pants"],
-    Womens: ["top", "Bottom", "Sarees"],
-    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
-  };
+  const product = useSelector((state) => state.productReducer.product);
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -46,46 +40,22 @@ const Shopping = () => {
     }
   }, [selectedCategory]);
 
-  const getAllProducts = async () => {
-    await httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        console.log(res.data);
-
-        dispatch(addProduct(res.data));
-        const filByStaus = res.data.filter((prd) => prd.status === true);
-        setData(filByStaus);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-    getAllProducts();
-  }, []);
-
-  const sellingPrices = data.map((item) => item.sellingPrice);
+  const sellingPrices =
+    product.length > 0 && product.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
   const lowestprice = 0;
 
   const filteredProducts =
-    data &&
-    data.filter((data) => {
+    product.length > 0 &&
+    product.filter((data) => {
       const categoryMatch =
         categories.length === 0 ||
         categories.some((categoryy) => data.selectedCategory === categoryy);
-      const priceMatch =
-        data.sellingPrice >= lowestprice && data.sellingPrice <= price;
 
-      return categoryMatch && priceMatch;
+      return categoryMatch;
     });
 
-  const usersPerpage = 5;
+  const usersPerpage = 40;
   const pagesVisited = pageNumber * usersPerpage;
 
   const displayUsers = filteredProducts
@@ -159,7 +129,7 @@ const Shopping = () => {
         </div>
       );
     });
-  const pageCount = Math.ceil(data.length / usersPerpage);
+  const pageCount = Math.ceil(filteredProducts.length / usersPerpage);
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -190,8 +160,8 @@ const Shopping = () => {
           <div>
             <div className="container">
               <div className="row p-3">
-                {/* <div className="col-lg-3"> */}
-                  <div className="card mb-5" style={{width: "18rem",height:"20rem"}}>
+                <div className="col-lg-3">
+                  <div className="card mb-5">
                     <div className="card-body mb-7 shadow-xl">
                       <div style={{ color: "black", fontWeight: "bolder" }}>
                         PRODUCT CATEGORIES
@@ -279,7 +249,7 @@ const Shopping = () => {
                       ) : null}
                     </div>
                   </div>
-                {/* </div> */}
+                </div>
 
                 {/* Content */}
                 <div className="col-lg-9">
@@ -295,12 +265,17 @@ const Shopping = () => {
                   >
                     {displayUsers}
 
-                    <ReactPaginate
-                      previousLabel={"prev"}
-                      nextLabel={"next"}
-                      pageCount={pageCount}
-                      onPageChange={changePage}
-                    />
+                    <div></div>
+                    {filteredProducts && filteredProducts.length !== 0 && (
+                      <ReactPaginate
+                        className={styless.pagination}
+                        previousLabel={"<-prev"}
+                        nextLabel={" next->"}
+                        pageCount={pageCount}
+                        onPageChange={changePage}
+                        containerClassName={"pagination"}
+                      />
+                    )}
                   </div>
                   <hr />
                 </div>

@@ -13,24 +13,12 @@ function SearchBar() {
   const [data, setData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  const item = data;
+  const item = useSelector((state) => state.productReducer.product);
   const filteredItems = getFilteredItems(query, item);
 
   function clear() {
     setQuery("");
   }
-
-  useEffect(() => {
-    httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        setData(res.data);
-        dispatch(addProduct(res.data));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
 
   function getFilteredItems(query, items) {
     if (!query) {
@@ -38,8 +26,8 @@ function SearchBar() {
     }
 
     return items.filter((data) => {
-      console.log("data",data)
-     return data.selectedSubcategory.includes(query);
+      console.log("data", data);
+      return data.collections.includes(query);
     });
   }
 
@@ -54,7 +42,7 @@ function SearchBar() {
   return (
     <div className={styles.container}>
       <input
-        type="text"
+        type="search"
         onChange={(e) => setQuery(e.target.value)}
         className={styles.input}
       />
@@ -72,9 +60,7 @@ function SearchBar() {
               key={value.selectedSubcategory}
               onClick={clear}
             >
-              <Link to={`/ViewDetails/${value._id}`}>
-                {value.selectedSubcategory}
-              </Link>
+              <Link to={`/shoppingPage`}>{value.selectedSubcategory}</Link>
             </div>
           ))}
         </div>

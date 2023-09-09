@@ -1,13 +1,24 @@
 
 .about {
   font-size: 15px;
+  font-weight: bolder;
 }
 .card{
   background: white;
+  overflow: hidden;
 }
 .hedding {
   font-size: 20px;
   color: #ab8181;
+}
+.sizes{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: scroll;
+
+}
+.sizes::-webkit-scrollbar {
+display: none;
 }
 
 .main-section {
@@ -174,6 +185,8 @@
 
 .activeHeading {
   color: red;
+  font-size: 24px;
+  font-weight: bolder;
 }
 .delivery1 {
   margin-left: 45rem;
@@ -309,8 +322,9 @@
   }
   .sizeresponsive {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
   }
+  
 }
 .add_to_cart {
   display: flex;
