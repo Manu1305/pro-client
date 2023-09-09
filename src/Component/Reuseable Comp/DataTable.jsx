@@ -1,8 +1,6 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 function DataTable({ rows, columns }) {
-  const { id } = columns;
-  console.log(columns);
   return (
     <DataGrid
       rows={rows}
@@ -15,16 +13,15 @@ function DataTable({ rows, columns }) {
         },
       }}
       slots={{ toolbar: GridToolbar }}
-      pageSizeOptions={[20]}
-      // autoHeight={true}
+      pageSizeOptions={[10]}
       sx={{
         m: 2,
+        p: 3,
         background: "#ffffff",
         width: "100%",
         height: "530px",
         fontFamily: "Plus Jakarta Sans, sans-serif",
         color: "black",
-        p:3,
       }}
     />
   );

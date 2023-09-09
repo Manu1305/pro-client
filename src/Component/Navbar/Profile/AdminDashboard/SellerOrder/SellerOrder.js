@@ -3,7 +3,7 @@ import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import { useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
-import { BiDotsVerticalRounded, BiSolidShoppingBags } from "react-icons/bi";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 import DataTable from "../../../../Reuseable Comp/DataTable";
 import { IconButton, Tooltip } from "@mui/material";
 import DeliveryDiningSharpIcon from '@mui/icons-material/DeliveryDiningSharp';
@@ -170,23 +170,18 @@ const SellerOrder = () => {
                 </div>
               }
               {
-                params.row["Delivery Status"] === "confirm Delivery" &&
+                params.row["Delivery Status"] === "confirm Return" &&
                 <div>
                   <div>
-                    <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
+                    <Tooltip title="Confirm Return" onClick={() => confirmDelivery(params.row.id)}>
                       <IconButton>
-                        <ThumbUpAltIcon />
+                        <ThumbUpAltIcon  />
                       </IconButton>
                     </Tooltip>
                   </div>
-                  <BiDotsVerticalRounded />
                 </div>
               }
-
-
             </div>
-
-
 
           );
         },
@@ -220,7 +215,7 @@ const SellerOrder = () => {
   });
 
   return (
-    <div style={{ marginLeft: "-150px", marginTop: "30px", }}>
+    <div style={{ marginTop: "30px", }}>
       <div>
         {/* <h1>Seller</h1> */}
         {rowData.length !== 0 ?

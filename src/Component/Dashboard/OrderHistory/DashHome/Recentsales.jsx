@@ -16,7 +16,10 @@ function Recentsales() {
       };
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
-        .then((res) =>{console.log(res.data); return res.data})
+        .then((res) => {
+          console.log(res.data);
+          return res.data;
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -55,25 +58,25 @@ function Recentsales() {
                 </tr>
               </thead>
               <tbody>
-              {lastFiveOrders.length !== 0 &&
+                {lastFiveOrders.length !== 0 &&
                   lastFiveOrders.map((sale, index) => {
-                    const date = new Date(sale.createdAt).toISOString().split('T')[0]
-                     return(<tr key={index}>
-                    <td>
-                      <input className="form-check-input" type="checkbox" />
-                    </td>
-                    <td>{date}</td>
-                    <td>{sale.dlvAddr.phone}</td>
-                  <td>{sale.prdData.brand}</td>
-                  <td>{sale.ordPrc}</td>
-                  <td>{sale.orderStatus}</td>
-                    <td>
-                    {sale.pType}
-                    </td>
-                  </tr>)
-                  }
-                    
-                  )}
+                    const date = new Date(sale.createdAt)
+                      .toISOString()
+                      .split("T")[0];
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <input className="form-check-input" type="checkbox" />
+                        </td>
+                        <td>{date}</td>
+                        <td>{sale.dlvAddr.phone}</td>
+                        <td>{sale.prdData.brand}</td>
+                        <td>{sale.ordPrc}</td>
+                        <td>{sale.orderStatus}</td>
+                        <td>{sale.pType}</td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>

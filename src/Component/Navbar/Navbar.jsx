@@ -19,7 +19,6 @@ const Navbar = () => {
   const user = useSelector((state) => state.userReducer.user);
   const CartItem = useSelector((state) => state.cartReducer.userCart);
 
-  console.log("cart", CartItem);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
