@@ -1,0 +1,82 @@
+.headingdiv{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    background-color: white;
+    padding-left: 20px;
+    margin-top: 20px;
+    margin: auto;
+    
+}
+.secondiv{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: auto;
+}
+.insidediv{
+    height: 300px;
+    width: 30%;
+    background-color: white;
+    margin-left: 20px;
+    margin-top: 20px;  
+    border-radius: 10px;
+}
+.boxheading{
+height: 10%;
+width: 100%;
+display: flex;
+align-items: center;
+padding-left: 10px;
+font-weight: bold;
+}
+.productdetailDiv{
+    height: 150px;
+    width: 90%;
+    background-color: white;
+    margin: auto;
+    margin-top: 20px;
+   
+}
+
+.table{
+    display: flex;
+    flex-direction: column;
+   margin-left: 20px;
+   width: 60%;
+   background-color: white;
+}
+.four{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 400px;
+    background-color: #F7FBFF;
+    margin: auto;
+    margin-top: 40px;
+}
+.logisticdetailsdiv{
+    height: 80%;
+    width: 40%;
+    margin-left: 20px;
+    background-color: white;
+}
+.totalbill{
+    margin-left: 50px;
+    height: 80%;
+    width: 40%;
+    background-color: white;
+    margin-left: 50px;
+}
+.five{
+    height: 400px;
+    width: 90%;
+    background: #034100;
+    margin: auto;
+}
+.stepper{
+    height: 100%;
+    width: 40%;
+    background-color: red;
+}
