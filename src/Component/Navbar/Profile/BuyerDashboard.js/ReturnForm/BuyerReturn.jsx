@@ -217,9 +217,6 @@ const BuyerReturn = () => {
                   </button>
                 </MDBCardBody>
               </MDBCol>
-              <MDBCol md="6">
-                <h1>uiydrxfghvh</h1>
-              </MDBCol>
             </div>
           </MDBRow>
         </MDBCard>
