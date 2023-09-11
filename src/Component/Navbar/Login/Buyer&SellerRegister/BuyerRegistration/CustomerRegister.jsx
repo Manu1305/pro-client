@@ -14,6 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
+import axios from "axios";
 
 const CustomerRegister = () => {
   const history = useNavigate();
@@ -37,7 +38,7 @@ const CustomerRegister = () => {
     const isValid = validate();
     if (isValid) {
       try {
-        await httpService
+        await axios
           .post(`${apiURL}/user/signup`, {
             userData: { name, email, password, phone, gst, urType: "buyer" },
           })
