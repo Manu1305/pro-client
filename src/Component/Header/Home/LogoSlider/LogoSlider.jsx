@@ -45,7 +45,7 @@ export const  Logoslider=()=> {
 
   return (
     <div className={logo.container}>
-      <h2>Our Partners</h2>
+      <h2 className={logo.hhhhaa}>Our PARTNERS</h2>
       <Slider {...settings} ref={sliderRef}>
         <div className={logo.slide} style={{ height: 50, borderRadius: 50 }}>
           <img
