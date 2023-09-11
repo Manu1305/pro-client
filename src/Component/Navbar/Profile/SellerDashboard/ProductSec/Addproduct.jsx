@@ -380,7 +380,7 @@ function AddProduct() {
       setvalidation(true);
       setBase64Images([]);
       setColor("");
-      setQtyAndSizes({});
+      // setQtyAndSizes({});
       setTotalStocks((prev) => prev + Number(totalQuantity));
       toast.success("color varient addeded successfully");
     } else {
