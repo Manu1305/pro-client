@@ -17,19 +17,19 @@ import Typography from '@mui/material/Typography';
 const steps = [
     {
       label: 'Order Placed',
-      description: `Order is placed <br/> 10 april 2023.`,
+      description: `Order is placed   10 april 2023.`,
     },
     {
       label: 'Order processed',
       description:
-        'Order is processed <br/> 10 april 2023',
+        'Order is processed   10 april 2023',
     },
     {
       label: 'Packed',
       description: `Order is being packed.`,
     },
     {
-        label: 'Sipping',
+        label: ' Shipping',
         description: `Order is being packed.`,
       }
   ];
@@ -61,7 +61,7 @@ function Test() {
                 <div className={styles.boxheading}>
                     <h3>Customer details</h3>
                 </div>
-                <hr />
+                <hr className={styles.line} />
                 <div >
                     <div className='flex flex-row ml-3 mt-3'>
                         
@@ -100,7 +100,7 @@ function Test() {
                     <h3>Shipping address</h3>
                     
                 </div>
-                <hr />
+                <hr className={styles.line}  />
                 <div >
                     <div className='flex flex-row ml-3 mt-3'>
                         
@@ -149,7 +149,7 @@ function Test() {
                 <div className={styles.boxheading}>
                     <h3>Payment details</h3>
                 </div>
-                <hr />
+                <hr className={styles.line}  />
                 <div >
                     <div className='flex flex-row ml-3 mt-3'>
                         
@@ -217,8 +217,8 @@ function Test() {
             <th className='bg-white'>Total amount</th>
 <tr/>
             <tr>
-    <td className='flex flex-row'>
-        <img src="https://media.istockphoto.com/id/479382464/vector/blue-sport-shoes-for-running.jpg?s=612x612&w=0&k=20&c=v_fkHkodSuuZnH3dswhtKJz8aZmNgwxjfYOQ0ocvOdA=" alt="" className='h-10 w-10' />
+    <td className={styles.table1}>
+        <img  src="https://media.istockphoto.com/id/479382464/vector/blue-sport-shoes-for-running.jpg?s=612x612&w=0&k=20&c=v_fkHkodSuuZnH3dswhtKJz8aZmNgwxjfYOQ0ocvOdA=" alt="" className='h-10 w-10 mob:hidden' />
         Addidas men sdfgfgfgvsv ddfv Peter</td>
     <td>Griffin</td>
     <td>$100</td>
@@ -295,27 +295,29 @@ function Test() {
             <div className={styles.stepper}>
 
 <p className='font-bold mt-2 ml-2'>Order Status</p>
-<Box sx={{ maxWidth: 400 }}>
-      <Stepper activeStep={activeStep} orientation="vertical">
+<Box sx={{ maxWidth: 400 }} >
+      <Stepper activeStep={activeStep} orientation="vertical" >
         {steps.map((step, index) => (
-          <Step key={step.label}>
-            <StepLabel
+          <Step key={step.label}  >
+            <StepLabel 
               optional={
                 index === 2 ? (
-                  <Typography variant="caption">Last step</Typography>
+                  <Typography  variant="caption">Last step</Typography>
                 ) : null
               }
             >
               {step.label}
             </StepLabel>
-            <StepContent>
+            <StepContent >
               <Typography>{step.description}</Typography>
-              <Box sx={{ mb: 2 }}>
+              <Box sx={{ mb: 2 }}>  
                 <div>
                   <Button
                     variant="contained"
                     onClick={handleNext}
                     sx={{ mt: 1, mr: 1 }}
+                     style={{backgroundColor:'orange'}}
+                   
                   >
                     {index === steps.length - 1 ? 'Finish' : 'Continue'}
                   </Button>
@@ -341,6 +343,12 @@ function Test() {
         </Paper>
       )}
     </Box>
+            </div>
+            <div className={styles.prevOrder}>
+
+<h1>
+    No previous Order from this customer
+</h1>
             </div>
         </div>
     </div>
