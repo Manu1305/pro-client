@@ -25,11 +25,6 @@ const Shopping = () => {
   const [isLoading, setIsLoading] = useState(true);
   
 
-  const categoriesWithSubcategories = {
-    Mens: ["Shirts", "Pants"],
-    Womens: ["top", "Bottom", "Sarees"],
-    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
-  };
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {

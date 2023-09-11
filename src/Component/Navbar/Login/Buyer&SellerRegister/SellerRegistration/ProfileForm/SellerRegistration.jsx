@@ -18,11 +18,11 @@ import {
 } from "mdb-react-ui-kit";
 import { Dropdown } from "react-bootstrap";
 import { useEffect } from "react";
-import httpService from '../../../../../Error Handling/httpService'
+import httpService from "../../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../../const/config";
 import { toast } from "react-toastify";
 
- const  SellerRegister = () => {
+const SellerRegister = () => {
   // const history = useNavigate();
   const dispatch = useDispatch();
   const [phone, setPhone] = useState("");
@@ -86,7 +86,7 @@ import { toast } from "react-toastify";
     // Add more countries and states as needed
   };
   const [showButton, setShowButton] = useState(true);
-  
+
   const navigate = useNavigate();
 
   const handleCountrySelect = (country) => {
@@ -140,22 +140,20 @@ import { toast } from "react-toastify";
 
   const sendOtp = () => {
     if (phone.length == 10) {
-      toast.success("otp sended successfuly")
+      toast.success("otp sended successfuly");
       setShowButton(false);
       httpService
         .post(`${apiURL}/user/send-otp`, { phone })
         .then((response) => {
-          console.log(response.data+"this is data");
-          
+          console.log(response.data + "this is data");
         })
-        
-        
+
         .catch((error) => {
           console.error(error);
         });
-        setTimeout(() => {
-          setShowButton(true);
-        }, 20000);
+      setTimeout(() => {
+        setShowButton(true);
+      }, 20000);
     } else {
       alert("phone number should 10");
     }
@@ -378,14 +376,13 @@ import { toast } from "react-toastify";
                       className="w-85"
                     />{" "}
                     {showButton && (
-                    <button
-                      className="btn btn-link bg-warning text-dark"
-                      onClick={sendOtp}
-                    >
-                      Send OTP
-                    </button>
-                    ) }
-                    
+                      <button
+                        className="btn btn-link bg-warning text-dark"
+                        onClick={sendOtp}
+                      >
+                        Send OTP
+                      </button>
+                    )}
                     {phoneError && (
                       <div className="text-danger">{phoneError}</div>
                     )}
@@ -530,7 +527,7 @@ import { toast } from "react-toastify";
                             className="w-85"
                           />
                         </div>
-
+                        
                         <div className="d-flex flex-row align-items-center mb-4">
                           <label
                             htmlFor="formControlLg"
@@ -543,22 +540,18 @@ import { toast } from "react-toastify";
                               id="formControlLg"
                               size="lg"
                               className="w-85 bg-warning"
-                              
                             >
-                             {selectedCountry || "Select Country"}
-                             
+                              {userFilledData.country || "select a country"}
                             </Dropdown.Toggle>
-                            <Dropdown.Menu >
-                            
+                            <Dropdown.Menu>
                               {countries.map((country, index) => (
                                 <Dropdown.Item
                                   key={index}
-                                  
                                   onClick={() =>
                                     setUserFilledData((prev) => {
                                       return { ...prev, ["country"]: country };
                                     })
-                                  }                       
+                                  }
                                 >
                                   {country}
                                 </Dropdown.Item>
@@ -566,6 +559,7 @@ import { toast } from "react-toastify";
                             </Dropdown.Menu>
                           </Dropdown>
                         </div>
+                        
                         <div className="d-flex flex-row align-items-center mb-4">
                           <label
                             htmlFor="formControlLg"
@@ -579,7 +573,7 @@ import { toast } from "react-toastify";
                               size="lg"
                               className="w-85 bg-warning"
                             >
-                              {selectedState || "Select State"}
+                              {userFilledData.state || "Select State"}
                             </Dropdown.Toggle>
                             <Dropdown.Menu
                               style={{ maxHeight: "200px", overflowY: "auto" }}
@@ -589,7 +583,6 @@ import { toast } from "react-toastify";
                                   (state, index) => (
                                     <Dropdown.Item
                                       key={index}
-                                      
                                       onClick={() =>
                                         setUserFilledData((prev) => {
                                           return { ...prev, ["state"]: state };
@@ -721,4 +714,4 @@ import { toast } from "react-toastify";
     </div>
   );
 };
-export default SellerRegister
+export default SellerRegister;
