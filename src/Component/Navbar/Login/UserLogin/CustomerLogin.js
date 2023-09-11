@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import {  useDispatch } from "react-redux";
 import { currentUserData } from "../../../../Redux/user/userAction";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../const/config";
-import httpService from "../../../Error Handling/httpService";
+// import httpService from "../../../Error Handling/httpService";
 import axios from "axios";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -150,7 +150,6 @@ const CustomerLogin = () => {
                             placeholder="please enter your password..."
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            // error={passwordError}
                             autoComplete="current-password"
 
                           />

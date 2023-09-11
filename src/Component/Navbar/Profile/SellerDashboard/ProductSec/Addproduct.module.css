@@ -257,8 +257,9 @@ flex-direction: column;
 }
 .headingText {
   font-weight: bold;
-  margin-right: 1000px;
-  margin-top: 10px;
+  /* margin-right: 1000px; */
+  /* margin-top: 10px; */
+  margin: 10px;
 }
 .maindiv {
   display: flex;
@@ -270,13 +271,16 @@ flex-direction: column;
   background-color: rgb(247, 251, 255);
 }
 .mainone {
-  margin-left: 100px;
+  /* margin-left: 100px; */
+  margin: 20px;
   width: 50%;
   background-color: rgb(247, 251, 255);
 }
 .maintwo {
+  margin: 10px;
   width: 50%;
   background-color: rgb(247, 251, 255);
+  /* background:white */
 }
 .inputDiv {
   display: flex;
