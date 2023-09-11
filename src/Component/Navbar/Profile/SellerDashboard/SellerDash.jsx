@@ -12,6 +12,7 @@ import { ReturnReq } from "../AdminDashboard/ReturnReq/ReturnReq";
 import { ReturnDelivery } from "../DeliveryDashBoard/ReturnDelivery/ReturnDelivery";
 import DeliveryDash from "../DeliveryDashBoard/Deliverydash";
 import OrderHistory from "../../../Dashboard/OrderHistory/Orderhistory";
+import AddProduct from "./ProductSec/Addproduct";
 
 const SellerDashboard = () => {
   const user = useSelector((state) => state.userReducer.user);
@@ -72,6 +73,23 @@ const SellerDashboard = () => {
                   }`}
                 >
                   Product
+                </button>
+              </span>
+            </li>
+          )}
+          {user?.urType === "admin" && (
+            <li
+              className={dash.item}
+              onClick={() => handleLoginTypeChange("AddProduct")}
+            >
+              <i className="fa-solid fa-cart-shopping"></i>
+              <span className={dash.nombres}>
+                <button
+                  className={`login-tab ${
+                    selectedLoginType === "AddProduct" && "active"
+                  }`}
+                >
+                  Add Product
                 </button>
               </span>
             </li>
@@ -279,6 +297,11 @@ const SellerDashboard = () => {
           {selectedLoginType === "productReq" && (
             <div className={dash["productRequest"]}>
               <ProductRequest />
+            </div>
+          )}
+          {selectedLoginType === "AddProduct" && (
+            <div className={dash["AddProduct"]}>
+              <AddProduct />
             </div>
           )}
         </div>
