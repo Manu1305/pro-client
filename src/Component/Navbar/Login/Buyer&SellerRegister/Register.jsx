@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import register from "./Register.module.css";
 import { useNavigate } from "react-router-dom";
 import CustomerRegister from "./BuyerRegistration/CustomerRegister";
@@ -17,10 +16,9 @@ const Register = () => {
   }
   return (
     <div className={register.bg}>
-      {/* <img src="../Image/loginHor.jpg" /> */}
 
       <div className={register["login-tabs"]}>
-        {/* <form> */}
+        
         <div className="p-4 d-flex justify-around">
           <div>
             <button
