@@ -431,8 +431,8 @@ const BuyerConfirm = () => {
                   <div style={{ display: "flex" }}>{type}</div>
                 </div>
               ))}
-
-              {payType === "Cash on delivery" ? (
+</div>
+          { payType === "Cash on delivery" ?   
                 <div
                   style={{
                     "font-weight": 10,
@@ -495,6 +495,27 @@ const BuyerConfirm = () => {
                           </b>
                         </div>
                       </div>
+                      <div
+                        className="d-flex justify-content-between m-3"
+                        style={{ color: "#bf0a2a" }}
+                      >
+                        <div
+                          className="font-weight-bold"
+                          style={{ marginLeft: "30px" }}
+                        >
+                          <b>Cash Pay:</b>
+                        </div>
+                        <div
+                          className="font-weight-bold"
+                          style={{ marginRight: "46px" }}
+                        >
+                          <b>
+                            {(parseInt(totalPrice) * 90) / 100 +
+                              (((parseInt(totalPrice) * 90) / 100) * 5) / 100 
+                              }
+                          </b>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <span>
@@ -502,11 +523,9 @@ const BuyerConfirm = () => {
                     Product Price. GST + Shippment Charge will be Included
                   </span>
                 </div>
-              ) : null}
-            </div>
+            
 
-            {/* order summ */}
-            <div
+            : <div
               className="card mb-4"
               style={{
                 backgroundColor: "#EEEEEE",
@@ -558,7 +577,7 @@ const BuyerConfirm = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>}
             <div>
               <button
                 className="btn btn-danger w-100 border p-3"

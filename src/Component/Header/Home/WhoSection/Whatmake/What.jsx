@@ -13,7 +13,7 @@ function Whatmakeus() {
         <h1 className={styles.mainheading}>
           WHAT
           <br />
-          MAKE US DEFFERENT
+          MAKE US DIFFERENT
         </h1>
       </div>
       <div>
@@ -22,7 +22,7 @@ function Whatmakeus() {
             <BsShop className={styles.logo} />
           </div>
           <div className={styles.ionetwo}>
-            <h2 className={styles.contentHeading}>Franchise opertunities</h2>
+            <h2 className={styles.contentHeading}>Franchise oppertunities</h2>
             <br />
             <br />
             <br />

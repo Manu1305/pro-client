@@ -55,7 +55,7 @@ const NewData = ({ productItems }) => {
 
   return (
     <div className={`${styless.bg}`}>
-      <h2>NEW ARRIVAL</h2>
+      <h2 className={styless.hhhhaa}>NEW ARRIVAL</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
           {data &&

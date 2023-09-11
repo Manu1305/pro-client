@@ -99,7 +99,7 @@ const BigDeals = (  ) => {
 
   return (
     <div className={`${styless.bg}`}>
-      <h2>BIG DEALS</h2>
+      <h2 className={styless.hhhhaa}>BIG DEALS</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
           { data &&
