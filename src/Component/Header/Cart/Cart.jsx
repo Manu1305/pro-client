@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
@@ -13,7 +13,6 @@ import SizeAndQuantity from "../../Reuseable Comp/SizeAndQuantity";
 import { userCartItem } from "../../../Redux/cart/cartAction";
 
 const Cart = () => {
-  // const [CartItem, setCartItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const CartItem = useSelector((state) => state.cartReducer.userCart);
@@ -21,6 +20,7 @@ const Cart = () => {
   console.log(CartItem);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const removeFromCart = async (id) => {
     Swal.fire({
@@ -46,7 +46,11 @@ const Cart = () => {
             .then((res) => {
               console.log("User CArt", res.data);
               dispatch(userCartItem(res.data));
-              Swal.fire("Removed", "Your product removed from cart.", "success");
+              Swal.fire(
+                "Removed",
+                "Your product removed from cart.",
+                "success"
+              );
             })
             .catch((err) => {
               console.log(err);
@@ -126,7 +130,10 @@ const Cart = () => {
               {CartItem.items?.length &&
                 CartItem.items.map((item) => (
                   <div className="shadow-xl h-25 mb-3" key={item._id}>
-                    <div className="card-body p-4">
+                    <div
+                      className="card-body p-4"
+                      // onClick={() => navigate(`/ViewDetails/${item.productId}`)}
+                    >
                       <div className="row d-flex justify-content-between align-items-center">
                         <div className="col-md-2 col-lg-2 col-xl-2">
                           <img src={item.productDetails.images} alt="item" />
@@ -144,10 +151,16 @@ const Cart = () => {
                           </p>
 
                           <div>
-                            <SizeAndQuantity
+                            {/* <SizeAndQuantity
                               obj={item.sizeAndQua}
                               select={Styles.select}
-                            />
+                            /> */}
+                            Quntities :{" "}
+                            {Object.entries(item.sizeAndQua)
+                              .map(([size, value]) => {
+                                return `${size}-${value}`;
+                              })
+                              .join(", ")}
                             <div>
                               <span
                                 className="text-muted"
@@ -156,7 +169,6 @@ const Cart = () => {
                                 Total quantities {item.totalQuantity}{" "}
                               </span>
                             </div>
-
                             <div>
                               <span className="text-red-600 text-xl font-bold">
                                 price : &#8377;{item.productDetails.price}
@@ -177,7 +189,7 @@ const Cart = () => {
                           <div className={Styles.hideprice}>
                             <span className="text-red-600 text-xl font-bold">
                               &#8377;
-                              {item.productDetails.price * item.totalQuantity}
+                              {item.itemPrice}
                             </span>
                           </div>
                         </div>

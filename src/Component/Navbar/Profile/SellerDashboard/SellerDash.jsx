@@ -77,7 +77,7 @@ const SellerDashboard = () => {
               </span>
             </li>
           )}
-          {user?.urType === "admin" && (
+          {(user?.urType === "admin" || user?.urType === "seller") && (
             <li
               className={dash.item}
               onClick={() => handleLoginTypeChange("AddProduct")}
@@ -220,7 +220,7 @@ const SellerDashboard = () => {
               </span>
             </li>
           )}
-          {user?.urType === "admin" && (
+          {user?.urType === "admin" &&  (
             <li
               className={dash.item}
               onClick={() => handleLoginTypeChange("return")}
