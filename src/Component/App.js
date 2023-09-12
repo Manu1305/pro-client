@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route,  } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
 import ScrollToTop from "../Scrolltotop";
 import Login from "./Navbar/Login/UserLogin/Login";
 import Navbar from "./Navbar/Navbar";
@@ -58,20 +58,19 @@ const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
 );
-
+const LazyAddProduct = React.lazy(() =>
+  import("./Navbar/Profile/SellerDashboard/ProductSec/Addproduct")
+);
 const LazyMainPage = React.lazy(() =>
   import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage")
 );
-
 
 const App = () => {
   const { productItems } = cards;
 
   // const [cartItems, setCartItems] = useState(0);
 
-  const user = useSelector(state => state.userReducer.user);
-  console.log("User",user)
-
+  const user = useSelector(state => state.userReducer.user)
 
   const dispatch = useDispatch()
 
@@ -121,7 +120,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    user.email &&  getCarts();
+    getCarts();
     getAllProducts()
   },[])
 
@@ -190,9 +189,9 @@ const App = () => {
             <Route path="/deliverydash" element={<DeliveryDash />} />
             <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
-            <Route path="/shoppingPage" exact element={<ShoppingPage />} />
-            <Route path="/shoppingPage/:category"  exact element={<ShoppingPage />} />
-            <Route path="/shoppingPage/:search" exact element={<ShoppingPage />} />
+            <Route path="/shoppingPage" element={<ShoppingPage />} />
+            <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
+            <Route path="/shoppingPage/:search" element={<ShoppingPage />} />
             <Route path="About" element={<AboutUs />} />
             <Route
               path="/forgotpassword/:id/:token"
@@ -206,7 +205,6 @@ const App = () => {
             <Route path="/Profilepage/:id" element={<SellerProSettings />} />
             <Route path="/editprofile" element={<Editprofile />} />
             <Route path="/returnPro/:id" element={<BuyerReturn />} />
-            {/* <Redirect to="/" /> */}
           </Routes>
         </div>
       </ScrollToTop>

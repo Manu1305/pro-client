@@ -380,7 +380,6 @@ function AddProduct() {
       setvalidation(true);
       setBase64Images([]);
       setColor("");
-      // setQtyAndSizes({});
       setTotalStocks((prev) => prev + Number(totalQuantity));
       toast.success("color varient addeded successfully");
     } else {
@@ -403,7 +402,7 @@ function AddProduct() {
       const newItems = prev.filter((item) => item !== prod);
       return [...newItems];
     });
-    alert("delted")
+    alert("delted");
   };
   return (
     <div className="bg-gray">
