@@ -146,6 +146,10 @@ const ViewProduct = () => {
     const { brand, sellingPrice, selectedCategory, description, seller } =
       product;
 
+
+      console.log("color",color)
+      console.log("images",images)
+
     const item = {
       productId: product._id,
       productDetails: {
