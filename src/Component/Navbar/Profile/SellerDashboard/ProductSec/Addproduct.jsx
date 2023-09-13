@@ -4,7 +4,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdDeleteSweep } from "react-icons/md";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -17,6 +17,17 @@ function AddProduct() {
     Womens: [],
     Kids: [],
   };
+
+  const productInfoArray = [
+    "Material",
+    "Packoff",
+    "Closure",
+    "Fit",
+    "Pattern",
+    "Idealfor",
+    "Washcare",
+    "Convertible",
+  ];
 
   const productCategories = Object.keys(categorySizes);
 
@@ -188,6 +199,7 @@ function AddProduct() {
   };
 
   const [productInfo, setProductInfo] = useState({});
+  const [productInfoDet, setProductInfoDet] = useState({});
   const [color, setColor] = useState("");
   const [qtyAndSizes, setQtyAndSizes] = useState({});
   const [prviewProdcts, setprviewProdcts] = useState([]);
@@ -237,22 +249,13 @@ function AddProduct() {
     console.log("ProductInfo", productInfo);
   }, [productInfo]);
 
-  // const convertToBase64 = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setBase64Images((prev) => [reader.result, ...prev]);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
   const addNewProduct = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
-    if (validation) {
-      if (isValid) {
+
+    console.log(isValid)
+    // if (validation) {
+    //   if (isValid) {
         const config = {
           headers: {
             "Content-Type": "application/json",
@@ -268,6 +271,7 @@ function AddProduct() {
                 ...productInfo,
                 productDetails: prviewProdcts,
                 stock: totalStocks,
+                productInfo:{...productInfoDet}
               },
               config
             )
@@ -277,19 +281,19 @@ function AddProduct() {
                 icon: "success",
                 title: "The product successfully added",
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 1000,
               });
             });
           history("/dashboard");
         } catch (error) {
           console.log("Couldn't add product: ", error);
         }
-      } else {
-        Swal.fire("Fill the all fields", "All field should be filled", "error");
-      }
-    } else {
-      Swal.fire("Fill the all fields", "All field should be filled", "error");
-    }
+    //   } else {
+    //     Swal.fire("Fill the all fields", "All field should be filled", "error");
+    //   }
+    // } else {
+    //   Swal.fire("Fill the all fields", "All field should be filled", "error");
+    // }
   };
 
   const onchangeHandler = (e) => {
@@ -323,11 +327,11 @@ function AddProduct() {
     if (!productInfo.productCode) {
       newErrors.productCode = "Add ProductCode ";
     }
-    if (!productInfo.description) {
-      newErrors.description = "Add description about the product";
-    }
+    // if (!productInfo.description) {
+    //   newErrors.description = "Add description about the product";
+    // }
 
-    if (!productInfo.material) {
+    if (!productInfo.Material) {
       newErrors.material = "Material name is required";
     }
 
@@ -348,13 +352,17 @@ function AddProduct() {
     } else if (!productInfo.collections) {
       newErrors.collections = "Please add collection name of your product";
     }
-    if (!productInfo.WashcareInstructions) {
-      newErrors.WashcareInstructions = "Add some washcare instructions";
-    }
 
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0;
+  };
+
+  const InfoHandler = (e) => {
+    const { name, value } = e.target;
+    setProductInfoDet((prev) => {
+      return { ...prev, [name]: value };
+    });
   };
 
   let totalQuantity = 0;
@@ -404,6 +412,11 @@ function AddProduct() {
     });
     alert("delted");
   };
+
+  useEffect(() => {
+console.log(productInfoDet)
+  },[productInfoDet])
+
   return (
     <div className="bg-gray">
       <div className={styles.headingdiv}>
@@ -417,7 +430,27 @@ function AddProduct() {
                 for="title"
                 className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                ProductCode
+                Title
+              </label>
+              {errors.title && (
+                <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+              )}
+              <input
+                type="text"
+                id="title"
+                name="title"
+                className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter product title"
+                required
+                onChange={(e) => onchangeHandler(e)}
+              />
+            </div>
+            <div>
+              <label
+                for="title"
+                className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Product Code
               </label>
               {errors.productCode && (
                 <p className="text-red-500 text-sm mt-1">
@@ -429,61 +462,11 @@ function AddProduct() {
                 id="title"
                 name="productCode"
                 className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter product title"
+                placeholder="Enter product code"
                 required
                 onChange={(e) => onchangeHandler(e)}
               />
             </div>
-
-            <form style={{ marginTop: "10px" }}>
-              <label htmlFor="editor" className="m-1">
-                product description
-              </label>
-              {errors.description && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.description}
-                </p>
-              )}
-              <div className="w-full mb-4 p-2 dark:bg-gray-700 dark:border-gray-600">
-                <div className="rounded-b-lg ">
-                  <textarea
-                    id="editor"
-                    rows="8"
-                    maxlength="50"
-                    className="block w-full text-sm text-gray-800 border-1  focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                    placeholder="Write product description here"
-                    required
-                    name="description"
-                    onChange={(e) => onchangeHandler(e)}
-                  />
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div className="bg-white mt-4 p-2">
-            <h3 className="fw-bolder">General info</h3>
-            <div className="mt-3">
-              <label
-                for="title"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Meterial
-              </label>
-              {errors.material && (
-                <p className="text-red-500 text-sm mt-1">{errors.material}</p>
-              )}
-              <input
-                type="text"
-                id="title"
-                className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter material"
-                required
-                name="material"
-                onChange={(e) => onchangeHandler(e)}
-              />
-            </div>
-
             <div className="mt-3">
               <label
                 for="brand"
@@ -542,6 +525,127 @@ function AddProduct() {
                 onChange={(e) => onchangeHandler(e)}
               />
             </div>
+          </div>
+
+          {/* General Info */}
+
+          <div className="mt-4 w-full" style={{ background: "white" }}>
+            <div className="m-2 w-97">
+              <label
+                for="countries"
+                className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                {errors.selectedCategory && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.selectedCategory}
+                  </p>
+                )}
+                Select product category
+              </label>
+              <select
+                id="product_category"
+                name="selectedCategory"
+                onChange={(e) => onchangeHandler(e)}
+                className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option selected>Choose a category</option>
+                {productCategories.map((category, index) => {
+                  return (
+                    <option key={index} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            {productInfo.selectedCategory && (
+              <div className="m-2 w-97">
+                <label
+                  for="countries"
+                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Select product Subcategory
+                </label>
+                {errors.selectedSubcategory && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.selectedSubcategory}
+                  </p>
+                )}
+                <select
+                  id="category"
+                  name="selectedSubcategory"
+                  onChange={(e) => onchangeHandler(e)}
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option selected>Choose a subcategory</option>
+                  {categoriesWithSubcategories[
+                    productInfo.selectedCategory
+                  ].map((subcategory, index) => (
+                    <option key={index} value={subcategory}>
+                      {subcategory}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            {productInfo.selectedSubcategory && (
+              <div className="m-2 w-97">
+                <label
+                  for="countries"
+                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Select collection
+                </label>
+                {errors.collections && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.collections}
+                  </p>
+                )}
+                <select
+                  id="subcategory"
+                  name="collections"
+                  onChange={(e) => onchangeHandler(e)}
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option selected>Choose a Collections</option>
+                  {Collections[productInfo.selectedSubcategory].map(
+                    (collections, index) => (
+                      <option key={index} value={collections}>
+                        {collections}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+            )}
+
+            <form style={{ marginTop: "10px" }}>
+              <label
+                htmlFor="editor"
+                className="m-1 text-sm font-medium text-gray-900"
+              >
+                Product description
+              </label>
+              {errors.description && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.description}
+                </p>
+              )}
+              <div className="w-full mb-4 p-2 dark:bg-gray-700 dark:border-gray-600">
+                <div className="rounded-b-lg ">
+                  <textarea
+                    id="editor"
+                    rows="8"
+                    // maxlength="50"
+                    className="block w-full text-sm text-gray-800 border-1  focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                    placeholder="Write product description here"
+                    required
+                    name="description"
+                    onChange={(e) => onchangeHandler(e)}
+                  />
+                </div>
+              </div>
+            </form>
           </div>
           <br />
           <div className="bg-white mt-2 p-2">
@@ -719,129 +823,40 @@ function AddProduct() {
         <br />
 
         <div className={`${styles.maintwo} p-1`}>
-          <div className="m-2 p-2" style={{ background: "white" }}>
-            <div style={{ width: "40%", marginLeft: "40px" }}>
-              <label
-                for="countries"
-                className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                {errors.selectedCategory && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.selectedCategory}
-                  </p>
-                )}
-                Select product category
-              </label>
-              <select
-                id="product_category"
-                name="selectedCategory"
-                onChange={(e) => onchangeHandler(e)}
-                className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option selected>Choose a category</option>
-                {productCategories.map((category, index) => {
-                  return (
-                    <option key={index} value={category}>
-                      {category}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            {productInfo.selectedCategory && (
-              <div
-                style={{
-                  width: "300px",
-                  marginLeft: "40px",
-                }}
-              >
-                <label
-                  for="countries"
-                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Select product Subcategory
-                </label>
-                {errors.selectedSubcategory && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.selectedSubcategory}
-                  </p>
-                )}
-                <select
-                  id="category"
-                  name="selectedSubcategory"
-                  onChange={(e) => onchangeHandler(e)}
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option selected>Choose a subcategory</option>
-                  {categoriesWithSubcategories[
-                    productInfo.selectedCategory
-                  ].map((subcategory, index) => (
-                    <option key={index} value={subcategory}>
-                      {subcategory}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-            {productInfo.selectedSubcategory && (
-              <div style={{ width: "300px", marginLeft: "40px" }}>
-                <label
-                  for="countries"
-                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Select collection
-                </label>
-                {errors.collections && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.collections}
-                  </p>
-                )}
-                <select
-                  id="subcategory"
-                  name="collections"
-                  onChange={(e) => onchangeHandler(e)}
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option selected>Choose a Collections</option>
-                  {Collections[productInfo.selectedSubcategory].map(
-                    (collections, index) => (
-                      <option key={index} value={collections}>
-                        {collections}
-                      </option>
-                    )
-                  )}
-                </select>
-              </div>
-            )}
+          <div className="bg-white mt-2 p-2">
+            <h3 className="fw-bolder">General info</h3>
 
-            <div style={{ marginLeft: "30px", marginBottom: "20px" }}>
-              <label
-                for="message"
-                className=" m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Washcare information
-              </label>
-              {errors.WashcareInstructions && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.WashcareInstructions}
-                </p>
-              )}
-              <textarea
-                name="WashcareInstructions"
-                onChange={(e) => onchangeHandler(e)}
-                rows="4"
-                maxLength={"70"}
-                className="block p-2.5 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Additional Texts...."
-              />
-            </div>
+            {productInfoArray.map((ele) => (
+              <div className="mt-3" key={ele}>
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  {ele}
+                </label>
+                {/* {errors[`${ele}`] && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors[`${ele}`]}
+                  </p>
+                )} */}
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Enter ${ele}`}
+                  required
+                  name={ele}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+            ))}
           </div>
 
-          <div className="bg-white m-1 p-1">
+          <div className="bg-white mt-4">
             <div style={{ marginLeft: "30px", marginBottom: "20px" }}>
               <label
                 for="message"
-                className=" m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
               >
                 Additional Text
               </label>
@@ -851,18 +866,18 @@ function AddProduct() {
                 </p>
               )}
               <textarea
-                name="WashcareInstructions"
+                name="Washcare"
                 onChange={(e) => onchangeHandler(e)}
                 rows="8"
                 maxLength={"70"}
-                className="block p-2.5 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block p-4 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter washcare description of product here..."
               />
             </div>
           </div>
 
           {/* Prview */}
-          <div className="m-2 w-full bg-white">
+          <div className="mt-4 w-full bg-white">
             <div>
               <h3
                 style={{ marginLeft: "40px", margin: "20px" }}
@@ -890,7 +905,9 @@ function AddProduct() {
                 </h2>{" "}
               </div>
               <div style={{ display: "flex", flexDirection: "row" }}>
-                <h2>Product Description</h2>
+                <span className="m-2 text-sm font-medium text-gray-900">
+                  Product Description
+                </span>
                 <h2>
                   {prviewProdcts.length >= 0
                     ? productInfo.description

@@ -13,16 +13,16 @@ axios.interceptors.response.use(null, (error) => {
 
   if (!expectedError) {
     //console.log('Logging the error', error);
-    toast.error(`error ${error.response.config.url}`, {
-      position: "top-center",
-      autoClose: 2500,
+    // toast.error(`error ${error.response.config.url}`, {
+    //   position: "top-center",
+    //   autoClose: 2500,
       
-      hideProgressBar: false,
-      closeOnClick: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "dark",
+    // });
   }
 
   return Promise.reject(error);

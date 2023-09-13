@@ -1,9 +1,9 @@
-
 .about {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: bolder;
+  /* font-weight: 60px; */
 }
-.card{
+.card {
   background: white;
   overflow: hidden;
 }
@@ -11,14 +11,13 @@
   font-size: 20px;
   color: #ab8181;
 }
-.sizes{
+.sizes {
   -ms-overflow-style: none;
   scrollbar-width: none;
   overflow-x: scroll;
-
 }
 .sizes::-webkit-scrollbar {
-display: none;
+  display: none;
 }
 
 .main-section {
@@ -117,6 +116,8 @@ display: none;
 .sizeresponsive {
   display: flex;
   flex-direction: row;
+  /* left: 0;fle */
+  justify-content: start;
 }
 .star {
   height: 100%;
@@ -147,7 +148,6 @@ display: none;
   flex-direction: row;
   margin-top: 20px;
 }
-
 
 .form-group {
   width: 80px;
@@ -192,22 +192,18 @@ display: none;
   margin-left: 45rem;
 }
 .color_Container {
-  margin-top: 30px;
-  width: 485px;
-  height: 127px;
+  margin-top: 15px;
   display: flex;
-  
 }
 .color_box {
-  background-color: #BBC1F8;
-  width: 60px;
-  height: 60px;
-  /* margin-top: 20px; */
+  /* background-color: #bbc1f8; */
+  width: 50px;
+  height: 50px;
   gap: 10px;
   text-align: center;
   line-height: 75px;
   font-size: 30px;
-  margin: left -10px;;
+  margin: left -10px;
 }
 
 .color_box:hover {
@@ -216,8 +212,7 @@ display: none;
   border: 5px solid rgb(5, 0, 10);
 }
 
-
-.footer{
+.footer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -225,10 +220,6 @@ display: none;
   width: 100%;
   background-color: black;
 }
-
-
-
-
 
 @media (min-width: 100px) and (max-width: 900px) {
   .sizeresponsive {
@@ -240,6 +231,7 @@ display: none;
   }
   .descrip {
     margin: 40px;
+    margin-top: 20px;
     border-top: 0.3rem solid rgb(141, 137, 137);
     width: 80%;
     margin-right: 20px;
@@ -279,15 +271,19 @@ display: none;
 }
 
 .desgin {
-  color: red;
+  color: #D70A2A;
   height: 60px;
   width: 5rem;
-  margin-left: 27px;
   font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 5px;
   align-items: center;
+}
+.tottal{
+  display: flex;
+  
 }
 
 /* .desgin {
@@ -324,7 +320,6 @@ display: none;
     display: flex;
     flex-direction: row;
   }
-  
 }
 .add_to_cart {
   display: flex;
@@ -338,7 +333,6 @@ display: none;
   align-items: center;
 }
 .descrip {
-  
   margin-left: 12px;
   width: 98%;
 }

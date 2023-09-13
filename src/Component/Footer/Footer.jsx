@@ -240,7 +240,7 @@ export const Footer=()=> {
           </div>
         </div>
       </div>
-      <p className={styles.hhhhh}>HiTec Mart © 2023, All Right Reserved.</p>
+      <p className={styles.hhhhh}>Copyright © 2023 HiTec Mart, All Right Reserved.</p>
     </footer>
   );
 }
