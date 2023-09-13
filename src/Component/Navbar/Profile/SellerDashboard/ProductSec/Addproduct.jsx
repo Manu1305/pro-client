@@ -860,13 +860,13 @@ console.log(productInfoDet)
               >
                 Additional Text
               </label>
-              {errors.WashcareInstructions && (
+              {errors.MoreDetails && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.WashcareInstructions}
+                  {errors.MoreDetails}
                 </p>
               )}
               <textarea
-                name="Washcare"
+                name="MoreDetails"
                 onChange={(e) => onchangeHandler(e)}
                 rows="8"
                 maxLength={"70"}
