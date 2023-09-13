@@ -11,6 +11,24 @@ nav {
   position: sticky;
   z-index: 999;
 }
+.dropdown1 {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f4f5f7;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 6px 10px;
+  z-index: 1;
+  border-radius: 1rem;
+}
+.dropdown1:hover .dropdown-content1 {
+  display: block;
+}
+
 .badge {
   padding-left: 9px;
   padding-right: 9px;

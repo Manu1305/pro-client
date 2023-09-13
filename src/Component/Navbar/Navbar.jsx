@@ -57,6 +57,7 @@ const Navbar = () => {
           />
         </Link>
       </li>
+     
       <SearchBar />
       <div className={styles["navbar-toggle"]} onClick={toggleMenu}>
         <i className="fas fa-bars"></i>
@@ -69,7 +70,33 @@ const Navbar = () => {
             </Link>
           </li>
         )}
-
+ <li>
+          <div className={styles.dropdown1}>
+            <span>FRANCHISE</span>
+            <div className={styles["dropdown-content1"]}>
+              {/* <p>Hello World!</p> */}
+              <p>
+                {" "}
+                <Link to="/wholesale" onClick={closeMenu}>
+                  Wholesale Store
+                </Link>
+              </p>
+              <p>
+                {" "}
+                <Link to="/retaill" onClick={closeMenu}>
+                 Retail Store Franchise 
+                </Link>
+              </p>
+              <p>
+                {" "}
+                <Link to="/delivv" onClick={closeMenu}>
+                  Delivery Franchise
+                </Link>
+              </p>
+           
+            </div>
+          </div>
+        </li>
         {user?.urType !== "admin" &&
           user?.urType !== "seller" &&
           user?.urType !== "delivery" && (
