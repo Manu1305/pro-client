@@ -11,6 +11,7 @@ import httpService from "../Error Handling/httpService";
 import { Footer } from "../Footer/Footer";
 import { ScaleLoader } from "react-spinners";
 import { PiHeartLight } from "react-icons/pi";
+import { CategCart } from "./CategCart/CategCart";
 
 const Shopping = () => {
   const { category } = useParams();
@@ -145,7 +146,7 @@ const Shopping = () => {
                 </div>
               ) : (
                 <div className="m-2" style={{ fontWeight: "30px" }}>
-                  {data.description}
+                  {data.title}
                 </div>
               )}
             </div>
@@ -182,11 +183,12 @@ const Shopping = () => {
           </div>
         ) : (
           <div>
+            <CategCart/>
             <div className="container">
               <div className="row p-3">
                 <div className="col-lg-3">
                   <div className="card mb-5">
-                    <div className="card-body mb-7 shadow-xl">
+                    <div className={`card-body mb-7 shadow-xl ${styless.categggg}`}>
                       <div style={{ color: "black", fontWeight: "bolder" }}>
                         PRODUCT CATEGORIES
                       </div>

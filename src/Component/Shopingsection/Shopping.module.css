@@ -2,6 +2,13 @@
   border-color: #3b71ca !important;
   background-color: white !important;
 }
+.categggg{
+  width: 250px;
+  Height:400px;
+  margin-left:-5rem;
+  margin-top: -25rem;
+}
+
 
 .icon-hover:hover i {
   color: #3b71ca !important;
@@ -225,6 +232,12 @@
 @media (max-width: 600px) {
   input[type="range"] {
     width: 80vw; /* Adjust the width as needed */
+  }
+  .categggg{
+    width: 350px;
+    Height:400px;
+    margin-left:0rem;
+    margin-top: 0rem;
   }
 }
 

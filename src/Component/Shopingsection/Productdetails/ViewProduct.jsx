@@ -239,7 +239,6 @@ const ViewProduct = () => {
     <div className={`${styles.card}`}>
       {productDetails.map((product) => (
         <div className="row" key={product._id}>
-
           {/* images css*/}
           <div className={`col-md-6`}>
             <div className={`text-center p-4`}>
@@ -250,7 +249,7 @@ const ViewProduct = () => {
                     : imgPreview
                 }
                 className={`img-fluid img-responsive rounded product-image`}
-                style={{ height: "400px", width: "770px",  }}
+                style={{ height: "400px", width: "770px" }}
                 alt="img"
               />
             </div>
@@ -310,9 +309,7 @@ const ViewProduct = () => {
                 <div
                   className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
                 >
-                  <h5 className="fw-bold ">
-                    ₹{product.sellingPrice}
-                  </h5>
+                  <h5 className="fw-bold ">₹{product.sellingPrice}</h5>
                   <div className={styles.starreviewmain}>
                     <div className={styles.star}>
                       <AiOutlineStar />
@@ -536,12 +533,12 @@ const ViewProduct = () => {
             ></div>
             <div className={styles.descrip}>
               <div>
-                <p className={`about m-2 ${styles.about}`}>
+                <p className={`about m-1 ${styles.about}`}>
                   Product description
                 </p>
-                <span className={`m-2 ${styles["text1"]}`}>
+                <div className={`m-2 w-75 ${styles["text1"]}`}>
                   {product.description}
-                </span>
+                </div>
               </div>
             </div>
 
@@ -552,7 +549,7 @@ const ViewProduct = () => {
                   display: "flex",
                   flexDirection: "column",
                   // marginTop: "30px",
-                  width:"30%"
+                  width: "30%",
                 }}
               >
                 <div className={`m-2  ${styles["text1"]}`}>
@@ -579,7 +576,6 @@ const ViewProduct = () => {
                 <div className={`m-2 ${styles["text1"]}`}>
                   <b className="mr-4">Closure</b>
                 </div>
-                
               </div>
               <div
                 style={{
@@ -614,6 +610,15 @@ const ViewProduct = () => {
                 </div>
               </div>
             </div>
+
+            {product.MoreDetails !== null && (
+              <div>
+                <p className={`about mt-3 ${styles.about}`}>More Details</p>
+                <div className={`m-2 w-70 ${styles["text1"]}`}>
+                  {product.MoreDetails}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ))}
