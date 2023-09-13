@@ -145,7 +145,7 @@ const Shopping = () => {
                 </div>
               ) : (
                 <div className="m-2" style={{ fontWeight: "30px" }}>
-                  {data.description}
+                  {data.title}
                 </div>
               )}
             </div>
