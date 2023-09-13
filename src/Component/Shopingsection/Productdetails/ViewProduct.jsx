@@ -399,6 +399,7 @@ const ViewProduct = () => {
                                     style={{
                                       borderRadius: "0px",
                                       backgroundColor: "rgb(243,243,243)",
+                                      marginRight:"10px"
                                     }}
                                   >
                                     <div>{size}</div>
@@ -412,7 +413,7 @@ const ViewProduct = () => {
                                     </div>
                                   </div>
                                   {user?.email && user?.urType === "buyer" && (
-                                    <div className="mt-1 ml-8 d-flex flex-row align-items-center">
+                                    <div className="mt-1 ml-3 d-flex flex-row align-items-center">
                                       <div>
                                         <AiOutlineMinusCircle
                                           // className="mr-1"
@@ -423,7 +424,7 @@ const ViewProduct = () => {
                                       <div
                                         style={{
                                           width: "20px",
-                                          marginLeft: "5px",
+                                          // marginLeft: "5px",
                                         }}
                                       >
                                         <input
@@ -519,18 +520,21 @@ const ViewProduct = () => {
               )}
             </div>
           </div>
-          <div >
-            <div className="mt-2">
+          <div>
+            <div className="m-5 mb-2">
               <h3 className={styles.activeHeading}>Description</h3>
             </div>
 
             <div
               style={{
                 borderTop: "0.4rem solid rgb(243,243,243)",
-                width: "95%",
+                width: "94%",
                 margin: "auto",
+                // marginTop:"10px",
+                left: 0,
               }}
             ></div>
+
             <div className={styles.descrip}>
               <div>
                 <p className={`about m-1 ${styles.about}`}>
@@ -542,77 +546,81 @@ const ViewProduct = () => {
               </div>
             </div>
 
-            <p className={`about mt-3 ${styles.about}`}>Product Details</p>
-            <div className="ml-20 d-flex">
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  // marginTop: "30px",
-                  width: "30%",
-                }}
-              >
-                <div className={`m-2  ${styles["text1"]}`}>
-                  <b className="mr-4">Material</b>{" "}
+            {/* info */}
+            <div className={styles.descrip}>
+              <p className={`about mt-3 ${styles.about}`}>Product Details</p>
+              <div className="ml-20 d-flex">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    // marginTop: "30px",
+                    width: "30%",
+                  }}
+                >
+                  <div className={`m-2  ${styles["text1"]}`}>
+                    <b className="mr-4">Material</b>{" "}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    <b className="mr-4">Fit</b>
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    <b className="mr-4">Ideal for</b>{" "}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    <b className="mr-4">Pack off</b>
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    <b className="mr-4">Pattern</b>
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    <b className="mr-4">Washcare</b>{" "}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    <b className="mr-4">Convertible</b>{" "}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    <b className="mr-4">Closure</b>
+                  </div>
                 </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  <b className="mr-4">Fit</b>
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  <b className="mr-4">Ideal for</b>{" "}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  <b className="mr-4">Pack off</b>
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  <b className="mr-4">Pattern</b>
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  <b className="mr-4">Washcare</b>{" "}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  <b className="mr-4">Convertible</b>{" "}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  <b className="mr-4">Closure</b>
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  // marginTop: "30px",
-                }}
-              >
-                <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Material}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Fit}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Idealfor}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Packoff}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Pattern}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Washcare}
-                </div>
-                <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Convertible}
-                </div>
-                <div className={`m-2 w-50 ${styles["text1"]}`}>
-                  {product.productInfo.Closure}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    // marginTop: "30px",
+                  }}
+                >
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    {product.productInfo.Material}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    {product.productInfo.Fit}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    {product.productInfo.Idealfor}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    {product.productInfo.Packoff}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    {product.productInfo.Pattern}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    {product.productInfo.Washcare}
+                  </div>
+                  <div className={`m-2 ${styles["text1"]}`}>
+                    {product.productInfo.Convertible}
+                  </div>
+                  <div className={`m-2 w-50 ${styles["text1"]}`}>
+                    {product.productInfo.Closure}
+                  </div>
                 </div>
               </div>
             </div>
 
+            {/* more */}
             {product.MoreDetails !== null && (
-              <div>
+              <div className={styles.descrip}>
                 <p className={`about mt-3 ${styles.about}`}>More Details</p>
                 <div className={`m-2 w-70 ${styles["text1"]}`}>
                   {product.MoreDetails}
