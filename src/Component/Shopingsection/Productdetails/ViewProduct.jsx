@@ -522,7 +522,7 @@ const ViewProduct = () => {
               )}
             </div>
           </div>
-          <div style={{ }}>
+          <div >
             <div className="mt-2">
               <h3 className={styles.activeHeading}>Description</h3>
             </div>

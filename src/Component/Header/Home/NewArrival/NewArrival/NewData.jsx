@@ -60,11 +60,11 @@ const NewData = ({ productItems }) => {
         <Slider {...settings}>
           {data &&
             data.map((productItem) => (
-              <div className={styless.mains} key={productItem._id}>
+              <div key={productItem._id}>
                 <div className={styless.customerheading}>
                   <Link to={`/ViewDetails/${productItem._id}`}>
-                    <div className={`${styless.card}`}>
-                      <img src={productItem.productDetails[0].images[0]} alt="image" />
+                    <div className={`${styless.card} shadow-md`} >
+                      <img src={productItem.productDetails[0].images[0]} alt="" />
                     </div>
                   </Link>
                 </div>

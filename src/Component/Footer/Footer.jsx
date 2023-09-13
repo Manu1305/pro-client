@@ -241,7 +241,7 @@ export const Footer=()=> {
           </div>
         </div>
       </div>
-      <p className={styles.hhhhh}>Copyright © 2023 HiTec Mart, All Right Reserved.</p>
+      <p style={{backgroundColor:'black'}} className={styles.hhhhh}>Copyright © 2023 HiTec Mart, All Right Reserved.</p>
     </footer>
   );
 }

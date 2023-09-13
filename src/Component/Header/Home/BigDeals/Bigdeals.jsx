@@ -70,7 +70,8 @@ const BigDeals = (  ) => {
       .then((res) => {
 
         console.log(res.data)
-        const shuffledData = shuffleArray(res.data); // Shuffle the data
+        const filterdDAta = res.data.filter((data) => data.status === true)
+        const shuffledData = shuffleArray(filterdDAta); // Shuffle the data
         setData(shuffledData);
         console.log(shuffledData);
       })
@@ -107,7 +108,7 @@ const BigDeals = (  ) => {
               <div>
                 <div className={styless.customerheading}>
                   <Link to={`/ViewDetails/${productItems._id}`}>
-                    <div className={`${styless.card}`}>
+                    <div className={`${styless.card} shadow-md`}>
                       <img
                         src={productItems.productDetails[0].images[0]}
                         alt="imge"
