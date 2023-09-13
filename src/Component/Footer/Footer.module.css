@@ -117,10 +117,11 @@
 
 .hhhhh {
   /* background-color: #183865; */
+  display: flex;
   align-items: center;
   color: aliceblue;
-  margin-top: -2rem;
-  margin-left: 30rem;
+ justify-content:center ;
+ align-items: center;
 }
 
 /* Media Queries for responsiveness */
@@ -225,9 +226,14 @@
 @media screen and (max-width: 600px) {
   .hhhhh {
     /* background-color: #183865; */
+    display: flex;
+    justify-content: center;
     align-items: center;
     color: aliceblue;
     margin-top: -5rem;
-    margin-left: 3rem;
+  
+
+   
+    
   }
 }
