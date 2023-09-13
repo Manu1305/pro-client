@@ -102,7 +102,7 @@ const TrendingItems = (  ) => {
 
   return (
     <div className={`${styless.bg}`}>
-      <h2>TOP TRENDS</h2>
+      <h2 className={styless.hhhhaa}>TOP TRENDS</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
           { data &&

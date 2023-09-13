@@ -39,6 +39,8 @@ function Review() {
 <span  className={`fa fa-star ${styles.checked}`}></span>
 <span  className={`fa fa-star ${styles.checked}`}></span>
 <span  className={`fa fa-star ${styles.checked}`}></span>
+<span  className={`fa fa-star ${styles.checked}`}></span>
+
 </div>
   </div>
   <div className={styles.starmaindiv}>

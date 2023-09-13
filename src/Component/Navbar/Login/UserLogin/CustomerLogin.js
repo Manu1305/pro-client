@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import {  useDispatch } from "react-redux";
 import { currentUserData } from "../../../../Redux/user/userAction";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../const/config";
-import httpService from "../../../Error Handling/httpService";
-
+// import httpService from "../../../Error Handling/httpService";
+import axios from "axios";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const CustomerLogin = () => {
   const history = useNavigate();
@@ -14,6 +16,7 @@ const CustomerLogin = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [inpType, setInpType] = useState('password')
   const dispatch = useDispatch();
 
   const handleCustomerLogin = async (e) => {
@@ -21,7 +24,7 @@ const CustomerLogin = () => {
 
 
     try {
-      const response = await httpService
+      const response = await axios
         .post(`${apiURL}/user/login`, { email, password })
         .then((res) => res)
         .catch((err) => {
@@ -50,9 +53,7 @@ const CustomerLogin = () => {
 
         console.log("CHECK", response.data.user)
         dispatch(currentUserData(response.data.user));
-        // sessionStorage.setItem("user", JSON.stringify(response.data.user));
       }
-
 
 
       if (response.data.token) {
@@ -75,9 +76,16 @@ const CustomerLogin = () => {
       console.log(error);
     }
 
-    
+
   };
 
+  const handleCheckPass = () => {
+    if (inpType==='password'){
+      setInpType('text')
+   } else {
+      setInpType('password')
+   }
+  }
   return (
     <section
       className="vh-90"
@@ -132,16 +140,26 @@ const CustomerLogin = () => {
                         <label className="form-label" for="form2Example27">
                           Password
                         </label>
-                        <input
-                          type="password"
-                          id="form2Example27"
-                          className="form-control form-control-lg"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          // error={passwordError}
-                          placeholder="please enter your password..."
-                        />
 
+                        <div class="mb-4 flex">
+
+                          <input
+                            className="form-control form-control-lg"
+                            type={inpType}
+                            id="form2Example27"
+                            placeholder="please enter your password..."
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            autoComplete="current-password"
+
+                          />
+                          <span className="flex justify-around items-center" onClick={handleCheckPass}>
+                           {
+                            inpType === "password" ? <RemoveRedEyeIcon className="absolute mr-10" /> : <VisibilityOffIcon className="absolute mr-10"/>
+
+                           } 
+                          </span>
+                        </div>
                       </div>
                       <div className="pt-1 mb-4">
                         <button

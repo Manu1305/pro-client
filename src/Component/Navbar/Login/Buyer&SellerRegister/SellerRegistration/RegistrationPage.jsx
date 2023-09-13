@@ -6,7 +6,6 @@ import  SellerRegister  from "./ProfileForm/SellerRegistration";
 import  Plans  from "./PlansForm/Plans";
 import  SubscriptionForm  from "./ConfirmationPage/Confirmation";
 import Thankyou from "./Thankyou";
-import { Link } from "react-router-dom";
 
 // import CustomerRegister from "../Buyer&SellerRegister/CustomerRegister";
 // import SellerRegister from "../Buyer&SellerRegister/SellerRegistration";

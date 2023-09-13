@@ -202,14 +202,6 @@ const DeliveryDash = () => {
 
   useEffect(() => {}, [orderId]);
 
-  const settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-  };
 
   return (
     <div className={`row ${styles.tableWrapper}`}>
