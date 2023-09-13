@@ -1,0 +1,523 @@
+.image-container {
+    position: relative;
+    display: inline-block;
+  }
+  .image-container22 {
+    position: relative;
+    display: inline-block;
+  }
+  .wholesale{
+    color: #030303;
+  }
+  .wholesaleH1{
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 2rem;
+    margin-left: 3.8rem;
+  }
+  .wholesaleP{
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 4rem;
+    margin-top: 1rem;
+
+
+  }
+  .eligi{
+    font-size: 40px;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-left: 3.5rem;
+  }
+  .headder{
+    font-size: 40px;
+    font-weight: 600;
+  }
+  .parag{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 1rem;
+  }
+  .elll{
+    font-size: 16px;
+    font-weight: 500;
+    color: #030303;
+    margin-left: 4rem;
+    margin-top: 1rem;
+  }
+  .text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    padding: 10px;
+  }
+  
+  /* Optional: Adjust the width of the image to fit your layout */
+  .image-container img {
+    width: 100%;
+  }
+  .image-container22 img {
+    width: 100%;
+  }
+  
+  .iconll {
+    width: 15rem;
+    height: 10rem;
+    margin-left: 15rem;
+  }
+  .image {
+    width: 100%;
+    max-height: 300px; /* Adjust the max-height to your desired size */
+    object-fit: cover; /* Maintain aspect ratio and crop if necessary */
+    background: #f4f4f4;
+    border-radius: 10px;
+  }
+  
+  .container {
+    padding: 20px;
+    display: flex;
+    margin-top: -0.3rem;
+    flex-direction: row;
+    align-items: center;
+  }
+  .cont {
+    align-items: center;
+    margin-left: 15rem;
+  }
+  .hea {
+    color: #183865;
+    text-align: center;
+    margin-top: auto;
+  }
+   .cont1 {
+      align-items: center;
+      margin-left: 6rem;
+      flex-basis: 100%; /* Single column for mobile */
+    }
+  .sty {
+    color: #070606;
+    text-align: center;
+    margin-left: -16rem;
+    /* align-items: center; */
+  }
+  .styt {
+    color: #183865;
+    text-align: center;
+    margin-left: 2rem;
+    margin-top: 1rem;
+    height: 3rem;
+    width: 3rem;
+  }
+  
+  .stye {
+    color: #080808;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    /* margin-left: -10rem; */
+    margin-right: 10rem;
+  }
+  .styew {
+    color: #183865;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 0.2rem;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .col-md-4 {
+    padding: 10px;
+  }
+  
+  .img-fluid {
+    /* max-width: 100%;
+      height: auto; */
+    width: 100%;
+    height: 1rem;
+  }
+  .bgss {
+    background-color: #5ce1e6;
+    margin-top: -0.2rem;
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .container1 {
+      justify-content: center;
+    }
+  }
+  
+  /* For screens larger than 1024px */
+  @media (min-width: 1025px) {
+    .container1 {
+      justify-content: space-between;
+    }
+
+  }
+  @media (max-width: 768px) {
+    .image {
+      width: 1px;
+      height: 1px;
+    }
+    .cont1 {
+      margin-left: 0;
+      flex-basis: 100%; /* Single column for mobile */
+    }
+    .styt {
+      color: #183865;
+      text-align: center;
+      margin-left: 2rem;
+      margin-top: 1rem;
+      height: 3rem;
+      width: 3rem;
+    }
+    .cont {
+      margin-left: 0; /* Remove the left margin for smaller screens */
+    }
+  }
+  
+  .imgggg {
+    height: 30rem;
+  }
+  /* Container for image and text overlay */
+  .image-container {
+    position: relative;
+    display: block; /* Use block display to adjust width and center */
+    max-width: 100%; /* Ensure the container doesn't exceed screen width */
+  }
+  .image-container22 {
+    position: relative;
+    display: block; /* Use block display to adjust width and center */
+    max-width: 100%; /* Ensure the container doesn't exceed screen width */
+  }
+  
+  /* Text overlay on image */
+  .text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 58px;
+    font-weight: 800;
+    color: white;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    padding: 10px;
+  }
+  
+  /* Optional: Adjust the width of the image to fit your layout */
+  .image-container img {
+    width: 100%;
+  }
+  .image-container22 img {
+    width: 100%;
+  }
+  .text-overlay22 {
+    position: absolute;
+    top: 55%;
+    border: 1px solid #5CE1E6;
+    background-color: #5CE1E6;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    font-size:medium;
+    color: white;
+    padding: 10px 32px;
+    border-radius: 2rem;
+    text-align: center;
+    padding: 10px;
+    font-size:medium;
+    margin-left: -40rem;
+  }
+  .text-overlay23 {
+    top: 40%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    color: #f4f4f4;
+    text-align: center;
+    font-size:24px;
+    font-weight:500; 
+    margin-left: -40rem;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .styew {
+      color: #183865;
+      text-align: center;
+      font-size:medium;
+      font-weight: 500;
+      margin-left: 0.2rem;
+    }
+    .row {
+
+      display: flex;
+      flex-direction: column;
+      /* margin-left: -4rem; */
+      text-align: center;
+  
+     
+  }
+    .stye {
+      margin-top: 9rem;
+      color: #030303;
+      /* text-align: center; */
+      font-size: small;
+      margin-top: 0rem;
+      /* text-align: center; */
+      margin-right: 1.3rem;
+    }
+    .sty {
+      margin-top: 3rem;
+      color: #060505;
+      text-align: center;
+      margin-left: -0rem;
+    }
+    
+    .image-container .text-overlay {
+      /* font-weight: 500; */
+      color: rgb(253, 246, 126);
+    }
+   
+    .image-container .text-overlay {
+      position: absolute;
+  
+      text-align: center;
+      width: 100%;
+      z-index: 2;
+      color: #fff;
+    }
+    .image-container22 .text-overlay23 {
+      /* position: absolute; */
+  
+      text-align: center;
+      /* width: 100%; */
+      z-index: 2;
+      color: #fff;
+      top: 55%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      color: #f4f4f4;
+      text-align: center;
+      font-size: small;
+      margin-left: -11rem;
+    }
+    .iconll {
+      width: 12rem;
+      height: 8rem;
+      margin-left: 1rem;
+      margin-bottom: -3rem;
+    }
+    .text-overlay {
+      position: absolute;
+      top: 50%;
+      text-align: center;
+      /* left: 50%; */
+      margin-left: 0rem;
+      transform: translate(-50%, -50%);
+      font-size: large;
+      color: white;
+      /* background-color: rgba(0, 0, 0, 0.5); */
+      padding: 10px;
+    }
+    .text-overlay22 {
+      position: absolute;
+      top: 20%;
+      border: 2px solid #5CE1E6;
+      background-color: #5CE1E6;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      font-size: large;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      padding: 10px;
+      font-size: x-large;
+      /* margin-left: 7rem; */
+    }
+    .text-overlay23 {
+      top: 70%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      color: #f4f4f4;
+      /* text-align: center; */
+      font-size: small;
+      font-weight: 400;
+      margin-left: -10rem;
+    }
+    .imgggg {
+      height: 20rem;
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px)  {
+    .iconll {
+      width: 10rem;
+      height: 10rem;
+      margin-left: 7rem;
+    }
+    .text-overlay {
+      position: absolute;
+      top: 40%;
+      white-space: nowrap;
+  
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: white;
+      /* background-color: rgba(0, 0, 0, 0.5); */
+      padding: 10px;
+    }
+    .text-overlay22 {
+      position: absolute;
+      top: 20%;
+      border: 2px solid #5CE1E6;
+      background-color: #5CE1E6;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      font-size: large;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      padding: 10px;
+      font-size:medium;
+      margin-left: 7rem;
+    }
+
+    .overlay-button1 {
+      background-color: #5CE1E6;
+      color: white;
+      text-align: center;
+      border: none;    
+      padding: 15px 32px;
+      border-radius: 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin-left: 7rem;
+    }
+    .text-overlay23 {
+      top: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      color: #f4f4f4;
+      text-align: center;
+      font-size:medium;
+      font-weight: 500; 
+            margin-left: -26rem;
+    }
+    .sty {
+      color: #f4f4f4;
+      text-align: center;
+      align-items: center;
+      margin-left: -8rem;
+    }
+    .stye {
+      color: #f4f4f4;
+      text-align: center;
+      align-items: center;
+      font-size: small;
+      margin-left: -14rem;
+    }
+
+  
+  
+    .image-container .text-overlay {
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      z-index: 2;
+      color: #fff;
+    }
+    .image-container22 .text-overlay22 {
+      position: absolute;
+      text-align: center;
+      /* width: 100%; */
+      z-index: 2;
+      color: #fff;
+    }
+    .image-container22 .text-overlay23 {
+      z-index: 2;
+  
+      top: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      color: #f4f4f4;
+      text-align: center;
+      font-size: small;
+      margin-left: -25rem;
+    }
+  }
+  
+  .image-container .text-overlay {
+    color: rgb(253, 246, 126);
+  }
+  .image-container .text-overlay {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    color: #fff;
+  }
+  
+  
+  
+  
+  /* for mobile appied by amar */
+  
+  
+  
+  @media screen and (max-width: 480px) {
+    /* Adjust styles for smaller screens (mobile) */
+    .container {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+
+    .text-overlay22 {
+      position: absolute;
+      top: 20%;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      font-size: large;
+      color: white;
+      color: #f4f4f4;
+      text-align: center;
+      padding: 10px;
+      font-size: x-large;
+      /* margin-left: 20rem; */
+    }
+  }
+  
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    .container {
+      font-size: 16px;
+      padding: 20px;
+    }
+  }
+   
+    .overlay-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  
+
+
+
+  
+
+    /* @font-face {
+      font-family: BOLD;
+      src: url("../../../../Montserrat/static/Montserrat-ExtraBold.ttf");
+    }
+    .text-overlay{
+      font-family: BOLD;
+    } */

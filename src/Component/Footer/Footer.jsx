@@ -76,10 +76,10 @@ export const Footer=()=> {
               </div>
               <div className={styles.list}>
                 <ul className={styles.listul}>
-                  <Link className={styles.listhead}>Legel</Link>
+                  <Link className={styles.listhead}>Legal</Link>
                   <Link className={styles.links}>Terms and conditions </Link>
                   <Link className={styles.links}>Privacy and policy</Link>
-                  
+
                 </ul>
               </div>
             </div>
