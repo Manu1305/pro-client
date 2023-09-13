@@ -266,7 +266,7 @@ function AddProduct() {
         try {
           await httpService
             .post(
-              `${apiURL}/product/add-new-product`,
+              `http://192.168.0.142:8000/product/add-new-product`,
               {
                 ...productInfo,
                 productDetails: prviewProdcts,

@@ -190,7 +190,8 @@ export const Footer=()=> {
             <h2 className={styles.twoheading}>HITECMART</h2>
             <p className="text-white">
               Complete your style with awesome <br />
-              clothes from us.
+              <p style={{display:'flex',justifyContent:'center', alignItems:'center'}}>clothes from us.
+                </p>
             </p>
             <div className={styles.iconsmain}>
               <div className={styles.icon}>
