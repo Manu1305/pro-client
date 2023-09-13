@@ -120,8 +120,9 @@
   display: flex;
   align-items: center;
   color: aliceblue;
- justify-content:center ;
- align-items: center;
+  justify-content: center;
+  align-items: center;
+  background: #000000;
 }
 
 /* Media Queries for responsiveness */
@@ -231,9 +232,5 @@
     align-items: center;
     color: aliceblue;
     margin-top: -5rem;
-  
-
-   
-    
   }
 }

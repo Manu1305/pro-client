@@ -20,7 +20,7 @@
   height: 400px;
   width: 500px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(34, 9, 9, 0.878);
+  /* box-shadow: 0 2px 8px rgba(34, 9, 9, 0.878); */
   
 }
 .bg{
@@ -147,7 +147,7 @@
   height: 350px;
   width: 390px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(34, 9, 9, 0.878);
+  /* box-shadow: 0 2px 8px rgba(34, 9, 9, 0.878); */
   
 }
 .bg{
@@ -165,5 +165,21 @@
 }
 .customerheading{
   width: 100px;
+}
+}
+@media only screen and (max-width: 589px) {
+  
+  .card {
+
+    display: flex;
+    flex-direction: column;
+  
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color:#fff;
+    height: 350px;
+    width: 220px;
+    border-radius: 10px;
+    /* box-shadow: 0 2px 8px rgba(34, 9, 9, 0.878); */
 }
 }

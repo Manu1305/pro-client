@@ -7,7 +7,7 @@
 
 .sidebar {
   position: fixed;
-  height: 570px;
+  height: auto;
   background: rgb(236, 65, 65);
   overflow-y: scroll;
   bottom: 0;
