@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { apiURL } from "../../../../const/config";
 import httpService from "../../../Error Handling/httpService";
 import Orders from "../../../Navbar/Profile/SellerDashboard/Vendor/VendorComponent/Orders/Orders";
-
+import stylesss from "./RecentSales.module.css"
 function Recentsales() {
   const [orders, setOrders] = useState([]);
 
@@ -35,9 +35,9 @@ function Recentsales() {
 
   const lastFiveOrders = orders.slice(-5);
   return (
-    <div>
-      <div className="container-fluid pt-4 px-4">
-        <div className="bg-light text-center rounded p-4">
+    <div  >
+      <div className={`container-fluid pt-4 px-4 ${stylesss.kkkk}`}>
+        <div className={"bg-light text-center rounded p-4 "}>
           <div className="d-flex align-items-center justify-content-between mb-4">
             <h6 className="mb-0">Recent orders</h6>
             {/* <a href="">Show All</a> */}
