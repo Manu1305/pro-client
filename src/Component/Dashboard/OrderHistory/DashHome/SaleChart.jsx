@@ -92,10 +92,10 @@ function SaleChart({ handleLoginTypeChange }) {
     <div>
       <div className="mob:w-50">
         <h1>Total Sales</h1>
-        <Chart  options={barChartOptions} series={barChartSeries} type="bar" />
+        <Chart  options={barChartOptions} series={barChartSeries} width={700} height={350} type="bar" />
       </div>
     </div>
   );
-}
+} 
 
 export default SaleChart;

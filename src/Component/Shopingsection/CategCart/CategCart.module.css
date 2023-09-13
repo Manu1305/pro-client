@@ -43,7 +43,7 @@
     grid-column-gap: var(--spacing-l);
     grid-row-gap: var(--spacing-l);
     max-width: var(--width-container);
-    width: 100%;
+    width: 70%;
     margin-left: 15rem;
 
   }
@@ -69,27 +69,26 @@
   .login-new .card {
     list-style: none;
     position: relative;
-    width: 258px;
-    height: 300px;
+    width: 200px;
+    height: 250px;
 
     
     /* box-shadow: 0 0 8px rgba(196, 38, 38, 0.878); */
   
   }
   
-  .login-new .card:before {
+  .login-new.card:before {
     content: '';
     display: block;
     padding-bottom: 150%;
-    width: 100%;
+    width: 70%;
   }
   
   .login-new .cardBackground {
-    margin-left: 3rem;
-
+    
     background-size: cover;
     background-position: center;
-    border-radius: var(--spacing-l);
+    /* border-radius: var(--spacing-l); */
     bottom: 0;
     filter: brightness(0.75) saturate(1.2) contrast(0.85);
     left: 0;
@@ -99,7 +98,7 @@
     transform-origin: center;
     transform: scale(1) translateZ(0);
     transition: filter 200ms linear, transform 200ms linear;
-    box-shadow: 10px 10px 20px black;
+   
   }
   
   .login-new .card:hover .cardBackground {
@@ -120,9 +119,9 @@
   .login-new .cardCategory {
     color: #fff;
     font-size: 0.9rem;
-    margin-bottom: var(--spacing-s);
+    /* margin-bottom: var(--spacing-s); */
     text-transform: uppercase;
-    margin-left: 2rem;
+
   }
   
   .login-new .cardHeading {
