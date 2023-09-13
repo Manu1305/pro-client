@@ -20,6 +20,7 @@ import TrendingItems from "./TopTrends/Trends";
 import BigDeals from "./BigDeals/Bigdeals";
 import Strength from "./TopTrends/StrengthUI/StrengthUI";
 import { Footer } from "../../Footer/Footer";
+import { Link } from "react-router-dom";
 const SampleNextArrow = (props) => {
   const { onClick } = props;
   return (
@@ -73,17 +74,20 @@ const Header = ({ productItems }) => {
         <div className={header.category1}>
           <Slider {...settings}>
             {cards.map((item) => (
+              <Link to="/shoppingPage">
               <div
                 key={item.id}
-                style={{ position: "relative", display: "inline-block" }}
+                style={{ position: "relative",  }}
               >
                 <img
                   src={item.image}
                   alt="cover"
-                  style={{ objectFit: "fill", width: "100%" }}
+                  // className={header.banner}
+                  className='object-contain md:object-scale-down'
                 />
-                <div className={header.overlay}></div>
+                {/* <div className={header.overlay}>text inside image </div> */}
               </div>
+              </Link>
             ))}
           </Slider>
         </div>
