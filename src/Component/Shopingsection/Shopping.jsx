@@ -183,6 +183,7 @@ const Shopping = () => {
           </div>
         ) : (
           <div>
+            
             <CategCart/>
             <div className="container">
               <div className="row p-3">
