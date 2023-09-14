@@ -6,16 +6,15 @@
 }
 
 .sidebar {
-  position: fixed;
-  height: auto;
+ position: sticky;
+  height: 1000px;
   background: rgb(236, 65, 65);
-  overflow-y: scroll;
-  bottom: 0;
+  overflow-x: auto;
+  width: 250px;
 }
 
 .content {
   width: 80%;
-  margin-left: 20%;
 }
 
 .sidebar_items {

@@ -9,7 +9,7 @@ import CategoryPieChart from "./Dashdata/CategoryPieChart";
 import { useSelector } from "react-redux";
 import styles from './DashHome.module.css'
 import UserChart from "./UsersChart";
-
+import Adminfee from "./Dashdata/Adminfee";
 
 function DashHome({handleLoginTypeChange}) {
   const [orders,setOrders]=useState([])
@@ -118,7 +118,11 @@ const[productrequestlength,setproductrequestlength]=useState('')
         ordersLength={ordersLength}
         handleLoginTypeChange={handleLoginTypeChange}
       />
+      <div className="flex flex-row">
       <SaleChart  />
+      <Adminfee/>
+      </div>
+      
       <ExtraData Allproductlength={Allproductlength} 
        productrequestlength={productrequestlength}
         handleLoginTypeChange={handleLoginTypeChange} />

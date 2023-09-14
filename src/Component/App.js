@@ -53,17 +53,12 @@ import httpService from "./Error Handling/httpService";
 import { apiURL } from "../const/config";
 import { userCartItem } from "../Redux/cart/cartAction";
 import { addProduct } from "../Redux/product/productAction";
-import { WholesaleStore } from "./Navbar/Franchise/WholesaleStore";
-import { DeliveryFranchise } from "./Navbar/Franchise/DeliveryFranchise";
-import { RetailFranchise } from "./Navbar/Franchise/RetailFranchise";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
 );
-const LazyAddProduct = React.lazy(() =>
-  import("./Navbar/Profile/SellerDashboard/ProductSec/Addproduct")
-);
+
 const LazyMainPage = React.lazy(() =>
   import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage")
 );
@@ -208,12 +203,6 @@ const App = () => {
             <Route path="/Profilepage/:id" element={<SellerProSettings />} />
             <Route path="/editprofile" element={<Editprofile />} />
             <Route path="/returnPro/:id" element={<BuyerReturn />} />
-
-            {/* franchise */}
-            <Route path="/wholesale" element={<WholesaleStore />} />
-            <Route path="/retaill" element={<RetailFranchise />} />
-            <Route path="/delivv" element={<DeliveryFranchise />} />
-
           </Routes>
         </div>
       </ScrollToTop>
