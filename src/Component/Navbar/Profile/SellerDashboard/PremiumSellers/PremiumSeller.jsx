@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,19 +12,18 @@ import httpService from "../../../../Error Handling/httpService";
 import ReasonModal from "../../AdminDashboard/ReasonModal";
 import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
+import DataTable from "../../../../Reuseable Comp/DataTable";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
-import UserTable from "../../../../Reuseable Comp/DataTable";
-import DataTable from "../../../../Reuseable Comp/DataTable";
 
-export const AllUsers = () => {
+export const PremiumSellers = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
   const [quantityModal, setQuantityModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [seller, setSellerName] = useState("");
+const [deleteId,setDeleteId]=  useState(null)
+const [seller, setSellerName] = useState('')
   const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [premium, setPremium] = useState([]);
+const[premium,setPremium]=useState([])
   const [product, setProduct] = useState({});
   const user = useSelector((state) => state.userReducer.user);
 
@@ -34,13 +33,17 @@ export const AllUsers = () => {
     try {
       const res = await httpService.get(`${apiURL}/user/allUserData`);
       console.log("users", res.data);
-      const data = res.data;
-
-      setPremium(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      const data= res.data
+      const premium =data.filter((data=>data.subsPlan=="active"))
+      
+        setPremium(premium)
+      }
+      catch (error) {
+        console.log(error);
+      }
+    } 
+     
+  
 
   useEffect(() => {
     getUsers();
@@ -54,6 +57,7 @@ export const AllUsers = () => {
     return () => clearTimeout(timer);
   }, []);
 
+
   const removeFromShop = async (id, obj) => {
     try {
       await httpService
@@ -63,6 +67,7 @@ export const AllUsers = () => {
         .then((res) => {
           console.log(res.data);
           getUsers();
+         
         })
         .catch((err) => {
           console.log("ERROR", err);
@@ -76,92 +81,89 @@ export const AllUsers = () => {
     console.log("check", reqProducts);
   }, [reqProducts]);
 
-  const header = [
-    "name",
-    "phone",
-    "email",
-    "userType",
-    "premium",
-    "gst",
-    
-  ].map((ele) => {
-    let string = ele;
-    string.replace(/^./, string[0].toUpperCase());
+  const header = ["Name", "Phone", "Email", "Plan", "expire","remainingDays"].map(
+    (ele) => {
+      let string = ele;
+      string.replace(/^./, string[0].toUpperCase());
 
-    if (ele === "images") {
-      return {
-        field: "image",
-        type: "image",
-        renderCell: (params) => {
-          return (
-            <div>
-              <img
-                src={params.row.images}
-                onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
-                alt=""
-                width={30}
-              />
-            </div>
-          );
-        },
-      };
-    }
-    if (ele === "action") {
-      return {
-        field: "Action",
-        type: "action",
-        width: "150px",
-        renderCell: (params) => {
-          console.log("Check here", params.row);
-          return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div
-                className="mr-5"
-                onClick={() => {
-                  setDeleteId(params.row.id);
-                  setSellerName(params.row.seller);
-                  setModalShow(true);
-                }}
-              >
-                <RiDeleteBin6Fill />
+      if (ele === "images") {
+        return {
+          field: "image",
+          type: "image",
+          renderCell: (params) => {
+            return (
+              <div>
+                <img
+                  src={params.row.images}
+                  onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
+                  alt=""
+                  width={30}
+                />
               </div>
-              {/* <div onClick={() => quantityHandler(params.row)}>
+            );
+          },
+        };
+      }
+      if (ele === "action") {
+        return {
+          field: "Action",
+          type: "action",
+          width: "150px",
+          renderCell: (params) => {
+            console.log("Check here", params.row);
+            return (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div className="mr-5" onClick={() => {
+                  setDeleteId(params.row.id);
+                  setSellerName(params.row.seller)
+                  setModalShow(true)
+                  }}>
+                  <RiDeleteBin6Fill />
+                </div>
+                {/* <div onClick={() => quantityHandler(params.row)}>
                   <FiEdit />
                 </div> */}
-            </div>
-          );
-        },
-      };
-    } else {
-      return {
-        field: ele,
-        headerName: string,
-        width: 150,
-        editable: true,
-      };
+              </div>
+            );
+          },
+        };
+      } else {
+        return {
+          field: ele,
+          headerName: string,
+          width: 150,
+          editable: true,
+        };
+      }
     }
-  });
+  );
 
   const rowData = premium.map((ele) => {
+    const expDate = new Date(ele.subscription.expDate);
+const currentDate = new Date();
+const timeDifference = expDate - currentDate;
+
+// Calculate the remaining days
+const remainingDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+
     return {
+
+        
       id: ele._id,
-      name: ele.name,
-      phone: ele.phone,
-      email: ele.email,
-      premium: ele.subsPlan,
-      userType: ele.urType,
-      gst: ele.gst,
-      shopname: ele.shopName ? ele.shopName : "nodata",
-      // state: ele.address.state ? ele.address.state : "nodata",
-      // city: ele.address.city ? ele.address.city : "nodata",
-      // area: ele.address.area ? ele.address.area : "nodata",
+      Name: ele.name,
+      Phone: ele.phone,
+      Email: ele.email,
+      Plan: ele.subsPlan,
+      expire: new Date(ele.subscription.expDate).toLocaleDateString('en-US'),
+      remainingDays:remainingDays,
     };
   });
 
   return (
     <div className="container ml-5 mr-0">
       <div className="d-flex justify-content-center row">
-        <h1>Premium Members</h1>
+       <h1>Premium Members</h1>
 
         <div>
           {premium.length === 0 ? (

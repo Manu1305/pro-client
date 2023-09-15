@@ -4,7 +4,7 @@ import dash from "./sellerDash.module.css";
 import { ProductRequest } from "../AdminDashboard/ProductReq";
 import { useSelector } from "react-redux";
 import VendorDashboard from "./Vendor/VendorDashboard";
-import UserTable from "./ReverseWithdraw/ReverseWithdrawSec";
+import {AllUsers} from './ReverseWithdraw/ReverseWithdrawSec'
 import AdminWithdrawControl from "../AdminDashboard/AdminWithdrawSec/AdminWithdrawControl";
 import SellerOrder from "../AdminDashboard/SellerOrder/SellerOrder";
 import Withdraw from "../../../Dashboard/Withdraw/Withdraw";
@@ -13,6 +13,7 @@ import { ReturnDelivery } from "../DeliveryDashBoard/ReturnDelivery/ReturnDelive
 import DeliveryDash from "../DeliveryDashBoard/Deliverydash";
 import OrderHistory from "../../../Dashboard/OrderHistory/Orderhistory";
 import AddProduct from "./ProductSec/Addproduct";
+import { PremiumSellers } from "./PremiumSellers/PremiumSeller";
 
 const SellerDashboard = () => {
   const user = useSelector((state) => state.userReducer.user);
@@ -59,6 +60,25 @@ const SellerDashboard = () => {
               </span>
             </li>
           )}
+
+{user?.urType === "admin" && (
+            <li
+              className={dash.item}
+              onClick={() => handleLoginTypeChange("premium")}
+            >
+              <i className="fa-solid fa-box-open"></i>
+              <span className={dash.nombres}>
+                <button
+                  className={`login-tab ${
+                    selectedLoginType === "premium" && "active"
+                  }`}
+                >
+                  Premium Sellers
+                </button>
+              </span>
+            </li>
+          )}
+
 
           {(user?.urType === "seller" || user?.urType === "admin") && (
             <li
@@ -264,7 +284,7 @@ const SellerDashboard = () => {
           )}
           {selectedLoginType === "reversewith" && (
             <div className={dash["reversewith-login"]}>
-              <UserTable />
+              <AllUsers />
               {/* reversewithdraw */}
             </div>
           )}
@@ -302,6 +322,11 @@ const SellerDashboard = () => {
           {selectedLoginType === "AddProduct" && (
             <div className={dash["AddProduct"]}>
               <AddProduct />
+            </div>
+          )}
+          {selectedLoginType === "premium" && (
+            <div className={dash["AddProduct"]}>
+              <PremiumSellers/>
             </div>
           )}
         </div>

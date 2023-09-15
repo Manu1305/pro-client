@@ -76,17 +76,18 @@ const Header = ({ productItems }) => {
             {cards.map((item) => (
               <Link to="/shoppingPage">
               <div
-                key={item.id}
-                style={{ position: "relative",  }}
-              >
-                <img
-                  src={item.image}
-                  alt="cover"
-                  // className={header.banner}
-                  className='object-contain md:object-scale-down'
-                />
-                {/* <div className={header.overlay}>text inside image </div> */}
-              </div>
+  key={item.id}
+  style={{ position: "relative" }}
+>
+  <img
+    src={item.image}
+    alt="cover"
+    style={{ maxWidth: "100%", height: "auto" }}
+    className='object-contain mob:object-scale-down'
+  />
+  {/* <div className={header.overlay}>text inside image</div> */}
+</div>
+
               </Link>
             ))}
           </Slider>
