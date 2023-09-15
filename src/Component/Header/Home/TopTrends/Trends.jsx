@@ -1,45 +1,11 @@
-import React, { useState } from "react";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styless from "./Trends.module.css";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import axios from "axios";
-import { apiURL } from "../../../../const/config";
-import top1 from "../../../../images/top1.png";
-import top2 from "../../../../images/top2.png";
-import top3 from "../../../../images/top3.png";
-import httpService from "../../../Error Handling/httpService";
 
-const SampleNextArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.next}>
-        <MdNavigateNext className={styless.icon} />
-      </button>
-    </div>
-  );
-};
-const SamplePrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.prev}>
-        <GrFormPrevious className={styless.icon} />
-      </button>
-    </div>
-  );
-};
-const TrendingItems = (  ) => {
-  const [count, setCount] = useState(0);
-  const [data, setData] = useState([]);
-  const increment = () => {
-    setCount(count + 1);
-  };
+const TrendingItems = ({ products }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -67,26 +33,6 @@ const TrendingItems = (  ) => {
     ],
   };
 
-  const apiCall = async () => {
-    await httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-
-        console.log(res.data)
-        const filterdDAta = res.data.filter((data) => data.status === true)
-        const shuffledData = shuffleArray(filterdDAta); // Shuffle the data
-        setData(shuffledData);
-        console.log(shuffledData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
-
-  useEffect(() => {
-    apiCall();
-  }, []);
-
   const shuffleArray = (array) => {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -96,18 +42,22 @@ const TrendingItems = (  ) => {
         shuffledArray[i],
       ];
     }
-    return shuffledArray;
+    return shuffledArray
   };
-
-  console.log(data);
+// useEffect(() => {
+  const filterdDAta = products
+    ? products.filter((data) => data.status === true)
+    : []
+  const shuffledData = shuffleArray(filterdDAta);
+// },)
 
   return (
     <div className={`${styless.bg}`}>
       <h2 className={styless.hhhhaa}>TOP TRENDS</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          { data &&
-            data.map((productItems) => (
+          {shuffledData &&
+            shuffledData.map((productItems) => (
               <div>
                 <div className={styless.customerheading}>
                   <Link to={`/ViewDetails/${productItems._id} `}>
@@ -120,14 +70,14 @@ const TrendingItems = (  ) => {
                   </Link>
                 </div>
                 <div>
-                 <h5 className={styless.title}>{productItems.brand}</h5>
-                {/* <span className={styless.description}> */}
-                <Link style={{ textDecoration: "none" }}>
-                  <p>Explore Now!</p>
-                </Link>
+                  <h5 className={styless.title}>{productItems.brand}</h5>
+                  {/* <span className={styless.description}> */}
+                  <Link style={{ textDecoration: "none" }}>
+                    <p>Explore Now!</p>
+                  </Link>
+                </div>
               </div>
-              </div>
-             
+
               // </div>
             ))}
         </Slider>

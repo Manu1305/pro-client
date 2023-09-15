@@ -1,12 +1,12 @@
 import React from "react";
 import idea from "./Franchise.module.css";
-
+import ImageWholesale from "../../../images/DeliveryFranch.png"
 
 export const DeliveryFranchise = () => {
   return (
     <>
       <div className={idea["image-container"]}>
-        <img src="../Image/DeliveryFranch.jpg" alt="cover" />
+        <img src={ImageWholesale} alt="cover" />
         {/* <h1 className={idea["text-overlay"]}>
           Quality, Service & Diversity are Assured{" "}
         </h1> */}

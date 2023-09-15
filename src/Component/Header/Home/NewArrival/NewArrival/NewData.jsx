@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styless from "./NewArrival.module.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { apiURL } from "../../../../../const/config";
-import httpService from "../../../../Error Handling/httpService";
 
-const NewData = ({ productItems }) => {
-  const [data, setData] = useState([]);
-
+const NewData = ({ products }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -37,39 +31,33 @@ const NewData = ({ productItems }) => {
     ],
   };
 
-  useEffect(() => {
-    httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        console.log(res.data + "this is responsedata");
-        const sortedData = res.data.sort((a, b) => {
-          // Sort by createdAt in descending order
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        });
-        setData(sortedData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  const sortedData = products
+  ? products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  : [];
 
   return (
     <div className={`${styless.bg}`}>
       <h2 className={styless.hhhhaa}>NEW ARRIVAL</h2>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          {data &&
-            data.map((productItem) => (
+          {sortedData &&
+            sortedData.map((productItem) => (
               <div key={productItem._id}>
                 <div className={styless.customerheading}>
                   <Link to={`/ViewDetails/${productItem._id}`}>
-                    <div className={`${styless.card} shadow-md`} >
-                      <img src={productItem.productDetails[0].images[0]} alt="" />
+                    <div className={`${styless.card} shadow-md`}>
+                      <img
+                        src={productItem.productDetails[0].images[0]}
+                        alt=""
+                      />
                     </div>
                   </Link>
                 </div>
                 <h5 className={styless.title}>{productItem.brand}</h5>
-                <Link to={`/ViewDetails/${productItem._id}`} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={`/ViewDetails/${productItem._id}`}
+                  style={{ textDecoration: "none" }}
+                >
                   <p>Explore Now!</p>
                 </Link>
               </div>

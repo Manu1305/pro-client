@@ -8,7 +8,6 @@ import { apiURL } from "../../../../const/config";
 import CategoryPieChart from "./Dashdata/CategoryPieChart";
 import { useSelector } from "react-redux";
 import styles from './DashHome.module.css'
-import UserChart from "./UsersChart";
 import Adminfee from "./Dashdata/Adminfee";
 
 function DashHome({handleLoginTypeChange}) {
@@ -20,6 +19,8 @@ const[customerLength,setCustomerLength]=useState('')
 const[sellerLength,setSellerLength]=useState('')
 const[Allproductlength,setAllproductlength]=useState('')
 const[productrequestlength,setproductrequestlength]=useState('')
+
+
   const user = useSelector((state) => state.userReducer.user);
   const getOrders = async () => {
     try {

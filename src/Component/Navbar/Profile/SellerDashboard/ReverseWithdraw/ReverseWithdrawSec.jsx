@@ -83,6 +83,7 @@ export const AllUsers = () => {
     "userType",
     "premium",
     "gst",
+    "Action",
     
   ].map((ele) => {
     let string = ele;
@@ -161,7 +162,7 @@ export const AllUsers = () => {
   return (
     <div className="container ml-5 mr-0">
       <div className="d-flex justify-content-center row">
-        <h1>Premium Members</h1>
+        <h1>All Users</h1>
 
         <div>
           {premium.length === 0 ? (

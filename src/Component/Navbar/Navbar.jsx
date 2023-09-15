@@ -87,19 +87,19 @@ const Navbar = () => {
               {/* <p>Hello World!</p> */}
               <p>
                 {" "}
-                <Link to="/wholesale" onClick={closeMenu}>
+                <Link to="/wholesale-store" onClick={closeMenu}>
                   Wholesale Store
                 </Link>
               </p>
               <p>
                 {" "}
-                <Link to="/retaill" onClick={closeMenu}>
+                <Link to="/retail-franchise" onClick={closeMenu}>
                   Retail Store Franchise
                 </Link>
               </p>
               <p>
                 {" "}
-                <Link to="/delivv" onClick={closeMenu}>
+                <Link to="/delivery-frenchies" onClick={closeMenu}>
                   Delivery Franchise
                 </Link>
               </p>
