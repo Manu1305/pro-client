@@ -133,9 +133,9 @@ const [seller, setSellerName] = useState('')
                   }}>
                   <RiDeleteBin6Fill />
                 </div>
-                {/* <div onClick={() => quantityHandler(params.row)}>
+                <div onClick={() => quantityHandler(params.row)}>
                   <FiEdit />
-                </div> */}
+                </div>
               </div>
             );
           },

@@ -44,7 +44,6 @@ import EmailCheck from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmatio
 import Changepassword from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmation.jsx/CHangepassword";
 import Notification from "./Navbar/Notificatios/Notification";
 import ShoppingPage from "./Shopingsection/Shopping";
-import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 import { ScaleLoader } from "react-spinners";
