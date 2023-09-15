@@ -80,7 +80,7 @@ const Shopping = () => {
       return categoryMatch && priceMatch;
     });
 
-  const usersPerpage = 5;
+  const usersPerpage = 20;
   const pagesVisited = pageNumber * usersPerpage;
 
   const displayUsers = filteredProducts
