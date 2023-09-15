@@ -69,6 +69,17 @@ const Navbar = () => {
             </Link>
           </li>
         )}
+
+        {user?.urType !== "admin" &&
+          user?.urType !== "seller" &&
+          user?.urType !== "delivery" && (
+            <li>
+              <Link to="shoppingPage" onClick={closeMenu}>
+                SHOP
+              </Link>
+            </li>
+          )}
+
         <li>
           <div className={styles.dropdown1}>
             <span>FRANCHISE</span>
@@ -95,22 +106,7 @@ const Navbar = () => {
             </div>
           </div>
         </li>
-        {user?.urType !== "admin" &&
-          user?.urType !== "seller" &&
-          user?.urType !== "delivery" && (
-            <li>
-              <Link to="shoppingPage" onClick={closeMenu}>
-                SHOP
-              </Link>
-            </li>
-          )}
-        {/* {(user?.urType !== "admin" || user?.urType !== "seller") && (
-          <li>
-            <Link to="bloghome" onClick={closeMenu}>
-              BLOG
-            </Link>
-          </li>
-        )} */}
+
         {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="About" onClick={closeMenu}>
