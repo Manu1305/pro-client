@@ -174,9 +174,11 @@ export const ProductRequest = () => {
   });
 
   const rowData = products.map((ele) => {
+
+    console.log("REQUESTS",ele)
     return {
       id: ele._id,
-      images: ele.productDetails[0].images[0],
+      images: ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
       brand: ele.brand,
       Stock: ele.stock,
       price: ele.sellingPrice,

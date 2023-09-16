@@ -154,7 +154,7 @@ const [seller, setSellerName] = useState('')
   const rowData = reqProducts.map((ele) => {
     return {
       id: ele._id,
-      images: ele.productDetails[0].images[0],
+      images: ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
       brand: ele.brand,
       stock: ele.stock,
       price: ele.sellingPrice,
