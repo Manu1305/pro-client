@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import styless from "./ProductSec.module.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import Slider from "react-slick";
+
+import { Link,  useNavigate } from "react-router-dom";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdNavigateNext } from "react-icons/md";
+
 import { useSelector } from "react-redux";
-import SizeModal from "./modal/SizeModal";
+
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import ReasonModal from "../../AdminDashboard/ReasonModal";
@@ -17,39 +16,37 @@ import DataTable from "../../../../Reuseable Comp/DataTable";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 
-export const ProductSec = () => {
+export const PremiumSellers = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
   const [quantityModal, setQuantityModal] = useState(false);
 const [deleteId,setDeleteId]=  useState(null)
 const [seller, setSellerName] = useState('')
   const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+const[premium,setPremium]=useState([])
   const [product, setProduct] = useState({});
   const user = useSelector((state) => state.userReducer.user);
 
   const navigate = useNavigate();
 
-  const getProducts = async () => {
-    await httpService
-      .get(`${apiURL}/product/get-all-products`, {
-        type: user.urType,
-        seller: user.email,
-      })
-      .then((res) => {
-        const filteredProducts = res.data.filter(
-          (product) => product.seller === user.email
-        );
-        console.log("seller Produc", filteredProducts);
-        setRequestedProducts(filteredProducts);
-      })
-      .catch((err) => {
-        console.log("ERROR", err);
-      });
-  };
+  const getUsers = async () => {
+    try {
+      const res = await httpService.get(`${apiURL}/user/allUserData`);
+      console.log("users", res.data);
+      const data= res.data
+      const premium =data.filter((data=>data.subsPlan=="active"))
+      
+        setPremium(premium)
+      }
+      catch (error) {
+        console.log(error);
+      }
+    } 
+     
+  
 
   useEffect(() => {
-    getProducts();
+    getUsers();
   }, []);
 
   useEffect(() => {
@@ -60,16 +57,6 @@ const [seller, setSellerName] = useState('')
     return () => clearTimeout(timer);
   }, []);
 
-  // add qunatity
-
-  const quantityHandler = (product) => {
-    setQuantityModal(true);
-    setProduct(product);
-  };
-
-  const notify = () => {
-    toast("Removed Product");
-  };
 
   const removeFromShop = async (id, obj) => {
     try {
@@ -79,8 +66,8 @@ const [seller, setSellerName] = useState('')
         })
         .then((res) => {
           console.log(res.data);
-          getProducts();
-          notify();
+          getUsers();
+         
         })
         .catch((err) => {
           console.log("ERROR", err);
@@ -94,7 +81,7 @@ const [seller, setSellerName] = useState('')
     console.log("check", reqProducts);
   }, [reqProducts]);
 
-  const header = ["seller", "images", "brand", "stock", "price", "action"].map(
+  const header = ["Name", "Phone", "Email", "Plan", "expire","remainingDays"].map(
     (ele) => {
       let string = ele;
       string.replace(/^./, string[0].toUpperCase());
@@ -133,9 +120,9 @@ const [seller, setSellerName] = useState('')
                   }}>
                   <RiDeleteBin6Fill />
                 </div>
-                <div onClick={() => quantityHandler(params.row)}>
+                {/* <div onClick={() => quantityHandler(params.row)}>
                   <FiEdit />
-                </div>
+                </div> */}
               </div>
             );
           },
@@ -151,28 +138,35 @@ const [seller, setSellerName] = useState('')
     }
   );
 
-  const rowData = reqProducts.map((ele) => {
+  const rowData = premium.map((ele) => {
+    const expDate = new Date(ele.subscription.expDate);
+const currentDate = new Date();
+const timeDifference = expDate - currentDate;
+
+// Calculate the remaining days
+const remainingDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+
     return {
+
+        
       id: ele._id,
-      images: ele.productDetails[0].images[0],
-      brand: ele.brand,
-      stock: ele.stock,
-      price: ele.sellingPrice,
-      seller: ele.seller,
+      Name: ele.name,
+      Phone: ele.phone,
+      Email: ele.email,
+      Plan: ele.subsPlan,
+      expire: new Date(ele.subscription.expDate).toLocaleDateString('en-US'),
+      remainingDays:remainingDays,
     };
   });
 
   return (
     <div className="container ml-5 mr-0">
       <div className="d-flex justify-content-center row">
-        <div className="d-flex justify-content-center mt-4">
-          <Link to="/dashboard/Addproduct" className="btn btn-danger">
-            Add Product
-          </Link>
-        </div>
+       <h1>Premium Members</h1>
 
         <div>
-          {reqProducts.length === 0 ? (
+          {premium.length === 0 ? (
             <div>
               {isLoading ? (
                 <div

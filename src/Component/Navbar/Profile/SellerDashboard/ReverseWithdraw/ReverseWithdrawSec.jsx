@@ -1,81 +1,42 @@
-// import React, { useEffect, useState } from "react";
-// import styless from "./Reverse.module.css"
-// import DataTable from "datatables.net-dt";
-// import { apiURL } from "../../../../../const/config";
-// import httpService from "../../../../Error Handling/httpService";
-
-
-
-// const UserTable = ({ onDelete }) => {
-//   const [user, setUser] = useState([]);
-
-//   const getUsers = async () => {
-//     try {
-//       const res = await httpService.get(`${apiURL}/user/allUserData`);
-//       console.log("users", res.data);
-//       setUser(res.data);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     getUsers();
-//   }, []);
-
-
-
-
-//   return (
-//     <>
-//       <div className={styless.ljhgf}>
-//         <table style={{ margin: "auto" }}>
-//           <thead>
-//             <tr>
-//               <th>type</th>
-//               <th>Name</th>
-//               <th>Email</th>
-//               <th>Phone</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {user.map((user) => (
-//               <tr key={user.id}>
-//                 <td>{user.urType}</td>
-//                 <td>{user.name}</td>
-//                 <td>{user.email}</td>
-//                 <td>{user.phone}</td>
-//                 {/* <td>
-//               <button onClick={() => onDelete(user.id)}>Delete</button>
-//             </td> */}
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default UserTable;
-
-
 import React, { useEffect, useState } from "react";
-import { Table, Form } from "react-bootstrap";
-import styless from "./Reverse.module.css";
+
+import { Link, useNavigate } from "react-router-dom";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import { useSelector } from "react-redux";
+
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
-import "datatables.net-dt/css/jquery.dataTables.css"; // You might need this if you're using DataTables styles
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
-const UserTable = ({ onDelete }) => {
-  const [user, setUser] = useState([]);
-  const [searchText, setSearchText] = useState("");
+import ReasonModal from "../../AdminDashboard/ReasonModal";
+import { toast } from "react-toastify";
+import { ScaleLoader } from "react-spinners";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
+import UserTable from "../../../../Reuseable Comp/DataTable";
+import DataTable from "../../../../Reuseable Comp/DataTable";
+
+export const AllUsers = () => {
+  const [reqProducts, setRequestedProducts] = useState([]);
+  const [quantityModal, setQuantityModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [seller, setSellerName] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [premium, setPremium] = useState([]);
+  const [product, setProduct] = useState({});
+  const user = useSelector((state) => state.userReducer.user);
+
+  const navigate = useNavigate();
 
   const getUsers = async () => {
     try {
       const res = await httpService.get(`${apiURL}/user/allUserData`);
       console.log("users", res.data);
-      setUser(res.data);
+      const data = res.data;
+
+      setPremium(data);
     } catch (error) {
       console.log(error);
     }
@@ -85,49 +46,192 @@ const UserTable = ({ onDelete }) => {
     getUsers();
   }, []);
 
-  const filteredUsers = user.filter((user) =>
-    user.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const removeFromShop = async (id, obj) => {
+    try {
+      await httpService
+        .put(`${apiURL}/product/remove-requested-product/${id}`, {
+          message: { ...obj, forU: user.email },
+        })
+        .then((res) => {
+          console.log(res.data);
+          getUsers();
+        })
+        .catch((err) => {
+          console.log("ERROR", err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("check", reqProducts);
+  }, [reqProducts]);
+
+  const header = [
+    "name",
+    "phone",
+    "email",
+    "userType",
+    "premium",
+    "gst",
+    "Action",
+    
+  ].map((ele) => {
+    let string = ele;
+    string.replace(/^./, string[0].toUpperCase());
+
+    if (ele === "images") {
+      return {
+        field: "image",
+        type: "image",
+        renderCell: (params) => {
+          return (
+            <div>
+              <img
+                src={params.row.images}
+                onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
+                alt=""
+                width={30}
+              />
+            </div>
+          );
+        },
+      };
+    }
+    if (ele === "action") {
+      return {
+        field: "Action",
+        type: "action",
+        width: "150px",
+        renderCell: (params) => {
+          console.log("Check here", params.row);
+          return (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div
+                className="mr-5"
+                onClick={() => {
+                  setDeleteId(params.row.id);
+                  setSellerName(params.row.seller);
+                  setModalShow(true);
+                }}
+              >
+                <RiDeleteBin6Fill />
+              </div>
+              {/* <div onClick={() => quantityHandler(params.row)}>
+                  <FiEdit />
+                </div> */}
+            </div>
+          );
+        },
+      };
+    } else {
+      return {
+        field: ele,
+        headerName: string,
+        width: 150,
+        editable: true,
+      };
+    }
+  });
+
+  const rowData = premium.map((ele) => {
+    return {
+      id: ele._id,
+      name: ele.name,
+      phone: ele.phone,
+      email: ele.email,
+      premium: ele.subsPlan,
+      userType: ele.urType,
+      gst: ele.gst,
+      shopname: ele.shopName ? ele.shopName : "nodata",
+      // state: ele.address.state ? ele.address.state : "nodata",
+      // city: ele.address.city ? ele.address.city : "nodata",
+      // area: ele.address.area ? ele.address.area : "nodata",
+    };
+  });
 
   return (
-    <>
-      <div className={styless.ljhgf}>
-        <Form>
-          <Form.Group controlId="searchForm">
-            <Form.Control
-              type="text"
-              placeholder="Search by name"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </Form.Group>
-        </Form>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>type</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.urType}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-                {/* <td>
-                  <button onClick={() => onDelete(user.id)}>Delete</button>
-                </td> */}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+    <div className="container ml-5 mr-0">
+      <div className="d-flex justify-content-center row">
+        <h1>All Users</h1>
+
+        <div>
+          {premium.length === 0 ? (
+            <div>
+              {isLoading ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ScaleLoader animation="border" role="status" color="red">
+                    <span className="visually-hidden">Loading...</span>
+                  </ScaleLoader>
+                </div>
+              ) : (
+                <img
+                  src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                  alt="Loaded"
+                />
+              )}
+            </div>
+          ) : (
+            <>
+              {rowData.length !== 0 ? (
+                <div className="mt-3">
+                  <DataTable columns={header} rows={rowData} />
+                </div>
+              ) : (
+                <div style={{ margin: "auto" }}>
+                  {isLoading ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ScaleLoader animation="border" role="status" color="red">
+                        <span className="visually-hidden">Loading...</span>
+                      </ScaleLoader>
+                    </div>
+                  ) : (
+                    <img
+                      src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                      alt="Loaded"
+                    />
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        <ReasonModal
+          product={{ id: deleteId, seller: seller }}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          removeFromShop={removeFromShop}
+        />
+
+        {/* <SizeModal
+          getProducts={getProducts}
+          setQuantityModal={setQuantityModal}
+          quantityModal={quantityModal}
+          product={product}
+        /> */}
       </div>
-    </>
+    </div>
   );
 };
-
-export default UserTable;

@@ -1,13 +1,12 @@
 import React from "react";
 import idea from "./Franchise.module.css";
-import { AiOutlineStar } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import Retail from "../../../images/ratailfranch.png"
 
 export const RetailFranchise = () => {
   return (
     <>
       <div className={idea["image-container"]}>
-        <img src="../Image/ratailfranch.jpg" alt="cover" />
+        <img src={Retail} alt="cover" />
         {/* <h1 className={idea["text-overlay"]}>
           Quality, Service & Diversity are Assured{" "}
         </h1> */}

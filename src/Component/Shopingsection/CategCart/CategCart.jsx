@@ -46,8 +46,8 @@ export const CategCart = () => {
 
 
   return (
-    <div className={styles["login-new"]}> 
-    
+    <div className={styles["login-new"]}>
+     
       {/* <div style={{ marginTop: "100px" }}>
         <h1 className="font-extrabold ">CATEGORIES</h1>
       </div> */}

@@ -44,7 +44,6 @@ import EmailCheck from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmatio
 import Changepassword from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmation.jsx/CHangepassword";
 import Notification from "./Navbar/Notificatios/Notification";
 import ShoppingPage from "./Shopingsection/Shopping";
-import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 import { ScaleLoader } from "react-spinners";
@@ -53,31 +52,30 @@ import httpService from "./Error Handling/httpService";
 import { apiURL } from "../const/config";
 import { userCartItem } from "../Redux/cart/cartAction";
 import { addProduct } from "../Redux/product/productAction";
+import { RetailFranchise } from "./Navbar/Franchise/RetailFranchise";
 import { WholesaleStore } from "./Navbar/Franchise/WholesaleStore";
 import { DeliveryFranchise } from "./Navbar/Franchise/DeliveryFranchise";
-import { RetailFranchise } from "./Navbar/Franchise/RetailFranchise";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
 );
-const LazyAddProduct = React.lazy(() =>
-  import("./Navbar/Profile/SellerDashboard/ProductSec/Addproduct")
-);
+
 const LazyMainPage = React.lazy(() =>
   import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage")
 );
 
 const App = () => {
-  const { productItems } = cards;
+  
+  const [produts,setProducts]=useState([])
 
   // const [cartItems, setCartItems] = useState(0);
 
-  const user = useSelector(state => state.userReducer.user)
+  const user = useSelector((state) => state.userReducer.user);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-// Cart
+  // Cart
   const getCarts = async () => {
     try {
       const config = {
@@ -93,8 +91,8 @@ const App = () => {
           if (res.data.Message === "Your cart is empty...!") {
             // setCartItem([]);
           } else {
-            console.log("UserCARt",res.data);
-            dispatch(userCartItem(res.data))
+            console.log("UserCARt", res.data);
+            dispatch(userCartItem(res.data));
             // setCartItem(res.data);
           }
         })
@@ -103,8 +101,6 @@ const App = () => {
       console.log("API Error", error);
     }
   };
-
-
   // all products
   const getAllProducts = async () => {
     await httpService
@@ -114,51 +110,74 @@ const App = () => {
 
         const filByStaus = res.data.filter((prd) => prd.status === true);
         dispatch(addProduct(filByStaus));
+        setProducts(filByStaus)
 
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-      })
-      
+      });
   };
+
+
+
 
   useEffect(() => {
     getCarts();
-    getAllProducts()
-  },[])
+    getAllProducts();
+  }, []);
 
   return (
     <Router>
       <ScrollToTop>
-
         <div className="fontClass">
-
           <Navbar />
           <Routes>
             <Route path="*" element={<Error404 />} />
-            <Route path="login" element={!user?.name ? <Login /> : <Header />} />
             <Route
-              path="/"
-              element={
-                <Header
-                  productItems={productItems}
-                />
-              }
+              path="login"
+              element={!user?.name ? <Login /> : <Header />}
             />
+            <Route path="/" element={<Header products={produts} />} />
             <Route path="/dashboard" element={<SellerDashboard />} />
 
+            <Route
+              path="/cart"
+              element={
+                <React.Suspense
+                  fallback={
+                    <div>
+                      <ScaleLoader />
+                    </div>
+                  }
+                >
+                  {" "}
+                  {user?.name ? <LazyCart /> : <Login />}
+                </React.Suspense>
+              }
+            />
 
-            <Route path="/cart" element={<React.Suspense fallback={<div><ScaleLoader /></div>}> {user?.name ? <LazyCart /> : <Login />}
-            </React.Suspense>} />
-
-            <Route path="/dashboard" element={<React.Suspense fallback={<div>Loading... </div>}> <LazySellerDashboard />
-            </React.Suspense>} />
+            <Route
+              path="/dashboard"
+              element={
+                <React.Suspense fallback={<div>Loading... </div>}>
+                  {" "}
+                  <LazySellerDashboard />
+                </React.Suspense>
+              }
+            />
 
             {/* <Route path="/dashboard/Addproduct" element={<React.Suspense fallback={<div> </div>}> <LazyAddProduct /> */}
             {/* </React.Suspense>} /> */}
 
-            <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
-            </React.Suspense>} />
+            <Route
+              path="storeset"
+              element={
+                <React.Suspense fallback={<div>Loading... </div>}>
+                  {" "}
+                  <LazyMainPage />
+                </React.Suspense>
+              }
+            />
             <Route path="/ViewDetails/:productId" element={<ViewProduct />} />
 
             <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
@@ -209,11 +228,10 @@ const App = () => {
             <Route path="/editprofile" element={<Editprofile />} />
             <Route path="/returnPro/:id" element={<BuyerReturn />} />
 
-            {/* franchise */}
-            <Route path="/wholesale" element={<WholesaleStore />} />
-            <Route path="/retaill" element={<RetailFranchise />} />
-            <Route path="/delivv" element={<DeliveryFranchise />} />
-
+            {/* franchies */}
+            <Route path="/wholesale-store" element={<WholesaleStore />} />
+            <Route path="/delivery-frenchies" element={<DeliveryFranchise />} />
+            <Route path="/retail-franchise" element={<RetailFranchise />} />
           </Routes>
         </div>
       </ScrollToTop>

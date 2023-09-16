@@ -10,7 +10,7 @@ import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Badge } from "@mui/material";
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -18,7 +18,6 @@ const Navbar = () => {
   const navigation = useNavigate();
   const user = useSelector((state) => state.userReducer.user);
   const CartItem = useSelector((state) => state.cartReducer.userCart);
-
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -57,7 +56,7 @@ const Navbar = () => {
           />
         </Link>
       </li>
-     
+
       <SearchBar />
       <div className={styles["navbar-toggle"]} onClick={toggleMenu}>
         <i className="fas fa-bars"></i>
@@ -70,33 +69,7 @@ const Navbar = () => {
             </Link>
           </li>
         )}
- <li>
-          <div className={styles.dropdown1}>
-            <span>FRANCHISE</span>
-            <div className={styles["dropdown-content1"]}>
-              {/* <p>Hello World!</p> */}
-              <p>
-                {" "}
-                <Link to="/wholesale" onClick={closeMenu}>
-                  Wholesale Store
-                </Link>
-              </p>
-              <p>
-                {" "}
-                <Link to="/retaill" onClick={closeMenu}>
-                 Retail Store Franchise 
-                </Link>
-              </p>
-              <p>
-                {" "}
-                <Link to="/delivv" onClick={closeMenu}>
-                  Delivery Franchise
-                </Link>
-              </p>
-           
-            </div>
-          </div>
-        </li>
+
         {user?.urType !== "admin" &&
           user?.urType !== "seller" &&
           user?.urType !== "delivery" && (
@@ -106,13 +79,34 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-        {/* {(user?.urType !== "admin" || user?.urType !== "seller") && (
-          <li>
-            <Link to="bloghome" onClick={closeMenu}>
-              BLOG
-            </Link>
-          </li>
-        )} */}
+
+        <li>
+          <div className={styles.dropdown1}>
+            <span>FRANCHISE</span>
+            <div className={styles["dropdown-content1"]}>
+              {/* <p>Hello World!</p> */}
+              <p>
+                {" "}
+                <Link to="/wholesale-store" onClick={closeMenu}>
+                  Wholesale Store
+                </Link>
+              </p>
+              <p>
+                {" "}
+                <Link to="/retail-franchise" onClick={closeMenu}>
+                  Retail Store Franchise
+                </Link>
+              </p>
+              <p>
+                {" "}
+                <Link to="/delivery-frenchies" onClick={closeMenu}>
+                  Delivery Franchise
+                </Link>
+              </p>
+            </div>
+          </div>
+        </li>
+
         {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="About" onClick={closeMenu}>
@@ -141,9 +135,10 @@ const Navbar = () => {
               <Link to="cart" onClick={closeMenu}>
                 <Badge
                   badgeContent={
-                    Object.values(CartItem).length === 0 || CartItem === undefined
+                    Object.values(CartItem).length === 0 ||
+                    CartItem === undefined
                       ? null
-                      : CartItem.items.length 
+                      : CartItem.items.length
                   }
                   color="error"
                 >
@@ -153,7 +148,6 @@ const Navbar = () => {
             ) : (
               <Link to="login" onClick={closeMenu}>
                 <CgShoppingCart style={{ height: "20px", width: "20px" }} />
- 
               </Link>
             )}
           </li>
