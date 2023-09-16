@@ -5,7 +5,7 @@ import plans from "./planSec.module.css";
 import { useSelector } from "react-redux";
 import { apiURL } from "../../../../../../const/config";
 import httpService from "../../../../../Error Handling/httpService";
- 
+
 const Plans = () => {
   const seller = useSelector((state) => state.userReducer.seller);
 
@@ -15,14 +15,13 @@ const Plans = () => {
       res = await httpService
         .get(`${apiURL}/payment/get-api-key`)
         .then((res) => {
-   
           return res.data;
         })
         .catch((err) => {
           console.log(err);
         });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
     return res;
   };
@@ -34,10 +33,9 @@ const Plans = () => {
     try {
       res = await httpService
         .post(`${apiURL}/subscription/subscriptions`, {
-         userData:seller
+          userData: seller,
         })
         .then((res) => {
-   
           return res.data;
         })
         .catch((err) => {
@@ -56,7 +54,6 @@ const Plans = () => {
 
       // razorpay checkout
       let raz_sub_pay = await subButton();
-      
 
       // razorpay verification and callback
       const options = {
@@ -83,15 +80,12 @@ const Plans = () => {
         },
       };
 
-
- 
       // created rzaopay instinace
       const razor = new window.Razorpay(options);
 
       // wait tiil reslove all promises
       let confirmPromise = Promise.all([raz_api_key, raz_sub_pay])
         .then((res) => {
-   
           return res;
         })
         .catch((err) => false);
@@ -141,5 +135,4 @@ const Plans = () => {
   );
 };
 
-
-export default Plans
+export default Plans;
