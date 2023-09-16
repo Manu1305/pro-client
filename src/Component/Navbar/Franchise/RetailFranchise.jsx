@@ -95,7 +95,7 @@ export const RetailFranchise = () => {
           </ol>
         </div>
 
-        <div>
+        <div className={idea.margbot}>
         <h3 className={idea.eligi}>Benefits & Rewards</h3>
           <ol>
             <li className={idea.elll}>1. Earn up tp 10% per month</li>

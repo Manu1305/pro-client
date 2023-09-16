@@ -1,6 +1,6 @@
 import React from "react";
 import idea from "./Franchise.module.css";
-import ImageWholesale from "../../../images/DeliveryFranch.png"
+import ImageWholesale from "../../../images/DeliveryFranch.png";
 
 export const DeliveryFranchise = () => {
   return (
@@ -28,67 +28,98 @@ export const DeliveryFranchise = () => {
           your business dreams.. {" "}
         </p>
         <div>
+        <h3 className={idea.eligi}>Our Delivery Service Benefits</h3>
+
           <ol>
             <li className={idea.wholesale}>
-              <h3 className={idea.wholesaleH1}>1. To Expand our business</h3>
-              <p className={idea.wholesaleP}>
-                {" "}
-                We are in an expanding stage now. So, we are seeking good
-                partners to collaborate with us to diversify the business.
-              </p>
-            </li>
-            <li className={idea.wholesale}>
-              <h3 className={idea.wholesaleH1}>2. To help entrepreneurs</h3>
-              <p className={idea.wholesaleP}>
-                {" "}
-                We need franchise partners not only for our growth, but we give
-                the opportunity to grow them also.
-              </p>
-            </li>
-            <li className={idea.wholesale}>
               <h3 className={idea.wholesaleH1}>
-                {" "}
-                3. To make our brand a household name
+                1. Bulk orders from retailers
               </h3>
               <p className={idea.wholesaleP}>
                 {" "}
-                Through your partnership, we are aiming to increase our brand
-                recognition and awareness.
+                Get a steady flow of daily bulk orders from retailers and
+                increase your income. Take advantage of this strategic
+                opportunity to build a thriving business and play a vital role
+                in the supply chain, all while enjoying the benefits of
+                entrepreneurial success.
               </p>
             </li>
             <li className={idea.wholesale}>
-              <h3 className={idea.wholesaleH1}> 4. To operate efficiently</h3>
+              <h3 className={idea.wholesaleH1}>2. Weekly payout</h3>
               <p className={idea.wholesaleP}>
                 {" "}
-                We aim to operate efficiently and reduce operational costs
-                through your collaboration.
+                Receive timely and convenient weekly payouts for your hard work.
+                Join us today to experience the convenience and financial
+                security of weekly payouts while running your successful and
+                profitable delivery franchise.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}> 3. Earn up to Rs. 200/order</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Enjoy competitive earnings for every order delivered. As a
+                franchise partner, you'll have the opportunity to maximize your
+                income with every order you fulfill. This commission structure
+                allows you to gain the rewards of your hard work and dedication.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}> 4. Exclusive franchise</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Our delivery franchise is exclusive. One Pincode.One Franchise.
+                Our franchise partners enjoy the unique privilege of being part
+                of an exclusive network, where you have the opportunity to serve
+                insightful customers and grow your business in a specialized
+                market segment.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}> 5. 24/7 Support</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Our dedicated support team is available around the clock to
+                address your inquiries, resolve any issues, and ensure your
+                franchise operations run smoothly. With our continuous support,
+                you're never alone on your journey to success in the delivery
+                business
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}> 6. Technical assistance</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Our expert technical support team is here to provide you with
+                guidance, resolve any technical issues, and ensure that you have
+                the tools and knowledge needed to succeed in the delivery
+                business.
               </p>
             </li>
           </ol>
         </div>
 
         <div>
-          <h3 className={idea.eligi}>Eligibility</h3>
+          <h3 className={idea.eligi}>Terms & Conditions</h3>
           <ol>
-            <li className={idea.elll}>1. Operational store area</li>
             <li className={idea.elll}>
-              2. A minimum of 700 sqft and above space is required.
+              1. Must be located in a radius of 20 km in a metropolitan city
             </li>
-            <li className={idea.elll}>3. Investment</li>
             <li className={idea.elll}>
-              4. A minimum of 15 -25 lakhs investment is required
+              2. Need to hire at least 02 delivery personnel to fulfill the
+              orders
             </li>
-            <li className={idea.elll}>5. A good business mind</li>
             <li className={idea.elll}>
-              6. You should have a good business mind to make a good sale.
+              3. Should comply with relevant rules and regulations under, the
+              motor vehicle act, 1988, and other acts as well
             </li>
-            <li className={idea.elll}>7.Accessible store location</li>
             <li className={idea.elll}>
-              8.The store location should be easily accessible.{" "}
+              4. Must be responsible for goods and punctual to the order
+              delivery
             </li>
           </ol>
         </div>
-        <div>
+        {/* <div>
           <h3 className={idea.eligi}>Store Highlights</h3>
           <ol>
             <li className={idea.elll}>500+ product varieties</li>
@@ -97,15 +128,26 @@ export const DeliveryFranchise = () => {
             <li className={idea.elll}>Partnered with 100+ manufacturer</li>
             <li className={idea.elll}>Guaranteed customer satisfaction</li>
           </ol>
-        </div>
+        </div> */}
 
-        <div>
-          <h3 className={idea.eligi}>Benefits & Rewards</h3>
+        <div className={idea.margbot}>
+          <h3 className={idea.eligi}>Other Benefits & Rewards</h3>
           <ol>
-            <li className={idea.elll}>1. Earn up tp 10% per month</li>
-            <li className={idea.elll}>2. Reward uo to 20% on your sale</li>
-            <li className={idea.elll}>3. Interior & staff training</li>
-            <li className={idea.elll}>4. 24*7 software & customer support</li>
+            <li className={idea.elll}>
+              1. Daily earning potential up to Rs 6000 per day
+            </li>
+            <li className={idea.elll}>
+              2. Hassle-free fast weekly payout straight into your account
+            </li>
+            <li className={idea.elll}>
+              3. A minimal security deposit of Rs. 100000 +18% GST only
+            </li>
+            <li className={idea.elll}>
+              4. Get residential storage rental upto Rs. 7000 per month
+            </li>
+            <li className={idea.elll}>
+              5. Field sales executive training & salary will be provided
+            </li>
           </ol>
         </div>
       </div>
