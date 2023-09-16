@@ -86,7 +86,7 @@ const Header = ({ products }) => {
         </div>
       </div>
       <Who />
-      <Logoslider />
+      {/* <Logoslider /> */}
       <CategoryNew />
       <NewData products={products} />
       <TrendingItems products={products} />
@@ -97,6 +97,6 @@ const Header = ({ products }) => {
       <CustomerReview /> */}
       <Footer />
     </div>
-  );
+  )
 };
 export default Header;
