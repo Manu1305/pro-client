@@ -248,8 +248,8 @@ const ViewProduct = () => {
                     ? product.productDetails[prdDetInd].images[0]
                     : imgPreview
                 }
-                className={`img-fluid img-responsive rounded product-image`}
-                style={{ height: "400px", width: "770px" }}
+                className={`img-fluid img-responsive rounded product-image ${styles.iggg}`}
+                // style={{ height: "400px", width: "770px" }}
                 alt="img"
               />
             </div>
