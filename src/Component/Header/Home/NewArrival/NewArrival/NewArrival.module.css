@@ -46,6 +46,14 @@
   margin-top: 10px;
 }
 
+.card img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: 350px;
+  width: 450px;
+}
+
 /* .customerheading {
   font-family:MEDIUM ;
   color: #0d0d0c;

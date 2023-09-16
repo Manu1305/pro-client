@@ -236,9 +236,22 @@
   transform: translate(-50%);
   top: 0;
 }
+.amtt{
+ 
+  margin-left: 4.5rem;
+  margin-top: 4rem;
+  font-weight: 500;
+  position: absolute;
+  left: 50%;
+  font-size: 16px;
+  transform: translate(-50%);
+  top: 0;
+  white-space: nowrap;
+
+}
 .branddd{
   margin-top: -8rem;
-  margin-left: -6rem;
+  margin-left: -2rem;
 }
 .topic .topicinfos{
   margin: 0;
@@ -321,6 +334,19 @@
   .orderCard {
     width: 24rem;
   }
+  .amtt{
+ 
+    margin-left: 5rem;
+    margin-top: 4rem;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    font-size: 16px;
+    transform: translate(-50%);
+    top: 0;
+    white-space: nowrap;
+  
+  }
   .topic .topicinfo{
     margin: 0;
     /* margin-left: 6rem; */
@@ -367,7 +393,7 @@
   }
   .branddd{
     margin-top: -6rem;
-    margin-left: -4rem;
+    margin-left: -0rem;
   }
   .topic .topicinfoss{
     margin: 0;

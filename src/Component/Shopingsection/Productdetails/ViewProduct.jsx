@@ -274,9 +274,9 @@ const ViewProduct = () => {
               <div className={"mt-4"}>
                 <div className={styles.heads}>
                   <div>
-                    {user?.email && user?.urType === "admin" && (
+                    {/* {user?.email && user?.urType === "admin" && (
                       <button> go back</button>
-                    )}
+                    )} */}
                     <h5 className={`text-uppercase brand ${styles.brand}`}>
                       {product.brand}
                     </h5>
@@ -382,7 +382,15 @@ const ViewProduct = () => {
                 </div>
               </div>
               <div className="bg-red mt-4">
-                <label htmlFor="product_size">CHOOSE SIZE</label>
+                 {/* {user?.email && user?.urType === "admin" && (
+                      <button> go back</button>
+                    )} */}
+                    { user.email && user.urType==="admin"?
+
+                      <label htmlFor="product_size">Stockes available</label>
+                    : <label htmlFor="product_size">CHOOSE SIZE</label>
+
+                    }
                 <div className={styles.sizes}>
                   {product.productDetails && (
                     <div>

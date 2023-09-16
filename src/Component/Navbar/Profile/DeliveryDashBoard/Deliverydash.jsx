@@ -227,14 +227,13 @@ const DeliveryDash = () => {
                       <p className={`fw-bold mb-1 ${styles.branddd}`}>
                         {order.prdData.brand}
                       </p>
-
                       <div className="mb-3">
                         <h6 className={`text-green-500 ${styles.topicinfos}`}>
                           Status: {order.orderStatus}
                         </h6>
                       </div>
                       <div>
-                      <h6>Amount: {order.pType=== "cash" ?  ((parseInt(order.ordPrc) * 90) / 100) + (((parseInt(order.ordPrc) * 90) / 100)*5)/100 :  "Paid"}</h6>
+                      <h5 className={styles.amtt}>Cash to Collect: {order.pType=== "cash" ?  ((parseInt(order.ordPrc) * 90) / 100) + (((parseInt(order.ordPrc) * 90) / 100)*5)/100 :  "Paid"}</h5>
 
                       </div>
                       <div className={styles.topicinfo}>
