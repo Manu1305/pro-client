@@ -5,7 +5,7 @@ import { apiURL } from "../../../../../const/config";
 
 function Adminfee() {
   const [button, setButton] = useState(false);
-  const [fee, setFee] = useState("");
+  const [fee, setFee] = useState(10);
   const toggleEdit = () => {
 
     setButton(!button);
@@ -35,7 +35,7 @@ function Adminfee() {
           <div className="h-32 w-36 rounded-2xl flex justify-center items-center border-solid border-2 border-black">
             <input
             type="number"
-              className="flex justify-center items-center font-extrabold text-7xl text-red-700 inset-y-0 h-20 w-20"
+              className="flex justify-center items-center font-extrabold text-7xl text-red-700 inset-y-0 h-20 w-24"
               readOnly={!button}
               onChange={(e) => {
                 setFee(e.target.value);

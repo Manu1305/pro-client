@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const NewData = ({ products }) => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -46,7 +46,7 @@ const NewData = ({ products }) => {
                 <div className={styless.customerheading}>
                   <Link to={`/ViewDetails/${productItem._id}`}>
                     <div className={`${styless.card} shadow-md`}>
-                      <img
+                      <img 
                         src={productItem.productDetails[0].images[0]}
                         alt=""
                       />

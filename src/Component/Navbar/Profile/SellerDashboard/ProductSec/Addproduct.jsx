@@ -10,6 +10,7 @@ import { MdDeleteSweep } from "react-icons/md";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 function AddProduct() {
+  const [isButtonVisible, setButtonVisible] = useState(true);
   const history = useNavigate();
 
   const categorySizes = {
@@ -252,6 +253,7 @@ function AddProduct() {
   const addNewProduct = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
+    setButtonVisible(false);
 
     console.log(isValid)
     // if (validation) {
@@ -283,10 +285,12 @@ function AddProduct() {
                 showConfirmButton: false,
                 timer: 1000,
               });
+              setButtonVisible(true);
             });
           history("/dashboard");
         } catch (error) {
           console.log("Couldn't add product: ", error);
+          setButtonVisible(true)
         }
     //   } else {
     //     Swal.fire("Fill the all fields", "All field should be filled", "error");
@@ -953,15 +957,17 @@ console.log(productInfoDet)
               </div>
             </div>
 
-            <div className="m-2 flex justify-center items-center">
-              <button
-                type="button"
-                onClick={addNewProduct}
-                style={{ background: "#4BB543" }}
-                className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
-              >
-                Submit
-              </button>
+            <div>
+      {isButtonVisible && (
+        <button
+          type="button"
+          onClick={addNewProduct}
+          style={{ background: "#4BB543" }}
+          className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
+        >
+          Submit
+        </button>
+      )}
             </div>
           </div>
         </div>

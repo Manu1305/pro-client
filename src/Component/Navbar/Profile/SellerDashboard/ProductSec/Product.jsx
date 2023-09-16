@@ -94,7 +94,7 @@ const [seller, setSellerName] = useState('')
     console.log("check", reqProducts);
   }, [reqProducts]);
 
-  const header = ["seller", "images", "brand", "stock", "price", "action"].map(
+  const header = ["ProductAdded","Date" ,"images", "brand", "price", "action"].map(
     (ele) => {
       let string = ele;
       string.replace(/^./, string[0].toUpperCase());
@@ -152,13 +152,16 @@ const [seller, setSellerName] = useState('')
   );
 
   const rowData = reqProducts.map((ele) => {
+    const date = new Date(ele.createdAt).toISOString().split('T')[0]
+
     return {
       id: ele._id,
       images: ele.productDetails[0].images[0],
       brand: ele.brand,
-      stock: ele.stock,
+      // stock: ele.stock,
       price: ele.sellingPrice,
-      seller: ele.seller,
+      ProductAdded: ele.seller,
+      Date:date,
     };
   });
 
