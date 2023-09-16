@@ -2,7 +2,7 @@ import React from "react";
 import idea from "./Franchise.module.css";
 import { AiOutlineStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import Wholesale from '../../../images/wholesaleFran.png'
+import Wholesale from "../../../images/wholesaleFran.png";
 
 export const WholesaleStore = () => {
   return (
@@ -46,7 +46,7 @@ export const WholesaleStore = () => {
           We have a strong presence in both online as well as offline platforms
           and have 500+ categories in both garment and footwear collections.{" "}
         </p>
-        <div>
+        {/* <div>
           <ol>
             <li className={idea.wholesale}>
               <h3 className={idea.wholesaleH1}>1. To Expand our business</h3>
@@ -84,47 +84,56 @@ export const WholesaleStore = () => {
               </p>
             </li>
           </ol>
-        </div>
+        </div> */}
 
         <div>
-          <h3 className={idea.eligi}>Eligibility</h3>
+          <h3 className={idea.eligi}>Terms & Conditions</h3>
           <ol>
-            <li className={idea.elll}>1. Operational store area</li>
             <li className={idea.elll}>
-              2. A minimum of 700 sqft and above space is required.
+              1. The store must be located in the nearby township or market.
             </li>
-            <li className={idea.elll}>3. Investment</li>
             <li className={idea.elll}>
-              4. A minimum of 15 -25 lakhs investment is required
+              2. Must have at least 1000 sqft to 1500 sqft space.
             </li>
-            <li className={idea.elll}>5. A good business mind</li>
             <li className={idea.elll}>
-              6. You should have a good business mind to make a good sale.
+              3. Any type of vehicle should get inside the store.
             </li>
-            <li className={idea.elll}>7.Accessible store location</li>
             <li className={idea.elll}>
-              8.The store location should be easily accessible.{" "}
+              4. The store should be constructed as per fire safety rules and
+              located in a safe place.
+            </li>
+            <li className={idea.elll}>
+              5. The complete responsibility of the store will be up to the
+              store owner.
+            </li>
+            <li className={idea.elll}>
+              6. The investment amount is about 20 lakhs to 30 lakhs.
             </li>
           </ol>
         </div>
-        <div>
-          <h3 className={idea.eligi}>Store Highlights</h3>
-          <ol>
-            <li className={idea.elll}>500+ product varieties</li>
-            <li className={idea.elll}>Attract interior design</li>
-            <li className={idea.elll}>Popular brands</li>
-            <li className={idea.elll}>Partnered with 100+ manufacturer</li>
-            <li className={idea.elll}>Guaranteed customer satisfaction</li>
-          </ol>
-        </div>
 
-        <div>
+        <div className={idea.margbot}>
           <h3 className={idea.eligi}>Benefits & Rewards</h3>
           <ol>
-            <li className={idea.elll}>1. Earn up tp 10% per month</li>
-            <li className={idea.elll}>2. Reward uo to 20% on your sale</li>
-            <li className={idea.elll}>3. Interior & staff training</li>
-            <li className={idea.elll}>4. 24*7 software & customer support</li>
+            <li className={idea.elll}>
+              1. The store owner will get a fixed amount from HiTec Mart on a
+              monthly basis of up to 2,50,000 and also 20% of the total profit
+              from the store.
+            </li>
+            <li className={idea.elll}>
+              2. Additional bonuses and rewards will be provided based on
+              monthly sales or time-to-time offers given by HiTec Mart.
+            </li>
+            <li className={idea.elll}>
+              3.The staff salary is paid by HiTec Mart.
+            </li>
+            <li className={idea.elll}>4. The payout period is monthly.</li>
+            <li className={idea.elll}>
+              5. The software is installed by HiTec Mart. 
+            </li>
+            <li className={idea.elll}>
+              6. The staff training and management are done by HiTec Mart.
+            </li>
           </ol>
         </div>
       </div>

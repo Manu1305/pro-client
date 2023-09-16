@@ -255,15 +255,15 @@ function AddProduct() {
     const isValid = validateForm();
     setButtonVisible(false);
 
-    console.log(isValid)
+    console.log(isValid);
     // if (validation) {
     //   if (isValid) {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
 
         try {
           await httpService
@@ -403,8 +403,6 @@ function AddProduct() {
     console.log("Stocks", totalStocks);
   }, [totalStocks]);
 
-  console.log("Total Quantity", totalQuantity);
-
   useEffect(() => {
     console.log("prview", prviewProdcts);
   }, [prviewProdcts]);
@@ -418,14 +416,14 @@ function AddProduct() {
   };
 
   useEffect(() => {
-console.log(productInfoDet)
-  },[productInfoDet])
+    console.log(productInfoDet);
+  }, [productInfoDet]);
 
   return (
     <div className="bg-gray">
-      <div className={styles.headingdiv}>
+      {/* <div className={styles.headingdiv}>
         <h2 className={styles.headingText}>Add product </h2>
-      </div>
+      </div> */}
       <div className={styles.maindiv}>
         <div className={styles.mainone}>
           <div className="bg-white p-1">
@@ -826,8 +824,8 @@ console.log(productInfoDet)
 
         <br />
 
-        <div className={`${styles.maintwo} p-1`}>
-          <div className="bg-white mt-2 p-2">
+        <div className={`${styles.maintwo} m-2 p-1`}>
+          <div className="bg-white p-2">
             <h3 className="fw-bolder">General info</h3>
 
             {productInfoArray.map((ele) => (
@@ -872,14 +870,32 @@ console.log(productInfoDet)
               <textarea
                 name="MoreDetails"
                 onChange={(e) => onchangeHandler(e)}
-                rows="8"
+                rows="4"
+                maxLength={"70"}
+                className="block p-4 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter washcare description of product here..."
+              />
+            </div>
+            <div style={{ marginLeft: "30px", marginBottom: "20px" }}>
+              <label
+                for="message"
+                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
+              >
+                Tags
+              </label>
+              {errors.tags && (
+                <p className="text-red-500 text-sm mt-1">{errors.tags}</p>
+              )}
+              <textarea
+                name="tags"
+                onChange={(e) => onchangeHandler(e)}
+                rows="4"
                 maxLength={"70"}
                 className="block p-4 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter washcare description of product here..."
               />
             </div>
           </div>
-
           {/* Prview */}
           <div className="mt-4 w-full bg-white">
             <div>

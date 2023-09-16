@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import header from "./Header.module.css";
 import { Offer } from "./Offer/Offer";
 // import ProductCard from "./ProductCard/ProductCard";
-import { Search } from "../Search/Search";
 // import About from "./AboutSection/About";
 import NewData from "./NewArrival/NewArrival/NewData";
 import "slick-carousel/slick/slick.css";
