@@ -234,7 +234,7 @@ const DeliveryDash = () => {
                         </h6>
                       </div>
                       <div>
-                      <h6>Amount: {order.pType=== "cash" ?  ((parseInt(order.ordPrc) * 90) / 100) + (((parseInt(order.ordPrc) * 90) / 100)*5)/100 :  "Paid"}</h6>
+                      <h5 className={styles.amtt}>Cash to Collect: {order.pType=== "cash" ?  ((parseInt(order.ordPrc) * 90) / 100) + (((parseInt(order.ordPrc) * 90) / 100)*5)/100 :  "Paid"}</h5>
 
                       </div>
                       <div className={styles.topicinfo}>
