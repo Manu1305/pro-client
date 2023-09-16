@@ -19,13 +19,12 @@ import { FiEdit } from "react-icons/fi";
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
-  const [quantityModal, setQuantityModal] = useState(false);
-const [deleteId,setDeleteId]=  useState(null)
-const [seller, setSellerName] = useState('')
+  // const [quantityModal, setQuantityModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [seller, setSellerName] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [product, setProduct] = useState({});
   const user = useSelector((state) => state.userReducer.user);
 
   const navigate = useNavigate();
@@ -63,8 +62,8 @@ const [seller, setSellerName] = useState('')
   // add qunatity
 
   const quantityHandler = (product) => {
-    setQuantityModal(true);
-    setProduct(product);
+    // setQuantityModal(true);
+    // setProduct(product);
   };
 
   const notify = () => {
@@ -126,11 +125,14 @@ const [seller, setSellerName] = useState('')
             console.log("Check here", params.row);
             return (
               <div style={{ display: "flex", flexDirection: "row" }}>
-                <div className="mr-5" onClick={() => {
-                  setDeleteId(params.row.id);
-                  setSellerName(params.row.seller)
-                  setModalShow(true)
-                  }}>
+                <div
+                  className="mr-5"
+                  onClick={() => {
+                    setDeleteId(params.row.id);
+                    setSellerName(params.row.seller);
+                    setModalShow(true);
+                  }}
+                >
                   <RiDeleteBin6Fill />
                 </div>
                 <div onClick={() => quantityHandler(params.row)}>
@@ -154,7 +156,8 @@ const [seller, setSellerName] = useState('')
   const rowData = reqProducts.map((ele) => {
     return {
       id: ele._id,
-      images: ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
+      images:
+        ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
       brand: ele.brand,
       stock: ele.stock,
       price: ele.sellingPrice,
