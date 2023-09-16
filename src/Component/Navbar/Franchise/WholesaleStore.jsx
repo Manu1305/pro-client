@@ -1,7 +1,6 @@
 import React from "react";
 import idea from "./Franchise.module.css";
-import { AiOutlineStar } from "react-icons/ai";
-import { Link } from "react-router-dom";
+
 
 export const WholesaleStore = () => {
   return (
