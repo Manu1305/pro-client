@@ -219,8 +219,8 @@ const App = () => {
             <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
             <Route path="/shoppingPage" element={<ShoppingPage products={produts}  />} />
-            <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
-            <Route path="/shoppingPage/:search" element={<ShoppingPage />} />
+            <Route path="/shoppingPage/:category" element={<ShoppingPage  products={produts}  />} />
+            <Route path="/shoppingPage/:search" element={<ShoppingPage  products={produts}  />} />
             <Route path="About" element={<AboutUs />} />
             <Route
               path="/forgotpassword/:id/:token"
