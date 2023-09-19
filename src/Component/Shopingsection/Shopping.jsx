@@ -13,7 +13,7 @@ import { ScaleLoader } from "react-spinners";
 import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
 
-const Shopping = () => {
+const Shopping = ({products}) => {
   const { category } = useParams();
   const selectedCategory = category ? category : "all";
   const dispatch = useDispatch();
@@ -41,36 +41,36 @@ const Shopping = () => {
     }
   }, [selectedCategory]);
 
-  const getAllProducts = async () => {
-    await httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        console.log(res.data);
+  // const getAllProducts = async () => {
+  //   await httpService
+  //     .get(`${apiURL}/product/get-all-products`)
+  //     .then((res) => {
+  //       console.log(res.products);
 
-        dispatch(addProduct(res.data));
-        const filByStaus = res.data.filter((prd) => prd.status === true);
-        setData(filByStaus);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  //       dispatch(addProduct(res.products));
+  //       const filByStaus = res.products.filter((prd) => prd.status === true);
+  //       setData(filByStaus);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
 
-  useEffect(() => {
-    setIsLoading(true);
-    getAllProducts();
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   getAllProducts();
+  // }, []);
 
-  const sellingPrices = data.map((item) => item.sellingPrice);
+  const sellingPrices = products.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
   const lowestprice = 0;
 
   const filteredProducts =
-    data &&
-    data.filter((data) => {
+  products &&
+  products.filter((data) => {
       const categoryMatch =
         categories.length === 0 ||
         categories.some((categoryy) => data.selectedCategory === categoryy);
@@ -163,25 +163,7 @@ const Shopping = () => {
   return (
     <>
       <div style={{ background: "#ffffff" }}>
-        {isLoading ? ( // Conditionally render a loading spinner
-          <div className={styless.loadingSpinner}>
-            <div>
-              <ScaleLoader
-                color="red"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  margin: "auto",
-                }}
-                animation="border"
-                role="status"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </ScaleLoader>
-            </div>
-          </div>
-        ) : (
+        
           <div>
             <CategCart />
             <div className="container">
@@ -310,7 +292,7 @@ const Shopping = () => {
               </div>
             </div>
           </div>
-        )}
+      
       </div>
       <div style={{ overflow: "hidden" }}>
         <Footer />

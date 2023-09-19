@@ -265,33 +265,33 @@ function AddProduct() {
       },
     };
 
-        try {
-          await httpService
-            .post(
-              `${apiURL}/product/add-new-product`,
-              {
-                ...productInfo,
-                productDetails: prviewProdcts,
-                stock: totalStocks,
-                productInfo:{...productInfoDet}
-              },
-              config
-            )
-            .then((res) => {
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "The product successfully added",
-                showConfirmButton: false,
-                timer: 1000,
-              });
-              setButtonVisible(true);
-            });
-          history("/dashboard");
-        } catch (error) {
-          console.log("Couldn't add product: ", error);
-          setButtonVisible(true)
-        }
+    try {
+      await httpService
+        .post(
+          `${apiURL}/product/add-new-product`,
+          {
+            ...productInfo,
+            productDetails: prviewProdcts,
+            stock: totalStocks,
+            productInfo: { ...productInfoDet },
+          },
+          config
+        )
+        .then((res) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "The product successfully added",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          setButtonVisible(true);
+        });
+      history("/dashboard");
+    } catch (error) {
+      console.log("Couldn't add product: ", error);
+      setButtonVisible(true);
+    }
     //   } else {
     //     Swal.fire("Fill the all fields", "All field should be filled", "error");
     //   }
@@ -353,6 +353,9 @@ function AddProduct() {
     }
     if (!productInfo.selectedSubcategory) {
       newErrors.selectedSubcategory = "Please select subcategroy";
+    }
+    if (!productInfo.selectedSubcategory) {
+      newErrors.selectedSubcategory = "Please select subcategroy";
     } else if (!productInfo.collections) {
       newErrors.collections = "Please add collection name of your product";
     }
@@ -361,6 +364,14 @@ function AddProduct() {
 
     return Object.keys(newErrors).length === 0;
   };
+
+  const errInfo = productInfoArray.map((ele) => {
+    const newErrors = {};
+    if(productInfoDet[`${ele}`]){
+      newErrors[`${ele}`] = `Please add ${ele}`;
+
+    }
+  });
 
   const InfoHandler = (e) => {
     const { name, value } = e.target;
@@ -474,10 +485,10 @@ function AddProduct() {
                 for="brand"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
+                Brand
                 {errors.brand && (
                   <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
                 )}
-                Brand
               </label>
               <input
                 type="text"
@@ -516,7 +527,9 @@ function AddProduct() {
                 Selling price
               </label>
               {errors.sellingPrice && (
-                <p className="text-red-500 text-sm mt-1">{errors.material}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.sellingPrice}
+                </p>
               )}
               <input
                 type="number"
@@ -537,12 +550,12 @@ function AddProduct() {
                 for="countries"
                 className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
               >
+                Select product category
                 {errors.selectedCategory && (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.selectedCategory}
                   </p>
                 )}
-                Select product category
               </label>
               <select
                 id="product_category"
@@ -834,6 +847,9 @@ function AddProduct() {
                   for="title"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
+                   {errors.ele && (
+                  <p className="text-red-500 text-sm mt-1">{errors.ele}</p>
+                )}
                   {ele}
                 </label>
                 {/* {errors[`${ele}`] && (
@@ -974,16 +990,16 @@ function AddProduct() {
             </div>
 
             <div>
-      {isButtonVisible && (
-        <button
-          type="button"
-          onClick={addNewProduct}
-          style={{ background: "#4BB543" }}
-          className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
-        >
-          Submit
-        </button>
-      )}
+              {isButtonVisible && (
+                <button
+                  type="button"
+                  onClick={addNewProduct}
+                  style={{ background: "#4BB543" }}
+                  className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </div>
         </div>

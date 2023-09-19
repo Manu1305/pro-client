@@ -76,6 +76,14 @@ const App = () => {
   const dispatch = useDispatch();
 
   // Cart
+
+  
+
+
+
+
+
+
   const getCarts = async () => {
     try {
       const config = {
@@ -211,7 +219,7 @@ const App = () => {
             <Route path="/deliverydash" element={<DeliveryDash />} />
             <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
-            <Route path="/shoppingPage" element={<ShoppingPage />} />
+            <Route path="/shoppingPage" element={<ShoppingPage products={produts}  />} />
             <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
             <Route path="/shoppingPage/:search" element={<ShoppingPage />} />
             <Route path="About" element={<AboutUs />} />
