@@ -47,7 +47,7 @@ const Navbar = () => {
     >
       <li>
         <Link to="/" onClick={closeMenu} className={styles.heading}>
-          
+          {/* HITEC MART */}
           <img
             src="../Image/logo.png"
             alt=""
@@ -69,6 +69,13 @@ const Navbar = () => {
             </Link>
           </li>
         )}
+
+        <li>
+          <Link to="shoppingPage" onClick={closeMenu}>
+            SHOP
+          </Link>
+        </li>
+
         <li>
           <div className={styles.dropdown1}>
             <span>FRANCHISE</span>

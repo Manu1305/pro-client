@@ -227,7 +227,6 @@ const DeliveryDash = () => {
                       <p className={`fw-bold mb-1 ${styles.branddd}`}>
                         {order.prdData.brand}
                       </p>
-
                       <div className="mb-3">
                         <h6 className={`text-green-500 ${styles.topicinfos}`}>
                           Status: {order.orderStatus}

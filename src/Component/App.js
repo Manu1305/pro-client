@@ -22,7 +22,6 @@ import Withdraw from "./Dashboard/Withdraw/Withdraw";
 import SellerSettingsPage from "./Dashboard/Sellersettings/SellerSettings";
 import Thankyou from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/Thankyou";
 import AboutUs from "./Header/Home/AboutSection/About";
-import cards from "./Header/Home/NewArrival/NewArrival/Cards";
 import SubscriptionForm from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/ConfirmationPage/Confirmation";
 import Wish from "./Header/WishList/Wish";
 import SellerProSettings from "./Dashboard/Sellersettings/sellerprofilesettings/sellerProfile";
