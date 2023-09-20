@@ -22,7 +22,6 @@ import Withdraw from "./Dashboard/Withdraw/Withdraw";
 import SellerSettingsPage from "./Dashboard/Sellersettings/SellerSettings";
 import Thankyou from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/Thankyou";
 import AboutUs from "./Header/Home/AboutSection/About";
-import cards from "./Header/Home/NewArrival/NewArrival/Cards";
 import SubscriptionForm from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/ConfirmationPage/Confirmation";
 import Wish from "./Header/WishList/Wish";
 import SellerProSettings from "./Dashboard/Sellersettings/sellerprofilesettings/sellerProfile";
@@ -76,6 +75,14 @@ const App = () => {
   const dispatch = useDispatch();
 
   // Cart
+
+  
+
+
+
+
+
+
   const getCarts = async () => {
     try {
       const config = {
@@ -211,9 +218,9 @@ const App = () => {
             <Route path="/deliverydash" element={<DeliveryDash />} />
             <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
-            <Route path="/shoppingPage" element={<ShoppingPage />} />
-            <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
-            <Route path="/shoppingPage/:search" element={<ShoppingPage />} />
+            <Route path="/shoppingPage" element={<ShoppingPage products={produts}  />} />
+            <Route path="/shoppingPage/:category" element={<ShoppingPage  products={produts}  />} />
+            <Route path="/shoppingPage/:search" element={<ShoppingPage  products={produts}  />} />
             <Route path="About" element={<AboutUs />} />
             <Route
               path="/forgotpassword/:id/:token"
