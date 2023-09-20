@@ -220,7 +220,7 @@ const ViewProduct = () => {
           return res;
         })
         .catch((err) => {
-          alert("URL DATA");
+          alert("Wanna Inform to admin about your Offer, So they Can assist with your products");
           console.log(err);
           return err;
         });

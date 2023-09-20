@@ -123,12 +123,12 @@ const Plans = () => {
           />
         </div>
         <Link to="/free">
-          <MainPlan
+           {/* <MainPlan
             about="1 Month Free Subscription"
             title="00.00"
-            description="Low Visibility & Limited Orders"
+            description="Low Visibility & Limited Orders, Applied for 1 Month only"
             buttonText="NORMAL PLAN!"
-          />
+          /> */}
         </Link>
       </div>
     </div>
