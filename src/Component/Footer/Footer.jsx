@@ -64,9 +64,9 @@ export const Footer = () => {
                   <Link to="/about" className={styles.links}>
                     About
                   </Link>
-                  <Link className={styles.links}>Contact us</Link>
+                  <Link to="/contactUs" className={styles.links}>Contact us</Link>
                   <Link className={styles.links}>Support</Link>
-                  <Link className={styles.links}>careers</Link>
+                  <Link to="/career" className={styles.links}>careers</Link>
                 </ul>
               </div>
               <div className={styles.list}>
@@ -82,7 +82,7 @@ export const Footer = () => {
                 <ul className={styles.listul}>
                   <Link className={styles.listhead}>Legal</Link>
                   <Link className={styles.links}>Terms and conditions </Link>
-                  <Link className={styles.links}>Privacy and policy</Link>
+                  <Link to="/privacyPol" className={styles.links}>Privacy and policy</Link>
                 </ul>
               </div>
             </div>

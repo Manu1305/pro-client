@@ -54,6 +54,9 @@ import { addProduct } from "../Redux/product/productAction";
 import { RetailFranchise } from "./Navbar/Franchise/RetailFranchise";
 import { WholesaleStore } from "./Navbar/Franchise/WholesaleStore";
 import { DeliveryFranchise } from "./Navbar/Franchise/DeliveryFranchise";
+import { ContactUs } from "./Footer/ContactUs/ContactUs";
+import { CareerWithUs } from "./Footer/CareerWithUs/CareerWithUs";
+import { PrivacyPolicy } from "./Footer/Privacy&Policy/Privacy&Policy";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -239,6 +242,12 @@ const App = () => {
             <Route path="/wholesale-store" element={<WholesaleStore />} />
             <Route path="/delivery-frenchies" element={<DeliveryFranchise />} />
             <Route path="/retail-franchise" element={<RetailFranchise />} />
+
+            {/* footer data */}
+            <Route path="/contactUs" element={<ContactUs />} />
+            <Route path="/career" element={<CareerWithUs />} />
+            <Route path="/privacyPol" element={<PrivacyPolicy />} />
+
           </Routes>
         </div>
       </ScrollToTop>

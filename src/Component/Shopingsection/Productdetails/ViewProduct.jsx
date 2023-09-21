@@ -12,9 +12,10 @@ import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
-import { toast } from "react-toastify";
 import { addCartItem, userCartItem } from "../../../Redux/cart/cartAction";
 import { Footer } from "../../Footer/Footer";
+import {toast} from 'react-toastify'
+
 
 const ViewProduct = () => {
   const { productId } = useParams();
@@ -175,7 +176,6 @@ const ViewProduct = () => {
       });
     } else {
       try {
-        // send prdDetInd,total quantity ,color quantity
         await httpService
           .post(
             `${apiURL}/cart/add-to-cart`,
@@ -215,7 +215,7 @@ const ViewProduct = () => {
         .then((res) => {
           console.log(res);
           setofferBtn(false);
-          alert("Prepare for More: A Call for You – Details Inside!");
+          toast.success("Prepare for More: A Call for You – Details Inside!");
 
           return res;
         })
