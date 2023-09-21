@@ -14,7 +14,10 @@ import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
 
 const Shopping = ({products}) => {
-  const { category } = useParams();
+  const { category,collections } = useParams();
+
+  const colletionResults = collections
+
   const selectedCategory = category ? category : "all";
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
@@ -24,6 +27,7 @@ const Shopping = ({products}) => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+const [collectionstate,setCollections]=useState([])
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -40,45 +44,30 @@ const Shopping = ({products}) => {
       setCategories([selectedCategory]);
     }
   }, [selectedCategory]);
-
-  // const getAllProducts = async () => {
-  //   await httpService
-  //     .get(`${apiURL}/product/get-all-products`)
-  //     .then((res) => {
-  //       console.log(res.products);
-
-  //       dispatch(addProduct(res.products));
-  //       const filByStaus = res.products.filter((prd) => prd.status === true);
-  //       setData(filByStaus);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   getAllProducts();
-  // }, []);
-
+  useEffect(() => {
+   
+    setCollections([colletionResults]);
+    
+  }, [colletionResults]);
   const sellingPrices = products.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
   const lowestprice = 0;
 
-  const filteredProducts =
-  products &&
-  products.filter((data) => {
-      const categoryMatch =
-        categories.length === 0 ||
-        categories.some((categoryy) => data.selectedCategory === categoryy);
-      const priceMatch =
-        data.sellingPrice >= lowestprice && data.sellingPrice <= price;
-
-      return categoryMatch && priceMatch;
-    });
+  const filteredProducts = products && products.filter((data) => {
+    const categoryMatch =
+      categories.length === 0 ||
+      categories.some((categoryy) => data.selectedCategory === categoryy);
+  
+    const collectionMatch =
+      collectionstate.length === 0 || collectionstate.includes(data.collections);
+  
+    const priceMatch =
+      data.sellingPrice >= lowestprice && data.sellingPrice <= price;
+  
+    return (categoryMatch || collectionMatch) && priceMatch;
+  });
+  
+  
 
   const usersPerpage = 20;
   const pagesVisited = pageNumber * usersPerpage;

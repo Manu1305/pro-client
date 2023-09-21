@@ -7,41 +7,35 @@ import { useSelector, useDispatch } from "react-redux";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 
-function SearchBar() {
+function SearchBar({ products }) {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [data, setData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  const item = data;
-  // const filteredItems = getFilteredItems(query, item);
+  const item = products;
+  const filteredItems = getFilteredUniqueItems(query, item).slice(0, 5); // Slice to get only the first 5 unique results
 
-  // function clear() {
-  //   setQuery("");
-  // }
+  function clear() {
+    setQuery("");
+  }
 
-  // useEffect(() => {
-  //   httpService
-  //     .get(`${apiURL}/product/get-all-products`)
-  //     .then((res) => {
-  //       setData(res.data);
-  //       dispatch(addProduct(res.data));
-      
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
+  function getFilteredUniqueItems(query, items) {
+    if (!query) {
+      return items;
+    }
 
-  // function getFilteredItems(query, items) {
-  //   if (!query) {
-  //     return items;
-  //   }
+    const uniqueItems = [];
+    const addedCollections = new Set();
 
-  //   return items.filter((data) =>
-  //     data.productDetails.brand.includes(query)
-  //   );
-  // }
+    for (const product of items) {
+      if (product.collections.includes(query) && !addedCollections.has(product.collections)) {
+        uniqueItems.push(product);
+        addedCollections.add(product.collections);
+      }
+    }
+
+    return uniqueItems;
+  }
 
   useEffect(() => {
     setIsSearching(true);
@@ -55,11 +49,11 @@ function SearchBar() {
     <div className={styles.container}>
       <input
         type="text"
-        // onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         className={styles.input}
       />
       <CiSearch className={styles.searchIcon} />
-      {/* {query && !isSearching && filteredItems.length === 0 && (
+      {query && !isSearching && filteredItems.length === 0 && (
         <ul className={styles.resultsContainer}>
           <li>No results found</li>
         </ul>
@@ -67,18 +61,14 @@ function SearchBar() {
       {query && filteredItems.length > 0 && (
         <div className={styles.resultsContainer}>
           {filteredItems.map((value) => (
-            <div
-              className={styles.link}
-              key={value.productDetails.brand}
-              onClick={clear}
-            >
-              <Link to={`/ViewDetails/${value._id}`}>
-                {value.productDetails.brand}
+            <div className={styles.link} key={value.tags} onClick={clear}>
+              <Link to={`/shoppingPages/searchresult/${value.collections}`}>
+                {value.collections}
               </Link>
             </div>
           ))}
         </div>
-      )} */}
+      )}
     </div>
   );
 }

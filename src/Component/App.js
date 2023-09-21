@@ -65,9 +65,8 @@ const LazyMainPage = React.lazy(() =>
 );
 
 const App = () => {
-  
-  const [produts,setProducts]=useState([])
-
+  const [produts, setProducts] = useState([]);
+const[ProductLength,setProductLength]=useState()
   // const [cartItems, setCartItems] = useState(0);
 
   const user = useSelector((state) => state.userReducer.user);
@@ -75,13 +74,6 @@ const App = () => {
   const dispatch = useDispatch();
 
   // Cart
-
-  
-
-
-
-
-
 
   const getCarts = async () => {
     try {
@@ -117,16 +109,13 @@ const App = () => {
 
         const filByStaus = res.data.filter((prd) => prd.status === true);
         dispatch(addProduct(filByStaus));
-        setProducts(filByStaus)
-
+        setProducts(filByStaus);
+        setProductLength(filByStaus.length);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   };
-
-
-
 
   useEffect(() => {
     getCarts();
@@ -137,7 +126,7 @@ const App = () => {
     <Router>
       <ScrollToTop>
         <div className="fontClass">
-          <Navbar />
+          <Navbar products={produts} />
           <Routes>
             <Route path="*" element={<Error404 />} />
             <Route
@@ -145,7 +134,7 @@ const App = () => {
               element={!user?.name ? <Login /> : <Header />}
             />
             <Route path="/" element={<Header products={produts} />} />
-            <Route path="/dashboard" element={<SellerDashboard />} />
+            <Route path="/dashboard" element={<SellerDashboard products={ProductLength} />} />
 
             <Route
               path="/cart"
@@ -218,14 +207,26 @@ const App = () => {
             <Route path="/deliverydash" element={<DeliveryDash />} />
             <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
-            <Route path="/shoppingPage" element={<ShoppingPage products={produts}  />} />
-            <Route path="/shoppingPage/:category" element={<ShoppingPage  products={produts}  />} />
-            <Route path="/shoppingPage/:search" element={<ShoppingPage  products={produts}  />} />
+            <Route
+              path="/shoppingPage"
+              element={<ShoppingPage products={produts} />}
+            />
+            <Route
+              path="/shoppingPage/:category"
+              element={<ShoppingPage products={produts} />}
+            />
+
+            {/* <Route path="/shoppingPage/:search" element={<ShoppingPage  products={produts}  />} /> */}
+            <Route
+              path="/shoppingPages/:category/:collections"
+              element={<ShoppingPage products={produts} />}
+            />
             <Route path="About" element={<AboutUs />} />
             <Route
               path="/forgotpassword/:id/:token"
               element={<Changepassword />}
             />
+            
             <Route path="/passwordupdate" element={<EmailCheck />} />
             <Route path="Wish" element={<Wish />} />
             <Route path="notifications" element={<Notification />} />

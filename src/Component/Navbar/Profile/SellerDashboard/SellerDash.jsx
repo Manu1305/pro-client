@@ -15,7 +15,7 @@ import OrderHistory from "../../../Dashboard/OrderHistory/Orderhistory";
 import AddProduct from "./ProductSec/Addproduct";
 import { PremiumSellers } from "./PremiumSellers/PremiumSeller";
 
-const SellerDashboard = () => {
+const SellerDashboard = ({products}) => {
   const user = useSelector((state) => state.userReducer.user);
   const [selectedLoginType, setSelectedLoginType] = useState("dashboard");
 
@@ -264,7 +264,7 @@ const SellerDashboard = () => {
         <div>
           {selectedLoginType === "dashboard" && (
             <div className={dash["dashboard-login"]}>
-              <VendorDashboard handleLoginTypeChange={handleLoginTypeChange} />
+              <VendorDashboard handleLoginTypeChange={handleLoginTypeChange} products={products} />
             </div>
           )}
           {selectedLoginType === "product" && (

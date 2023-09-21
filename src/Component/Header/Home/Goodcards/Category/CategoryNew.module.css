@@ -94,12 +94,12 @@
 }
 
 .login-new .card:hover .cardBackground {
-  transform: scale(1.05) translateZ(0);
+  transform: scale(1.1) translateZ(0);
 }
 
-.login-new .cardGrid:hover > .card:not(:hover) .cardBackground {
+/* .login-new .cardGrid:hover > .card:not(:hover) .cardBackground {
   filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
-}
+} */
 
 .login-new .cardContent {
   left: 0;
