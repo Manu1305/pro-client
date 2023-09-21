@@ -8,6 +8,7 @@ function ExtraData ({Allproductlength,productrequestlength,handleLoginTypeChange
   const [ordersLength, setOrdersLength] = useState([]);
 const [totalsales,setTotalSales]=useState('')
 const [userLength,setUsersLength]=useState('')
+
   const getOrders = async () => {
     try {
       const config = {

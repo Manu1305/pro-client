@@ -232,7 +232,7 @@ function AddProduct() {
           reader.readAsDataURL(file);
         });
       })
-    )
+    ) 
       .then((base64Array) => {
         setBase64Images([...base64Images, ...base64Array]);
       })
@@ -240,6 +240,7 @@ function AddProduct() {
         console.error("Error converting image to base64:", error)
       );
   };
+
   const handleDeleteImage = (index) => {
     const updatedImages = [...base64Images];
     updatedImages.splice(index, 1);
@@ -922,12 +923,6 @@ function AddProduct() {
                 Product Prview
               </h3>
             </div>
-            {/* <div className="d-flex justify-end">
-              <Link to={`/viewDetails`}>
-                <span className="btn btn-primary btn-sm">View</span>
-              </Link>
-            </div> */}
-
             <div
               style={{ marginLeft: "30px" }}
               className="block w-80 text-sm text-gray-900  border-1 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

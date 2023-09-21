@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import styles from './DashHome.module.css'
 import Adminfee from "./Dashdata/Adminfee";
 
-function DashHome({handleLoginTypeChange}) {
+function DashHome({handleLoginTypeChange,products}) {
   const [orders,setOrders]=useState([])
   const [ordersLength, setOrdersLength] = useState([]);
 const [totalsales,setTotalSales]=useState('')
@@ -74,21 +74,21 @@ const[productrequestlength,setproductrequestlength]=useState('')
       console.log(error);
     }
   };
-  const getAllProducts = async () => {
-    await httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        setAllproductlength(res.data.length);
-        console.log(res.data);
-        // dispatch(addProduct(res.data));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      // .finally(() => {
-      //   setIsLoading(false);
-      // });
-  };
+  // const getAllProducts = async () => {
+  //   await httpService
+  //     .get(`${apiURL}/product/get-all-products`)
+  //     .then((res) => {
+  //       setAllproductlength(res.data.length);
+  //       console.log(res.data);
+  //       // dispatch(addProduct(res.data));
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     })
+  //     // .finally(() => {
+  //     //   setIsLoading(false);
+  //     // });
+  // };
   const getProductrequest = async () => {
     await httpService
       .post(`${apiURL}/product/requested-Products`, {
@@ -107,7 +107,7 @@ const[productrequestlength,setproductrequestlength]=useState('')
   useEffect(() => {
     getOrders();
     getUsers();
-    getAllProducts();
+    // getAllProducts();
     getProductrequest()
   }, []);
 
@@ -124,7 +124,7 @@ const[productrequestlength,setproductrequestlength]=useState('')
       <Adminfee/>
       </div>
       
-      <ExtraData Allproductlength={Allproductlength} 
+      <ExtraData Allproductlength={products} 
        productrequestlength={productrequestlength}
         handleLoginTypeChange={handleLoginTypeChange} />
 <div  className={styles.dives}>

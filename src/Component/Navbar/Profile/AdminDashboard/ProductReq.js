@@ -134,6 +134,7 @@ export const ProductRequest = () => {
           console.log(params.row)
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
+              
               <div
                 onClick={() =>
                   navigate(`/ViewDetails/${params.row.id}`)
@@ -188,7 +189,7 @@ export const ProductRequest = () => {
 
   return (
     <div className={styless.container}>
-
+<h2>Product request</h2>
       {rowData.length !== 0 ? (
         <DataTable columns={header} rows={rowData} />
       ) : (
