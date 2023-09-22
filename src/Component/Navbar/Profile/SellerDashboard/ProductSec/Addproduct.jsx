@@ -251,7 +251,7 @@ function AddProduct() {
     console.log("ProductInfo", productInfo);
   }, [productInfo]);
 
-  const addNewProduct = async (e) => {
+  const     addNewProduct = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
     setButtonVisible(false);
