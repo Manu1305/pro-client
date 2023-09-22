@@ -14,7 +14,7 @@ export const ContactUs = () => {
 
         fetch(scriptUrl, {method: 'POST', body:formData})
         .then(res => {
-            alert("Your Message is Successfully Submitted, We will get back to you as soon as possible")
+            // alert("Your Message is Successfully Submitted, We will get back to you as soon as possible")
         })
         .catch(err => alert(err))
     }
