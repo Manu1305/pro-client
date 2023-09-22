@@ -53,6 +53,7 @@ const NewData = ({ products }) => {
                     </div>
                   </Link>
                 </div>
+                <div className="ml-10">
                 <h5 className={styless.title}>{productItem.brand}</h5>
                 <Link
                   to={`/ViewDetails/${productItem._id}`}
@@ -60,6 +61,8 @@ const NewData = ({ products }) => {
                 >
                   <p>Explore Now!</p>
                 </Link>
+
+                </div>
               </div>
             ))}
         </Slider>

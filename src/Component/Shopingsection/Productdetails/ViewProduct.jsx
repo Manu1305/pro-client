@@ -15,6 +15,7 @@ import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { addCartItem, userCartItem } from "../../../Redux/cart/cartAction";
 import { Footer } from "../../Footer/Footer";
+import axios from "axios";
 
 const ViewProduct = () => {
   const { productId } = useParams();
@@ -30,6 +31,29 @@ const ViewProduct = () => {
 
   const [imgPreview, setImgPreview] = useState("");
   const [prdDetInd, setPrdDetInd] = useState(0);
+const [product,setProduct] =useState({})
+
+  const getOneProducts = async () => {
+    await axios
+      .get(`${apiURL}/product/get-one-products/${productId}`)
+      .then((res) => {
+        console.log(res.data);
+        setProduct(res.data);
+      
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
+
+  useEffect(() => {
+    
+    getOneProducts();
+  }, []);
+
+
+
+
 
   const handleShare = () => {
     if (navigator.share) {
@@ -122,6 +146,10 @@ const ViewProduct = () => {
       setofferBtn(false);
     }
   }, [totalItems]);
+  
+
+
+
 
   const storedProductData = useSelector(
     (state) => state.productReducer.product
@@ -270,8 +298,8 @@ const ViewProduct = () => {
           </div>
 
           <div className="col-md-6">
-            <div className={`product`}>
-              <div className={"mt-4"}>
+            <div className={`product`} >
+              <div className={"mt-4"}  style={{marginLeft:'30px'}}>
                 <div className={styles.heads}>
                   <div>
                     {/* {user?.email && user?.urType === "admin" && (
@@ -348,7 +376,7 @@ const ViewProduct = () => {
               {/* color selection */}
               <div style={{ marginTop: "15px" }}>
                 <h5
-                  style={{ fontSize: "18px", fontWeight: 20 }}
+                  style={{ fontSize: "18px", fontWeight: 20, marginLeft:'30px' }}
                   className={`about ${styles.about}`}
                 >
                   Choose a color
@@ -381,24 +409,27 @@ const ViewProduct = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-red mt-4">
+              <div className="bg-red mt-4"   >
                  {/* {user?.email && user?.urType === "admin" && (
                       <button> go back</button>
                     )} */}
+                    <div style={{marginLeft:'30px'}} >
+
                     { user.email && user.urType==="admin"?
 
                       <label htmlFor="product_size">Stockes available</label>
                     : <label htmlFor="product_size">CHOOSE SIZE</label>
 
                     }
-                <div className={styles.sizes}>
+                    </div>
+                <div >
                   {product.productDetails && (
-                    <div>
+                    <div style={{marginLeft:'30px'}}>
                       <div className={`mt-1 left-0 ${styles.sizeresponsive}`}>
                         {product.productDetails &&
                           Object.entries(
                             product.productDetails[prdDetInd].qtyAndSizes
-                          ).map(([size, quantity]) => (
+                           ).map(([size, quantity]) => (
                             <div key={size} className={styles.tottal}>
                               {quantity !== 0 && (
                                 <div>
@@ -531,8 +562,7 @@ const ViewProduct = () => {
           <div>
             <div className="m-5 mb-2">
               <h3 className={styles.activeHeading}>Description</h3>
-            </div>
-
+            </div> 
             <div
               style={{
                 borderTop: "0.4rem solid rgb(243,243,243)",
@@ -555,7 +585,7 @@ const ViewProduct = () => {
             </div>
 
             {/* info */}
-            <div className={styles.descrip}>
+            <div className={styles.descrips}>
               <p className={`about mt-3 ${styles.about}`}>Product Details</p>
               <div className="ml-20 d-flex">
                 <div
@@ -595,13 +625,13 @@ const ViewProduct = () => {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    // marginTop: "30px",
+                   marginLeft:'30px'
                   }}
                 >
                   <div className={`m-2 ${styles["text1"]}`}>
                     {product.productInfo.Material}
                   </div>
-                  <div className={`m-2 ${styles["text1"]}`}>
+                  <div  className={`m-2 ${styles["text1"]}`}>
                     {product.productInfo.Fit}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>

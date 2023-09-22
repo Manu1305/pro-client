@@ -11,12 +11,19 @@ function SearchBar({ products }) {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [selectedSuggestion, setSelectedSuggestion] = useState("");
 
   const item = products;
-  const filteredItems = getFilteredUniqueItems(query, item).slice(0, 5); // Slice to get only the first 5 unique results
+  const filteredItems = getFilteredUniqueItems(query, item).slice(0, 5);
 
   function clear() {
     setQuery("");
+    setSelectedSuggestion("");
+  }
+
+  function handleSuggestionClick(suggestion) {
+    setQuery(""); 
+    setSelectedSuggestion("");
   }
 
   function getFilteredUniqueItems(query, items) {
@@ -49,6 +56,7 @@ function SearchBar({ products }) {
     <div className={styles.container}>
       <input
         type="text"
+        value={selectedSuggestion || query}
         onChange={(e) => setQuery(e.target.value)}
         className={styles.input}
       />
@@ -61,7 +69,7 @@ function SearchBar({ products }) {
       {query && filteredItems.length > 0 && (
         <div className={styles.resultsContainer}>
           {filteredItems.map((value) => (
-            <div className={styles.link} key={value.tags} onClick={clear}>
+            <div className={styles.link} key={value.tags} onClick={() => handleSuggestionClick(value.collections)}>
               <Link to={`/shoppingPages/searchresult/${value.collections}`}>
                 {value.collections}
               </Link>

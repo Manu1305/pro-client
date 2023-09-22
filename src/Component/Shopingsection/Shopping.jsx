@@ -76,7 +76,7 @@ const [collectionstate,setCollections]=useState([])
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
-        <div key={data.id} className="col-lg-3 col-md-4 mb-5">
+        <div key={data.id} className="col-lg-3 col-md-4 col-6 mb-5" style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
           <div className="d-flex flex-column">
             <div className={styless.container}>
               <Link
@@ -86,11 +86,12 @@ const [collectionstate,setCollections]=useState([])
                   display: "inline-block",
                 }}
                 to={`/ViewDetails/${data._id}`}
+                
               >
-                <div style={{ position: "relative" }}>
+                <div className={styless.imagediv} > 
                   <img
                     src={data.productDetails[0].images[0]}
-                    style={{ height: 320, width: 305, objectFit: "fill" }}
+                   
                     alt=""
                   />
                   <div className={styless.like}>
@@ -105,8 +106,8 @@ const [collectionstate,setCollections]=useState([])
                       <PiHeartLight
                         className={styless.like_button}
                         style={{
-                          height: "30px",
-                          width: "30px",
+                          height: "22px",
+                          width: "22px",
                           fontWeight: "50px",
                         }}
                         onClick={() => {
@@ -123,14 +124,37 @@ const [collectionstate,setCollections]=useState([])
             <div className="card-body">
               <div
                 className="cart-title m-1"
-                style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
-              >
+              
+              > <p   style={{ textTransform: "uppercase", fontFamily: "sans-serif" }} >
                 {data.brand}
+
+              </p>
+              <p   style={{ textTransform: "uppercase", fontFamily: "sans-serif"}} className="text-gray-300" >
+                {data.collections}
+
+              </p>
               </div>
               {user && user.email ? (
                 <div className="m-2 d-flex justify-content-between">
-                  <div className="mb-1 me-1 mx-4" style={{ fontSize: "bold" }}>
-                    &#8377; {data.sellingPrice}{" "}
+                  <div className="mb-1" style={{ fontSize: "bold" }}>
+                  <p className="text-green-500 font-semibold">
+  {`${Math.floor(((data.realPrice - data.sellingPrice) / data.realPrice * 100))}% Off`}
+</p>
+
+                  </div>
+                  <div className="mb-1" style={{ fontSize: "bold" }}>
+                    <p className="text-gray-400 line-through">
+                    {data.realPrice}
+
+                    </p>
+                  </div>
+                  
+                  <div className="mb-1">
+                    <p className="font-semibold">
+                    
+                    &#8377;{data.sellingPrice}
+
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -264,7 +288,7 @@ const [collectionstate,setCollections]=useState([])
                   >
                     {displayUsers}
 
-                    <div></div>
+                   
                     {filteredProducts && filteredProducts.length !== 0 && (
                       <ReactPaginate
                         className={styless.pagination}

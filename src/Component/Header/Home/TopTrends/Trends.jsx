@@ -70,11 +70,14 @@ const TrendingItems = ({ products }) => {
                   </Link>
                 </div>
                 <div>
+                  <div className="ml-10" >
                   <h5 className={styless.title}>{productItems.brand}</h5>
                   {/* <span className={styless.description}> */}
-                  <Link style={{ textDecoration: "none" }}>
+                  <Link style={{ textDecoration: "none"}}>
                     <p>Explore Now!</p>
                   </Link>
+
+                  </div>
                 </div>
               </div>
 
