@@ -43,16 +43,16 @@ export const Footer = () => {
             <div className={styles.iconsmain}>
               <div className={styles.icon}>
                 {" "}
-                <FaFacebookF />
+               <Link to="https://www.facebook.com/Hitecmart1"><FaFacebookF /></Link> 
               </div>
               <div className={styles.icon}>
-                <BsInstagram />
+              <Link to="https://www.instagram.com/hitecmart/"><BsInstagram /></Link>  
               </div>
               <div className={styles.icon}>
-                <ImTwitter />
+               <Link to="https://twitter.com/hitecmart/"> <ImTwitter /></Link>
               </div>
               <div className={styles.icon}>
-                <FaLinkedinIn />
+               <Link to="https://www.linkedin.com/company/hitech-mart/"><FaLinkedinIn /></Link> 
               </div>
             </div>
           </div>
