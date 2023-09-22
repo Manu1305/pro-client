@@ -1,0 +1,132 @@
+.header {
+  text-align: center;
+  color: #bf0a2a;
+  font-weight: 700;
+  font-size: 35px;
+}
+.para {
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 2rem;
+  margin-left: 19rem;
+  margin-right: 19rem;
+  margin-bottom: 4rem;
+}
+.headerrr {
+  text-align: center;
+  color: #bf0a2a;
+  font-weight: 700;
+  font-size: 35px;
+  margin-top: 4rem;
+}
+.butt {
+  color: #fff;
+  background-color: #bf0a2a;
+  margin-top: 4rem;
+  margin-left: 31rem;
+  margin-top: 1rem;
+  padding: 10px 15px;
+}
+.butts {
+  color: #fff;
+  background-color: #bf0a2a;
+  margin-top: 4rem;
+  margin-left: 10rem;
+  margin-top: 1rem;
+  padding: 10px 15px;
+  margin-bottom: 4rem;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 90%;
+    left: 12%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: white;
+    font-size: 58px;
+    font-weight: 800;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    padding: 10px;
+  }
+  .image-container .text-overlay {
+    color: rgb(253, 246, 126);
+  }
+  .image-container .text-overlay {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    color: #fff;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px)  {
+    .text-overlay {
+        position: absolute;
+        top: 40%;
+        white-space: nowrap;
+    
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        color: white;
+        /* background-color: rgba(0, 0, 0, 0.5); */
+        padding: 10px;
+      }
+      .image-container .text-overlay {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        z-index: 2;
+        color: #fff;
+      }
+  }
+@media screen and (max-width: 600px) {
+    .para {
+        text-align: center;
+        font-weight: 500;
+        font-size: 16px;
+        margin-top: 2rem;
+        margin-left: 0rem;
+        margin-right: 0rem;
+        margin-bottom: 4rem;
+      }
+      .butt {
+        color: #fff;
+        background-color: #bf0a2a;
+        margin-top: 4rem;
+        margin-left: 5.5rem;
+        margin-top: 1rem;
+        padding: 10px 15px;
+      }
+      .butts {
+        color: #fff;
+        background-color: #bf0a2a;
+        margin-top: -3rem;
+        margin-left: 5rem;
+        margin-top: 1rem;
+        padding: 10px 15px;
+      }
+      .text-overlay {
+        position: absolute;
+        top: 50%;
+        left:10%;
+        text-align: center;
+        /* left: 50%; */
+        margin-left: 0rem;
+        transform: translate(-50%, -50%);
+        font-size: large;
+        color: white;
+        /* background-color: rgba(0, 0, 0, 0.5); */
+        padding: 10px;
+      }
+      .image-container .text-overlay {
+        position: absolute;
+    
+        text-align: center;
+        width: 100%;
+        z-index: 2;
+        color: #fff;
+      }
+}

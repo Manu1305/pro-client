@@ -26,7 +26,7 @@ const Register = () => {
                 selectedLoginType === "customer" && "active"
               }`}
               onClick={() => handleLoginTypeChange("customer")}
-            style={{backgroundColor:'orangered',borderRadius:'5px'}}
+            style={{backgroundColor:'rgb(201, 76, 76)',color:"white",borderRadius:'5px', padding:"5px 5px" }}
             >
               CUSTOMER REGISTER
             </button>
@@ -37,7 +37,7 @@ const Register = () => {
                 selectedLoginType === "seller" && "active"
               }`}
               onClick={() => storepage()}
-              style={{backgroundColor:'orangered',borderRadius:'5px'}}
+              style={{backgroundColor:'rgb(201, 76, 76)',color:"white",borderRadius:'5px', padding:"5px 5px" }}
             >
               SELLER REGISTER
             </button>
