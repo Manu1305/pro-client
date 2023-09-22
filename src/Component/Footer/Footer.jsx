@@ -65,8 +65,8 @@ export const Footer = () => {
                     About
                   </Link>
                   <Link to="/contactUs" className={styles.links}>Contact us</Link>
-                  <Link className={styles.links}>Support</Link>
-                  <Link to="/career" className={styles.links}>careers</Link>
+                  {/* <Link className={styles.links}>Support</Link> */}
+                  <Link to="/career" className={styles.links}>Careers</Link>
                 </ul>
               </div>
               <div className={styles.list}>
@@ -74,7 +74,7 @@ export const Footer = () => {
                   <Link className={styles.listhead}>Quick link</Link>
                   <Link className={styles.links}>Share location</Link>
                   <Link className={styles.links}>Order tracking</Link>
-                  <Link className={styles.links}>Size Guide</Link>
+                  <Link to="/sizeChart" className={styles.links}>Size Guide</Link>
                   <Link className={styles.links}>FAQs</Link>
                 </ul>
               </div>

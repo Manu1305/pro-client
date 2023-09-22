@@ -120,18 +120,7 @@ export const PrivacyPolicy = () => {
               already taken place.
             </p>
           </li>
-          <li className={idea.wholesale}>
-            <h3 className={idea.wholesaleH1}> 4.Distribution of Information</h3>
-            <p className={idea.wholesaleP}>
-              {" "}
-              We may share information with governmental agencies or other
-              companies assisting us in fraud prevention or investigation. We
-              may do so when: (1) permitted or required by law; or, (2) trying
-              to protect against or prevent actual or potential fraud or
-              unauthorized transactions; or, (3) investigating fraud which has
-              already taken place.
-            </p>
-          </li>
+        
           <li className={idea.wholesale}>
             <h3 className={idea.wholesaleH1}> 5.Storage of Information </h3>
             <p className={idea.wholesaleP}>

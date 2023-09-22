@@ -57,6 +57,7 @@ import { DeliveryFranchise } from "./Navbar/Franchise/DeliveryFranchise";
 import { ContactUs } from "./Footer/ContactUs/ContactUs";
 import { CareerWithUs } from "./Footer/CareerWithUs/CareerWithUs";
 import { PrivacyPolicy } from "./Footer/Privacy&Policy/Privacy&Policy";
+import { SizeChart } from "./Footer/Size&Chart/Size&Chart";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -248,6 +249,7 @@ const[ProductLength,setProductLength]=useState()
             <Route path="/contactUs" element={<ContactUs />} />
             <Route path="/career" element={<CareerWithUs />} />
             <Route path="/privacyPol" element={<PrivacyPolicy />} />
+            <Route path="/sizeChart" element={<SizeChart />} />
 
           </Routes>
         </div>

@@ -118,7 +118,9 @@
   
   .login-new .cardCategory {
     color: #fff;
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: 12rem;
     /* margin-bottom: var(--spacing-s); */
     text-transform: uppercase;
 

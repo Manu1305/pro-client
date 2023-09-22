@@ -49,7 +49,7 @@ export const CareerWithUs = () => {
       >Email CVs to:</button>
       <button className={styles.butts}
        onClick={() => emailwhats()}
-      >Call/WhatsApp:</button>
+      >Call:</button>
     </div>
   );
 };
