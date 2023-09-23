@@ -4,17 +4,16 @@ import styles from "./Addproduct.module.css";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 
-function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
+function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
   const [qtyAndSizes, setQtyAndSizes] = useState();
-  const [prviewProdcts, setprviewProdcts] = useState([]);
-  const [totalStocks, setTotalStocks] = useState(0);
+  //   const [prviewProdcts, setprviewProdcts] = useState([]);
+  //   const [totalStocks, setTotalStocks] = useState(0);
   const [images, setImages] = useState(null);
 
   const submitHandler = async () => {
     console.log("color => ", color);
     console.log("qtyAndSizes => ", qtyAndSizes);
-    // console.log("color => ",color)
     console.log("images => ", images);
 
     const config = {
@@ -51,16 +50,6 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
 
   console.log("ProductID", productId);
 
-  //   const addColor = () => {
-  //     setprviewProdcts((prev) => [
-  //       ...prev,
-  //       {
-  //         color,
-  //         images,
-  //         qtyAndSizes,
-  //       },
-  //     ]);
-  //   };
   return (
     <div className="bg-gray">
       <div className="bg-white mt-2 p-2">
@@ -70,9 +59,6 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
         >
           Colors
         </label>
-        {/* {colorError && (
-          <p className="text-red-500 text-sm mt-1">{colorError}</p>
-        )} */}
 
         <input
           style={{ height: "50px", width: "300px" }}
@@ -153,9 +139,7 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
       <div className="bg-white mt-3 p-1">
         <div style={{ marginTop: "30px" }}>
           <h3 className="m-1 fw-bold">Product image</h3>
-          {/* {imageError && (
-            <p className="text-red-500 text-sm mt-1">{imageError}</p>
-          )} */}
+
           <br />
           <h4>Add the product main image</h4>
           <div className="flex items-center justify-center w-auto">
@@ -196,11 +180,9 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
                 multiple
               />
             </label>
-            {/* {base64Images.map((base64Image, index) => ( */}
+            {/* preview */}
             <div>
               <img
-                //   key={index}
-                //   src={base64Image}
                 alt="jius"
                 style={{
                   maxWidth: "100px",
@@ -208,9 +190,7 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
                   margin: "10px",
                 }}
               />
-              <button
-              //    onClick={() => handleDeleteImage(index)}
-              >
+              <button>
                 <MdDeleteSweep
                   style={{
                     display: "flex",
@@ -221,7 +201,6 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
                 />
               </button>
             </div>
-            {/* ))} */}
           </div>
         </div>
       </div>
@@ -235,7 +214,6 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
         </button>
         <button
           onClick={() => setSecondModal(false)}
-          // style={{ background: "#" }}
           className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
         >
           Cancel
@@ -245,7 +223,7 @@ function Setion2({ sizeSelected, productInfo, setSecondModal, productId }) {
   );
 }
 
-export default Setion2;
+export default Section2;
 
 {
   /* Prview */
