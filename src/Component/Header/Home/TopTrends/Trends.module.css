@@ -19,7 +19,7 @@
   margin-bottom: 1rem;
   margin-right: 20px;
   /* background-color:#fff; */
-  height: 400px;
+  height: auto;
   width: 500px;
   border-radius: 10px;
   /* box-shadow: 0 2px 8px rgba(34, 9, 9, 0.878); */
@@ -27,7 +27,7 @@
 }
 .bg{
   background-color: #fff;
-  margin-top: 1rem;
+
 
 }
 
@@ -100,9 +100,9 @@
 
 }
 .title{
-  margin-left: 0.5rem;
+ 
   font-weight:bold;
-  margin-top: 50px;
+ 
 
 }
 

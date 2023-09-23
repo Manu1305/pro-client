@@ -5,13 +5,13 @@ import Orders from "./VendorComponent/Orders/Orders";
 import Products from "./VendorComponent/Products/Products";
 import DashHome from "../../../../Dashboard/OrderHistory/DashHome/DashHome";
 
-function VendorDashboard({handleLoginTypeChange}) {
+function VendorDashboard({handleLoginTypeChange,products}) {
 
   
   return (
     <div className="container">
       <div className="component">
-        <DashHome handleLoginTypeChange={handleLoginTypeChange}/>
+        <DashHome handleLoginTypeChange={handleLoginTypeChange} products={products} />
       </div>
       <div className="component">
         {/* <Orders /> */}

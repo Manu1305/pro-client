@@ -43,16 +43,16 @@ export const Footer = () => {
             <div className={styles.iconsmain}>
               <div className={styles.icon}>
                 {" "}
-                <FaFacebookF />
+               <Link to="https://www.facebook.com/Hitecmart1"><FaFacebookF /></Link> 
               </div>
               <div className={styles.icon}>
-                <BsInstagram />
+              <Link to="https://www.instagram.com/hitecmart/"><BsInstagram /></Link>  
               </div>
               <div className={styles.icon}>
-                <ImTwitter />
+               <Link to="https://twitter.com/hitecmart/"> <ImTwitter /></Link>
               </div>
               <div className={styles.icon}>
-                <FaLinkedinIn />
+               <Link to="https://www.linkedin.com/company/hitech-mart/"><FaLinkedinIn /></Link> 
               </div>
             </div>
           </div>
@@ -64,9 +64,9 @@ export const Footer = () => {
                   <Link to="/about" className={styles.links}>
                     About
                   </Link>
-                  <Link className={styles.links}>Contact us</Link>
-                  <Link className={styles.links}>Support</Link>
-                  <Link className={styles.links}>careers</Link>
+                  <Link to="/contactUs" className={styles.links}>Contact us</Link>
+                  {/* <Link className={styles.links}>Support</Link> */}
+                  <Link to="/career" className={styles.links}>Careers</Link>
                 </ul>
               </div>
               <div className={styles.list}>
@@ -74,7 +74,7 @@ export const Footer = () => {
                   <Link className={styles.listhead}>Quick link</Link>
                   <Link className={styles.links}>Share location</Link>
                   <Link className={styles.links}>Order tracking</Link>
-                  <Link className={styles.links}>Size Guide</Link>
+                  <Link to="/sizeChart" className={styles.links}>Size Guide</Link>
                   <Link className={styles.links}>FAQs</Link>
                 </ul>
               </div>
@@ -82,7 +82,7 @@ export const Footer = () => {
                 <ul className={styles.listul}>
                   <Link className={styles.listhead}>Legal</Link>
                   <Link className={styles.links}>Terms and conditions </Link>
-                  <Link className={styles.links}>Privacy and policy</Link>
+                  <Link to="/privacyPol" className={styles.links}>Privacy and policy</Link>
                 </ul>
               </div>
             </div>

@@ -1,0 +1,91 @@
+.header {
+  text-align: center;
+  color: #bf0a2a;
+  font-weight: 700;
+  font-size: 35px;
+  margin-top: 4rem;
+}
+.wholesale{
+    color: #030303;
+  }
+.text-overlay {
+    position: absolute;
+    top: 90%;
+    left: 12%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: white;
+    font-size: 58px;
+    font-weight: 800;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    padding: 10px;
+  }
+  .wholesaleP{
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 4rem;
+    margin-top: 1rem;
+
+
+  }
+  .bott{
+    margin-bottom: 5rem;
+  }
+
+  .wholesaleH1{
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 2rem;
+    margin-left: 3.8rem;
+  }
+.image-container .text-overlay {
+  color: rgb(253, 246, 126);
+}
+.image-container .text-overlay {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 2;
+  color: #fff;
+}
+
+.imgg{
+    width: 50rem;
+    height: 50rem;
+}
+
+.imggg{
+    width: 40rem;
+    height: 30rem;
+    margin-left: 2rem;
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .image-container .text-overlay {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    color: #fff;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .image-container .text-overlay {
+    position: absolute;
+
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    color: #fff;
+  }
+  
+.imgg{
+    width: 50rem;
+    height: 30rem;
+}
+.imggg{
+    width: 40rem;
+    height: 20rem;
+    margin-left: 0rem;
+}
+}

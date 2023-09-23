@@ -12,7 +12,7 @@ import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Badge } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
-const Navbar = () => {
+const Navbar = ({products}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
@@ -57,7 +57,7 @@ const Navbar = () => {
         </Link>
       </li>
 
-      <SearchBar />
+      <SearchBar products={products} />
       <div className={styles["navbar-toggle"]} onClick={toggleMenu}>
         <i className="fas fa-bars"></i>
       </div>

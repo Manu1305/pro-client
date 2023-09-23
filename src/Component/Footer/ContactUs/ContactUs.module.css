@@ -1,0 +1,38 @@
+.header{
+    text-align: center;
+    color: #BF0A2A;
+    font-weight: 700;
+    font-size: 35px;
+}
+.para{
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+}
+.bttt{
+    color: #fff;
+    background-color: #BF0A2A;
+    margin-left: 65rem;
+    margin-top: 1rem;
+    padding: 10px 15px;
+}
+.rowww{
+    /* margin-top: 0.5rem; */
+    width: 50rem;
+margin-left: 15rem;}
+.coll{
+    margin-top: 0.5rem;
+
+}
+@media screen and (max-width: 600px) {
+
+    .bttt{
+        margin-left: 12rem;
+        margin-bottom: 2rem;
+    }
+    .rowww{
+        /* margin-top: 0.5rem; */
+        width: 18rem;
+    margin-left: 0rem;
+}
+}

@@ -13,8 +13,11 @@ import { ScaleLoader } from "react-spinners";
 import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
 
-const Shopping = () => {
-  const { category } = useParams();
+const Shopping = ({products}) => {
+  const { category,collections } = useParams();
+
+  const colletionResults = collections
+
   const selectedCategory = category ? category : "all";
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
@@ -24,6 +27,7 @@ const Shopping = () => {
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+const [collectionstate,setCollections]=useState([])
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -40,45 +44,30 @@ const Shopping = () => {
       setCategories([selectedCategory]);
     }
   }, [selectedCategory]);
-
-  const getAllProducts = async () => {
-    await httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        console.log(res.data);
-
-        dispatch(addProduct(res.data));
-        const filByStaus = res.data.filter((prd) => prd.status === true);
-        setData(filByStaus);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
   useEffect(() => {
-    setIsLoading(true);
-    getAllProducts();
-  }, []);
-
-  const sellingPrices = data.map((item) => item.sellingPrice);
+   
+    setCollections([colletionResults]);
+    
+  }, [colletionResults]);
+  const sellingPrices = products.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
   const lowestprice = 0;
 
-  const filteredProducts =
-    data &&
-    data.filter((data) => {
-      const categoryMatch =
-        categories.length === 0 ||
-        categories.some((categoryy) => data.selectedCategory === categoryy);
-      const priceMatch =
-        data.sellingPrice >= lowestprice && data.sellingPrice <= price;
-
-      return categoryMatch && priceMatch;
-    });
+  const filteredProducts = products && products.filter((data) => {
+    const categoryMatch =
+      categories.length === 0 ||
+      categories.some((categoryy) => data.selectedCategory === categoryy);
+  
+    const collectionMatch =
+      collectionstate.length === 0 || collectionstate.includes(data.collections);
+  
+    const priceMatch =
+      data.sellingPrice >= lowestprice && data.sellingPrice <= price;
+  
+    return (categoryMatch || collectionMatch) && priceMatch;
+  });
+  
+  
 
   const usersPerpage = 20;
   const pagesVisited = pageNumber * usersPerpage;
@@ -87,7 +76,7 @@ const Shopping = () => {
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
-        <div key={data.id} className="col-lg-3 col-md-4 mb-5">
+        <div key={data.id} className="col-lg-3 col-md-4 col-6 mb-5" style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
           <div className="d-flex flex-column">
             <div className={styless.container}>
               <Link
@@ -97,11 +86,12 @@ const Shopping = () => {
                   display: "inline-block",
                 }}
                 to={`/ViewDetails/${data._id}`}
+                
               >
-                <div style={{ position: "relative" }}>
+                <div className={styless.imagediv} > 
                   <img
                     src={data.productDetails[0].images[0]}
-                    style={{ height: 320, width: 305, objectFit: "fill" }}
+                   
                     alt=""
                   />
                   <div className={styless.like}>
@@ -116,8 +106,8 @@ const Shopping = () => {
                       <PiHeartLight
                         className={styless.like_button}
                         style={{
-                          height: "30px",
-                          width: "30px",
+                          height: "22px",
+                          width: "22px",
                           fontWeight: "50px",
                         }}
                         onClick={() => {
@@ -134,14 +124,37 @@ const Shopping = () => {
             <div className="card-body">
               <div
                 className="cart-title m-1"
-                style={{ textTransform: "uppercase", fontFamily: "fantasy" }}
-              >
+              
+              > <p   style={{ textTransform: "uppercase", fontFamily: "sans-serif" }} >
                 {data.brand}
+
+              </p>
+              <p   style={{ textTransform: "uppercase", fontFamily: "sans-serif"}} className="text-gray-300" >
+                {data.collections}
+
+              </p>
               </div>
               {user && user.email ? (
                 <div className="m-2 d-flex justify-content-between">
-                  <div className="mb-1 me-1 mx-4" style={{ fontSize: "bold" }}>
-                    &#8377; {data.sellingPrice}{" "}
+                  <div className="mb-1" style={{ fontSize: "bold" }}>
+                  <p className="text-green-500 font-semibold">
+  {`${Math.floor(((data.realPrice - data.sellingPrice) / data.realPrice * 100))}% Off`}
+</p>
+
+                  </div>
+                  <div className="mb-1" style={{ fontSize: "bold" }}>
+                    <p className="text-gray-400 line-through">
+                    {data.realPrice}
+
+                    </p>
+                  </div>
+                  
+                  <div className="mb-1">
+                    <p className="font-semibold">
+                    
+                    &#8377;{data.sellingPrice}
+
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -163,25 +176,7 @@ const Shopping = () => {
   return (
     <>
       <div style={{ background: "#ffffff" }}>
-        {isLoading ? ( // Conditionally render a loading spinner
-          <div className={styless.loadingSpinner}>
-            <div>
-              <ScaleLoader
-                color="red"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  margin: "auto",
-                }}
-                animation="border"
-                role="status"
-              >
-                <span className="visually-hidden">Loading...</span>
-              </ScaleLoader>
-            </div>
-          </div>
-        ) : (
+        
           <div>
             <CategCart />
             <div className="container">
@@ -293,7 +288,7 @@ const Shopping = () => {
                   >
                     {displayUsers}
 
-                    <div></div>
+                   
                     {filteredProducts && filteredProducts.length !== 0 && (
                       <ReactPaginate
                         className={styless.pagination}
@@ -310,7 +305,7 @@ const Shopping = () => {
               </div>
             </div>
           </div>
-        )}
+      
       </div>
       <div style={{ overflow: "hidden" }}>
         <Footer />

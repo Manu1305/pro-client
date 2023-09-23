@@ -123,6 +123,11 @@
   flex-direction: row;
   /* left: 0;fle */
   justify-content: start;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: scroll;
+  gap: 10px;
+
 }
 .star {
   height: 100%;
@@ -199,6 +204,7 @@
 .color_Container {
   margin-top: 15px;
   display: flex;
+  margin-left: 30px;
 }
 .color_box {
   /* background-color: #bbc1f8; */
@@ -226,6 +232,11 @@
   background-color: black;
 }
 
+.descrips{
+  margin-left: 40px;
+  margin-top: 50px;
+}
+
 @media (min-width: 100px) and (max-width: 900px) {
   .sizeresponsive {
     display: flex;
@@ -236,13 +247,19 @@
   }
   .descrip {
     margin: 40px;
-    margin-top: 20px;
+    margin-top: 100px;
     border-top: 0.3rem solid rgb(141, 137, 137);
     width: 80%;
     margin-right: 20px;
 
     /* margin-right: 30rem; */
   }
+  .descrips{
+    margin-left: 40px;
+    margin-top: 210px;
+  }
+
+
 }
 
 .control-btn button {
@@ -340,9 +357,12 @@
 .descrip {
   margin-left: 40px;
   width: 98%;
+  margin-top: 20px;
 }
 .text1 {
   font-weight: 0.1rem;
+  height: 50px;
+  width: 20px;
 }
 .icons {
   /* position: absolute; */

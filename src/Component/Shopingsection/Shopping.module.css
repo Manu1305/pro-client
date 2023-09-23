@@ -226,7 +226,15 @@
   align-items: center;
 }
 
+.imagediv{
+  position: relative;
+}
 
+.imagediv img{
+height: 320px;
+width: 305px;
+object-fit: "fill";
+}
 
 
 @media (max-width: 600px) {
@@ -239,6 +247,22 @@
     margin-left:0rem;
     margin-top: 0rem;
   }
+
+  .imagediv{
+    position: relative;
+  }
+  
+  .imagediv img{
+  height: 250px;
+  width: 255px;
+  object-fit: "fill";
+  }
+  
+
+
+
+
+
 }
 
 @font-face {

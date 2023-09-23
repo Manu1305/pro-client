@@ -5,10 +5,7 @@ import Swal from "sweetalert2";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { MdDeleteSweep } from "react-icons/md";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Setion2 from "./Setion2";
+import Section2 from "./Setion2";
 
 function AddProduct() {
   const [isButtonVisible, setButtonVisible] = useState(true);
@@ -202,56 +199,23 @@ function AddProduct() {
 
   const [productInfo, setProductInfo] = useState({});
   const [productInfoDet, setProductInfoDet] = useState({});
-  const [color, setColor] = useState("");
-  const [qtyAndSizes, setQtyAndSizes] = useState({});
-  const [prviewProdcts, setprviewProdcts] = useState([]);
-  const [base64Images, setBase64Images] = useState([]);
-  const [totalStocks, setTotalStocks] = useState(0);
+
   const [errors, setErrors] = useState({});
-  const [colorError, setColorError] = useState("");
-  const [imageError, setimageError] = useState("");
-  const [validation, setvalidation] = useState(false);
+  // const [colorError, setColorError] = useState("");
+  // const [validation, setvalidation] = useState(false);
   const [uplProductId, setUplProductId] = useState("");
 
   const [secondModal, setSecondModal] = useState(false);
 
-  const [imagesHad, setImagesHad] = useState(null);
   const categoriesWithSubcategories = {
     Mens: ["Shirts", "Pants"],
     Womens: ["top", "Bottom", "Sarees"],
     Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
   };
 
-  const imgHandler = async (e) => {
-    const files = e.target.files;
-    setImagesHad(files);
-  };
-  // const imgHandler = async (e) => {
-  //   // const files = Array.from(e.target.files);
-  //   const files = e.target.files;
-
-  //   const formData = new FormData();
-  //   // formData.append("photos", files);
-
-  //   for (const file of files) {
-  //     formData.append("photos", file);
-  //   }
-  //   const response = await fetch(`${apiURL}/product/images`, {
-  //     method: "POST",
-  //     body: formData,
-  //   })
-  //     .then((res) => res)
-  //     .then((res) => res.json())
-  //     .catch((eer) => eer);
-
-  //   console.log("UPload REsponse", response);
-  // };
-
-  const handleDeleteImage = (index) => {
-    const updatedImages = [...base64Images];
-    updatedImages.splice(index, 1);
-    setBase64Images(updatedImages);
-  };
+  useEffect(() => {
+    console.log("ProductInfo", productInfo);
+  }, [productInfo]);
 
   const onchangeHandler = (e) => {
     const { name, value } = e.target;
@@ -260,34 +224,11 @@ function AddProduct() {
     });
   };
 
-  const validateFormcolorandimage = () => {
-    let success = true;
-
-    if (!color) {
-      setColorError("Color is required");
-      success = false;
-    } else {
-      setColorError("");
-    }
-
-    // if (base64Images.length === 0) {
-    //   setimageError("Please upload at least one image");
-    //   success = false;
-    // } else {
-    //   setimageError("");
-    // }
-
-    return success;
-  };
-
   const validateForm = () => {
     const newErrors = {};
     if (!productInfo.productCode) {
       newErrors.productCode = "Add ProductCode ";
     }
-    // if (!productInfo.description) {
-    //   newErrors.description = "Add description about the product";
-    // }
 
     if (!productInfo.Material) {
       newErrors.material = "Material name is required";
@@ -307,6 +248,9 @@ function AddProduct() {
     }
     if (!productInfo.selectedSubcategory) {
       newErrors.selectedSubcategory = "Please select subcategroy";
+    }
+    if (!productInfo.selectedSubcategory) {
+      newErrors.selectedSubcategory = "Please select subcategroy";
     } else if (!productInfo.collections) {
       newErrors.collections = "Please add collection name of your product";
     }
@@ -316,6 +260,14 @@ function AddProduct() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // const errInfo = productInfoArray.map((ele) => {
+  //   const newErrors = {};
+  //   if(productInfoDet[`${ele}`]){
+  //     newErrors[`${ele}`] = `Please add ${ele}`;
+
+  //   }
+  // });
+
   const InfoHandler = (e) => {
     const { name, value } = e.target;
     setProductInfoDet((prev) => {
@@ -323,70 +275,25 @@ function AddProduct() {
     });
   };
 
-  let totalQuantity = 0;
-
-  useEffect(() => {
-    let value =
-      Object.values(qtyAndSizes).length > 0 &&
-      Object.values(qtyAndSizes).reduce((acc, curr) => acc + curr);
-    totalQuantity += value;
-  }, [qtyAndSizes]);
-
-  const deleteAnyColor = (ind, prod) => {
-    setprviewProdcts((prev) => {
-      const newItems = prev.filter((item) => item !== prod);
-      return [...newItems];
-    });
-    toast.success("deleted");
-  };
-
-  const addColorsHandler = () => {
-    const success = validateFormcolorandimage();
-    if (success) {
-      setprviewProdcts((prev) => [
-        ...prev,
-        {
-          color,
-          images: base64Images,
-          qtyAndSizes,
-        },
-      ]);
-      setvalidation(true);
-      setBase64Images([]);
-      setColor("");
-      setTotalStocks((prev) => prev + Number(totalQuantity));
-      toast.success("color varient addeded successfully");
-    } else {
-      toast.warn("please add the image and color and size");
-    }
-  };
+  // const deleteAnyColor = (ind, prod) => {
+  //   setprviewProdcts((prev) => {
+  //     const newItems = prev.filter((item) => item !== prod);
+  //     return [...newItems];
+  //   });
+  //   toast.success("deleted");
+  // };
 
   const addNewProduct = async () => {
     // e.preventDefault();
     const isValid = validateForm();
     setButtonVisible(false);
 
-    console.log("Uploaded imgs", imagesHad);
-
-    // console.log(isValid);
-    // if (validation) {
-    //   if (isValid) {
     const config = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
-
-    // const formData = new FormData();
-
-    // // for (const file of imagesHad) {
-    // //   formData.append("images", file);
-    // // }
-    // formData.append("productInfo", JSON.stringify(productInfoDet));
-    // // formData.append("productDetails", JSON.stringify(prviewProdcts));
-    // formData.append("genInfo", JSON.stringify(productInfo));
-    // formData.append("stock", totalStocks);
 
     try {
       await httpService
@@ -408,27 +315,16 @@ function AddProduct() {
           });
           setButtonVisible(true);
         });
-      // history("/dashboard");
     } catch (error) {
       console.log("Couldn't add product: ", error);
       setButtonVisible(true);
     }
-    //   } else {
-    //     Swal.fire("Fill the all fields", "All field should be filled", "error");
-    //   }
-    // } else {
-    //   Swal.fire("Fill the all fields", "All field should be filled", "error");
-    // }
   };
 
   return (
     <div className="bg-gray">
-      {/* <div className={styles.headingdiv}>
-        <h2 className={styles.headingText}>Add product </h2>
-      </div> */}
-
       {secondModal ? (
-        <Setion2
+        <Section2
           productId={uplProductId}
           sizeSelected={sizeSelected}
           productInfo={productInfo}
@@ -651,7 +547,6 @@ function AddProduct() {
                     <textarea
                       id="editor"
                       rows="8"
-                      // maxlength="50"
                       className="block w-full text-sm text-gray-800 border-1  focus:ring-0 dark:text-white dark:placeholder-gray-400"
                       placeholder="Write product description here"
                       required
@@ -701,11 +596,7 @@ function AddProduct() {
                   >
                     {ele}
                   </label>
-                  {/* {errors[`${ele}`] && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors[`${ele}`]}
-                </p>
-              )} */}
+
                   <input
                     type="text"
                     id="title"
@@ -720,28 +611,6 @@ function AddProduct() {
             </div>
 
             <div className="bg-white mt-4">
-              {/* <div style={{ marginLeft: "30px", marginBottom: "20px" }}>
-            <label
-              for="message"
-              className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
-            >
-              Additional Text
-            </label>
-            {errors.MoreDetails && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.MoreDetails}
-              </p>
-            )}
-            <textarea
-              name="MoreDetails"
-              onChange={(e) => onchangeHandler(e)}
-              rows="4"
-              maxLength={"70"}
-              className="block p-4 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Enter washcare description of product here..."
-            />
-          </div> */}
-
               <label
                 for="message"
                 className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
@@ -769,11 +638,7 @@ function AddProduct() {
             >
               Submit
             </button>
-            <button
-              // onClick={addNewProduct}
-              // style={{ background: "#" }}
-              className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
-            >
+            <button className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200">
               Cancel
             </button>
           </div>
