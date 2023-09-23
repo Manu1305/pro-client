@@ -1,12 +1,17 @@
 import React from "react";
 import styles from "./Size&Chart.module.css";
+import images1 from "../../../images/hhhh.jpg"
+import images2 from "../../../images/gggg.jpg"
+import images3 from "../../../images/tttt.jpg"
+
+
 
 export const SizeChart = () => {
   return (
     <div>
       <h1 className={styles.header}>Size & Charts</h1>
       <div className={styles["image-container"]}>
-        <img src="../Image/hhhh.jpg" alt="cover"  />
+        <img src={images1} alt="cover"  />
         {/* <h1 className={styles["text-overlay"]}>
           CAREERS
         </h1> */}
@@ -44,7 +49,7 @@ export const SizeChart = () => {
             </p>
           </li>
           <div className={styles["image-containerr"]}>
-        <img src="../Image/gggg.jpg" alt="cover" className={styles.imgg} />
+        <img src={images2} alt="cover" className={styles.imgg} />
      
       </div>{" "}
           <li className={styles.wholesale}>
@@ -63,7 +68,7 @@ export const SizeChart = () => {
             </p>
           </li>
           <div className={styles["image-containerr"]}>
-        <img src="../Image/tttt.jpg" alt="cover" className={styles.imggg} />
+        <img src={images3} alt="cover" className={styles.imggg} />
      
       </div>{" "}
         </ol>
