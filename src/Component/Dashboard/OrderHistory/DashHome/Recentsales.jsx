@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { apiURL } from "../../../../const/config";
 import httpService from "../../../Error Handling/httpService";
 import Orders from "../../../Navbar/Profile/SellerDashboard/Vendor/VendorComponent/Orders/Orders";
-import stylesss from "./RecentSales.module.css"
+import stylesss from "./RecentSales.module.css";
 function Recentsales() {
   const [orders, setOrders] = useState([]);
+  const [lastFiveOrders, setlastFiveOrders] = useState([]);
 
   const getOrders = async () => {
     try {
@@ -18,10 +19,16 @@ function Recentsales() {
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
           console.log(res.data);
+
+          if (res.data.length > 0) {
+            setlastFiveOrders(res.data.slice(0, 5));
+          }
+
           return res.data;
         })
         .catch((err) => {
           console.log(err);
+          
         });
       setOrders(res);
     } catch (error) {
@@ -31,11 +38,11 @@ function Recentsales() {
 
   useEffect(() => {
     getOrders();
+    // const lastFiveOrders = orders.slice(-5);
   }, []);
 
-  const lastFiveOrders = orders.slice(-5);
   return (
-    <div  >
+    <div>
       <div className={`container-fluid pt-4 px-4 ${stylesss.kkkk}`}>
         <div className={"bg-light text-center rounded p-4 "}>
           <div className="d-flex align-items-center justify-content-between mb-4">

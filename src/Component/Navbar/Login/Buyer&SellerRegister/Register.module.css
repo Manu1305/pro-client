@@ -1,6 +1,5 @@
 .login-tabs {
   text-align: center;
-
 }
 .img1 {
   width: 100%;
@@ -39,7 +38,7 @@
   text-transform: uppercase;
   overflow: hidden;
   transition: 0.5s;
-  
+
   letter-spacing: 4px;
 }
 
@@ -47,15 +46,14 @@
   background: #03e9f4;
   color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 5px #BF0A2A, 0 0 25px #BF0A2A, 0 0 50px#BF0A2A,
-    0 0 100px #BF0A2A;
+  /* box-shadow: 0 0 5px #BF0A2A, 0 0 25px #BF0A2A, 0 0 50px#BF0A2A,
+    0 0 100px #BF0A2A; */
 }
 
 .login-tabs button span {
   position: absolute;
   display: block;
 }
-
 
 @keyframes btn-anim1 {
   0% {
@@ -68,7 +66,6 @@
 }
 
 .login-tabs button span:nth-child(2) {
-
   right: 0;
   width: 2px;
   height: 100%;

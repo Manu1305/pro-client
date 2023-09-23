@@ -32,7 +32,16 @@ export const AllUsers = () => {
 
   const getUsers = async () => {
     try {
-      const res = await httpService.get(`${apiURL}/user/allUserData`);
+      const res = await httpService
+        .get(`${apiURL}/user/allUserData`)
+        .then((res) => {
+          setIsLoading(false);
+
+          return res;
+        })
+        .catch((err) => {
+          setIsLoading(false);
+        });
       console.log("users", res.data);
       const data = res.data;
 
@@ -43,15 +52,8 @@ export const AllUsers = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getUsers();
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   const removeFromShop = async (id, obj) => {
@@ -84,7 +86,6 @@ export const AllUsers = () => {
     "premium",
     "gst",
     "Action",
-    
   ].map((ele) => {
     let string = ele;
     string.replace(/^./, string[0].toUpperCase());

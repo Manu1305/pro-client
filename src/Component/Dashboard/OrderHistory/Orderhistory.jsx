@@ -56,10 +56,16 @@ const OrderHistory = () => {
         },
       };
 
-      const res = await httpService.get(
-        `${apiURL}/orders/get-all-orders`,
-        config
-      );
+      const res = await httpService
+        .get(`${apiURL}/orders/get-all-orders`, config)
+        .then((res) => {
+          setIsLoading(false);
+          return res;
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+        });
       const filteredProducts = res.data.filter(
         (product) => product.seller === user.email
       );
@@ -74,12 +80,8 @@ const OrderHistory = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
+    setIsLoading(true);
     getOrders();
-    return () => clearTimeout(timer);
   }, []);
 
   const header = [
@@ -211,7 +213,9 @@ const OrderHistory = () => {
 
   const rowData = orders.map((ele) => {
     const date = new Date(ele.createdAt).toISOString().split("T")[0];
-    const collect = ((parseInt(ele.ordPrc) * 90) / 100) + (((parseInt(ele.ordPrc) * 90) / 100)*5)/100
+    const collect =
+      (parseInt(ele.ordPrc) * 90) / 100 +
+      (((parseInt(ele.ordPrc) * 90) / 100) * 5) / 100;
     return {
       id: ele._id,
       "Order Id": ele._id,
@@ -219,7 +223,7 @@ const OrderHistory = () => {
       Product: ele.prdData.images,
       "Orderd On": date,
       Price: ele.ordPrc,
-      Collect:ele.pType === "cash" ? collect : null,
+      Collect: ele.pType === "cash" ? collect : null,
       "Payment Method": ele.pType,
       "Delivery Status": ele.orderStatus,
     };
@@ -227,7 +231,7 @@ const OrderHistory = () => {
 
   return (
     <div>
-      <h1>Seller</h1>
+      {/* <h1>Seller</h1> */}
       {rowData.length !== 0 ? (
         <DataTable columns={header} rows={rowData} autoHeight />
       ) : (

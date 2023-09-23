@@ -179,10 +179,11 @@ const CustomerLogin = () => {
                           Register here
                         </Link>
                       </p>
-                      <a href="#!" className="small text-muted">
+                      <a href="#!" className="small text-muted mx-2">
                         Terms of use.
                       </a>
-                      <a href="#!" className="small text-muted">
+                      &
+                      <a href="#!" className="small text-muted  mx-2">
                         Privacy policy
                       </a>
                     </form>

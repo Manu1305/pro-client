@@ -22,7 +22,7 @@ function SearchBar({ products }) {
   }
 
   function handleSuggestionClick(suggestion) {
-    setQuery(""); 
+    setQuery("");
     setSelectedSuggestion("");
   }
 
@@ -34,10 +34,13 @@ function SearchBar({ products }) {
     const uniqueItems = [];
     const addedCollections = new Set();
 
+    const queryLowercase = query.toLowerCase(); // Convert query to lowercase
+
     for (const product of items) {
-      if (product.collections.includes(query) && !addedCollections.has(product.collections)) {
+      const productCollectionsLowercase = product.collections.toLowerCase(); // Convert product collections to lowercase
+      if (productCollectionsLowercase.includes(queryLowercase) && !addedCollections.has(productCollectionsLowercase)) {
         uniqueItems.push(product);
-        addedCollections.add(product.collections);
+        addedCollections.add(productCollectionsLowercase);
       }
     }
 

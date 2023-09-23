@@ -9,7 +9,6 @@ import httpService from "../../Error Handling/httpService";
 import { ScaleLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import SizeAndQuantity from "../../Reuseable Comp/SizeAndQuantity";
 import { userCartItem } from "../../../Redux/cart/cartAction";
 
 const Cart = () => {
@@ -62,14 +61,6 @@ const Cart = () => {
     });
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   if (CartItem.subTotal === 0) {
     return (
       <div className="text-center">
@@ -82,38 +73,22 @@ const Cart = () => {
             }}
           >
             <div style={{ margin: "auto" }}>
-              {isLoading ? (
-                <div
+              <div>
+                <img
+                  src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                  alt="Loaded"
+                />
+                <button
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    backgroundColor: "green",
+                    height: "50px",
+                    width: "100px",
+                    borderRadius: "40px",
                   }}
                 >
-                  <ScaleLoader
-                    animation="border"
-                    role="status"
-                    color="red"
-                  ></ScaleLoader>
-                </div>
-              ) : (
-                <div>
-                  <img
-                    src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
-                    alt="Loaded"
-                  />
-                  <button
-                    style={{
-                      backgroundColor: "green",
-                      height: "50px",
-                      width: "100px",
-                      borderRadius: "40px",
-                    }}
-                  >
-                    Shop Now
-                  </button>
-                </div>
-              )}
+                  Shop Now
+                </button>
+              </div>
             </div>
           </div>
         </Link>
@@ -127,7 +102,7 @@ const Cart = () => {
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-10">
-              {CartItem.items?.length &&
+              {CartItem.items?.length ? (
                 CartItem.items.map((item) => (
                   <div className="shadow-xl h-25 mb-3" key={item._id}>
                     <div
@@ -204,7 +179,25 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div>
+                  <img
+                    src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                    alt="Loaded"
+                  />
+                  <button
+                    style={{
+                      backgroundColor: "green",
+                      height: "50px",
+                      width: "100px",
+                      borderRadius: "40px",
+                    }}
+                  >
+                    Shop Now
+                  </button>
+                </div>
+              )}
 
               {CartItem.items?.length && (
                 <>
