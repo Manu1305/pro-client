@@ -12,9 +12,7 @@ export const SizeChart = () => {
       <h1 className={styles.header}>Size & Charts</h1>
       <div className={styles["image-container"]}>
         <img src={images1} alt="cover"  />
-        {/* <h1 className={styles["text-overlay"]}>
-          CAREERS
-        </h1> */}
+     
       </div>{" "}
       <div className={styles.bott}>
         <ol>

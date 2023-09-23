@@ -95,7 +95,7 @@ const[ProductLength,setProductLength]=useState()
           if (res.data.Message === "Your cart is empty...!") {
             // setCartItem([]);
           } else {
-            console.log("UserCARt", res.data);
+            console.log("UserCARt", res);
             dispatch(userCartItem(res.data));
             // setCartItem(res.data);
           }

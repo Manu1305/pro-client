@@ -11,7 +11,8 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
-import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
+import { BsHandbagFill, BsPlusCircle, } from "react-icons/bs";
+import { BiSolidOffer } from "react-icons/bi";
 import { addCartItem, userCartItem } from "../../../Redux/cart/cartAction";
 import { Footer } from "../../Footer/Footer";
 import axios from "axios";
@@ -337,22 +338,22 @@ const [product,setProduct] =useState({})
                 <div
                   className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
                 >
-                  <h5 className="fw-bold ">₹{product.sellingPrice}</h5>
+                  <h5 className="fw-bold text-3xl font-mono">₹{product.sellingPrice}</h5>
                   <div className={styles.starreviewmain}>
                     <div className={styles.star}>
-                      <AiOutlineStar />
-                      <p>4.8</p>
+                     
+                      <h2 className="line-through" >{product.realPrice}</h2>
                     </div>
                     <div className={`${styles.review}`}>
-                      <FaRegCommentDots />
+                      <BiSolidOffer className="h-15 w-15" />
 
-                      <p className={styles.reviewtext}> 67 reviews</p>
+                      <p className={styles.reviewtext}> {`${Math.floor(((product.realPrice - product.sellingPrice) / product.realPrice * 100))}% Off`}</p>
                     </div>
                   </div>
                 </div>
 
                 <div className={styles.priceandpercentage}>
-                  <div>
+                  {/* <div>
                     <p
                       className="line-through"
                       style={{
@@ -363,7 +364,7 @@ const [product,setProduct] =useState({})
                     >
                       ₹{product.realPrice}
                     </p>
-                  </div>
+                  </div> */}
                   {user?.email && user?.urType === "buyer" && (
                     <div className={styles.percentagetext}>
                       <h5 className="text-success">93%</h5>

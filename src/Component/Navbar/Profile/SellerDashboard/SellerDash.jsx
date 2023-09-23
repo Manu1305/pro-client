@@ -187,14 +187,14 @@ const SellerDashboard = ({products}) => {
           {user?.urType === "admin" && (
             <li
               className={dash.item}
-              onClick={() => handleLoginTypeChange("reversewith")}
+              onClick={() => handleLoginTypeChange("usermanagement")}
             >
               <i class="fa-solid fa-user"></i>
               <span className={dash.nombres}>
                 <button
                   //   to="/product"
                   className={`login-tab ${
-                    selectedLoginType === "reversewith" && "active"
+                    selectedLoginType === "usermanagement" && "active"
                   }`}
                 >
                   UserManagement
@@ -282,7 +282,7 @@ const SellerDashboard = ({products}) => {
               <AdminWithdrawControl />
             </div>
           )}
-          {selectedLoginType === "reversewith" && (
+          {selectedLoginType === "usermanagement" && (
             <div className={dash["reversewith-login"]}>
               <AllUsers />
               {/* reversewithdraw */}

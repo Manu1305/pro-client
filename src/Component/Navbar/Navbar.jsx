@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Badge } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import image from "../../images/logoooo.jpg"
 
 const Navbar = ({products}) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -49,7 +50,7 @@ const Navbar = ({products}) => {
         <Link to="/" onClick={closeMenu} className={styles.heading}>
           {/* HITEC MART */}
           <img
-            src="../Image/logo.png"
+            src={image}
             alt=""
             style={{ width: "100px", height: "50px" }}
             className={` ${styles.imgcircle}`}
