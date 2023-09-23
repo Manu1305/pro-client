@@ -153,7 +153,7 @@ export const AllUsers = () => {
       premium: ele.subsPlan,
       userType: ele.urType,
       gst: ele.gst,
-      shopname: ele.shopName ? ele.shopName : "nodata",
+      Action: "Deactivate",
       // state: ele.address.state ? ele.address.state : "nodata",
       // city: ele.address.city ? ele.address.city : "nodata",
       // area: ele.address.area ? ele.address.area : "nodata",

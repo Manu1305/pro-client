@@ -113,7 +113,7 @@
 .starreviewmain {
   display: flex;
   flex-direction: row;
-  width: 200px;
+  width: 400px;
   height: 20px;
 
   margin-left: 20px;
@@ -145,13 +145,13 @@
   align-items: center;
   width: 60%;
   height: 100%;
-  background-color: #c9e0eb;
   margin-left: 10%;
-  color: blue;
+  color: green;
 }
 .reviewtext {
-  color: blue !important;
+  color: green !important;
   margin-left: 5px;
+  font-family: 'Times New Roman', Times, serif;
 }
 .priceandpercentage {
   display: flex;
@@ -416,12 +416,11 @@
   align-items: center;
   width: 60%;
   height: 100%;
-  background-color: #c9e0eb;
   margin-left: 10%;
-  color: blue;
+  color: green;
 }
 .reviewtext {
-  color: blue !important;
+  color: green !important;
   margin-left: 5px;
 }
 .priceandpercentage {
