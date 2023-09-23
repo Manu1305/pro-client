@@ -52,8 +52,7 @@ export const ReturnReq = () => {
       await httpService
         .get(`${apiURL}/return/returnReq`, config)
         .then((res) => {
-
-          console.log("RET DAta",res.data)
+          console.log("RET DAta", res.data);
           setUserData(res.data);
         })
         .catch((err) => {
@@ -65,6 +64,7 @@ export const ReturnReq = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getReturnReq();
   }, []);
 
@@ -83,60 +83,54 @@ export const ReturnReq = () => {
     await httpService
       .put(`${apiURL}/delivery/assign-return-delivery-order/${id}`)
       .then((res) => {
+        setIsLoading(false);
         Swal.fire("Return Assigned");
       })
 
       .catch((err) => {
         console.log("ERROR", err);
+        setIsLoading(false);
       });
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const header = ["User", "Order Id", "Phone", "Issue","status", "action"].map(
+  const header = ["User", "Order Id", "Phone", "Issue", "status", "action"].map(
     (ele) => {
       let string = ele;
-      
+
       string.replace(/^./, string[0].toUpperCase());
 
-      
       if (ele === "action") {
         return {
           field: "Action",
           type: "action",
           width: "150px",
           renderCell: (params) => {
-            console.log("Check",params.row);
+            console.log("Check", params.row);
             return (
               <div style={{ display: "flex", flexDirection: "row" }}>
-                
-                {
-                  !params.row.retStatus && <>
-                  <div className="m-2">
-                  <p
-                    className="btn btn-danger btn-sm"
-                    onClick={() => removeFromReq(params.row["Order Id"])}
-                  >
-                    Cancel
-                  </p>
-                </div>
-                <div className="m-2" onClick={() => console.log()}>
-                  {/* <BiSolidShoppingBags /> */}
-                  <p
-                    className="btn btn-success btn-sm"
-                    onClick={() => AssignReturnDelivery(params.row["Order Id"])}
-                  >
-                    Approve
-                  </p>
-                </div>
+                {!params.row.retStatus && (
+                  <>
+                    <div className="m-2">
+                      <p
+                        className="btn btn-danger btn-sm"
+                        onClick={() => removeFromReq(params.row["Order Id"])}
+                      >
+                        Cancel
+                      </p>
+                    </div>
+                    <div className="m-2" onClick={() => console.log()}>
+                      {/* <BiSolidShoppingBags /> */}
+                      <p
+                        className="btn btn-success btn-sm"
+                        onClick={() =>
+                          AssignReturnDelivery(params.row["Order Id"])
+                        }
+                      >
+                        Approve
+                      </p>
+                    </div>
                   </>
-                }
+                )}
               </div>
             );
           },
@@ -156,10 +150,10 @@ export const ReturnReq = () => {
     return {
       id: ele._id,
       User: ele.uname,
-      "Order Id": ele.orderId      ,
+      "Order Id": ele.orderId,
       Phone: ele.phone,
       Issue: ele.productIssue,
-      status:ele.retStatus
+      status: ele.retStatus,
     };
   });
 

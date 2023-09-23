@@ -22,7 +22,7 @@ const Shopping = ({products}) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
 
-  const [price, setPrice] = useState(10000);
+  const [price, setPrice] = useState(100000);
   const [categories, setCategories] = useState([]);
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
