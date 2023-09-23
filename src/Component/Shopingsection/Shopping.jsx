@@ -22,7 +22,7 @@ const Shopping = ({products}) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
 
-  const [price, setPrice] = useState(10000);
+  const [price, setPrice] = useState(100000);
   const [categories, setCategories] = useState([]);
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
@@ -54,17 +54,20 @@ const [collectionstate,setCollections]=useState([])
   const lowestprice = 0;
 
   const filteredProducts = products && products.filter((data) => {
+   
+
     const categoryMatch =
       categories.length === 0 ||
+      
       categories.some((categoryy) => data.selectedCategory === categoryy);
-  
     const collectionMatch =
       collectionstate.length === 0 || collectionstate.includes(data.collections);
   
     const priceMatch =
       data.sellingPrice >= lowestprice && data.sellingPrice <= price;
-  
-    return (categoryMatch || collectionMatch) && priceMatch;
+
+    return (categoryMatch || collectionMatch) && priceMatch ;
+
   });
   
   
@@ -129,18 +132,21 @@ const [collectionstate,setCollections]=useState([])
                 {data.brand}
 
               </p>
-              <p   style={{ textTransform: "uppercase", fontFamily: "sans-serif"}} className="text-gray-300" >
-                {data.collections}
+              <p   style={{ textTransform: "uppercase", fontFamily: "sans-serif",}} className="text-gray-600" >
+                {data.title.slice(0,22)}
 
               </p>
               </div>
               {user && user.email ? (
                 <div className="m-2 d-flex justify-content-between">
                   <div className="mb-1" style={{ fontSize: "bold" }}>
-                  <p className="text-green-500 font-semibold">
-  {`${Math.floor(((data.realPrice - data.sellingPrice) / data.realPrice * 100))}% Off`}
-</p>
+                  <p className="font-semibold">
+                    
+                    &#8377;{data.sellingPrice}
 
+                    </p>
+
+                 
                   </div>
                   <div className="mb-1" style={{ fontSize: "bold" }}>
                     <p className="text-gray-400 line-through">
@@ -150,11 +156,10 @@ const [collectionstate,setCollections]=useState([])
                   </div>
                   
                   <div className="mb-1">
-                    <p className="font-semibold">
-                    
-                    &#8377;{data.sellingPrice}
+                  <p className="text-green-500 font-semibold">
+  {`${Math.floor(((data.realPrice - data.sellingPrice) / data.realPrice * 100))}% Off`}
+</p>
 
-                    </p>
                   </div>
                 </div>
               ) : (

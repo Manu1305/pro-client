@@ -159,8 +159,8 @@ const BuyerOrder = () => {
                   />
 
                   <div className="ms-3">
-                    <p className="fw-bold mb-1">{order.prdData.barnd}</p>
-                    <p className="text-muted mb-0">{order.prdData.category}</p>
+                    <p className="fw-bold mb-1">{order.brand}</p>
+                    <p className="text-muted mb-0">{order.category}</p>
                   </div>
                   <select>
                     {order.sizeWithQuantity &&
