@@ -30,19 +30,14 @@ const SellerOrder = () => {
           console.log(err);
         });
       setOrders(res);
+
+      res && setIsLoading(false)
+
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
     }
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
 
 
   const addToDelivery = async (id) => {
@@ -109,6 +104,7 @@ const SellerOrder = () => {
 
 
   useEffect(() => {
+    setIsLoading(true);
     getOrders();
   }, []);
 
@@ -175,7 +171,7 @@ const SellerOrder = () => {
                   <div>
                     <Tooltip title="Confirm Return" onClick={() => confirmDelivery(params.row.id)}>
                       <IconButton>
-                        <ThumbUpAltIcon  />
+                        <ThumbUpAltIcon />
                       </IconButton>
                     </Tooltip>
                   </div>

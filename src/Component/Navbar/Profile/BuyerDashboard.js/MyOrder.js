@@ -43,11 +43,15 @@ const BuyerOrder = () => {
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
-          console.log(res.data+"orders csdc");
+          setIsLoading(false);
+
+          console.log(res.data + "orders csdc");
           return res.data;
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
+
         });
       console.log(res);
       dispatch(addorder(res));
@@ -61,15 +65,10 @@ const BuyerOrder = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
 
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     getOrders();
   }, []);
 
@@ -82,7 +81,7 @@ const BuyerOrder = () => {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes',
-      cancelButtonText:'No'
+      cancelButtonText: 'No'
     }).then((result) => {
       if (result.isConfirmed) {
         const config = {
@@ -104,10 +103,10 @@ const BuyerOrder = () => {
           .catch((err) => {
             console.log(err);
           });
-      
+
       }
     })
-    
+
   }
 
   return (
@@ -227,16 +226,16 @@ const BuyerOrder = () => {
                         {/* <button className="btn btn-warning my-2">
                           CHANGE ADDRESS
                         </button> */}
-                       {
-  order.orderStatus !== 'Cancelled' ? (
-    <button
-      onClick={() => cancelorder(order._id)}
-      className="btn btn-danger"
-    >
-      CANCEL ORDER
-    </button>
-  ) : null
-}
+                        {
+                          order.orderStatus !== 'Cancelled' ? (
+                            <button
+                              onClick={() => cancelorder(order._id)}
+                              className="btn btn-danger"
+                            >
+                              CANCEL ORDER
+                            </button>
+                          ) : null
+                        }
 
                       </>
                     )}

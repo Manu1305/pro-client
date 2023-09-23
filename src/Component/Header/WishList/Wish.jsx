@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Wish.module.css";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { Footer } from "../../Footer/Footer";
@@ -25,39 +24,23 @@ const WishList = () => {
       await httpService
         .get(`${apiURL}/wish/user-wish`, config)
         .then((res) => {
-        
           setWishLists(res.data);
-          console.log(JSON.stringify(res.data)+"this is wishlsit");
-       
+          console.log(JSON.stringify(res.data) + "this is wishlsit");
+          setIsLoading(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setIsLoading(false);
+        });
     } catch (error) {
       console.log("API Error", error);
     }
   };
+  useEffect(() => {}, []);
+
   useEffect(() => {
- 
-  }, []);
-  
-  useEffect(() => {
+    setIsLoading(true);
     getWishproduct();
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
- 
-  }, [wishLists]);
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
 
   const removefrom = async (productId) => {
     const config = {
@@ -76,9 +59,8 @@ const WishList = () => {
           config
         )
         .then((response) => {
-          toast.warning("item removed successfully")
+          toast.warning("item removed successfully");
           getWishproduct();
-         
         })
         .catch((err) => {
           console.log(err);
@@ -90,27 +72,32 @@ const WishList = () => {
 
   if (wishLists.length === 0) {
     return (
-      <div style={{margin:'auto'}} >
+      <div style={{ margin: "auto" }}>
         {isLoading ? (
-         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-           <ScaleLoader  animation="border" role="status" color="red">
-             <span className="visually-hidden">Loading...</span>
-           </ScaleLoader >
-         
-         </div>
-       ) : (
-         <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded" />
-       )}
-       </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ScaleLoader animation="border" role="status" color="red">
+              <span className="visually-hidden">Loading...</span>
+            </ScaleLoader>
+          </div>
+        ) : (
+          <img
+            src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+            alt="Loaded"
+          />
+        )}
+      </div>
     );
   }
 
   return (
     <>
-      <section
-        className="h-100"
-        style={{ backgroundColor: "#eee"}}
-      >
+      <section className="h-100" style={{ backgroundColor: "#eee" }}>
         <div className="container h-100 py-5">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-10">
@@ -123,23 +110,20 @@ const WishList = () => {
                   <div
                     className="card rounded-3 mb-4"
                     key={item._id}
-                    onClick={() => {
-                     
-                    }}
+                    onClick={() => {}}
                   >
-                    
                     <div className="card-body p-4">
                       <div className="row d-flex justify-content-between align-items-center">
                         <Link to={`/ViewDetails/${item._id}`}>
-                        <div className="col-md-2 col-lg-2 col-xl-2">
-                          <img src={item.productDetails[0].images[0]} alt="item" />
-                        </div>
-
+                          <div className="col-md-2 col-lg-2 col-xl-2">
+                            <img
+                              src={item.productDetails[0].images[0]}
+                              alt="item"
+                            />
+                          </div>
                         </Link>
                         <div className="col-md-3 col-lg-3 col-xl-3">
-                          <p className="lead fw-normal mb-2">
-                            {item.brand}
-                          </p>
+                          <p className="lead fw-normal mb-2">{item.brand}</p>
 
                           <p>
                             <p className="text-muted">

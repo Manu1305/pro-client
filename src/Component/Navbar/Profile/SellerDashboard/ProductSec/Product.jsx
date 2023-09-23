@@ -41,22 +41,17 @@ export const ProductSec = () => {
         );
         console.log("seller Produc", filteredProducts);
         setRequestedProducts(filteredProducts);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("ERROR", err);
+        setIsLoading(false);
       });
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getProducts();
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   // add qunatity
@@ -93,68 +88,73 @@ export const ProductSec = () => {
     console.log("check", reqProducts);
   }, [reqProducts]);
 
-  const header = ["ProductAdded","Date" ,"images", "brand", "price", "action"].map(
-    (ele) => {
-      let string = ele;
-      string.replace(/^./, string[0].toUpperCase());
+  const header = [
+    "ProductAdded",
+    "Date",
+    "images",
+    "brand",
+    "price",
+    "action",
+  ].map((ele) => {
+    let string = ele;
+    string.replace(/^./, string[0].toUpperCase());
 
-      if (ele === "images") {
-        return {
-          field: "image",
-          type: "image",
-          renderCell: (params) => {
-            return (
-              <div>
-                <img
-                  src={params.row.images}
-                  onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
-                  alt=""
-                  width={30}
-                />
-              </div>
-            );
-          },
-        };
-      }
-      if (ele === "action") {
-        return {
-          field: "Action",
-          type: "action",
-          width: "150px",
-          renderCell: (params) => {
-            console.log("Check here", params.row);
-            return (
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <div
-                  className="mr-5"
-                  onClick={() => {
-                    setDeleteId(params.row.id);
-                    setSellerName(params.row.seller);
-                    setModalShow(true);
-                  }}
-                >
-                  <RiDeleteBin6Fill />
-                </div>
-                <div onClick={() => quantityHandler(params.row)}>
-                  <FiEdit />
-                </div>
-              </div>
-            );
-          },
-        };
-      } else {
-        return {
-          field: ele,
-          headerName: string,
-          width: 150,
-          editable: true,
-        };
-      }
+    if (ele === "images") {
+      return {
+        field: "image",
+        type: "image",
+        renderCell: (params) => {
+          return (
+            <div>
+              <img
+                src={params.row.images}
+                onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
+                alt=""
+                width={30}
+              />
+            </div>
+          );
+        },
+      };
     }
-  );
+    if (ele === "action") {
+      return {
+        field: "Action",
+        type: "action",
+        width: "150px",
+        renderCell: (params) => {
+          console.log("Check here", params.row);
+          return (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div
+                className="mr-5"
+                onClick={() => {
+                  setDeleteId(params.row.id);
+                  setSellerName(params.row.seller);
+                  setModalShow(true);
+                }}
+              >
+                <RiDeleteBin6Fill />
+              </div>
+              <div onClick={() => quantityHandler(params.row)}>
+                <FiEdit />
+              </div>
+            </div>
+          );
+        },
+      };
+    } else {
+      return {
+        field: ele,
+        headerName: string,
+        width: 150,
+        editable: true,
+      };
+    }
+  });
 
   const rowData = reqProducts.map((ele) => {
-    const date = new Date(ele.createdAt).toISOString().split('T')[0]
+    const date = new Date(ele.createdAt).toISOString().split("T")[0];
 
     return {
       id: ele._id,
@@ -164,13 +164,12 @@ export const ProductSec = () => {
       // stock: ele.stock,
       price: ele.sellingPrice,
       ProductAdded: ele.seller,
-      Date:date,
+      Date: date,
     };
   });
 
   return (
     <div className="container ml-5 mr-0">
-
       <h2>All products </h2>
       <div className="d-flex justify-content-center row">
         <div className="d-flex justify-content-center mt-4">
