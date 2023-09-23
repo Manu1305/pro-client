@@ -135,7 +135,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(247, 216, 217);
   color: orange;
 }
 .review {
@@ -406,8 +405,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(247, 216, 217);
-  color: orange;
+  color: red;
+  font-size: 1.5rem;
 }
 .review {
   display: flex;
@@ -422,6 +421,7 @@
 .reviewtext {
   color: green !important;
   margin-left: 5px;
+  font-size: 1.5rem;
 }
 .priceandpercentage {
   display: flex;
