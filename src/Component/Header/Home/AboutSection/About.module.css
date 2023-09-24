@@ -2,7 +2,8 @@
   position: relative;
   width: 100%;
   height: 700px;
-  background-image: url('../../../../../public/Image/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
+  /* background-image: url('../Image/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png'); */
+  background-image: url('../../../../images/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
   background-repeat: no-repeat;
   background-size:cover;
   background-position: center;
@@ -50,7 +51,7 @@
   position: relative;
   width: 100%;
   height: 900px;
-  background-image: url('../../../../../public/Image/Aboutus/2nd.png');
+  background-image: url('../../../../images/Aboutus/2nd.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -78,7 +79,7 @@
   position: relative;
   width: 100%;
   height: 500px;
-  background-image: url('../../../../../public/Image/Aboutus/4th.png');
+  background-image: url('../../../../images/Aboutus/4th.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -88,7 +89,7 @@
   position: relative;
   width: 100%;
   height: 500px;
-  background-image: url('../../../../../public/Image/Aboutus/3rd.png');
+  background-image: url('../../../../images/Aboutus/3rd.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -99,7 +100,7 @@
     position: relative;
     width: 100%;
     height: 300px;
-    background-image: url('../../../../../public/Image/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
+    background-image: url('../../../../images/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -145,7 +146,7 @@
     position: relative;
     width: 100%;
     height: 300px;
-    background-image: url('../../../../../public/Image/Aboutus/2nd.png');
+    background-image: url('../../../../images/Aboutus/2nd.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
