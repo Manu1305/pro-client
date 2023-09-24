@@ -11,13 +11,14 @@ import { useNavigate } from "react-router";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Badge } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-
+import logo from '../../images/logo.png'
 const Navbar = ({products}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
   const user = useSelector((state) => state.userReducer.user);
   const CartItem = useSelector((state) => state.cartReducer.userCart);
+   
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -49,7 +50,7 @@ const Navbar = ({products}) => {
         <Link to="/" onClick={closeMenu} className={styles.heading}>
           {/* HITEC MART */}
           <img
-            src="../Image/logo.png"
+            src={logo}
             alt=""
             style={{ width: "100px", height: "50px" }}
             className={` ${styles.imgcircle}`}

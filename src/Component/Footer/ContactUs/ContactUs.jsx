@@ -31,7 +31,7 @@ export const ContactUs = () => {
           <div className="container mt-5">
             <div className={`row my-4 ${styles.rowww}`}>
               <div className={`col-md-6 ${styles.coll}`}>
-                <input placeholder="Name" name="Name"  className="form-control" />
+                <input placeholder="Name" name="Name" required  className="form-control" />
               </div>
               <div className={`col-md-6 ${styles.coll}`}>
                 <input placeholder="Email" name="Email" className="form-control" />

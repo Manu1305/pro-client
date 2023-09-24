@@ -16,6 +16,8 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
     console.log("qtyAndSizes => ", qtyAndSizes);
     console.log("images => ", images);
 
+
+    
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
