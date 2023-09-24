@@ -75,7 +75,7 @@ export const Footer = () => {
                   <Link className={styles.links}>Share location</Link>
                   <Link className={styles.links}>Order tracking</Link>
                   <Link to="/sizeChart" className={styles.links}>Size Guide</Link>
-                  <Link className={styles.links}>FAQs</Link>
+                  <Link to="/faq" className={styles.links}>FAQs</Link>
                 </ul>
               </div>
               <div className={styles.list}>
