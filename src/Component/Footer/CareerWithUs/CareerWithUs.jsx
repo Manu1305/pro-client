@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./CareerWithUs.module.css";
 import Swal from "sweetalert2";
+import images from "../../../images/Careerss.jpg"
 
 export const CareerWithUs = () => {
 
@@ -23,7 +24,7 @@ export const CareerWithUs = () => {
   return (
     <div>
       <div className={styles["image-container"]}>
-        <img src="../Image/Careerss.jpg" alt="cover" />
+        <img src={images} alt="cover" />
         <h1 className={styles["text-overlay"]}>
           CAREERS
         </h1>

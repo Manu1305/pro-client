@@ -1,0 +1,15 @@
+.header {
+    text-align: center;
+    color: #bf0a2a;
+    font-weight: 700;
+    font-size: 35px;
+    margin-top: 4rem;
+  }
+
+  .headerr {
+    text-align: center;
+    color:black;
+    font-weight: 700;
+    font-size: 25px;
+    /* margin-top: 4rem; */
+  }
