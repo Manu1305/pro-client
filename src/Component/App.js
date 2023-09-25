@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "../Scrolltotop";
 import Login from "./Navbar/Login/UserLogin/Login";
 import Navbar from "./Navbar/Navbar";
@@ -71,7 +71,7 @@ const LazyMainPage = React.lazy(() =>
 
 const App = () => {
   const [produts, setProducts] = useState([]);
-const[ProductLength,setProductLength]=useState()
+  const [ProductLength, setProductLength] = useState();
   // const [cartItems, setCartItems] = useState(0);
 
   const user = useSelector((state) => state.userReducer.user);
@@ -139,7 +139,10 @@ const[ProductLength,setProductLength]=useState()
               element={!user?.name ? <Login /> : <Header />}
             />
             <Route path="/" element={<Header products={produts} />} />
-            <Route path="/dashboard" element={<SellerDashboard products={ProductLength} />} />
+            <Route
+              path="/dashboard"
+              element={<SellerDashboard products={ProductLength} />}
+            />
 
             <Route
               path="/cart"
@@ -231,7 +234,7 @@ const[ProductLength,setProductLength]=useState()
               path="/forgotpassword/:id/:token"
               element={<Changepassword />}
             />
-            
+
             <Route path="/passwordupdate" element={<EmailCheck />} />
             <Route path="Wish" element={<Wish />} />
             <Route path="notifications" element={<Notification />} />

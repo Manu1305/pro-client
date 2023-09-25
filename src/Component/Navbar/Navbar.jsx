@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Badge } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import logo from '../../images/logo.png'
 import image from "../../images/logoooo.jpg"
 
 const Navbar = ({products}) => {
@@ -19,6 +20,7 @@ const Navbar = ({products}) => {
   const navigation = useNavigate();
   const user = useSelector((state) => state.userReducer.user);
   const CartItem = useSelector((state) => state.cartReducer.userCart);
+   
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);

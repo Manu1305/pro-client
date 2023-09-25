@@ -89,7 +89,7 @@ const Header = ({ products }) => {
       {/* <Logoslider /> */}
       <CategoryNew />
       <NewData products={products} />
-      <TrendingItems products={products} />
+      <TrendingItems  />
       <Strength />
       {/* <Offer />
 

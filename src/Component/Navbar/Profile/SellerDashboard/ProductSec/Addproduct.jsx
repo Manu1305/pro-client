@@ -575,6 +575,7 @@ function AddProduct() {
                 name="MoreDetails"
                 onChange={(e) => onchangeHandler(e)}
                 rows="4"
+                required
                 maxLength={"70"}
                 className="block p-4 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter washcare description of product here..."
@@ -625,6 +626,7 @@ function AddProduct() {
                 onChange={(e) => onchangeHandler(e)}
                 rows="4"
                 maxLength={"70"}
+                required
                 className="block p-4 w-full text-sm border-1"
                 placeholder="Enter tages for searching product"
               />
