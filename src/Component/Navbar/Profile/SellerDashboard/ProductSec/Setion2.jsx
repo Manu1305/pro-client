@@ -3,12 +3,15 @@ import { MdDeleteSweep } from "react-icons/md";
 import styles from "./Addproduct.module.css";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
+import { useNavigate } from "react-router-dom";
 
 function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
   const [qtyAndSizes, setQtyAndSizes] = useState();
   //   const [prviewProdcts, setprviewProdcts] = useState([]);
   //   const [totalStocks, setTotalStocks] = useState(0);
+
+    const navigate = useNavigate()
   const [images, setImages] = useState(null);
 
   const submitHandler = async () => {
@@ -39,6 +42,8 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
         )
         .then((res) => {
           console.log(res.data);
+        //   navigate('/dashboard')
+        setSecondModal(false)
         })
         .catch((err) => {
           console.log(err);
@@ -48,7 +53,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
     }
   };
 
-  console.log("ProductID", productId);
+//   console.log("ProductID", productId);
 
   return (
     <div className="bg-gray">
