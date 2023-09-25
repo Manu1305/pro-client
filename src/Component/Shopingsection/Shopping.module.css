@@ -9,6 +9,11 @@
   margin-top: -25rem;
 }
 
+.tittt{
+  white-space: nowrap; 
+overflow: hidden;
+}
+
 
 .icon-hover:hover i {
   color: #3b71ca !important;

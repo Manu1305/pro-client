@@ -4,7 +4,7 @@ import dash from "./sellerDash.module.css";
 import { ProductRequest } from "../AdminDashboard/ProductReq";
 import { useSelector } from "react-redux";
 import VendorDashboard from "./Vendor/VendorDashboard";
-import {AllUsers} from './ReverseWithdraw/ReverseWithdrawSec'
+import { AllUsers } from "./ReverseWithdraw/ReverseWithdrawSec";
 import AdminWithdrawControl from "../AdminDashboard/AdminWithdrawSec/AdminWithdrawControl";
 import SellerOrder from "../AdminDashboard/SellerOrder/SellerOrder";
 import Withdraw from "../../../Dashboard/Withdraw/Withdraw";
@@ -15,7 +15,7 @@ import OrderHistory from "../../../Dashboard/OrderHistory/Orderhistory";
 import AddProduct from "./ProductSec/Addproduct";
 import { PremiumSellers } from "./PremiumSellers/PremiumSeller";
 
-const SellerDashboard = ({products}) => {
+const SellerDashboard = ({ products }) => {
   const user = useSelector((state) => state.userReducer.user);
   const [selectedLoginType, setSelectedLoginType] = useState("dashboard");
 
@@ -61,12 +61,12 @@ const SellerDashboard = ({products}) => {
             </li>
           )}
 
-{user?.urType === "admin" && (
+          {user?.urType === "admin" && (
             <li
               className={dash.item}
               onClick={() => handleLoginTypeChange("premium")}
             >
-              <i className="fa-solid fa-box-open"></i>
+              <i class="fa fa-star" aria-hidden="true"></i>
               <span className={dash.nombres}>
                 <button
                   className={`login-tab ${
@@ -78,7 +78,6 @@ const SellerDashboard = ({products}) => {
               </span>
             </li>
           )}
-
 
           {(user?.urType === "seller" || user?.urType === "admin") && (
             <li
@@ -102,7 +101,7 @@ const SellerDashboard = ({products}) => {
               className={dash.item}
               onClick={() => handleLoginTypeChange("AddProduct")}
             >
-              <i className="fa-solid fa-cart-shopping"></i>
+              <i class="fa fa-cart-plus" aria-hidden="true"></i>
               <span className={dash.nombres}>
                 <button
                   className={`login-tab ${
@@ -240,7 +239,7 @@ const SellerDashboard = ({products}) => {
               </span>
             </li>
           )}
-          {user?.urType === "admin" &&  (
+          {user?.urType === "admin" && (
             <li
               className={dash.item}
               onClick={() => handleLoginTypeChange("return")}
@@ -264,7 +263,10 @@ const SellerDashboard = ({products}) => {
         <div>
           {selectedLoginType === "dashboard" && (
             <div className={dash["dashboard-login"]}>
-              <VendorDashboard handleLoginTypeChange={handleLoginTypeChange} products={products} />
+              <VendorDashboard
+                handleLoginTypeChange={handleLoginTypeChange}
+                products={products}
+              />
             </div>
           )}
           {selectedLoginType === "product" && (
@@ -326,7 +328,7 @@ const SellerDashboard = ({products}) => {
           )}
           {selectedLoginType === "premium" && (
             <div className={dash["AddProduct"]}>
-              <PremiumSellers/>
+              <PremiumSellers />
             </div>
           )}
         </div>
