@@ -138,7 +138,7 @@ const Shopping = ({ products }) => {
                     textTransform: "uppercase",
                     fontFamily: "sans-serif",
                   }}
-                  className="text-gray-600"
+                  className={`text-gray-600 ${styless.tittt}`}
                 >
                   {data.title.slice(0, 22)}
                 </p>
