@@ -44,10 +44,8 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
         )
         .then((res) => {
           console.log(res.data);
-          
-          // alert("Product added successfully")
-          // navigate()
-          setSecondModal(false)
+        //   navigate('/dashboard')
+        setSecondModal(false)
         })
         .catch((err) => {
           console.log(err);
@@ -57,7 +55,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
     }
   };
 
-  console.log("ProductID", productId);
+//   console.log("ProductID", productId);
 
   return (
     <div className="bg-gray">
