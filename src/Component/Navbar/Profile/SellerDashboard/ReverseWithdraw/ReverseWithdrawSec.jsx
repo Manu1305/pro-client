@@ -26,6 +26,7 @@ export const AllUsers = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [premium, setPremium] = useState([]);
   const [product, setProduct] = useState({});
+  const [userStatus, setUserStatus] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
 
   const navigate = useNavigate();
@@ -56,14 +57,15 @@ export const AllUsers = () => {
     getUsers();
   }, []);
 
-  const removeFromShop = async (id, obj) => {
+
+  const activateUser = async (id,status) => {
+
+    console.log("Id",id)
     try {
       await httpService
-        .put(`${apiURL}/product/remove-requested-product/${id}`, {
-          message: { ...obj, forU: user.email },
-        })
+        .patch(`${apiURL}/user/deactivate-activate-user/${id}`,{actStatus :status})
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data, "upcoming data");
           getUsers();
         })
         .catch((err) => {
@@ -74,9 +76,7 @@ export const AllUsers = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("check", reqProducts);
-  }, [reqProducts]);
+
 
   const header = [
     "name",
@@ -90,46 +90,35 @@ export const AllUsers = () => {
     let string = ele;
     string.replace(/^./, string[0].toUpperCase());
 
-    if (ele === "images") {
-      return {
-        field: "image",
-        type: "image",
-        renderCell: (params) => {
-          return (
-            <div>
-              <img
-                src={params.row.images}
-                onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
-                alt=""
-                width={30}
-              />
-            </div>
-          );
-        },
-      };
-    }
-    if (ele === "action") {
+    if (ele === "Action") {
       return {
         field: "Action",
         type: "action",
         width: "150px",
         renderCell: (params) => {
-          console.log("Check here", params.row);
           return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div
-                className="mr-5"
-                onClick={() => {
-                  setDeleteId(params.row.id);
-                  setSellerName(params.row.seller);
-                  setModalShow(true);
-                }}
-              >
-                <RiDeleteBin6Fill />
-              </div>
-              {/* <div onClick={() => quantityHandler(params.row)}>
-                  <FiEdit />
-                </div> */}
+            <div>
+              {/* {userStatus ? (
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => {
+                      deactivateUser(ele._id);
+                    }}
+                  >
+                    dectivate
+                  </button>
+                </div>
+              ) : ( */}
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <button
+                    className={params.row.Action ? "btn btn-danger": "btn btn-success"}
+                    onClick={() => activateUser(params.row.id,params.row.Action)}
+                  >
+                   {!params.row.Action ? "Activate" : "Deactivate"}
+                  </button>
+                </div>
+              {/* )} */}
             </div>
           );
         },
@@ -153,10 +142,7 @@ export const AllUsers = () => {
       premium: ele.subsPlan,
       userType: ele.urType,
       gst: ele.gst,
-      Action: "Deactivate",
-      // state: ele.address.state ? ele.address.state : "nodata",
-      // city: ele.address.city ? ele.address.city : "nodata",
-      // area: ele.address.area ? ele.address.area : "nodata",
+      Action: ele.status,
     };
   });
 
@@ -218,13 +204,6 @@ export const AllUsers = () => {
             </>
           )}
         </div>
-
-        <ReasonModal
-          product={{ id: deleteId, seller: seller }}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          removeFromShop={removeFromShop}
-        />
 
         {/* <SizeModal
           getProducts={getProducts}

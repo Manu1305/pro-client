@@ -3,13 +3,16 @@ import { MdDeleteSweep } from "react-icons/md";
 import styles from "./Addproduct.module.css";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
+import { useNavigate } from "react-router-dom";
 
 function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
   const [qtyAndSizes, setQtyAndSizes] = useState();
   //   const [prviewProdcts, setprviewProdcts] = useState([]);
   //   const [totalStocks, setTotalStocks] = useState(0);
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState([]);
+
+  const navigate =useNavigate()
 
   const submitHandler = async () => {
     console.log("color => ", color);
@@ -41,6 +44,10 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
         )
         .then((res) => {
           console.log(res.data);
+          
+          // alert("Product added successfully")
+          // navigate()
+          setSecondModal(false)
         })
         .catch((err) => {
           console.log(err);
@@ -185,6 +192,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
             {/* preview */}
             <div>
               <img
+              src={images}
                 alt="jius"
                 style={{
                   maxWidth: "100px",

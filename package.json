@@ -51,6 +51,7 @@
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
+    "react-service-worker": "^0.1.1",
     "react-slick": "^0.29.0",
     "react-spinners": "^0.13.8",
     "react-table": "^7.8.0",

@@ -1,27 +1,26 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { currentUserData } from "../../../../Redux/user/userAction";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../const/config";
 // import httpService from "../../../Error Handling/httpService";
 import axios from "axios";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {toast} from "react-toastify"
 const CustomerLogin = () => {
   const history = useNavigate();
   const localStorage = window.localStorage;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [inpType, setInpType] = useState('password')
+  const [inpType, setInpType] = useState("password");
   const dispatch = useDispatch();
 
   const handleCustomerLogin = async (e) => {
     e.preventDefault();
-
 
     try {
       const response = await axios
@@ -44,20 +43,26 @@ const CustomerLogin = () => {
               "warning"
             );
           }
-
         });
 
+      // if (
+      //   response &&
+      //   response.data &&
+      //   response.data.user &&
+      //   response.data.status === true
+      // ) {
+      //   console.log("CHECK", response.data.user);
+      //   dispatch(currentUserData(response.data.user));
+      // } else {
+      //   console.log("CHECK", response.data.user);
+      //   dispatch(currentUserData(response.data.user));
+      // }
 
-
-      if (response && response.data && response.data.user) {
-
-        console.log("CHECK", response.data.user)
-        dispatch(currentUserData(response.data.user));
-      }
-
-
-      if (response.data.token) {
+      console.log(response)
+      if (response.data.user.status) {
         localStorage.setItem("token", response.data.token);
+        dispatch(currentUserData(response.data.user));
+
         const route =
           response.data.user.urType === "seller"
             ? !response.data.user?.storeSetup
@@ -70,27 +75,26 @@ const CustomerLogin = () => {
             name: response.data.name,
           },
         });
+      } else {
+        toast.error("Your account is blocked by admin",{
+         icon: "🎭"
+        });
       }
     } catch (error) {
       // alert("Wrong details: " + error);
       console.log(error);
     }
-
-
   };
 
   const handleCheckPass = () => {
-    if (inpType==='password'){
-      setInpType('text')
-   } else {
-      setInpType('password')
-   }
-  }
+    if (inpType === "password") {
+      setInpType("text");
+    } else {
+      setInpType("password");
+    }
+  };
   return (
-    <section
-      className="vh-90"
-      style={{ "background-color": "rgb(191,10,41)" }}
-    >
+    <section className="vh-90" style={{ "background-color": "rgb(191,10,41)" }}>
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col col-xl-10">
@@ -108,7 +112,6 @@ const CustomerLogin = () => {
                   <div className="card-body p-4 p-lg-5 text-black">
                     <form>
                       <div className="d-flex align-items-center mb-3 pb-1">
-
                         <i
                           className="fas fa-face-smile fa-2x me-3"
                           style={{ color: "red" }}
@@ -134,7 +137,6 @@ const CustomerLogin = () => {
                           // error={emailError}
                           placeholder="please enter your email address..."
                         />
-
                       </div>
                       <div className="form-outline mb-4">
                         <label className="form-label" for="form2Example27">
@@ -142,7 +144,6 @@ const CustomerLogin = () => {
                         </label>
 
                         <div class="mb-4 flex">
-
                           <input
                             className="form-control form-control-lg"
                             type={inpType}
@@ -151,13 +152,16 @@ const CustomerLogin = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             autoComplete="current-password"
-
                           />
-                          <span className="flex justify-around items-center" onClick={handleCheckPass}>
-                           {
-                            inpType === "password" ? <RemoveRedEyeIcon className="absolute mr-10" /> : <VisibilityOffIcon className="absolute mr-10"/>
-
-                           } 
+                          <span
+                            className="flex justify-around items-center"
+                            onClick={handleCheckPass}
+                          >
+                            {inpType === "password" ? (
+                              <RemoveRedEyeIcon className="absolute mr-10" />
+                            ) : (
+                              <VisibilityOffIcon className="absolute mr-10" />
+                            )}
                           </span>
                         </div>
                       </div>
