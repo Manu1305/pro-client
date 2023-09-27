@@ -59,6 +59,7 @@ import { CareerWithUs } from "./Footer/CareerWithUs/CareerWithUs";
 import { PrivacyPolicy } from "./Footer/Privacy&Policy/Privacy&Policy";
 import { SizeChart } from "./Footer/Size&Chart/Size&Chart";
 import { FaQ } from "./Footer/FAQ/FaQ";
+import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -255,6 +256,7 @@ const App = () => {
             <Route path="/privacyPol" element={<PrivacyPolicy />} />
             <Route path="/sizeChart" element={<SizeChart />} />
             <Route path="/faq" element={<FaQ />} />
+            <Route path="/termsCond" element={<TermsCondition />} />
 
           </Routes>
         </div>
