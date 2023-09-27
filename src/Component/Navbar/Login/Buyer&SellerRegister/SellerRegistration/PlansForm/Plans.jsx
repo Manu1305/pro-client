@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { MainPlan } from "./MainPlan";
 import plans from "./planSec.module.css";
 import { useSelector } from "react-redux";
 import { apiURL } from "../../../../../../const/config";
 import httpService from "../../../../../Error Handling/httpService";
+import { toast } from "react-toastify";
 
 const Plans = () => {
+  const navigate = useNavigate()
   const seller = useSelector((state) => state.userReducer.seller);
 
   const getApiKey = async () => {
@@ -39,7 +41,11 @@ const Plans = () => {
           return res.data;
         })
         .catch((err) => {
-          console.log(err);
+          console.log("err",err.response.data.code);
+          if(err.response.data.code === 11000){
+            navigate(-1)
+          return  toast.warning("Email Or Phone number is already registered")
+          }
         });
     } catch (error) {
       console.log(error);
