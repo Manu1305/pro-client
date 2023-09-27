@@ -356,7 +356,7 @@ const [otpbutton,setotpButton]=useState(false)
                     onChange={(e) => setGst(e.target.value)}
                   />
                 </div>
-
+  
                 <button
                   className="btn btn-dark"
                   color="dark"
