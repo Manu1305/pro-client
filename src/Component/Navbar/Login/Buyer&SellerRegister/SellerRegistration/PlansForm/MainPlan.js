@@ -2,9 +2,9 @@ import React from "react";
 import plans from "./planSec.module.css";
 import { Link } from "react-router-dom";
 
-export const MainPlan = () => {
+export const MainPlan = ({subHandler}) => {
   return (
-    <div className={plans.dooll}>
+    <div className={plans.dooll} >
       <div className={plans.card}>
         <h2 className={plans.abt}>Prime Listing</h2>
         <div className={plans["card-content"]}>
@@ -14,7 +14,7 @@ export const MainPlan = () => {
           </h6>
           <h2 className={plans.abt1}>Rs. 9,999</h2>
 
-          <button className={plans.buttt}>SUBSCRIBE NOW!</button>
+          <button className={plans.buttt} onClick={subHandler}>SUBSCRIBE NOW!</button>
         </div>
       </div>
 
