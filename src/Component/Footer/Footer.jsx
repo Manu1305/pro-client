@@ -81,7 +81,7 @@ export const Footer = () => {
               <div className={styles.list}>
                 <ul className={styles.listul}>
                   <Link className={styles.listhead}>Legal</Link>
-                  <Link className={styles.links}>Terms and conditions </Link>
+                  <Link to="/termsCond" className={styles.links}>Terms and conditions </Link>
                   <Link to="/privacyPol" className={styles.links}>Privacy and policy</Link>
                 </ul>
               </div>
