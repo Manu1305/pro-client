@@ -429,26 +429,6 @@ const SellerRegister = () => {
                           <div className="text-danger">{GstError}</div>
                         )}
                       </div>
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Full name
-                        </label>
-                        <MDBInput
-                          id="formControlLg"
-                          type="text"
-                          size="lg"
-                          name="full name"
-                          // value={.name}
-                          onChange={onchangeHandler}
-                          className="w-85"
-                        />
-                        {nameError && (
-                          <div className="text-danger">{nameError}</div>
-                        )}
-                      </div>
 
                       <div className="d-flex flex-row align-items-center mb-4">
                         <label
