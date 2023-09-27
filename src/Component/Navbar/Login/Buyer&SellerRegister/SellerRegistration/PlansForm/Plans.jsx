@@ -52,6 +52,8 @@ const Plans = () => {
       //get Razorpay api key
       let raz_api_key = await getApiKey();
 
+      // console.log("Raz pay api key",raz_api_key)
+
       // razorpay checkout
       let raz_sub_pay = await subButton();
 
@@ -114,22 +116,14 @@ const Plans = () => {
   return (
     <div className={plans.App}>
       <div className={plans["card-container"]}>
-        <div onClick={subHandler}>
-          <MainPlan
-            about="Prime Listing"
-            title="9,999"
-            description="Every day deal sale, Hot Promotions, SEO, Facebook Ads, Google Ads, High Visibility etc."
-            buttonText="SUBSCRIBE NOW!"
-          />
-        </div>
-        <Link to="/free">
-           {/* <MainPlan
-            about="1 Month Free Subscription"
-            title="00.00"
-            description="Low Visibility & Limited Orders, Applied for 1 Month only"
-            buttonText="NORMAL PLAN!"
-          /> */}
-        </Link>
+        {/* <div onClick={subHandler}></div> */}
+        <MainPlan
+          subHandler={subHandler}
+          about="Prime Listing"
+          title="9,999"
+          description="Every day deal sale, Hot Promotions, SEO, Facebook Ads, Google Ads, High Visibility etc."
+          buttonText="SUBSCRIBE NOW!"
+        />
       </div>
     </div>
   );

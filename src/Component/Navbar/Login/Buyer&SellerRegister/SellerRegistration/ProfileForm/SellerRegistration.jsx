@@ -429,26 +429,6 @@ const SellerRegister = () => {
                           <div className="text-danger">{GstError}</div>
                         )}
                       </div>
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Full name
-                        </label>
-                        <MDBInput
-                          id="formControlLg"
-                          type="text"
-                          size="lg"
-                          name="full name"
-                          // value={.name}
-                          onChange={onchangeHandler}
-                          className="w-85"
-                        />
-                        {nameError && (
-                          <div className="text-danger">{nameError}</div>
-                        )}
-                      </div>
 
                       <div className="d-flex flex-row align-items-center mb-4">
                         <label
@@ -692,12 +672,12 @@ const SellerRegister = () => {
                         </Link>
                       </p>
                       <div className="d-flex flex-row justify-content-start">
-                        <a href="#!" className="small text-muted me-1">
+                        <Link to="/termsCond" className="small text-muted me-1">
                           Terms of use.
-                        </a>
-                        <a href="#!" className="small text-muted">
+                        </Link>
+                        <Link to="/privacyPol" className="small text-muted">
                           Privacy policy
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   {/* )} */}

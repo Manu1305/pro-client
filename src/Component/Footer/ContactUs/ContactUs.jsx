@@ -2,22 +2,24 @@ import React, { useState } from "react";
 import styles from "./ContactUs.module.css";
 
 export const ContactUs = () => {
+  const scriptUrl =
+    "https://script.google.com/macros/s/AKfycbyrB5Q3h2D3s_Q_g8on5YZDdC7AmQpl_iDFOhtt7RSskIVpoBfjxqs5ekDhS8mhk0dq1g/exec";
 
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbyrB5Q3h2D3s_Q_g8on5YZDdC7AmQpl_iDFOhtt7RSskIVpoBfjxqs5ekDhS8mhk0dq1g/exec"
+  const handleSubmit = (e) => {
+    const formele = document.querySelector("form");
 
-    const handleSubmit = (e) =>{
-        const formele=document.querySelector("form")
+    e.preventDefault();
 
-        e.preventDefault()
+    const formData = new FormData(formele);
 
-        const formData =new FormData(formele)
-
-        fetch(scriptUrl, {method: 'POST', body:formData})
-        .then(res => {
-            alert("Your Message is Successfully Submitted, We will get back to you as soon as possible")
-        })
-        .catch(err => alert(err))
-    }
+    fetch(scriptUrl, { method: "POST", body: formData })
+      .then((res) => {
+        alert(
+          "Your Message is Successfully Submitted, We will get back to you as soon as possible"
+        );
+      })
+      .catch((err) => alert(err));
+  };
 
   return (
     <div>
@@ -27,22 +29,45 @@ export const ContactUs = () => {
         we want to hear from you. Let us know how we can help
       </p>
       <div>
-        <form className="form" onSubmit={(e)=>{handleSubmit(e)}}  name="google-sheet"    >
+        <form
+          className="form"
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+          name="google-sheet"
+        >
           <div className="container mt-5">
             <div className={`row my-4 ${styles.rowww}`}>
               <div className={`col-md-6 ${styles.coll}`}>
-                <input placeholder="Name" name="Name" required  className="form-control" />
+                <input
+                  placeholder="Name"
+                  name="Name"
+                  required
+                  className="form-control"
+                />
               </div>
               <div className={`col-md-6 ${styles.coll}`}>
-                <input placeholder="Email" name="Email" className="form-control" />
+                <input
+                  placeholder="Email"
+                  name="Email"
+                  className="form-control"
+                />
               </div>
             </div>
             <div className={`row my-4 ${styles.rowww}`}>
               <div className={`col-md-6 ${styles.coll}`}>
-                <input placeholder="Phone" name="Phone" className="form-control" />
+                <input
+                  placeholder="Phone"
+                  name="Phone"
+                  className="form-control"
+                />
               </div>
               <div className={`col-md-6 ${styles.coll}`}>
-                <input placeholder="Age" name="Age" className="form-control" />
+                <input
+                  placeholder="Place"
+                  name="Age"
+                  className="form-control"
+                />
               </div>
             </div>
             <div className={`row my-4 ${styles.rowww}`}>
@@ -61,3 +86,4 @@ export const ContactUs = () => {
     </div>
   );
 };
+
