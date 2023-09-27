@@ -354,12 +354,12 @@ const [button,setButton]=useState(true)
                   </Link>
                 </p>
                 <div className="d-flex flex-row justify-content-start">
-                  <a href="#!" className="small text-muted me-1">
+                  <Link to="/termsCond" className="small text-muted me-1">
                     Terms of use.
-                  </a>
-                  <a href="#!" className="small text-muted  ">
+                  </Link>
+                  <Link to="/privacyPol" className="small text-muted  ">
                     Privacy policy
-                  </a>
+                  </Link>
                 </div>
               </MDBCardBody>
             </MDBCol>
