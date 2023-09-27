@@ -295,7 +295,7 @@ const SellerRegister = () => {
           <MDBRow className="g-0">
             {/* {userData.map((data)=>{
             return( */}
-            <div className="flex flex-row">
+            <div>
               <div>
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
@@ -476,7 +476,7 @@ const SellerRegister = () => {
                 </MDBCardBody>
               </MDBCol>
               </div>
-              <div style={{width:"900px"}}>
+              <div>
 
               
               <MDBCol md="6">
