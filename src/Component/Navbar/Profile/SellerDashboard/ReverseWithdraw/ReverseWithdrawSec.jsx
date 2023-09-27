@@ -1,36 +1,14 @@
 import React, { useEffect, useState } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-import { useSelector } from "react-redux";
-
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
-import ReasonModal from "../../AdminDashboard/ReasonModal";
-import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
-import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FiEdit } from "react-icons/fi";
-import UserTable from "../../../../Reuseable Comp/DataTable";
 import DataTable from "../../../../Reuseable Comp/DataTable";
 
 export const AllUsers = () => {
-  const [reqProducts, setRequestedProducts] = useState([]);
-  const [quantityModal, setQuantityModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
-  const [seller, setSellerName] = useState("");
-  const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [premium, setPremium] = useState([]);
-  const [product, setProduct] = useState({});
-  const [userStatus, setUserStatus] = useState(true);
-  const user = useSelector((state) => state.userReducer.user);
-
-  const navigate = useNavigate();
-
   const getUsers = async () => {
     try {
       const res = await httpService
@@ -57,13 +35,13 @@ export const AllUsers = () => {
     getUsers();
   }, []);
 
-
-  const activateUser = async (id,status) => {
-
-    console.log("Id",id)
+  const activateUser = async (id, status) => {
+    console.log("Id", id);
     try {
       await httpService
-        .patch(`${apiURL}/user/deactivate-activate-user/${id}`,{actStatus :status})
+        .patch(`${apiURL}/user/deactivate-activate-user/${id}`, {
+          actStatus: status,
+        })
         .then((res) => {
           console.log(res.data, "upcoming data");
           getUsers();
@@ -75,8 +53,6 @@ export const AllUsers = () => {
       console.log(error);
     }
   };
-
-
 
   const header = [
     "name",
@@ -110,14 +86,16 @@ export const AllUsers = () => {
                   </button>
                 </div>
               ) : ( */}
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <button
-                    className={params.row.Action ? "btn btn-danger": "btn btn-success"}
-                    onClick={() => activateUser(params.row.id,params.row.Action)}
-                  >
-                   {!params.row.Action ? "Activate" : "Deactivate"}
-                  </button>
-                </div>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <button
+                  className={
+                    params.row.Action ? "btn btn-danger" : "btn btn-success"
+                  }
+                  onClick={() => activateUser(params.row.id, params.row.Action)}
+                >
+                  {!params.row.Action ? "Activate" : "Deactivate"}
+                </button>
+              </div>
               {/* )} */}
             </div>
           );
