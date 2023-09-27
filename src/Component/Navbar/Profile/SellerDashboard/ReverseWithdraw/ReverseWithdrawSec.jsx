@@ -139,7 +139,7 @@ export const AllUsers = () => {
       name: ele.name,
       phone: ele.phone,
       email: ele.email,
-      premium: ele.subsPlan,
+      premium: ele.subscription.subsStatus,
       userType: ele.urType,
       gst: ele.gst,
       Action: ele.status,

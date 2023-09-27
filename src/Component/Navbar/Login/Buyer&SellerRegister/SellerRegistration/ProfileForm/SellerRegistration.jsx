@@ -288,13 +288,15 @@ const SellerRegister = () => {
     if (userFilledData.phoneOtp == 12345) setAfterotp(true);
   }, [userFilledData]);
   return (
-    <div>
+    
+      <div>
       <MDBContainer>
         <MDBCard>
           <MDBRow className="g-0">
             {/* {userData.map((data)=>{
             return( */}
             <div>
+              <div>
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
                   <div className="d-flex flex-row mt-2">
@@ -468,9 +470,15 @@ const SellerRegister = () => {
                         )}
                       </div>
                     </div>
+
+                    
                    {/* )} */}
                 </MDBCardBody>
               </MDBCol>
+              </div>
+              <div>
+
+              
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
                   {/* {Afterotp && ( */}
@@ -695,6 +703,7 @@ const SellerRegister = () => {
                   {/* )} */}
                 </MDBCardBody>
               </MDBCol>
+              </div>
             </div>
           </MDBRow>
         </MDBCard>

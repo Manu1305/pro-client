@@ -155,7 +155,7 @@ export const PremiumSellers = () => {
       Name: ele.name,
       Phone: ele.phone,
       Email: ele.email,
-      Plan: ele.subsPlan,
+      Plan: ele.subscription.subsStatus,
       expire: new Date(ele.subscription.expDate).toLocaleDateString("en-US"),
       remainingDays: remainingDays,
     };

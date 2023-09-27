@@ -2,32 +2,32 @@
   border-color: #3b71ca !important;
   background-color: white !important;
 }
-.categggg{
+.categggg {
   width: 250px;
-  Height:400px;
+  height: 400px;
   /* margin-left:-5rem; */
   margin-top: -25rem;
 }
 
-.tittt{
-  white-space: nowrap; 
-overflow: hidden;
+.tittt {
+  white-space: nowrap;
+  overflow: hidden;
 }
-
 
 .icon-hover:hover i {
   color: #3b71ca !important;
 }
 
 .paginateLabel {
-  gap: 10px; /* Adjust the value as needed to add space */
+  gap: 10px; 
 }
-/* pagination.css */
+
 
 .pagination {
   display: flex;
   list-style: none;
   padding: 0;
+  font-family:"Martian Mono, monospace";
 }
 
 .pagination li {
@@ -194,7 +194,7 @@ overflow: hidden;
   opacity: 0.7;
 }
 
-.like{
+.like {
   position: "absolute";
   bottom: 0;
   right: 0;
@@ -202,23 +202,18 @@ overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  
 }
 
-.like_button{
+.like_button {
   height: 30px;
   width: 33px;
   border-radius: 50%;
   cursor: pointer;
   z-index: 2;
   padding: 3px;
-  background-color:#fbfbf9;
+  background-color: #fbfbf9;
   font-size: 25px;
   margin-top: 3px;
-  
-
-
 }
 
 /* .like_button :hover {
@@ -231,43 +226,40 @@ overflow: hidden;
   align-items: center;
 }
 
-.imagediv{
+.imagediv {
   position: relative;
 }
 
-.imagediv img{
-height: 320px;
-width: 305px;
-object-fit: "fill";
+.imagediv img {
+  height: 320px;
+  width: 305px;
+  object-fit: "fill";
 }
-
 
 @media (max-width: 600px) {
   input[type="range"] {
     width: 80vw; /* Adjust the width as needed */
   }
-  .categggg{
+  .categggg {
     width: 350px;
-    Height:400px;
-    margin-left:0rem;
+    height: 400px;
+    margin-left: 0rem;
     margin-top: 0rem;
   }
 
-  .imagediv{
+  .imagediv {
     position: relative;
   }
-  
-  .imagediv img{
-  height: 250px;
-  width: 255px;
-  object-fit: "fill";
+
+  .imagediv img {
+    height: 250px;
+    width: 255px;
+    object-fit: "cover";
   }
-  
-
-
-
-
-
+  .tittt {
+    font-size: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 }
 
 @font-face {

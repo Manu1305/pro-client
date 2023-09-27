@@ -186,7 +186,7 @@ function AddProduct() {
   };
 
   const sizeSelected = {
-    Shirts: ["S", "M", "L", "XL"],
+    Shirts: ["S", "M", "L", "XL","XXL"],
     Pants: [28, 30, 32, 34, 36, 38, 40],
     top: ["XS", "S", "M", "L", "XL"],
     Bottom: ["XS", "S", "M", "L", "XL"],

@@ -76,8 +76,8 @@ const CustomerLogin = () => {
           },
         });
       } else {
-        toast.error("Your account is blocked by admin",{
-         icon: "🎭"
+        toast.error("Your account is suspended",{
+         icon: ""
         });
       }
     } catch (error) {

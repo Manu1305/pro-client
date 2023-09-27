@@ -172,11 +172,11 @@ export const ProductSec = () => {
     <div className="container ml-5 mr-0">
       <h2>All products </h2>
       <div className="d-flex justify-content-center row">
-        <div className="d-flex justify-content-center mt-4">
+        {/* <div className="d-flex justify-content-center mt-4">
           <Link to="/dashboard/Addproduct" className="btn btn-danger">
             Add Product
           </Link>
-        </div>
+        </div> */}
 
         <div>
           {reqProducts.length === 0 ? (

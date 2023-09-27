@@ -57,7 +57,7 @@ const Plans = () => {
 
       // razorpay verification and callback
       const options = {
-        key: raz_api_key.key,
+        key: "rzp_live_m3oBDZHhzp8QRY",
         currency: "INR",
         name: "Hitech Mart",
         subscription_id: raz_sub_pay.razAck.id,
