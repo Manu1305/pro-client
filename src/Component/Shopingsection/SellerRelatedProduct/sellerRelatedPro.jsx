@@ -33,14 +33,13 @@ const SamplePrevArrow = (props) => {
 const SellerRelatedPro = ({ addToCart }) => {
   const [productItems, setProductItems] = useState([]);
   const [userData, setUserData] = useState([]);
-  // const [related, setRelated]= useState("")
 
   
   useEffect(() => {
     httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        // setProductItems(res.data);
+        setProductItems(res.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -93,6 +92,7 @@ const SellerRelatedPro = ({ addToCart }) => {
   };
   return (
     <div className={`${styless.bg}`}>
+      {/* <h1>sertuihi</h1> */}
       {/* <h2>Related Products </h2> */}
       <div className={`${styless.sliderContainer}`}>
 
@@ -105,15 +105,18 @@ const SellerRelatedPro = ({ addToCart }) => {
                   <img
                     src={productItems.productDetails[0].images[0]}
                     alt="imge"
+                    className={styless.igfff}
                   />
                 </div>
               </Link>
             </div>
-            <div>
+            <div className={styless.marbtm}>
              <h5 className={styless.title}>{productItems.brand}</h5>
+             <h5 className={styless.titlee}>{productItems.title}</h5>
+
             {/* <span className={styless.description}> */}
             <Link style={{ textDecoration: "none" }}>
-              <p>Explore Now!</p>
+              {/* <p>Explore Now!</p> */}
             </Link>
           </div>
           </div>

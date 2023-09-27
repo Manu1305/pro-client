@@ -656,7 +656,8 @@ const ViewProduct = () => {
         </div>
       </div>
       )} 
-      {user?.email && user?.urType === "buyer" && <SellerRelatedPro />}
+      {console.log("cdisfus", user)}
+      {user?.email && user?.urType === "buyer" ? <SellerRelatedPro />:null }
       <div className={styles.footer}>
         <Footer />
       </div>
