@@ -3,7 +3,7 @@ import styles from "./ContactUs.module.css";
 
 export const ContactUs = () => {
 
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbxIaWaczZmz2RzFxJJorK4X2XJ_rn5mz_FsIsLJJXnjtdZROlUU3oc4UCma_lh12IqU/exec"
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbyrB5Q3h2D3s_Q_g8on5YZDdC7AmQpl_iDFOhtt7RSskIVpoBfjxqs5ekDhS8mhk0dq1g/exec"
 
     const handleSubmit = (e) =>{
         const formele=document.querySelector("form")
