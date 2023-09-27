@@ -128,7 +128,7 @@ const Shopping = ({ products }) => {
                 <p
                   style={{
                     textTransform: "uppercase",
-                    fontFamily: "sans-serif",
+                    fontFamily: "Martian Mono, monospace",
                   }}
                 >
                   {data.brand}

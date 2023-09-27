@@ -14,6 +14,8 @@ import {
 } from "mdb-react-ui-kit";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
+import { toast } from "react-toastify";
+
 
 const CustomerRegister = () => {
   const history = useNavigate();
@@ -24,22 +26,29 @@ const CustomerRegister = () => {
   const [phone, setPhone] = useState("");
   const [gst, setGst] = useState("");
   const [urType, setUrType] = useState("buyer");
+  const [phoneOtp,setPhoneOtp]=useState('')
+const [button,setButton]=useState(true)
+
+
+
+
+
+
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmpasswordError, setConfirmPasswordError] = useState("");
-
   const [phoneError, setPhoneError] = useState("");
-
+  const[otpError,setOtpError]=useState(false)
   async function handleCustomerSignup(e) {
     e.preventDefault();
 
     const isValid = validate();
-    if (isValid) {
+    if (isValid ) {
       try {
         await httpService
           .post(`${apiURL}/user/signup`, {
-            userData: { name, email, password, phone, gst, urType: "buyer" },
+            userData: { name, email, password, phone, gst, urType: "buyer"},
           })
           .then((res) => {
             console.log(res);
@@ -63,6 +72,7 @@ const CustomerRegister = () => {
           });
       } catch (error) {
         console.log("Registration failed:", error);
+        toast.error("otp validation failed")
         // Handle error, e.g., show an error message
       }
     } else {
@@ -70,12 +80,60 @@ const CustomerRegister = () => {
     }
   }
 
+  const sendOtp = () => {
+    if (phone.length == 10) {
+      
+      toast.success("otp sended successfuly");
+      httpService
+        .post(`${apiURL}/user/send-otp`, { phone })
+        .then((response) => {
+         
+          console.log(response.data + "this is data")
+        })
+
+        .catch((error) => {
+          console.error(error);
+          toast.error("otp not sended",error);
+        });
+      setTimeout(() => {
+       
+      }, 20000);
+    } else {
+      alert("phone number should 10");
+    }
+  };
+
+  const verifyOtp = () => {
+    httpService
+      .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status == "approved") {
+          toast.success("otp verified")
+          setButton(!button)
+
+
+          
+        } else {
+          toast.error("wrong otp ")
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+
+
+
   const validate = () => {
     let emailError = "";
     let passwordError = "";
     let confirmpasswordError = "";
     let phoneError = "";
     let nameError = "";
+    let otpError=""
+    
 
     if (!name) {
       nameError = "Email address is required";
@@ -111,19 +169,26 @@ const CustomerRegister = () => {
       nameError = "Please enter a valid full name 😊";
     }
 
+    if (button===true) {
+      otpError = "please verify phone number with otp";
+    } 
+
+
+
     setNameError(nameError);
     setEmailError(emailError);
     setPasswordError(passwordError);
     setNameError(nameError);
     setConfirmPasswordError(confirmpasswordError);
     setPhoneError(phoneError);
-
+    setOtpError(otpError)
     if (
       emailError ||
       passwordError ||
       confirmpasswordError ||
       phoneError ||
-      nameError
+      nameError ||
+      otpError
     ) {
       return false;
     }
@@ -157,7 +222,7 @@ const CustomerRegister = () => {
                 {nameError && <div className="text-danger">{nameError}</div>}
                 <div className="mb-4">
                   <label htmlFor="formControlLg" className="mb-1">
-                    Full name
+                    Full name 
                   </label>
                   <MDBInput
                     id="formControlLg"
@@ -218,10 +283,12 @@ const CustomerRegister = () => {
                 </div>
 
                 {phoneError && <div className="text-danger">{phoneError}</div>}
-                <div className="mb-4">
+                <div className="mb-4" style={{width:'90%'}} >
                   <label htmlFor="phoneFormControlLg" className="mb-1">
                     Phone No.
                   </label>
+                  
+<div className="flex flex-row gap-3">
                   <MDBInput
                     id="phoneFormControlLg"
                     type="tel"
@@ -229,6 +296,33 @@ const CustomerRegister = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
+                  {
+                    button&& (  <button className="rounded" onClick={sendOtp} >Send otp</button> )
+                  }
+                
+  
+</div>
+                  </div>
+               
+                <div className="mb-4" style={{width:'40%'}}>
+                {otpError && <div className="text-danger">{otpError}</div>}
+                  <label htmlFor="phoneFormControlLg" className="mb-1">
+                    OTP
+                  </label>
+                  <div className="flex flex-row gap-3">
+
+                  <MDBInput
+                    id="phoneFormControlLg"
+                    type="tel"
+                    size="lg"
+                    value={phoneOtp}
+                    onChange={(e) => setPhoneOtp(e.target.value)}
+                  />
+                  {
+                    button&& ( <button className="rounded"  onClick={verifyOtp} >Submit</button>)
+                  }
+                 
+                  </div>
                 </div>
 
                 <div className="mb-4">

@@ -10,6 +10,11 @@ const Register = () => {
   const handleLoginTypeChange = (loginType) => {
     setSelectedLoginType(loginType);
   };
+  
+
+
+
+
 
   function storepage() {
     navigate("/sellerregistration");
