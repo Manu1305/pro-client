@@ -383,6 +383,11 @@ const SellerRegister = () => {
 
                   {/* <button onClick={verifyOtp}>Submit otp</button> */}
                   {otpError && <div className="text-danger">{otpError}</div>}
+
+
+<div>
+  
+</div>
                   <div className="d-flex flex-row align-items-center mb-4">
                     <label
                       htmlFor="formControlLg"
@@ -407,7 +412,7 @@ const SellerRegister = () => {
                     </button>
                   </div>
 
-                  {/* {Afterotp && ( */}
+                   {Afterotp && ( 
                     <div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <label
@@ -452,7 +457,7 @@ const SellerRegister = () => {
                     </div>
 
                     
-                   {/* )} */}
+                   )} 
                 </MDBCardBody>
               </MDBCol>
               </div>
@@ -461,7 +466,7 @@ const SellerRegister = () => {
               
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
-                  {/* {Afterotp && ( */}
+                   {Afterotp && (
                     <div>
                       <hr></hr>
                       <div>
@@ -680,9 +685,10 @@ const SellerRegister = () => {
                         </Link>
                       </div>
                     </div>
-                  {/* )} */}
+                  )} 
                 </MDBCardBody>
               </MDBCol>
+              
               </div>
             </div>
           </MDBRow>
