@@ -28,6 +28,8 @@ const CustomerRegister = () => {
   const [urType, setUrType] = useState("buyer");
   const [phoneOtp,setPhoneOtp]=useState('')
 const [button,setButton]=useState(true)
+const [otpbutton,setotpButton]=useState(false)
+
 
 
 
@@ -66,6 +68,7 @@ const [button,setButton]=useState(true)
 
                 footer: '<a href="/login">Go to Login page</a>',
               });
+              setButton(true)
             } else if (res.data.message == "success") {
               history("/login");
             }
@@ -84,6 +87,7 @@ const [button,setButton]=useState(true)
     if (phone.length == 10) {
       
       toast.success("otp sended successfuly");
+      setotpButton(true)
       httpService
         .post(`${apiURL}/user/send-otp`, { phone })
         .then((response) => {
@@ -110,7 +114,7 @@ const [button,setButton]=useState(true)
         console.log(response.data);
         if (response.data.status == "approved") {
           toast.success("otp verified")
-          setButton(!button)
+          setButton(false)
 
 
           
@@ -283,6 +287,10 @@ const [button,setButton]=useState(true)
                 </div>
 
                 {phoneError && <div className="text-danger">{phoneError}</div>}
+                
+                      <div>
+
+                     
                 <div className="mb-4" style={{width:'90%'}} >
                   <label htmlFor="phoneFormControlLg" className="mb-1">
                     Phone No.
@@ -296,16 +304,21 @@ const [button,setButton]=useState(true)
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
-                  {
-                    button&& (  <button className="rounded" onClick={sendOtp} >Send otp</button> )
-                  }
+                   <button className="rounded bg-green-500 w-20" onClick={sendOtp} >Send otp</button> 
+                  
                 
   
 </div>
+
                   </div>
-               
+                    
+
                 <div className="mb-4" style={{width:'40%'}}>
                 {otpError && <div className="text-danger">{otpError}</div>}
+               {otpbutton&& (
+
+                <div>
+
                   <label htmlFor="phoneFormControlLg" className="mb-1">
                     OTP
                   </label>
@@ -319,11 +332,17 @@ const [button,setButton]=useState(true)
                     onChange={(e) => setPhoneOtp(e.target.value)}
                   />
                   {
-                    button&& ( <button className="rounded"  onClick={verifyOtp} >Submit</button>)
+                    button&& ( <button className="rounded bg-green-500 w-20"  onClick={verifyOtp} >verify</button>)
                   }
                  
                   </div>
                 </div>
+               )
+
+               }
+                </div>
+                </div>
+
 
                 <div className="mb-4">
                   <label htmlFor="gstFormControlLg" className="mb-1">

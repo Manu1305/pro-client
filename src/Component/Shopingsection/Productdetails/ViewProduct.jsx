@@ -319,13 +319,21 @@ const ViewProduct = () => {
               <div
                 className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
               >
+                
+                 <div>
+                 {user && user.email ? (
                 <h5 className="fw-bold text-3xl font-mono">
                   ₹{product.sellingPrice}
                 </h5>
+                 ):null}
+
+                 </div>
+ 
                 <div className={styles.starreviewmain}>
+                {user && user.email ? (
                   <div className={styles.star}>
                     <h2 className="line-through">{product.realPrice}</h2>
-                  </div>
+                  </div> ):null}
                   <div className={`${styles.review}`}>
                     <BiSolidOffer className="h-15 w-15" />
 
