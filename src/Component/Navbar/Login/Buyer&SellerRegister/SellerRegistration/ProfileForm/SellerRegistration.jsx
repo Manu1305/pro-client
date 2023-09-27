@@ -28,8 +28,6 @@ const SellerRegister = () => {
   const [phone, setPhone] = useState("");
 
   const [phoneOtp, setPhoneOtp] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
   const [Afterotp, setAfterotp] = useState(false);
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -89,14 +87,7 @@ const SellerRegister = () => {
 
   const navigate = useNavigate();
 
-  const handleCountrySelect = (country) => {
-    setSelectedCountry(country);
-    setSelectedState("");
-  };
-
-  const handleResendOTP = () => {
-    alert("otp sended");
-  };
+  
   const handleCustomerLogin = (e) => {
     const isValid = validate();
 
@@ -414,7 +405,7 @@ const SellerRegister = () => {
                     </button>
                   </div>
 
-                  {Afterotp && (
+                  {/* {Afterotp && ( */}
                     <div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <label
@@ -477,12 +468,12 @@ const SellerRegister = () => {
                         )}
                       </div>
                     </div>
-                  )}
+                   {/* )} */}
                 </MDBCardBody>
               </MDBCol>
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
-                  {Afterotp && (
+                  {/* {Afterotp && ( */}
                     <div>
                       <hr></hr>
                       <div>
@@ -686,9 +677,6 @@ const SellerRegister = () => {
                       >
                         Registration
                       </button>
-                      <a className="small text-muted" href="#!">
-                        Forgot password?
-                      </a>
                       <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                         Already have an account?{" "}
                         <Link to="/login" style={{ color: "#393f81" }}>
@@ -704,7 +692,7 @@ const SellerRegister = () => {
                         </a>
                       </div>
                     </div>
-                  )}
+                  {/* )} */}
                 </MDBCardBody>
               </MDBCol>
             </div>

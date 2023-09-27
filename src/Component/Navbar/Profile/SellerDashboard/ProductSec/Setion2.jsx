@@ -10,9 +10,9 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [qtyAndSizes, setQtyAndSizes] = useState();
   //   const [prviewProdcts, setprviewProdcts] = useState([]);
   //   const [totalStocks, setTotalStocks] = useState(0);
+  const [images, setImages] = useState([]);
 
-    const navigate = useNavigate()
-  const [images, setImages] = useState(null);
+  const navigate =useNavigate()
 
   const submitHandler = async () => {
     console.log("color => ", color);
@@ -190,6 +190,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
             {/* preview */}
             <div>
               <img
+              src={images}
                 alt="jius"
                 style={{
                   maxWidth: "100px",

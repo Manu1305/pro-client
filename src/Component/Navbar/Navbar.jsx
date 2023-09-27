@@ -54,7 +54,7 @@ const Navbar = ({products}) => {
           <img
             src={image}
             alt=""
-            style={{ width: "100px", height: "50px" }}
+            style={{ width: "100px", height: "30px" ,marginBottom:'10px'}}
             className={` ${styles.imgcircle}`}
           />
         </Link>

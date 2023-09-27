@@ -39,7 +39,7 @@ const CustomerRegister = () => {
       try {
         await httpService
           .post(`${apiURL}/user/signup`, {
-            userData: { name, email, password, phone, gst, urType: "buyer" },
+            userData: { name, email, password, phone, gst, urType: "buyer"},
           })
           .then((res) => {
             console.log(res);
