@@ -60,6 +60,7 @@ import { PrivacyPolicy } from "./Footer/Privacy&Policy/Privacy&Policy";
 import { SizeChart } from "./Footer/Size&Chart/Size&Chart";
 import { FaQ } from "./Footer/FAQ/FaQ";
 import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
+import SellerRelatedPro from "./Shopingsection/SellerRelatedProduct/sellerRelatedPro";
 
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
@@ -225,7 +226,6 @@ const App = () => {
               element={<ShoppingPage products={produts} />}
             />
 
-            {/* <Route path="/shoppingPage/:search" element={<ShoppingPage  products={produts}  />} /> */}
             <Route
               path="/shoppingPages/:category/:collections"
               element={<ShoppingPage products={produts} />}
@@ -249,6 +249,8 @@ const App = () => {
             <Route path="/wholesale-store" element={<WholesaleStore />} />
             <Route path="/delivery-frenchies" element={<DeliveryFranchise />} />
             <Route path="/retail-franchise" element={<RetailFranchise />} />
+            <Route path="/ViewDetails/:id" element={<SellerRelatedPro />} />
+
 
             {/* footer data */}
             <Route path="/contactUs" element={<ContactUs />} />
