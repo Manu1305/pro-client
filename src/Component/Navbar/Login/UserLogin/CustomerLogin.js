@@ -166,6 +166,13 @@ const CustomerLogin = () => {
                         </div>
                       </div>
                       <div className="pt-1 mb-4">
+                    
+                    <div className="flex flex-col">
+                      
+                      <Link to="/privacyPol" className="small text-muted">
+                      By proceeding, you accept Hitecmart's terms and privacy policy
+                      </Link>
+
                         <button
                           className="btn btn-dark btn-lg btn-block bg-dark"
                           // type="button"
@@ -173,6 +180,7 @@ const CustomerLogin = () => {
                         >
                           Login
                         </button>
+                    </div>
                       </div>
                       <Link className="small text-muted" to="/passwordupdate">
                         Forgot password?
@@ -183,13 +191,11 @@ const CustomerLogin = () => {
                           Register here
                         </Link>
                       </p>
-                      <Link to="/termsCond" className="small text-muted mx-2">
-                        Terms of use.
-                      </Link>
-                      &
-                      <Link to="/privacyPol" className="small text-muted  mx-2">
-                        Privacy policy
-                      </Link>
+                      
+                      <div >
+
+                     
+                      </div>
                     </form>
                   </div>
                 </div>
