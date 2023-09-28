@@ -30,11 +30,11 @@ const SamplePrevArrow = (props) => {
   );
 };
 
-const SellerRelatedPro = ({ addToCart }) => {
+const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
   const [productItems, setProductItems] = useState([]);
   const [userData, setUserData] = useState([]);
 
-  
+  // console.log("ffff", prodd)
   useEffect(() => {
     httpService
       .get(`${apiURL}/product/get-all-products`)
@@ -46,9 +46,8 @@ const SellerRelatedPro = ({ addToCart }) => {
       });
   }, []);
 
-
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -66,7 +65,7 @@ const SellerRelatedPro = ({ addToCart }) => {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2   ,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -80,7 +79,7 @@ const SellerRelatedPro = ({ addToCart }) => {
         },
       },
     ],
-  }
+  };
   const settingsImageSlider = {
     dots: true,
     infinite: true,
@@ -92,12 +91,10 @@ const SellerRelatedPro = ({ addToCart }) => {
   };
   return (
     <div className={`${styless.bg}`}>
-      {/* <h1>sertuihi</h1> */}
       {/* <h2>Related Products </h2> */}
       <div className={`${styless.sliderContainer}`}>
-
         <Slider {...settings}>
-          {productItems && productItems.map((productItems) => (
+          {/* { productItems && productItems.map((productItems) => (
             <div>
             <div className={styless.customerheading}>
               <Link to={`/ViewDetails/${productItems._id}`}>
@@ -114,13 +111,39 @@ const SellerRelatedPro = ({ addToCart }) => {
              <h5 className={styless.title}>{productItems.brand}</h5>
              <h5 className={styless.titlee}>{productItems.title}</h5>
 
-            {/* <span className={styless.description}> */}
             <Link style={{ textDecoration: "none" }}>
-              {/* <p>Explore Now!</p> */}
             </Link>
           </div>
           </div>
-          ))}
+          ))} */}
+          {productItems &&
+            productItems.map((item) => {
+              if (item.collections === prodd) {
+                return (
+                  <div key={item._id}>
+                    <div className={styless.customerheading}>
+                      {console.log("hhhhhhh", productId)}
+                      <a href={`/ViewDetails/${item._id}`}>
+                        <div className={`${styless.card}`}>
+                          <img
+                            src={item.productDetails[0].images[0]}
+                            alt="image"
+                            className={styless.igfff}
+                          />
+                        </div>
+                      </a>
+                    </div>
+                    <div className={styless.marbtm}>
+                      <h5 className={styless.title}>{item.brand}</h5>
+                      <h5 className={styless.titlee}>{item.title}</h5>
+                      {/* Add any other content you want to display */}
+                    </div>
+                  </div>
+                );
+              } else {
+                return null; // Return null for items that don't match the condition
+              }
+            })}
         </Slider>
       </div>
       <Link to="/shoppingPage">

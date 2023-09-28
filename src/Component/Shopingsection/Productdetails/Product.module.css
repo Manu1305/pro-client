@@ -3,7 +3,7 @@
   font-weight: bolder;
   /* font-weight: 60px; */
 }
-.iggg{
+.iggg {
   width: 770px;
   height: 30rem;
 }
@@ -127,7 +127,6 @@
   scrollbar-width: none;
   overflow-x: scroll;
   gap: 10px;
-
 }
 .star {
   height: 100%;
@@ -150,7 +149,7 @@
 .reviewtext {
   color: green !important;
   margin-left: 5px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
 }
 .priceandpercentage {
   display: flex;
@@ -231,7 +230,7 @@
   background-color: black;
 }
 
-.descrips{
+.descrips {
   margin-left: 40px;
   margin-top: 50px;
 }
@@ -253,12 +252,10 @@
 
     /* margin-right: 30rem; */
   }
-  .descrips{
+  .descrips {
     margin-left: 40px;
     margin-top: 210px;
   }
-
-
 }
 
 .control-btn button {
@@ -292,7 +289,7 @@
 }
 
 .desgin {
-  color: #D70A2A;
+  color: #d70a2a;
   height: 60px;
   width: 5rem;
   font-weight: bold;
@@ -302,9 +299,8 @@
   gap: 5px;
   align-items: center;
 }
-.tottal{
+.tottal {
   display: flex;
-  
 }
 
 /* .desgin {
@@ -316,7 +312,32 @@
   margin-left: 0rem;
   justify-content: 1rem;
 } */
+.sidee {
+  margin-left: 2rem;
+}
+.text1 {
+  font-weight: 0.1rem;
+  height: 50px;
+  width: 20px;
+  white-space: nowrap;
+}
 @media (min-width: 100px) and (max-width: 640px) {
+  .text1 {
+    font-weight: 14px;
+    height: 50px;
+    width: 20px;
+    white-space: wrap;
+  }
+  .text12 {
+    font-weight: 0.1rem;
+    height: 50px;
+    width: 20px;
+    white-space: wrap;
+    margin-bottom: 4rem;
+  }
+  .sidee {
+    margin-left: -5rem;
+  }
   .tottal {
     margin: 10px;
     margin-left: -1rem;
@@ -358,11 +379,7 @@
   width: 98%;
   margin-top: 20px;
 }
-.text1 {
-  font-weight: 0.1rem;
-  height: 50px;
-  width: 20px;
-}
+
 .icons {
   /* position: absolute; */
   display: flex;
