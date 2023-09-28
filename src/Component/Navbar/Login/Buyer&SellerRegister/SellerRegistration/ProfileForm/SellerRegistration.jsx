@@ -41,6 +41,18 @@ const SellerRegister = () => {
   const [GstError, setGstError] = useState("");
   const [otpError, setOtperror] = useState("");
   const [userFilledData, setUserFilledData] = useState({});
+  const[userType,setUsertype]=("Seller registration")
+
+
+
+
+
+
+
+
+
+
+
   const countries = ["India", "Australia", "Srilanka"];
   const stateData = {
     India: [
@@ -134,7 +146,7 @@ const SellerRegister = () => {
       toast.success("otp sended successfuly");
       setShowButton(false);
       httpService
-        .post(`${apiURL}/user/send-otp`, { phone })
+        .post(`${apiURL}/user/send-otp`, { phone,userType })
         .then((response) => {
           console.log(response.data + "this is data");
         })
@@ -155,10 +167,22 @@ const SellerRegister = () => {
       .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status == "approved") {
+        if (response.data.message == "success") {
           setAfterotp(true);
           setOtperror("");
-        } else {
+        } 
+       else if(response.data.message == "failed") {
+          setAfterotp(false);
+          setOtperror("Wrong otp");
+        } 
+
+        else if(response.data.message == "failed") {
+          setAfterotp(false);
+          setOtperror("Wrong otp");
+        } 
+
+
+        else {
           setAfterotp(false);
           setOtperror("Wrong otp");
         }
@@ -170,7 +194,7 @@ const SellerRegister = () => {
 
   const handlePhoneOtpChange = (e) => {
     setPhoneOtp(e.target.value);
-    setAfterotp(e.target.value === "12345");
+    setAfterotp(e.target.value === "111113");
   };
 
   const validate = () => {

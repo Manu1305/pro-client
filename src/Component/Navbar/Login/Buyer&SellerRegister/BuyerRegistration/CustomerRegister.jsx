@@ -29,7 +29,7 @@ const CustomerRegister = () => {
   const [phoneOtp,setPhoneOtp]=useState('')
 const [button,setButton]=useState(true)
 const [otpbutton,setotpButton]=useState(false)
-
+const[userType,setUsertype]=("seller")
 
 
 
@@ -109,10 +109,10 @@ const [otpbutton,setotpButton]=useState(false)
 
   const verifyOtp = () => {
     httpService
-      .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
+      .post(`${apiURL}/user/verify-otp`, {  phoneOtp })
       .then((response) => {
-        console.log(response.data);
-        if (response.data.status == "approved") {
+        console.log(response.data+"otp response");
+        if (response.data.message == "success") {
           toast.success("otp verified")
           setButton(false)
 
