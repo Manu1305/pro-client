@@ -661,9 +661,15 @@ const SellerRegister = () => {
                           </div>
                         )}
                       </div>
+                      <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By register, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
 
                       <button
-                        className="btn btn-dark "
+                        className="btn btn-dark mt-3 "
                         color="dark"
                         size="lg"
                         onClick={handleCustomerLogin}
@@ -676,14 +682,7 @@ const SellerRegister = () => {
                           login here
                         </Link>
                       </p>
-                      <div className="d-flex flex-row justify-content-start">
-                        <Link to="/termsCond" className="small text-muted me-1">
-                          Terms of use.
-                        </Link>
-                        <Link to="/privacyPol" className="small text-muted">
-                          Privacy policy
-                        </Link>
-                      </div>
+                     
                     </div>
                   )} 
                 </MDBCardBody>
