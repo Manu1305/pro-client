@@ -591,6 +591,8 @@ const ViewProduct = () => {
                   // marginTop: "30px",
                   width: "30%",
                 }}
+                className={styles.sidee}
+
               >
                 <div className={`m-2  ${styles["text1"]}`}>
                   <b className="mr-4">Material</b>{" "}
@@ -624,7 +626,7 @@ const ViewProduct = () => {
                   marginLeft: "30px",
                 }}
               >
-                <div className={`m-2 ${styles["text1"]}`}>
+                <div className={`m-2 ${styles["text12"]}`}>
                   {product.productInfo.Material}
                 </div>
                 <div className={`m-2 ${styles["text1"]}`}>

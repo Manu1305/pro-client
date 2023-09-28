@@ -37,34 +37,17 @@ const NewData = ({ products }) => {
   const productItems = [
     {
       id: 1,
-      title: "Party Outfits",
+      title: "TOMMY HILFIGER",
       image: top1,
       description: "Fashion Full Sleeve Blue Jacket.",
       price: "199",
       category: "men",
     },
-    // {
-    //   id: 2,
-
-    //   title: "Elegent Olive",
-    //   image: top2,
-    //   description: "Regular Printed Casual Shirt.",
-    //   price: "299",
-    //   category: "men",
-    // },
-    // {
-    //   id: 3,
-
-    //   title: "Breezy White",
-    //   image: top3,
-    //   description: "Pure Cotton  Casual Shirt",
-    //   price: "499",
-    //   category: "men",
-    // },
+ 
     {
       id: 4,
 
-      title: "Cobalt Blue",
+      title: "RAE ZONE",
       image:
         "https://img.freepik.com/free-photo/portrait-handsome-smiling-stylish-young-man-model-dressed-red-checkered-shirt-fashion-man-posing_158538-4909.jpg?w=1800&t=st=1687430348~exp=1687430948~hmac=15538f6516e9d08813cb45cb5c4f1cfc995a243552a00c56e234742849694599",
       description: "Linen Casual Shirt.",
@@ -74,42 +57,25 @@ const NewData = ({ products }) => {
     {
       id: 5,
 
-      title: "Coffee Browns",
+      title: "SEVEN ELEVEN",
       image:
         "https://img.freepik.com/free-photo/cute-stylish-children_155003-8330.jpg?w=2000&t=st=1687430370~exp=1687430970~hmac=dd8b402fd684ddebcdb5e3c061e329bd1f53cb0664d7fbc194d72b14f284552b",
       description: "Men Pure Cotton Casual Shirt.",
       price: "450",
       category: "kid",
     },
-    // {
-    //   id: 6,
-
-    //   title: "Turquoise Bue",
-    //   image:
-    //     "https://img.freepik.com/free-photo/young-woman-beautiful-red-dress_1303-17506.jpg?w=900&t=st=1687430390~exp=1687430990~hmac=9aa0b85e730f7ea9dea2d41baea64ad9b5ad187e4a88bfd868988db967d4249c",
-    //   description: "Men Pure Cotton Casual Shirt",
-    //   price: "999",
-    //   category: "women",
-    // },
+  
     {
       id: 7,
 
-      title: "Electric Lime",
+      title: "SONI Bros",
       image:
         "https://img.freepik.com/free-photo/stylish-handsome-indian-man-tshirt-pastel-wall_496169-1571.jpg?w=2000&t=st=1687430435~exp=1687431035~hmac=77be139c5b97ee7659f1835a959e3723697d372f30d4e194b3577937be43c649",
       description: "Slim Fit Casual Shirt",
       price: "4999",
       category: "women",
     },
-    // {
-    //   id: 8,
-    //   title: "Soft Pastels",
-    //   image:
-    //     "https://img.freepik.com/free-photo/man-portrait_1296-626.jpg?w=900&t=st=1687430519~exp=1687431119~hmac=514858cc9fb23969d02c43f7bfe7a964dd33e315e348249ca79f48bfe52c08df",
-    //   description: "Printed Casula Shirt.",
-    //   price: "899",
-    //   category: "women",
-    // },
+    
   ];
 
   const sortedData = products
