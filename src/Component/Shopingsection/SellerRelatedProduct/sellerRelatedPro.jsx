@@ -30,7 +30,7 @@ const SamplePrevArrow = (props) => {
   );
 };
 
-const SellerRelatedPro = ({ addToCart, prodd }) => {
+const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
   const [productItems, setProductItems] = useState([]);
   const [userData, setUserData] = useState([]);
 
@@ -122,7 +122,8 @@ const SellerRelatedPro = ({ addToCart, prodd }) => {
                 return (
                   <div key={item._id}>
                     <div className={styless.customerheading}>
-                      <Link to={`/ViewDetails/${item._id}`}>
+                      {console.log("hhhhhhh", productId)}
+                      <a href={`/ViewDetails/${item._id}`}>
                         <div className={`${styless.card}`}>
                           <img
                             src={item.productDetails[0].images[0]}
@@ -130,7 +131,7 @@ const SellerRelatedPro = ({ addToCart, prodd }) => {
                             className={styless.igfff}
                           />
                         </div>
-                      </Link>
+                      </a>
                     </div>
                     <div className={styless.marbtm}>
                       <h5 className={styless.title}>{item.brand}</h5>

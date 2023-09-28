@@ -665,6 +665,7 @@ const ViewProduct = () => {
         { <SellerRelatedPro 
            prodd={product.
             collections}
+            productId={product._id} 
         /> }
       </div>
       
