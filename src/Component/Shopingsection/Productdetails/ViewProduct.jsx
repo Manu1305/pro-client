@@ -37,7 +37,7 @@ const ViewProduct = () => {
       await axios
         .get(`${apiURL}/product/get-single-products/${productId}`)
         .then((res) => {
-          console.log(res.data);
+          console.log("gggggggggg",res.data);
           // alert("calling api")
           console.log(res.data.productDetails[prdDetInd].images[0]);
           setProduct(res.data);
@@ -662,10 +662,14 @@ const ViewProduct = () => {
             </div>
           )}
         </div>
+        { <SellerRelatedPro 
+           prodd={product.
+            collections}
+        /> }
       </div>
+      
       )} 
-      {console.log("cdisfus", user)}
-      {user?.email && user?.urType === "buyer" ? <SellerRelatedPro />:null }
+      
       <div className={styles.footer}>
         <Footer />
       </div>
