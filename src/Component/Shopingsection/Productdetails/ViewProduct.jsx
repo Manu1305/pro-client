@@ -626,8 +626,8 @@ const ViewProduct = () => {
                   marginLeft: "30px",
                 }}
               >
-                <div className={`m-2 ${styles["text12"]}`}>
-                  {product.productInfo.Material}
+                <div className={`m-2 ${styles["text1"]}`}>
+                  {product.productInfo.Material.slice(0,10)}
                 </div>
                 <div className={`m-2 ${styles["text1"]}`}>
                   {product.productInfo.Fit}

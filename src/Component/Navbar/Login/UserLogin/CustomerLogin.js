@@ -167,24 +167,24 @@ const CustomerLogin = () => {
                       </div>
                       <div className="pt-1 mb-4">
                     
-                    <div className="flex flex-col">
-                      
-                      <Link to="/privacyPol" className="small text-muted">
-                      By proceeding, you accept Hitecmart's terms and privacy policy
-                      </Link>
-
+                      <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By login, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
                         <button
-                          className="btn btn-dark btn-lg btn-block bg-dark"
+                          className="btn btn-dark btn-lg btn-block bg-dark mt-3"
                           // type="button"
                           onClick={handleCustomerLogin}
                         >
                           Login
                         </button>
-                    </div>
+                   
                       </div>
                       <Link className="small text-muted" to="/passwordupdate">
                         Forgot password?
-                      </Link>{" "}
+                      </Link>
                       <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                         Don't have an account?{" "}
                         <Link to="/register" style={{ color: "#393f81" }}>

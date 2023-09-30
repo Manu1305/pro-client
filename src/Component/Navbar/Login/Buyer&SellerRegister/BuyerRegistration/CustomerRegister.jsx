@@ -29,7 +29,7 @@ const CustomerRegister = () => {
   const [phoneOtp,setPhoneOtp]=useState('')
 const [button,setButton]=useState(true)
 const [otpbutton,setotpButton]=useState(false)
-
+const[userType,setUsertype]=("seller")
 
 
 
@@ -109,10 +109,10 @@ const [otpbutton,setotpButton]=useState(false)
 
   const verifyOtp = () => {
     httpService
-      .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
+      .post(`${apiURL}/user/verify-otp`, {  phoneOtp })
       .then((response) => {
-        console.log(response.data);
-        if (response.data.status == "approved") {
+        console.log(response.data+"otp response");
+        if (response.data.message == "success") {
           toast.success("otp verified")
           setButton(false)
 
@@ -356,9 +356,14 @@ const [otpbutton,setotpButton]=useState(false)
                     onChange={(e) => setGst(e.target.value)}
                   />
                 </div>
-  
+                <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By register, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
                 <button
-                  className="btn btn-dark"
+                  className="btn btn-dark mt-3"
                   color="dark"
                   size="lg"
                   onClick={handleCustomerSignup}
@@ -372,14 +377,7 @@ const [otpbutton,setotpButton]=useState(false)
                     login here
                   </Link>
                 </p>
-                <div className="d-flex flex-row justify-content-start">
-                  <Link to="/termsCond" className="small text-muted me-1">
-                    Terms of use.
-                  </Link>
-                  <Link to="/privacyPol" className="small text-muted  ">
-                    Privacy policy
-                  </Link>
-                </div>
+              
               </MDBCardBody>
             </MDBCol>
           </MDBRow>
