@@ -20,6 +20,7 @@
     font-size: 16px;
     margin-left: 4rem;
     margin-top: 1rem;
+    margin-right: 6rem;
 
 
   }
@@ -41,10 +42,19 @@
     font-size: 16px;
     font-weight: 500;
     margin-top: 1rem;
+    margin-left: 7rem;
+    margin-right: 6rem;
   }
   .elll{
     font-size: 16px;
     font-weight: 500;
+    color: #030303;
+    margin-left: 4rem;
+    margin-top: 1rem;
+  }
+  .elllss{
+    font-size: 16px;
+    font-weight: 700;
     color: #030303;
     margin-left: 4rem;
     margin-top: 1rem;
@@ -250,6 +260,34 @@
   }
   
   @media screen and (max-width: 600px) {
+    .eligi{
+      font-size: 29px;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-left: 3.5rem;
+    }
+    .headder{
+      font-size: 29px;
+      font-weight: 600;
+    }
+    .wholesaleP{
+      font-weight: 500;
+      font-size: 16px;
+      margin-left: 4rem;
+      margin-top: 1rem;
+      margin-right: 0rem;
+  
+  
+    }
+    
+    .parag{
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 1rem;
+      margin-left: 0rem;
+      margin-right: 0rem;
+    }
     .styew {
       color: #183865;
       text-align: center;

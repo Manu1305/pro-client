@@ -1,6 +1,6 @@
 import React from "react";
 import idea from "./Franchise.module.css";
-import Retail from "../../../images/ratailfranch.png"
+import Retail from "../../../images/ratailfranch.png";
 
 export const RetailFranchise = () => {
   return (
@@ -71,38 +71,44 @@ export const RetailFranchise = () => {
         <div>
           <h3 className={idea.eligi}>Eligibility</h3>
           <ol>
-            <li className={idea.elll}>1. Operational store area</li>
-            <li className={idea.elll}>2. A minimum of 700 sqft and above space is required.</li>
-            <li className={idea.elll}>3. Investment</li>
-            <li className={idea.elll}>4. A minimum of 15 -25 lakhs investment is required</li>
-            <li className={idea.elll}>5. A good business mind</li>
+            <li className={idea.elllss}>1. Operational store area</li>
             <li className={idea.elll}>
-              6. You should have a good business mind to make a good sale.
+              {" "}
+              A minimum of 700 sqft and above space is required.
             </li>
-            <li className={idea.elll}>7.Accessible store location</li>
-            <li className={idea.elll}>8.The store location should be easily accessible. </li>
+            <li className={idea.elllss}>2. Investment</li>
+            <li className={idea.elll}>
+              {" "}
+              A minimum of 15 -25 lakhs investment is required
+            </li>
+            <li className={idea.elllss}>3. A good business mind</li>
+            <li className={idea.elll}>
+              You should have a good business mind to make a good sale.
+            </li>
+            <li className={idea.elllss}>4.Accessible store location</li>
+            <li className={idea.elll}>
+              The store location should be easily accessible.{" "}
+            </li>
           </ol>
         </div>
         <div>
-        <h3 className={idea.eligi}>Store Highlights</h3>
+          <h3 className={idea.eligi}>Store Highlights</h3>
           <ol>
             <li className={idea.elll}>500+ product varieties</li>
             <li className={idea.elll}>Attract interior design</li>
             <li className={idea.elll}>Popular brands</li>
             <li className={idea.elll}>Partnered with 100+ manufacturer</li>
             <li className={idea.elll}>Guaranteed customer satisfaction</li>
-
           </ol>
         </div>
 
         <div className={idea.margbot}>
-        <h3 className={idea.eligi}>Benefits & Rewards</h3>
+          <h3 className={idea.eligi}>Benefits & Rewards</h3>
           <ol>
             <li className={idea.elll}>1. Earn up tp 10% per month</li>
             <li className={idea.elll}>2. Reward uo to 20% on your sale</li>
             <li className={idea.elll}>3. Interior & staff training</li>
             <li className={idea.elll}>4. 24*7 software & customer support</li>
-
           </ol>
         </div>
       </div>
