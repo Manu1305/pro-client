@@ -231,7 +231,6 @@ const OrderHistory = () => {
 
   return (
     <div>
-      {/* <h1>Seller</h1> */}
       {rowData.length !== 0 ? (
         <DataTable columns={header} rows={rowData} autoHeight />
       ) : (
