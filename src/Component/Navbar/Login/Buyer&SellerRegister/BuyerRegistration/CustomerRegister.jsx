@@ -29,7 +29,7 @@ const CustomerRegister = () => {
   const [phoneOtp,setPhoneOtp]=useState('')
 const [button,setButton]=useState(true)
 const [otpbutton,setotpButton]=useState(false)
-const[userType,setUsertype]=("seller")
+const[userType,setUsertype]=("customer")
 
 
 
@@ -89,7 +89,7 @@ const[userType,setUsertype]=("seller")
       toast.success("otp sended successfuly");
       setotpButton(true)
       httpService
-        .post(`${apiURL}/user/send-otp`, { phone })
+        .post(`${apiURL}/user/send-otp`, { phone,userType })
         .then((response) => {
          
           console.log(response.data + "this is data")
@@ -113,7 +113,7 @@ const[userType,setUsertype]=("seller")
       .then((response) => {
         console.log(response.data+"otp response");
         if (response.data.message == "success") {
-          toast.success("otp verified")
+          toast.success("otp succesfully verified ✅")
           setButton(false)
 
 
@@ -126,10 +126,6 @@ const[userType,setUsertype]=("seller")
         console.error(error);
       });
   };
-
-
-
-
   const validate = () => {
     let emailError = "";
     let passwordError = "";
