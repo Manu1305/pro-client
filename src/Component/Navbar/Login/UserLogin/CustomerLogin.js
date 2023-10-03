@@ -76,8 +76,8 @@ const CustomerLogin = () => {
           },
         });
       } else {
-        toast.error("Your account is suspended",{
-         icon: ""
+        toast.error("Your account temprorely is suspended",{
+         icon: "🚫"
         });
       }
     } catch (error) {

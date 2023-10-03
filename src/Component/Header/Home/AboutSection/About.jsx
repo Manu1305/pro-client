@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './About.module.css'
 import { Footer } from '../../../Footer/Footer'
+import Imgg1 from "../../../../images/Aboutus/2nd.png"
 function AboutUs() {
   return (
     <div>
@@ -9,20 +10,22 @@ function AboutUs() {
      <h1 className={styles.aboutustext}>ABOUT US</h1>
 
 
-<div className={styles.headingcontent}>
+<div className={styles.headingcontentfirst}>
 
-<h1 className={styles.Headingtext}>Top b2b portal in india</h1>
-<h3 className={styles.contenttext}>Welcome to hitecmart - the largest b2b portal . We connect Manufactures to wholesale and retailers for Bulk <br/>
+<h1 className={styles.Headingtextfirst}>Top b2b portal in india</h1>
+<h3 className={styles.contenttextfirst}>Welcome to hitecmart - the largest b2b portal . We connect Manufactures to wholesale and retailers for Bulk <br/>
 Business. We always give top priority to our customers and we are committed to serving you the best quality <br/>
 Products available in the market to flourish your bussiness to the next level.  </h3>
 </div>
       </div>
       <div className={styles.main1}>
-     
-    
-
-
+            <div >
+                  <img src={Imgg1} className={styles.secndimg} alt="img" />
+            </div>
+           
 <div className={styles.headingcontent1}>
+<div className='mb-20 '>
+      
 
 <h1 className={styles.Headingtext}>Transform your bussiness plan into reality</h1>
 <h3 className={styles.contenttext}>HiTec Mart is a leading b2b clothing wholesale suppliers . We are cimmitted to providing <br/>
@@ -44,7 +47,7 @@ At Hitec Mart, we understand the importance of providing bussinesses with not ju
 effectively
 </h3>
 
-</div>
+</div></div>
       </div>
       <div className={styles.main3}>
      
@@ -53,24 +56,26 @@ effectively
 
      <div className={styles.ourmission}>
      
-     <h1 className={styles.Headingtext}>Our Mission</h1>
-     <h3 className={styles.contenttext}>Our mission to create a sustainable and inclusive fashion <br/>
-     ecosystem in b2b marketplace that drive economic growth <br/>
+     <h1 className={styles.Headingtextdef}>Our Mission</h1>
+     <h3 className={styles.contenttextdef}>Our mission to create a sustainable and inclusive fashion <br/> 
+     ecosystem in b2b marketplace that drive economic growth <br/> 
      and borderless transaction from a grolbal perspective
      </h3>
   
      
      </div>
            </div>
+
+
+
+           <div className={styles.lastmaindiv} >
            <div className={styles.mainvision}>
+   
+           </div>
+           <div className={styles.ourvision}>
      
-    
-
-
-     <div className={styles.ourvision}>
-     
-     <h1 className={styles.Headingtext}>Our Vision</h1>
-     <h3 className={styles.contenttext}>Our vision to become a giant in the global B2B marketplace by <br/>
+     <h1 className={styles.Headingtextlast}>Our Vision</h1>
+     <h3 className={styles.contenttextlast}>Our vision to become a giant in the global B2B marketplace by <br/>
      serving our clients the best shopping experience available today in <br/>
      the market.
      </h3>
