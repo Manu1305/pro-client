@@ -29,6 +29,7 @@
     "chart": "^0.1.2",
     "chart.js": "^4.3.0",
     "datatables.net-dt": "^1.13.6",
+    "fast2sms": "^1.0.3",
     "firebase": "^8.6.8",
     "fontawesome": "^5.6.3",
     "formik": "^2.2.9",

@@ -166,30 +166,36 @@ const CustomerLogin = () => {
                         </div>
                       </div>
                       <div className="pt-1 mb-4">
+                    
+                      <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By login, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
                         <button
-                          className="btn btn-dark btn-lg btn-block bg-dark"
+                          className="btn btn-dark btn-lg btn-block bg-dark mt-3"
                           // type="button"
                           onClick={handleCustomerLogin}
                         >
                           Login
                         </button>
+                   
                       </div>
                       <Link className="small text-muted" to="/passwordupdate">
                         Forgot password?
-                      </Link>{" "}
+                      </Link>
                       <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                         Don't have an account?{" "}
                         <Link to="/register" style={{ color: "#393f81" }}>
                           Register here
                         </Link>
                       </p>
-                      <Link to="/termsCond" className="small text-muted mx-2">
-                        Terms of use.
-                      </Link>
-                      &
-                      <Link to="/privacyPol" className="small text-muted  mx-2">
-                        Privacy policy
-                      </Link>
+                      
+                      <div >
+
+                     
+                      </div>
                     </form>
                   </div>
                 </div>

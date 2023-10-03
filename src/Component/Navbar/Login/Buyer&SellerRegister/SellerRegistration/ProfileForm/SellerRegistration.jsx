@@ -41,6 +41,18 @@ const SellerRegister = () => {
   const [GstError, setGstError] = useState("");
   const [otpError, setOtperror] = useState("");
   const [userFilledData, setUserFilledData] = useState({});
+  const[userType,setUsertype]=("Seller registration")
+
+
+
+
+
+
+
+
+
+
+
   const countries = ["India", "Australia", "Srilanka"];
   const stateData = {
     India: [
@@ -134,7 +146,7 @@ const SellerRegister = () => {
       toast.success("otp sended successfuly");
       setShowButton(false);
       httpService
-        .post(`${apiURL}/user/send-otp`, { phone })
+        .post(`${apiURL}/user/send-otp`, { phone,userType })
         .then((response) => {
           console.log(response.data + "this is data");
         })
@@ -155,10 +167,22 @@ const SellerRegister = () => {
       .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status == "approved") {
+        if (response.data.message == "success") {
           setAfterotp(true);
           setOtperror("");
-        } else {
+        } 
+       else if(response.data.message == "failed") {
+          setAfterotp(false);
+          setOtperror("Wrong otp");
+        } 
+
+        else if(response.data.message == "failed") {
+          setAfterotp(false);
+          setOtperror("Wrong otp");
+        } 
+
+
+        else {
           setAfterotp(false);
           setOtperror("Wrong otp");
         }
@@ -170,7 +194,7 @@ const SellerRegister = () => {
 
   const handlePhoneOtpChange = (e) => {
     setPhoneOtp(e.target.value);
-    setAfterotp(e.target.value === "12345");
+    setAfterotp(e.target.value === "111113");
   };
 
   const validate = () => {
@@ -383,6 +407,11 @@ const SellerRegister = () => {
 
                   {/* <button onClick={verifyOtp}>Submit otp</button> */}
                   {otpError && <div className="text-danger">{otpError}</div>}
+
+
+<div>
+  
+</div>
                   <div className="d-flex flex-row align-items-center mb-4">
                     <label
                       htmlFor="formControlLg"
@@ -407,7 +436,7 @@ const SellerRegister = () => {
                     </button>
                   </div>
 
-                  {/* {Afterotp && ( */}
+                   {Afterotp && ( 
                     <div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <label
@@ -452,7 +481,7 @@ const SellerRegister = () => {
                     </div>
 
                     
-                   {/* )} */}
+                   )} 
                 </MDBCardBody>
               </MDBCol>
               </div>
@@ -461,7 +490,7 @@ const SellerRegister = () => {
               
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
-                  {/* {Afterotp && ( */}
+                   {Afterotp && (
                     <div>
                       <hr></hr>
                       <div>
@@ -656,9 +685,15 @@ const SellerRegister = () => {
                           </div>
                         )}
                       </div>
+                      <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By register, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
 
                       <button
-                        className="btn btn-dark "
+                        className="btn btn-dark mt-3 "
                         color="dark"
                         size="lg"
                         onClick={handleCustomerLogin}
@@ -671,18 +706,12 @@ const SellerRegister = () => {
                           login here
                         </Link>
                       </p>
-                      <div className="d-flex flex-row justify-content-start">
-                        <Link to="/termsCond" className="small text-muted me-1">
-                          Terms of use.
-                        </Link>
-                        <Link to="/privacyPol" className="small text-muted">
-                          Privacy policy
-                        </Link>
-                      </div>
+                     
                     </div>
-                  {/* )} */}
+                  )} 
                 </MDBCardBody>
               </MDBCol>
+              
               </div>
             </div>
           </MDBRow>

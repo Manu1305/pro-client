@@ -41,7 +41,7 @@ const TrendingItems = ({ products }) => {
   const productItems = [
     {
       id: 1,
-      title: "Party Outfits",
+      title: "TOMMY HILFIGER",
       image: top1,
       description: "Fashion Full Sleeve Blue Jacket.",
       price: "199",
@@ -50,7 +50,7 @@ const TrendingItems = ({ products }) => {
     {
       id: 2,
 
-      title: "Elegent Olive",
+      title: "RAE ZONE",
       image: top2,
       description: "Regular Printed Casual Shirt.",
       price: "299",
@@ -59,7 +59,7 @@ const TrendingItems = ({ products }) => {
     {
       id: 3,
 
-      title: "Breezy White",
+      title: "SEVEN ELEVEN",
       image: top3,
       description: "Pure Cotton  Casual Shirt",
       price: "499",
@@ -68,23 +68,23 @@ const TrendingItems = ({ products }) => {
     {
       id: 4,
 
-      title: "Cobalt Blue",
+      title: "SONI Bros",
       image:
         "https://img.freepik.com/free-photo/portrait-handsome-smiling-stylish-young-man-model-dressed-red-checkered-shirt-fashion-man-posing_158538-4909.jpg?w=1800&t=st=1687430348~exp=1687430948~hmac=15538f6516e9d08813cb45cb5c4f1cfc995a243552a00c56e234742849694599",
       description: "Linen Casual Shirt.",
       price: "599",
       category: "kid",
     },
-    {
-      id: 5,
+    // {
+    //   id: 5,
 
-      title: "Coffee Browns",
-      image:
-        "https://img.freepik.com/free-photo/cute-stylish-children_155003-8330.jpg?w=2000&t=st=1687430370~exp=1687430970~hmac=dd8b402fd684ddebcdb5e3c061e329bd1f53cb0664d7fbc194d72b14f284552b",
-      description: "Men Pure Cotton Casual Shirt.",
-      price: "450",
-      category: "kid",
-    },
+    //   title: "Coffee Browns",
+    //   image:
+    //     "https://img.freepik.com/free-photo/cute-stylish-children_155003-8330.jpg?w=2000&t=st=1687430370~exp=1687430970~hmac=dd8b402fd684ddebcdb5e3c061e329bd1f53cb0664d7fbc194d72b14f284552b",
+    //   description: "Men Pure Cotton Casual Shirt.",
+    //   price: "450",
+    //   category: "kid",
+    // },
     // {
     //   id: 6,
 
@@ -95,16 +95,16 @@ const TrendingItems = ({ products }) => {
     //   price: "999",
     //   category: "women",
     // },
-    {
-      id: 7,
+    // {
+    //   id: 7,
 
-      title: "Electric Lime",
-      image:
-        "https://img.freepik.com/free-photo/stylish-handsome-indian-man-tshirt-pastel-wall_496169-1571.jpg?w=2000&t=st=1687430435~exp=1687431035~hmac=77be139c5b97ee7659f1835a959e3723697d372f30d4e194b3577937be43c649",
-      description: "Slim Fit Casual Shirt",
-      price: "4999",
-      category: "women",
-    },
+    //   title: "Electric Lime",
+    //   image:
+    //     "https://img.freepik.com/free-photo/stylish-handsome-indian-man-tshirt-pastel-wall_496169-1571.jpg?w=2000&t=st=1687430435~exp=1687431035~hmac=77be139c5b97ee7659f1835a959e3723697d372f30d4e194b3577937be43c649",
+    //   description: "Slim Fit Casual Shirt",
+    //   price: "4999",
+    //   category: "women",
+    // },
     // {
     //   id: 8,
     //   title: "Soft Pastels",

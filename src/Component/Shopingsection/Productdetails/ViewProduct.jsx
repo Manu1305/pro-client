@@ -37,7 +37,7 @@ const ViewProduct = () => {
       await axios
         .get(`${apiURL}/product/get-single-products/${productId}`)
         .then((res) => {
-          console.log(res.data);
+          console.log("gggggggggg",res.data);
           // alert("calling api")
           console.log(res.data.productDetails[prdDetInd].images[0]);
           setProduct(res.data);
@@ -591,6 +591,8 @@ const ViewProduct = () => {
                   // marginTop: "30px",
                   width: "30%",
                 }}
+                className={styles.sidee}
+
               >
                 <div className={`m-2  ${styles["text1"]}`}>
                   <b className="mr-4">Material</b>{" "}
@@ -625,7 +627,7 @@ const ViewProduct = () => {
                 }}
               >
                 <div className={`m-2 ${styles["text1"]}`}>
-                  {product.productInfo.Material}
+                  {product.productInfo.Material.slice(0,10)}
                 </div>
                 <div className={`m-2 ${styles["text1"]}`}>
                   {product.productInfo.Fit}
@@ -662,9 +664,15 @@ const ViewProduct = () => {
             </div>
           )}
         </div>
+        { <SellerRelatedPro 
+           prodd={product.
+            collections}
+            productId={product._id} 
+        /> }
       </div>
+      
       )} 
-      {user?.email && user?.urType === "buyer" && <SellerRelatedPro />}
+      
       <div className={styles.footer}>
         <Footer />
       </div>
