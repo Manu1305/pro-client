@@ -183,6 +183,66 @@ function AddProduct() {
       "Pleated Shorts",
       "Swim Shorts",
     ],
+    GirlsShirts : [
+      "T-Shirts",
+      "Blouses",
+      "Tank Tops",
+      "Polo Shirts",
+      "Button-Up Shirts",
+      "Sweaters",
+      "Hoodies",
+      "Long Sleeve Shirts",
+      "Crop Tops",
+      "Graphic Tees",
+    ],
+     GirlsPants : [
+      "Jeans",
+      "Leggings",
+      "Trousers",
+      "Yoga Pants",
+      "Culottes",
+      "Jeggings",
+      "Cargo Pants",
+      "Sweatpants",
+      "Capri Pants",
+      "Palazzo Pants",
+    ],
+    
+    GirlsShorts : [
+      "Denim Shorts",
+      "Athletic Shorts",
+      "Cargo Shorts",
+      "Bermuda Shorts",
+      "Chino Shorts",
+      "Board Shorts",
+      "Cotton Shorts",
+      "Khaki Shorts",
+      "Printed Shorts",
+      "Linen Shorts",
+      "Track Shorts",
+      "Pull-On Shorts",
+      "School Uniform Shorts",
+      "Sweat Shorts",
+      "Jogger Shorts",
+      "Running Shorts",
+      "Basketball Shorts",
+      "Active Shorts",
+      "Pleated Shorts",
+      "Swim Shorts",
+    ],
+    
+     Frock : [
+      "A-Line Frocks",
+      "Party Frocks",
+      "Casual Frocks",
+      "Maxi Frocks",
+      "Pinafore Frocks",
+      "Sundresses",
+      "Floral Frocks",
+      "Ruffle Frocks",
+      "Smocked Frocks",
+      "Tiered Frocks",
+    ]
   };
 
   const sizeSelected = {
@@ -195,6 +255,10 @@ function AddProduct() {
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsShirts:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsPants:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsShorts:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    Frock:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
   };
 
   const [productInfo, setProductInfo] = useState({});
@@ -210,7 +274,7 @@ function AddProduct() {
   const categoriesWithSubcategories = {
     Mens: ["Shirts", "Pants"],
     Womens: ["top", "Bottom", "Sarees"],
-    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts"],
+    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts", "GirlsShirts", "GirlsPants", "GirlsShorts",'Frock'],
   };
 
   useEffect(() => {
@@ -309,7 +373,7 @@ function AddProduct() {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "The product successfully added",
+            title: "Saved",
             showConfirmButton: false,
             timer: 1000,
           });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Test.module.css";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { TfiEmail } from "react-icons/tfi";
@@ -12,6 +12,9 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
+import { apiURL } from "../../const/config";
+import { useNavigate, useParams } from "react-router-dom";
 
 const steps = [
   {
@@ -35,7 +38,15 @@ const steps = [
 
 
 function Test() {
+
+
+  const { orderId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
+  const[order,setOrder]=useState()
+  const navigate = useNavigate();
+
+
+
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -48,6 +59,42 @@ function Test() {
   const handleReset = () => {
     setActiveStep(0);
   };
+
+  const getOneOrder= async () => {
+  
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+
+      await axios
+        .get(`${apiURL}/orders/getSingleorder/${orderId}`,config)
+        .then((res) => {
+          console.log("singleOrder",res.data);
+          // alert("worked")
+        
+          setOrder(res.data);
+        })
+        .catch((error) => {
+          console.error("Error", error);
+        });
+    } catch (error) {
+      console.log(error,"its new errror")
+    }
+  };
+
+
+useEffect(()=>{
+  getOneOrder()
+},[])
+
+
+
+
+
 
   return (
     <div style={{ backgroundColor: "#F7FBFF", width: "100%" }}>
@@ -85,16 +132,16 @@ function Test() {
           <hr className={styles.line} />
           <div>
             <div className="flex flex-row ml-3 mt-3">
-              <p className="ml-1">address</p>
+              <p className="ml-1">{order.dlvAddr.area}</p>
             </div>
             <div className="flex flex-row ml-3 mt-3">
-              <p className="ml-1"> state</p>
+              <p className="ml-1"> {order.dlvAddr.city}</p>
             </div>
             <div className="flex flex-row ml-3 mt-3">
-              <p className="ml-1">pin</p>
+              <p className="ml-1">{order.dlvAddr.state}</p>
             </div>
             <div className="flex flex-row ml-3 mt-3">
-              <p className="ml-1">India</p>
+              <p className="ml-1">{order.dlvAddr.state}</p>
             </div>
           </div>
         </div>

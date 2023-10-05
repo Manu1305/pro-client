@@ -12,14 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { userCartItem } from "../../../Redux/cart/cartAction";
 
 const Cart = () => {
-  const [isLoading, setIsLoading] = useState(true);
+ 
 
   const CartItem = useSelector((state) => state.cartReducer.userCart);
 
   console.log(CartItem);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const removeFromCart = async (id) => {
     Swal.fire({

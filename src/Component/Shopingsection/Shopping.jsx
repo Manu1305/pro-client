@@ -4,12 +4,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
-import { addProduct } from "../../Redux/product/productAction";
+
 import { useParams } from "react-router-dom";
-import { apiURL } from "../../const/config";
-import httpService from "../Error Handling/httpService";
+
 import { Footer } from "../Footer/Footer";
-import { ScaleLoader } from "react-spinners";
+
 import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
 
@@ -19,14 +18,14 @@ const Shopping = ({ products }) => {
   const colletionResults = collections;
 
   const selectedCategory = category ? category : "all";
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.userReducer.user);
 
   const [price, setPrice] = useState(100000);
   const [categories, setCategories] = useState([]);
-  const [data, setData] = useState([]);
+
   const [pageNumber, setPageNumber] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+
   const [collectionstate, setCollections] = useState([]);
 
   const handleCategoryChange = (categor) => {
@@ -85,13 +84,14 @@ const Shopping = ({ products }) => {
         >
           <div className="d-flex flex-column">
             <div className={styless.container}>
+            
               <Link
                 style={{
                   cursor: "pointer",
                   position: "relative",
                   display: "inline-block",
                 }}
-                to={`/ViewDetails/${data._id}`}
+                to={user && user.email ? `/ViewDetails/${data._id}` : "/login"}
               >
                 <div className={styless.imagediv}>
                   <img src={data.productDetails[0].images[0]} alt="" />
@@ -191,7 +191,7 @@ const Shopping = ({ products }) => {
           <div className="container">
             <div className="row p-3">
               <div className="col-lg-3">
-                <div className="card mb-5">
+                
                   <div
                     className={`card-body mb-7 shadow-xl ${styless.categggg}`}
                   >
@@ -280,7 +280,7 @@ const Shopping = ({ products }) => {
                       </div>
                     ) : null}
                   </div>
-                </div>
+                
               </div>
 
               {/* Content */}
