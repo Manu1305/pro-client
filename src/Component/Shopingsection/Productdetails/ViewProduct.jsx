@@ -664,6 +664,7 @@ const ViewProduct = () => {
             </div>
           )}
         </div>
+        <h2 className={styles.relatdd}>Related Product</h2>
         { <SellerRelatedPro 
            prodd={product.
             collections}
