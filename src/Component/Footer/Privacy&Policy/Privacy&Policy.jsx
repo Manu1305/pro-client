@@ -6,10 +6,8 @@ export const PrivacyPolicy = () => {
     <div>
       <h1 className={idea.header}>Privacy & Policy</h1>
       <p className={idea.parag}>
-        Thank you for visiting _____________ Certon Technologies Private
-        Limited, a Company incorporated under the provisions of the Companies
-        Act 2013 is the owners the website- _________________. Certon
-        Technologies Private Limited is committed to ensuring and protecting the
+        Thank you for visiting Hitecmart, a Company incorporated under the provisions of the Companies
+        Act 2013 is the owners the website- Hitecmart is committed to ensuring and protecting the
         privacy of any user who accesses and uses the Website
         (___________________________). In the Privacy Policy, the use of terms
         such as “Company” “we”, “us” and “our” refers to Certon Technologies
@@ -42,11 +40,11 @@ export const PrivacyPolicy = () => {
             <p className={idea.wholesaleP}>
               {" "}
               This Privacy Policy applies to all information collected or
-              submitted on our website. _______________________ collects or
+              submitted on our website. Hitecmart collects or
               requests you to submit your Business information, such as your
               name, company name, various tax registrations, e-mail address,
               owner/proprietor name, office or branch address and telephone
-              number. Information collected by __________________________ is
+              number. Information collected by Hitecmart is
               used solely for the purpose of billing and shipping your online
               purchased purchases. We do not collect any information about your
               computer hardware, software or payment information. Neither we
