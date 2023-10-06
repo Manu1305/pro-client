@@ -1,31 +1,53 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { apiURL } from "../../../../const/config";
+import httpService from "../../../Error Handling/httpService";
+import Orders from "../../../Navbar/Profile/SellerDashboard/Vendor/VendorComponent/Orders/Orders";
+import stylesss from "./RecentSales.module.css";
 function Recentsales() {
-  const salesData = [
-    {
-      date: "01 Jan 2023",
-      invoice: "INV-0123",
-      customer: "Manu ",
-      amount: "123",
-      status: "Paid",
-    },
-    {
-      date: "02 Jan 2045",
-      invoice: "INV-0456",
-      customer: "Manu ",
-      amount: "456",
-      status: "Pending",
-    },
-    // Add more sales data objects here
-  ];
+  const [orders, setOrders] = useState([]);
+  const [lastFiveOrders, setlastFiveOrders] = useState([]);
+
+  const getOrders = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+      const res = await httpService
+        .get(`${apiURL}/orders/get-all-orders`, config)
+        .then((res) => {
+          console.log(res.data);
+
+          if (res.data.length > 0) {
+            setlastFiveOrders(res.data.slice(0, 5));
+          }
+
+          return res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          
+        });
+      setOrders(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getOrders();
+    // const lastFiveOrders = orders.slice(-5);
+  }, []);
 
   return (
     <div>
-      <div className="container-fluid pt-4 px-4">
-        <div className="bg-light text-center rounded p-4">
+      <div className={`container-fluid pt-4 px-4 ${stylesss.kkkk}`}>
+        <div className={"bg-light text-center rounded p-4 "}>
           <div className="d-flex align-items-center justify-content-between mb-4">
-            <h6 className="mb-0">Recent Sales</h6>
-            <a href="">Show All</a>
+            <h6 className="mb-0">Recent orders</h6>
+            {/* <a href="">Show All</a> */}
           </div>
           <div className="table-responsive">
             <table className="table text-start align-middle table-bordered table-hover mb-0">
@@ -35,31 +57,33 @@ function Recentsales() {
                     <input className="form-check-input" type="checkbox" />
                   </th>
                   <th scope="col">Date</th>
-                  <th scope="col">Invoice</th>
-                  <th scope="col">Customer</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Product</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">Payment type</th>
                 </tr>
               </thead>
               <tbody>
-                {salesData.map((sale, index) => (
-                  <tr key={index}>
-                    <td>
-                      <input className="form-check-input" type="checkbox" />
-                    </td>
-                    <td>{sale.date}</td>
-                    <td>{sale.invoice}</td>
-                    <td>{sale.customer}</td>
-                    <td>{sale.amount}</td>
-                    <td>{sale.status}</td>
-                    <td>
-                      <a className="btn btn-sm btn-primary" href="">
-                        Detail
-                      </a>
-                    </td>
-                  </tr>
-                ))}
+                {lastFiveOrders.length !== 0 &&
+                  lastFiveOrders.map((sale, index) => {
+                    const date = new Date(sale.createdAt)
+                      .toISOString()
+                      .split("T")[0];
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <input className="form-check-input" type="checkbox" />
+                        </td>
+                        <td>{date}</td>
+                        <td>{sale.dlvAddr.phone}</td>
+                        <td>{sale.prdData.brand}</td>
+                        <td>{sale.ordPrc}</td>
+                        <td>{sale.orderStatus}</td>
+                        <td>{sale.pType}</td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>

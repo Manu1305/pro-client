@@ -2,25 +2,22 @@ import React, { useState } from "react";
 import header from "./Header.module.css";
 import { Offer } from "./Offer/Offer";
 // import ProductCard from "./ProductCard/ProductCard";
-import { Search } from "../Search/Search";
 // import About from "./AboutSection/About";
 import NewData from "./NewArrival/NewArrival/NewData";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { GrPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { cards } from "./BigOfferData";
 
 import { Logoslider } from "./LogoSlider/LogoSlider";
-import { CustomerReview } from "./ReviewVideo/ReviewVideo/CustomerVideo";
 import { CategoryNew } from "./Goodcards/Category/CategoryNew";
-import ShortAbout from "./AboutHome/AboutinHome";
 import Who from "./WhoSection/Who";
 import TrendingItems from "./TopTrends/Trends";
-import BigDeals from "./BigDeals/Bigdeals";
 import Strength from "./TopTrends/StrengthUI/StrengthUI";
 import { Footer } from "../../Footer/Footer";
+import { Link } from "react-router-dom";
+
 const SampleNextArrow = (props) => {
   const { onClick } = props;
   return (
@@ -42,7 +39,7 @@ const SamplePrevArrow = (props) => {
   );
 };
 
-const Header = ({ productItems }) => {
+const Header = ({ products }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -67,33 +64,32 @@ const Header = ({ productItems }) => {
       },
     ],
   };
-  const [videoWidth, setVideoWidth] = useState(0);
-  const [videoHeight, setVideoHeight] = useState(0);
+
   return (
-    <div>
+    <div style={{ overflow: "hidden" }}>
       <div className={header.container2}>
         <div className={header.category1}>
           <Slider {...settings}>
             {cards.map((item) => (
-              // <div className='boxs'>
-              <div
-                key={item.id}
-                style={{ position: "relative", display: "inline-block" }}
-              >
-                <img src={item.image} alt="cover" width="100%" />
-
-                <div className={header.overlay}>{/* <Search /> */}</div>
-              </div>
+              <Link to="/shoppingPage">
+                <div key={item.id} style={{ position: "relative" }}>
+                  <img
+                    src={item.image}
+                    alt="cover"
+                    style={{ maxWidth: "100%", height: "auto" }}
+                    className="object-contain mob:object-scale-down"
+                  />
+                </div>
+              </Link>
             ))}
           </Slider>
         </div>
       </div>
       <Who />
-      <Logoslider />
+      {/* <Logoslider /> */}
       <CategoryNew />
-      <NewData productItems={productItems} />
-      <TrendingItems />
-      <BigDeals />
+      <NewData products={products} />
+      <TrendingItems  />
       <Strength />
       {/* <Offer />
 
@@ -101,6 +97,6 @@ const Header = ({ productItems }) => {
       <CustomerReview /> */}
       <Footer />
     </div>
-  );
+  )
 };
 export default Header;

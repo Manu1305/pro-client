@@ -7,40 +7,44 @@ import { useSelector, useDispatch } from "react-redux";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 
-function SearchBar() {
+function SearchBar({ products }) {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [data, setData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [selectedSuggestion, setSelectedSuggestion] = useState("");
 
-  const item = data;
-  const filteredItems = getFilteredItems(query, item);
+  const item = products;
+  const filteredItems = getFilteredUniqueItems(query, item).slice(0, 5);
 
   function clear() {
     setQuery("");
+    setSelectedSuggestion("");
   }
 
-  useEffect(() => {
-    httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        setData(res.data);
-        dispatch(addProduct(res.data));
-      
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  function handleSuggestionClick(suggestion) {
+    setQuery("");
+    setSelectedSuggestion("");
+  }
 
-  function getFilteredItems(query, items) {
+  function getFilteredUniqueItems(query, items) {
     if (!query) {
       return items;
     }
 
-    return items.filter((data) =>
-      data.productDetail.brand.includes(query)
-    );
+    const uniqueItems = [];
+    const addedCollections = new Set();
+
+    const queryLowercase = query.toLowerCase(); // Convert query to lowercase
+
+    for (const product of items) {
+      const productCollectionsLowercase = product.collections.toLowerCase(); // Convert product collections to lowercase
+      if (productCollectionsLowercase.includes(queryLowercase) && !addedCollections.has(productCollectionsLowercase)) {
+        uniqueItems.push(product);
+        addedCollections.add(productCollectionsLowercase);
+      }
+    }
+
+    return uniqueItems;
   }
 
   useEffect(() => {
@@ -55,6 +59,7 @@ function SearchBar() {
     <div className={styles.container}>
       <input
         type="text"
+        value={selectedSuggestion || query}
         onChange={(e) => setQuery(e.target.value)}
         className={styles.input}
       />
@@ -67,13 +72,9 @@ function SearchBar() {
       {query && filteredItems.length > 0 && (
         <div className={styles.resultsContainer}>
           {filteredItems.map((value) => (
-            <div
-              className={styles.link}
-              key={value.productDetail.brand}
-              onClick={clear}
-            >
-              <Link to={`/ViewDetails/${value._id}`}>
-                {value.productDetail.brand}
+            <div className={styles.link} key={value.tags} onClick={() => handleSuggestionClick(value.collections)}>
+              <Link to={`/shoppingPages/searchresult/${value.collections}`}>
+                {value.collections}
               </Link>
             </div>
           ))}

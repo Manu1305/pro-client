@@ -2,80 +2,176 @@
   position: relative;
   width: 100%;
   height: 700px;
-  background-image: url('../../../../../public/Image/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
+  background-image: url('../../../../images/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
   background-repeat: no-repeat;
   background-size:cover;
   background-position: center;
 }
+.main:hover{
+  animation: fadeInAnimation ease 3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+
+}
 .headingcontent{
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   bottom: 0;
   width: 100%;
   height: 30%;
-  background-color: black;
-  opacity: 0.5;
+  background-color: white;
 }
-.headingcontent1{
+
+.headingcontentfirst{
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   bottom: 0;
   width: 100%;
-  height: 70%;
-  background-color: black;
-  opacity: 0.5;
+  height: 35%;
+  background-color: white;
 }
+
+
+.headingcontent1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  flex-direction: column;
+  margin-bottom: 250px;
+  margin-top: -150px;
+}
+
+
+.lastmaindiv{
+  position: relative;
+  width: 80%;
+  height: auto;
+}
+
+
+
 .Headingtext{
-  color: aliceblue;
+  color: black;
   align-items: center;
   font-weight: bolder;
   font-size: x-large;
+  margin-top: 20px;
+
 }
-.contenttext{
+
+.Headingtextfirst{
+  color: black;
+  align-items: center;
+  font-weight: bolder;
+  font-size: x-large;
+  margin-bottom: 40px;
+
+}
+.Headingtextlast{
+  text-align: left;
+  font-weight: bolder;
+  font-size: larger;
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  margin-right: 370px;
+}
+.contenttextlast{
+  margin-top: 20px;
+  color: black;
+  display: flex;
+
+  align-items: center;
+  text-align: left;
+  margin-left: 20px;
+  font-weight: 600; 
+  margin-top: 30px;
+}
+
+
+.Headingtextdef{
+  color: white;
+  align-items: center;
+  font-weight: bolder;
+  font-size: x-large;
+  margin-bottom: 40px;
+
+}
+.contenttextdef{
   margin-top: 20px;
   color: white;
   display: flex;
  justify-content: center;
   align-items: center;
   text-align: center;
+  letter-spacing: 2px;
+  font-size: large;
 }
+.contenttext{
+  margin-top: 20px;
+  color: black;
+  display: flex;
+ justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-weight: 600;
+}
+
+.contenttextfirst{
+  margin-top: 20px;
+  color: black;
+  display: flex;
+ justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-weight: 600;
+}
+
 .aboutustext{
   font-size: 4rem;
   font-weight: bolder;
   color: white;
 }
 .main1{
-  position: relative;
   width: 100%;
-  height: 900px;
-  background-image: url('../../../../../public/Image/Aboutus/2nd.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  height: auto;
 }
 .ourmission{
-  position: absolute;
+  
   bottom: 0;
   right: 0;
   width: 45%;
   height: 40%;
-  background-color: black;
-  opacity: 0.5;
-  margin-bottom: 160px;
+
 }
 .ourvision{
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 45%;
+  right: 0;
+  top: 35%;
+  width: 50%;
   height: 40%;
-  background-color: black;
-  opacity: 0.5;
+  background-color: white;
   margin-bottom: 160px;
+  margin-left: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .mainvision{
   position: relative;
-  width: 100%;
+  width: 65%;
   height: 500px;
-  background-image: url('../../../../../public/Image/Aboutus/4th.png');
+  background-image: url('../../../../images/Aboutus/4th.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -85,18 +181,29 @@
   position: relative;
   width: 100%;
   height: 500px;
-  background-image: url('../../../../../public/Image/Aboutus/3rd.png');
+  background-image: url('../../../../images/Aboutus/3rd.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.secndimg{
+  width: 100%;
+  height: 1100px
+  
+
+}
+
 
 @media screen and (max-width: 768px) {
   .main{
     position: relative;
     width: 100%;
     height: 300px;
-    background-image: url('../../../../../public/Image/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
+    background-image: url('../../../../images/Aboutus/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume\ 1.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -106,34 +213,73 @@
     bottom: 0;
     width: 100%;
     height: 40%;
-    background-color: black;
-    opacity: 0.5;
+    background-color: white;
+   
+  }
+  .Headingtextlast{
+    text-align: left;
+    font-weight: bolder;
+    margin-left: 20px;
+    font-size: larger;
+    color: white;
+    display: flex;
+    margin-right: 0px;
+    
+  }
+  .headingcontentfirst{
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-color: white;
+    margin-top: 300px;
+   
   }
   .headingcontent1{
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
-    height: 90%;
-    background-color: black;
-    opacity: 0.5;
+    height: 100%;
+    background-color: white;
+    margin-top: 30px;
+
   }
+  
   .Headingtext{
-    color: aliceblue;
+    color: black;
     align-items: center;
     font-weight: bolder;
-    font-size: 1rem
+    font-size: 13px;
+    margin-top : 150px;
+  }
+  .Headingtextfirst{
+    color: white;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 15px;
+    
+  
+  }
+  .contenttextfirst{
+    color:  black;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 9px;
+    z-index: 1;
+    margin-bottom: 100px;
   }
   .contenttext{
-    margin-top: 20px;
-    color: white;
+    color: black;
     display: flex;
    justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: .6rem;
+    font-size: 7px;
+    margin-bottom: -10px;
   }
+
   .aboutustext{
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: bolder;
     color: white;
  
@@ -142,7 +288,7 @@
     position: relative;
     width: 100%;
     height: 300px;
-    background-image: url('../../../../../public/Image/Aboutus/2nd.png');
+    background-image: url('../../../../images/Aboutus/2nd.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -152,29 +298,67 @@
     bottom: 0;
     right: 0;
     width: 100%;
-    height: 40%;
-    background-color: black;
-    opacity: 0.5;
     margin-bottom: 160px;
   }
   .ourvision{
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 45%;
-    height: 40%;
-    background-color: black;
-    opacity: 0.5;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    
     margin-bottom: 160px;
+    
   }
   .mainvision{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 100%;
     height: 300px;
-    background-image: url('https://img.freepik.com/free-photo/artistic-blurry-colorful-wallpaper-background_58702-8365.jpg?w=900&t=st=1688798719~exp=1688799319~hmac=c4cb7dea5c13c1bf7999873877004534e2f900e2a480089b1d48340cb82db2dd');
+    /* background-image: url('https://img.freepik.com/free-photo/artistic-blurry-colorful-wallpaper-background_58702-8365.jpg?w=900&t=st=1688798719~exp=1688799319~hmac=c4cb7dea5c13c1bf7999873877004534e2f900e2a480089b1d48340cb82db2dd'); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
   }
-
+  .main3{
+    position: relative;
+    width: 100%;
+    height: 550px;
+    /* background-image: url('../../../../images/Aboutus/3rd.png'); */
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .secndimg{
+   display: none;
+    
+  
+  }
+  .lastmaindiv{
+    position: relative;
+    width: 100%;
+    height:300px ;
+  }
+  .contenttext{
+    color: black;
+    display: flex;
+    align-items: center;
+    font-size: 8px;
+  } 
+  
 }
+
+/* @keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+} */

@@ -2,32 +2,80 @@
   border-color: #3b71ca !important;
   background-color: white !important;
 }
+.categggg {
+  width: 250px;
+  height: 400px;
+  /* margin-left:-5rem; */
+  margin-top: -25rem;
+}
+
+.tittt {
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 .icon-hover:hover i {
   color: #3b71ca !important;
 }
-.card-text{
+
+.paginateLabel {
+  gap: 10px; 
+}
+
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  font-family:"Martian Mono, monospace";
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li a {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #ee0505;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.pagination li.active a {
+  background-color: #e74c3c;
+}
+
+.pagination li a:hover {
+  background-color: #a5aea3;
+}
+
+.card-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .card img {
   height: 20rem;
   border-radius: 10px 10px 0 0;
 }
+
 .image-container {
   position: relative;
   display: inline-block;
 }
-.bg23{
+
+.bg23 {
   /* background-color: aliceblue; */
   border-radius: 1rem;
 }
 
 .image-overlay {
   position: absolute;
- margin-top: 17rem;
- margin-left: 12rem;
+  margin-top: 17rem;
+  margin-left: 12rem;
   top: 0;
   left: 0;
   width: 1rem;
@@ -37,7 +85,6 @@
   align-items: center;
   opacity: 0;
   transition: opacity 0.3s;
-
 }
 
 .image-container:hover .image-overlay {
@@ -67,7 +114,6 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.4s ease-in-out;
-
 }
 
 .sliderContainer {
@@ -75,7 +121,7 @@
   max-width: 1200px;
   padding: 0 20px;
 }
- .control-btn button {
+.control-btn button {
   background: white;
   width: 30px;
   height: 30px;
@@ -101,85 +147,118 @@
   left: 20px;
   z-index: 99;
 }
+
 .control-btn .icon {
   font-size: 25px;
 }
-.cardbody{
+.cardbody {
+  width: 389px;
+  height: 578px;
   display: flex;
   flex-direction: column;
+  align-items: start;
 }
-.range{
-  width: 200px;
-background-color: red;
-color: red;
-outline: none;
-}
+
 /* CSS module */
-.range {
-  width: 200px;
-  background-color: red;
-  color: red;
-  outline: none;
-}
 
-.pages a{
+.pages a {
   color: black;
 }
-.pages li{
+.pages li {
   color: black;
 }
 
-
-
-
-.range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.range::after {
-  content: '100';
-  color: black;
-  font-size: 2rem;
-  position: absolute;
-  left: 80%;
-  top: 26%;
-}
-
-.pricefilterdiv{
+.pricefilterdiv {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background:red;
+
+/* wish icon */
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.3;
+  transition: 0.3s ease;
+  background-color: transparent;
+}
+
+.overlay:hover {
+  opacity: 0.7;
+}
+
+.like {
+  position: "absolute";
+  bottom: 0;
+  right: 0;
+  margin: "5px";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.like_button {
+  height: 30px;
+  width: 33px;
+  border-radius: 50%;
   cursor: pointer;
-  width: 15rem;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  background: red;
-  height: 0.5rem;
+  z-index: 2;
+  padding: 3px;
+  background-color: #fbfbf9;
+  font-size: 25px;
+  margin-top: 3px;
 }
 
-input[type="range"]::-moz-range-track {
-  background: #053a5f;
-  height: 0.5rem;
+/* .like_button :hover {
+  color: red;
+} */
+.loadingSpinner {
+  margin-top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  margin-top: -12px; /* Centers thumb on the track */
-  background-color: black;
-  height: 2rem;
-  width: 1rem;    
+
+.imagediv {
+  position: relative;
 }
+
+.imagediv img {
+  height: 320px;
+  width: 305px;
+  object-fit: "fill";
+}
+
 @media (max-width: 600px) {
   input[type="range"] {
     width: 80vw; /* Adjust the width as needed */
+  }
+  .categggg {
+    width: 350px;
+    height: 400px;
+    margin-left: 0rem;
+    margin-top: 0rem;
+  }
+
+  .imagediv {
+    position: relative;
+  }
+
+  .imagediv img {
+    height: 250px;
+    width: 255px;
+    object-fit: "cover";
+  }
+  .tittt {
+    font-size: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 }
 
@@ -189,8 +268,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .btn.active {
   background-color: #ff0000; /* Replace with your desired background color */
-  color: black /* Replace with your desired text color */
+  color: black; /* Replace with your desired text color */
 }
-.sidebar{
+.sidebar {
   margin-left: 0rem;
 }

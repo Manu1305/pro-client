@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import styles from "./sellerOrder.module.css";
-import { useSelector } from "react-redux";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
-import DataTable from "../../../../Data table/DataTable";
 import { useNavigate } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import DataTable from "../../../../Reuseable Comp/DataTable";
+import { IconButton, Tooltip } from "@mui/material";
+import DeliveryDiningSharpIcon from "@mui/icons-material/DeliveryDiningSharp";
+import { toast } from "react-toastify";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 const SellerOrder = () => {
-  const user = useSelector((state) => state.userReducer.user);
   const [orders, setOrders] = useState([]);
-  const [deleteProductId, setDeleteProductId] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(false);
+  // const [rowData,setRowData] = useState([])
   const navigate = useNavigate();
 
   const getOrders = async () => {
@@ -23,15 +26,36 @@ const SellerOrder = () => {
       };
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
-        .then((res) => res.data)
+        .then((res) => {
+          // const allData = res.data.filter((ele) => {
+          //   const date = new Date(ele.createdAt).toISOString().split("T")[0];
+
+          //   if (ele.orderStatus !== "Pending") {
+          //     console.log("ID Recived", ele._id);
+          //     return {
+          //       id: ele._id,
+          //       "Order Id": ele._id,
+          //       prdId: ele.productId,
+          //       Product: ele.prdData.images,
+          //       "Orderd On": date,
+          //       Price: ele.ordPrc,
+          //       "Payment Method": ele.pType,
+          //       "Delivery Status": ele.orderStatus,
+          //     };
+          //   }
+          // });
+          // setRowData(allData)
+          return res.data;
+        })
         .catch((err) => {
           console.log(err);
         });
-
-      console.log("all order response", res);
       setOrders(res);
+
+      res && setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -40,6 +64,16 @@ const SellerOrder = () => {
       .put(`${apiURL}/delivery/assign-delivery-product/${id}`)
       .then((res) => {
         getOrders();
+        toast("Assigned Delivery", {
+          position: "top-center",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          // draggable: true,
+          // progress: undefined,
+          theme: "light",
+        });
       })
       .catch((err) => {
         console.log("ERROR", err);
@@ -68,6 +102,16 @@ const SellerOrder = () => {
         })
         .then((json) => {
           getOrders();
+          toast("Product Delivered", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            // draggable: true,
+            // progress: undefined,
+            theme: "light",
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -78,16 +122,17 @@ const SellerOrder = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getOrders();
   }, []);
 
   const header = [
     "Product",
-    "Category",
-    "Selectedsize",
-    "Status",
-    "Trackingid",
-    "amount",
+    "Order Id",
+    "Orderd On",
+    "Payment Method",
+    "Price",
+    "Delivery Status",
     "Action",
   ].map((ele) => {
     let string = ele;
@@ -97,11 +142,17 @@ const SellerOrder = () => {
       return {
         field: "Product",
         type: "image",
+
         renderCell: (params) => {
           console.log("parmas*******************", params);
           return (
             <div>
-              <img src={params.row.Product} alt="" />
+              <img
+                src={params.row.Product}
+                alt="refresh"
+                width={30}
+                onClick={() => navigate(`/ViewDetails/${params.row.prdId}`)}
+              />
             </div>
           );
         },
@@ -111,84 +162,54 @@ const SellerOrder = () => {
       return {
         field: "Action",
         type: "action",
-        width: 150,
         renderCell: (params) => {
-          console.log("Check KR", params.row);
+          // console.log("Check KR", params.row);
           return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              {params.row.Status === "Ready To PickUp" ? (
-                <button style={{padding:"10px",background:"rgb(248,249,250)"}} onClick={() => addToDelivery(params.row.id)}>
-                  <i className="bi bi-truck fa-2x"></i>
-                </button>
-              ) : (
-                (params.row.Status === "confirm Delivery" ||
-                  params.row.Status === "confirm Return") ? (
-                  <button>
-                    <i className="bi bi-check-circle-fill fa-2x"></i>
-                  </button>
-                  
-                ):  <button onClick={() => navigate(`/productVerification/${params.row.id}`)}><i className="bi bi-eye-fill fa-2xl"></i></button>
+            <div style={{ alignItems: "center" }}>
+              {params.row["Delivery Status"] === "Ready To PickUp" && (
+                <div>
+                  <Tooltip
+                    title="Assign Delivery"
+                    onClick={() => addToDelivery(params.row.id)}
+                  >
+                    <IconButton>
+                      <DeliveryDiningSharpIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
               )}
-              <div
-                className="m-2"
-                onClick={() => {
-                  // setModalShow(true);
-                  console.log(params);
-                  setDeleteProductId({
-                    id: params.row.id,
-                    seller: params.row.seller,
-                  });
-                }}
-              ></div>
+              {params.row["Delivery Status"] === "confirm Delivery" && (
+                <div>
+                  <div>
+                    <Tooltip
+                      title="Confirm Delivery"
+                      onClick={() => confirmDelivery(params.row.id)}
+                    >
+                      <IconButton>
+                        <ThumbUpAltIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                  <BiDotsVerticalRounded />
+                </div>
+              )}
+              {params.row["Delivery Status"] === "confirm Return" && (
+                <div>
+                  <div>
+                    <Tooltip
+                      title="Confirm Return"
+                      onClick={() => confirmDelivery(params.row.id)}
+                    >
+                      <IconButton>
+                        <ThumbUpAltIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                </div>
+              )}
             </div>
           );
         },
-      };
-    }
-    if (ele === "Selectedsize") {
-      return {
-        field: "Selectedsize",
-        type: "Selectedsize",
-        width: 200,
-        renderCell: (params) => (
-          <select
-            style={{
-              padding: "8px",
-              margin: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              fontSize: "14px",
-              appearance: "none", // This removes the default dropdown arrow/icon
-              WebkitAppearance: "none", // For Safari
-            }}
-          >
-            {Object.entries(params.row.Selectedsize).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value.selectedSizes ? (
-                  <span
-                    style={{
-                      fontSize: 13,
-                      color: "GrayText",
-                    }}
-                  >
-                    {value.selectedSizes}
-                  </span>
-                ) : null}{" "}
-                -{" "}
-                {value.quantities ? (
-                  <span
-                    style={{
-                      fontSize: 13,
-                      color: "GrayText",
-                    }}
-                  >
-                    {value.quantities}
-                  </span>
-                ) : null}
-              </option>
-            ))}
-          </select>
-        ),
       };
     } else {
       return {
@@ -202,23 +223,52 @@ const SellerOrder = () => {
   });
 
   const rowData = orders.map((ele) => {
-    return {
-      id: ele._id,
-      prdId:ele.productId,
-      Product: ele.prdDeta.images,
-      Category: ele.prdDeta.category,
-      Selectedsize: ele.sizeWithQuantity,
-      Status: ele.orderStatus,
-      Trackingid: ele.trackId,
-      amount: ele.ordPrc,
-    };
+    const date = new Date(ele.createdAt).toISOString().split("T")[0];
+
+    if (ele.length!== 0) {
+      console.log("ID Recived", ele._id);
+      return {
+        id: ele._id,
+        "Order Id": ele._id,
+        prdId: ele.productId,
+        Product: ele.prdData.images,
+        "Orderd On": date,
+        Price: ele.ordPrc,
+        "Payment Method": ele.pType,
+        "Delivery Status": ele.orderStatus,
+      };
+    }
   });
 
+
+
   return (
-    <div style={{ marginLeft: "-150px"}}>
+    <div style={{ marginTop: "30px" }}>
       <div>
-        {rowData.length !== 0 && (
+        {/* <h1>Seller</h1> */}
+        {rowData.length !== 0 ? (
           <DataTable columns={header} rows={rowData} autoHeight />
+        ) : (
+          <div style={{ margin: "auto" }}>
+            {isLoading ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ScaleLoader animation="border" role="status" color="red">
+                  <span className="visually-hidden">Loading...</span>
+                </ScaleLoader>
+              </div>
+            ) : (
+              <img
+                src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                alt="Loaded"
+              />
+            )}
+          </div>
         )}
       </div>
     </div>

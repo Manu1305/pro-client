@@ -1,5 +1,18 @@
 import { createStore } from "redux";
-import { rootred } from "./rootReducer";
-import { composeWithDevTools } from 'redux-devtools-extension';
-const store = createStore(rootred,composeWithDevTools());
-export default store;
+import { reducers, } from "./rootReducer";
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+
+const persistConfig = {
+    key: 'root',
+    version: 1,
+    storage,
+    whitelist:['userReducer','productReqReducer']
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers)
+
+
+export const store = createStore(persistedReducer)
+
+export const persistor = persistStore(store)

@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "../Scrolltotop";
-import Cart from "./Header/Cart/Cart";
 import Login from "./Navbar/Login/UserLogin/Login";
 import Navbar from "./Navbar/Navbar";
 import Header from "./Header/Home/Header";
 import BlogHome from "./Pages/BlogHome/BlogHome";
-import { Footer } from "./Footer/Footer";
-import TrendingData from "./Body/TrendingBlog/TrendingData";
 import DetailsPages from "./Pages/Details/DetailsPages";
 import SellerDashboard from "./Navbar/Profile/SellerDashboard/SellerDash";
 import Register from "./Navbar/Login/Buyer&SellerRegister/Register";
@@ -23,10 +20,8 @@ import Editprofile from "./Dashboard/Sellersettings/sellerprofilesettings/EditPr
 import AddProduct from "./Navbar/Profile/SellerDashboard/ProductSec/Addproduct";
 import Withdraw from "./Dashboard/Withdraw/Withdraw";
 import SellerSettingsPage from "./Dashboard/Sellersettings/SellerSettings";
-
 import Thankyou from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/Thankyou";
 import AboutUs from "./Header/Home/AboutSection/About";
-import cards from "./Header/Home/NewArrival/NewArrival/Cards";
 import SubscriptionForm from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/ConfirmationPage/Confirmation";
 import Wish from "./Header/WishList/Wish";
 import SellerProSettings from "./Dashboard/Sellersettings/sellerprofilesettings/sellerProfile";
@@ -48,75 +43,148 @@ import EmailCheck from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmatio
 import Changepassword from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmation.jsx/CHangepassword";
 import Notification from "./Navbar/Notificatios/Notification";
 import ShoppingPage from "./Shopingsection/Shopping";
-
-import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
-
+import { ScaleLoader } from "react-spinners";
+import { useDispatch, useSelector } from "react-redux";
+import httpService from "./Error Handling/httpService";
+import { apiURL } from "../const/config";
+import { userCartItem } from "../Redux/cart/cartAction";
+import { addProduct } from "../Redux/product/productAction";
+import { RetailFranchise } from "./Navbar/Franchise/RetailFranchise";
+import { WholesaleStore } from "./Navbar/Franchise/WholesaleStore";
+import { DeliveryFranchise } from "./Navbar/Franchise/DeliveryFranchise";
+import { ContactUs } from "./Footer/ContactUs/ContactUs";
+import { CareerWithUs } from "./Footer/CareerWithUs/CareerWithUs";
+import { PrivacyPolicy } from "./Footer/Privacy&Policy/Privacy&Policy";
+import { SizeChart } from "./Footer/Size&Chart/Size&Chart";
+import { FaQ } from "./Footer/FAQ/FaQ";
+import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
+import SellerRelatedPro from "./Shopingsection/SellerRelatedProduct/sellerRelatedPro";
+import Test from "./Test/Test";
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
 );
-const LazyAddProduct = React.lazy(() =>
-  import("./Navbar/Profile/SellerDashboard/ProductSec/Addproduct")
-);
+
 const LazyMainPage = React.lazy(() =>
   import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage")
 );
 
 const App = () => {
-  const { productItems } = cards;
+  const [produts, setProducts] = useState([]);
+  const [ProductLength, setProductLength] = useState();
+  // const [cartItems, setCartItems] = useState(0);
 
-  const [wishlist, setWishlist] = useState([]);
+  const user = useSelector((state) => state.userReducer.user);
 
-  const [cartItems, setCartItems] = useState(0);
+  const dispatch = useDispatch();
+
+  // Cart
+
+  const getCarts = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      return await httpService
+        .get(`${apiURL}/cart/user-cart`, config)
+        .then((res) => {
+          if (res.data.Message === "Your cart is empty...!") {
+            // setCartItem([]);
+          } else {
+            console.log("UserCARt", res);
+            dispatch(userCartItem(res.data));
+            // setCartItem(res.data);
+          }
+        })
+        .catch((err) => console.log(err.config.message));
+    } catch (error) {
+      console.log("API Error", error);
+    }
+  };
+  // all products
+  const getAllProducts = async () => {
+    await httpService
+      .get(`${apiURL}/product/get-all-products`)
+      .then((res) => {
+        console.log(res.data);
+
+        const filByStaus = res.data.filter((prd) => prd.status === true);
+        dispatch(addProduct(filByStaus));
+        setProducts(filByStaus);
+        setProductLength(filByStaus.length);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  useEffect(() => {
+    getCarts();
+    getAllProducts();
+  }, []);
 
   return (
     <Router>
-            <ScrollToTop>
+      <ScrollToTop>
+        <div className="fontClass">
+          <Navbar products={produts} />
+          <Routes>
+            <Route path="*" element={<Error404 />} />
+            <Route
+              path="login"
+              element={!user?.name ? <Login /> : <Header />}
+            />
+            <Route path="/" element={<Header products={produts} />} />
+            <Route
+              path="/dashboard"
+              element={<SellerDashboard products={ProductLength} />}
+            />
 
-      <div className="fontClass">
-    
-        <Navbar 
-            wishlist={wishlist} cartItems={cartItems} />
-        <Routes>
-        <Route path="*" element={<Error404/>} />
-          <Route path="login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <Header
-                productItems={productItems}
-              
-                   
-              />
-            }
-          />
-          <Route path="/dashboard" element={<SellerDashboard />} />
-          {/* <Route
-            path="/cart"
-            element={
-              <Cart
-                   
-              setCartItems={setCartItems}
-              />
-            }
-          /> */}
-            {/* <Route path="/Cart" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyCart />
-            </React.Suspense>} /> */}
+            <Route
+              path="/cart"
+              element={
+                <React.Suspense
+                  fallback={
+                    <div>
+                      <ScaleLoader />
+                    </div>
+                  }
+                >
+                  {" "}
+                  {user?.name ? <LazyCart /> : <Login />}
+                </React.Suspense>
+              }
+            />
 
-            <Route path="/Cart" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyCart />
-            </React.Suspense>} />
+            <Route
+              path="/dashboard"
+              element={
+                <React.Suspense fallback={<div>Loading... </div>}>
+                  {" "}
+                  <LazySellerDashboard />
+                </React.Suspense>
+              }
+            />
 
-            <Route path="/dashboard" element={<React.Suspense fallback={<div>Loading... </div>}> <LazySellerDashboard />
-            </React.Suspense>} />
+            {/* <Route path="/dashboard/Addproduct" element={<React.Suspense fallback={<div> </div>}> <LazyAddProduct /> */}
+            {/* </React.Suspense>} /> */}
 
-            <Route path="/dashboard/Addproduct" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyAddProduct />
-            </React.Suspense>} />
-
-            <Route path="storeset" element={<React.Suspense fallback={<div>Loading... </div>}> <LazyMainPage />
-            </React.Suspense>} />
-        <Route path="/ViewDetails/:productId" element={<ViewProduct setCartItems={setCartItems} />} />
+            <Route
+              path="storeset"
+              element={
+                <React.Suspense fallback={<div>Loading... </div>}>
+                  {" "}
+                  <LazyMainPage />
+                </React.Suspense>
+              }
+            />
+            <Route path="/ViewDetails/:productId" element={<ViewProduct />} />
 
             <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
             <Route path="thankyou" element={<Thankyou />} />
@@ -126,7 +194,7 @@ const App = () => {
             <Route path="/details/:id" element={<DetailsPages />} />
             <Route path="sellerplans" element={<Plans />} />
             <Route path="StorePage" element={<StorePage />} />
-            <Route path="dashboard/Addproduct" element={<AddProduct />} />
+            <Route path="/dashboard/Addproduct" element={<AddProduct />} />
             <Route path="storeset" element={<MainPage />} />
             <Route path="store" element={<Store />} />
             <Route path="payment" element={<SellerPayment />} />
@@ -142,6 +210,7 @@ const App = () => {
             <Route path="/whyus" element={<Whydetail />} />
             <Route path="/whatus" element={<Whatmakeus />} />
             <Route path="/whoweare" element={<WhoWeAre />} />
+            <Route path="/orderDetails/:orderId" element={<Test />} />
             <Route
               path="/productVerification/:id"
               element={<ProductVerification />}
@@ -149,22 +218,49 @@ const App = () => {
             <Route path="/deliverydash" element={<DeliveryDash />} />
             <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
-            <Route path="/shoppingPage" element={<ShoppingPage />} />
-            <Route path="/shoppingPage/:category" element={<ShoppingPage />} />
+            <Route
+              path="/shoppingPage"
+              element={<ShoppingPage products={produts} />}
+            />
+            <Route
+              path="/shoppingPage/:category"
+              element={<ShoppingPage products={produts} />}
+            />
+
+            <Route
+              path="/shoppingPages/:category/:collections"
+              element={<ShoppingPage products={produts} />}
+            />
             <Route path="About" element={<AboutUs />} />
             <Route
               path="/forgotpassword/:id/:token"
               element={<Changepassword />}
             />
+
             <Route path="/passwordupdate" element={<EmailCheck />} />
             <Route path="Wish" element={<Wish />} />
             <Route path="notifications" element={<Notification />} />
 
-            {/* <Route path="AdminHome" element={<AdminDashboard />} /> */}
             <Route path="/profile/:id " element={<Profile />} />
             <Route path="/Profilepage/:id" element={<SellerProSettings />} />
             <Route path="/editprofile" element={<Editprofile />} />
             <Route path="/returnPro/:id" element={<BuyerReturn />} />
+
+            {/* franchies */}
+            <Route path="/wholesale-store" element={<WholesaleStore />} />
+            <Route path="/delivery-frenchies" element={<DeliveryFranchise />} />
+            <Route path="/retail-franchise" element={<RetailFranchise />} />
+            <Route path="/ViewDetails/:id" element={<SellerRelatedPro />} />
+
+
+            {/* footer data */}
+            <Route path="/contactUs" element={<ContactUs />} />
+            <Route path="/career" element={<CareerWithUs />} />
+            <Route path="/privacyPol" element={<PrivacyPolicy />} />
+            <Route path="/sizeChart" element={<SizeChart />} />
+            <Route path="/faq" element={<FaQ />} />
+            <Route path="/termsCond" element={<TermsCondition />} />
+
           </Routes>
         </div>
       </ScrollToTop>

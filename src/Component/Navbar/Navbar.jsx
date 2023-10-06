@@ -3,37 +3,24 @@ import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { CgShoppingCart } from "react-icons/cg";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import  Profile  from "./Dropdown/ProfileDropdown";
-import { addUser } from "../../Redux/user/userAction";
+import Profile from "./Dropdown/ProfileDropdown";
 import SearchBar from "./Search/Search";
 import { useNavigate } from "react-router";
-import { MdMarkEmailRead, MdOutlineNotificationsNone } from "react-icons/md";
-import { apiURL } from "../../const/config";
-import httpService from "../Error Handling/httpService";
-import logo from '../../images/logo.png';
+import { MdOutlineNotificationsNone } from "react-icons/md";
+import { Badge } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import logo from '../../images/logo.png'
+import image from "../../images/logoooo.jpg"
 
- const Navbar = ({ wishlist, cartItems }) => {
+const Navbar = ({products}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigation = useNavigate();
-  let user = useSelector((state) => state.userReducer.user);
-
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    if (user && !user.name) {
-      try {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
-        dispatch(addUser(userData));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, []);
+  const user = useSelector((state) => state.userReducer.user);
+  const CartItem = useSelector((state) => state.cartReducer.userCart);
+   
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -42,6 +29,7 @@ import logo from '../../images/logo.png';
   const closeMenu = () => {
     setShowMenu(false);
   };
+
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
@@ -55,7 +43,7 @@ import logo from '../../images/logo.png';
 
   return (
     <nav
-      className={styles.navbar}
+      className={`shadow-xl ${styles.navbar}`}
       style={{
         backgroundColor: scrollPosition > 0 ? "white" : "white",
       }}
@@ -64,19 +52,20 @@ import logo from '../../images/logo.png';
         <Link to="/" onClick={closeMenu} className={styles.heading}>
           {/* HITEC MART */}
           <img
-                src={logo}
-                alt=""
-                style={{ width: "140px", height: "50px" }}
-                className={`rounded-circle ${styles.imgcircle}`}
-              />
+            src={image}
+            alt=""
+            style={{ width: "100px", height: "30px" ,marginBottom:'10px'}}
+            className={` ${styles.imgcircle}`}
+          />
         </Link>
       </li>
-      <SearchBar />
+
+      <SearchBar products={products} />
       <div className={styles["navbar-toggle"]} onClick={toggleMenu}>
         <i className="fas fa-bars"></i>
       </div>
       <ul className={`${styles["navbar-menu"]} ${showMenu ? styles.show : ""}`}>
-        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
+        {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="/" onClick={closeMenu}>
               HOME
@@ -84,23 +73,40 @@ import logo from '../../images/logo.png';
           </li>
         )}
 
-        {user?.urType !== "admin" &&
-          user?.urType !== "seller" &&
-          user?.urType !== "delivery" && (
-            <li>
-              <Link to="shoppingPage" onClick={closeMenu}>
-                SHOP
-              </Link>
-            </li>
-          )}
-        {(user?.urType !== "admin"|| user?.urType !== "seller") && (
-          <li>
-            <Link to="bloghome" onClick={closeMenu}>
-              Blog
-            </Link>
-          </li>
-        )}
-        {(user?.urType === "buyer" || user?.urType === "seller") && (
+        <li>
+          <Link to="shoppingPage" onClick={closeMenu}>
+            SHOP
+          </Link>
+        </li>
+
+        <li>
+          <div className={styles.dropdown1}>
+            <span>FRANCHISE</span>
+            <div className={styles["dropdown-content1"]}>
+              {/* <p>Hello World!</p> */}
+              <p>
+                {" "}
+                <Link to="/wholesale-store" onClick={closeMenu}>
+                  Wholesale Store
+                </Link>
+              </p>
+              <p>
+                {" "}
+                <Link to="/retail-franchise" onClick={closeMenu}>
+                  Retail Store Franchise
+                </Link>
+              </p>
+              <p>
+                {" "}
+                <Link to="/delivery-frenchies" onClick={closeMenu}>
+                  Delivery Franchise
+                </Link>
+              </p>
+            </div>
+          </div>
+        </li>
+
+        {(user?.urType !== "admin" || user?.urType !== "seller") && (
           <li>
             <Link to="About" onClick={closeMenu}>
               ABOUT
@@ -109,38 +115,38 @@ import logo from '../../images/logo.png';
         )}
 
         {user?.urType === "buyer" && (
-          <li>
+          <li style={{ marginTop: "3px" }}>
             {user && user.email ? (
               <Link to="Wish" onClick={closeMenu}>
-                <AiOutlineHeart />
-                {wishlist.length === 0 ? "" : wishlist.length}
+                <AiOutlineHeart style={{ height: "20px", width: "20px" }} />
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}>
-                <AiOutlineHeart />
-                {wishlist.length === 0 ? "" : wishlist.length}
+                <AiOutlineHeart style={{ height: "20px", width: "20px" }} />
               </Link>
             )}
           </li>
         )}
 
         {user?.urType === "buyer" && (
-          <li>
+          <li style={{ marginTop: "2px" }}>
             {user && user.email ? (
               <Link to="cart" onClick={closeMenu}>
-                <CgShoppingCart />
-                {cartItems != 0 ? (
-                  <span className={styles.length1}>
-                    {cartItems === 0 ? "" : cartItems}
-                  </span>
-                ) : (
-                  ""
-                )}
+                <Badge
+                  badgeContent={
+                    Object.values(CartItem).length === 0 ||
+                    CartItem === undefined
+                      ? null
+                      : CartItem.items.length
+                  }
+                  color="error"
+                >
+                  <ShoppingCartOutlinedIcon />
+                </Badge>
               </Link>
             ) : (
               <Link to="login" onClick={closeMenu}>
-                <CgShoppingCart />
-                <span>{cartItems === 0 ? "" : cartItems}</span>
+                <CgShoppingCart style={{ height: "20px", width: "20px" }} />
               </Link>
             )}
           </li>
@@ -148,24 +154,24 @@ import logo from '../../images/logo.png';
 
         <li style={{ height: "20px" }}>
           {user && user.email ? (
-            <Profile />
+            <Profile closemenu={closeMenu} />
           ) : (
-            <Link to="login">
-              <FiUser />
+            <Link to="login" onClick={closeMenu} style={{ marginTop: "5px" }}>
+              <FiUser style={{ height: "20px", width: "20px" }} />
             </Link>
           )}
         </li>
-     {
-(user?.urType === "seller" || user?.urType === "admin") && <li style={{ height: "20px" }}>
-<MdOutlineNotificationsNone className='fa-lg' onClick={() => navigation('/notifications')} />
-
-   </li>
-
-}   
-</ul>
-     
+        {(user?.urType === "seller" || user?.urType === "admin") && (
+          <li style={{ height: "20px" }}>
+            <MdOutlineNotificationsNone
+              className="fa-lg"
+              onClick={() => navigation("/notifications")}
+            />
+          </li>
+        )}
+      </ul>
     </nav>
   );
 };
 
-export default Navbar
+export default Navbar;

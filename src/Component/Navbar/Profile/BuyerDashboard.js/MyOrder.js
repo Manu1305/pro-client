@@ -6,49 +6,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { addorder } from "../../../../Redux/order/orderAction";
 import { apiURL } from "../../../../const/config";
 import httpService from "../../../Error Handling/httpService";
+import ClipLoader from "react-spinners/ClipLoader";
+import { ScaleLoader } from "react-spinners";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
-  const orderss = useSelector((state) => state.orderReducer.order);
+  // const orderss = useSelector((state) => state.orderReducer.order);
+  //
   const [orders, setOrders] = useState([]);
-  const [editingIndex, setEditingIndex] = useState(-1);
-  const [updatedAddress, setUpdatedAddress] = useState({});
-  const [updatedStatus, setUpdatedStatus] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
-  const handleEditClick = (index) => {
-    setEditingIndex(index);
-    setUpdatedAddress({
-      city: orders[index].address.city,
-      state: orders[index].address.state,
-    });
-    setUpdatedStatus(orders[index].status);
-  };
-  const handleAddressChange = (event) => {
-    setUpdatedAddress({
-      ...updatedAddress,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleStatusChange = (event) => {
-    setUpdatedStatus(event.target.value);
-  };
-
-  const handleSaveClick = (index) => {
-    const updatedOrders = [...orders];
-    updatedOrders[index] = {
-      ...updatedOrders[index],
-      address: { ...updatedAddress },
-      status: updatedStatus,
-    };
-
-    setOrders(updatedOrders);
-
-    setEditingIndex(-1);
-    setUpdatedAddress({});
-    setUpdatedStatus("");
-  };
 
   const returnButton = (order) => {
     alert(order.updatedAt);
@@ -60,6 +31,8 @@ const BuyerOrder = () => {
     console.log("Check difference ", currentDate < order.updatedAt);
   };
 
+  // const user = useSelector((state) => state.userReducer.user)
+  console.log("user", user);
   const getOrders = async () => {
     try {
       const config = {
@@ -71,28 +44,99 @@ const BuyerOrder = () => {
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
-          console.log(res)
-          return res.data
+          setIsLoading(false);
+
+          console.log(res.data + "orders csdc");
+          return res.data;
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
+
         });
-        console.log(res)
-        debugger
+      console.log(res);
       dispatch(addorder(res));
-      setOrders(res);
+
+      if (res.length == 0) {
+        setOrders([]);
+      } else {
+        setOrders(res);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
+
   useEffect(() => {
+    setIsLoading(true);
     getOrders();
   }, []);
 
+  function cancelorder(id) {
+    Swal.fire({
+      title: 'Are you sure to cancel this order?',
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        };
+        axios
+          .put(`${apiURL}/orders/update-order/${id}`, config)
+          .then((res) => {
+            getOrders();
+            Swal.fire(
+              '!',
+              'Your Order cancelled successfully...',
+              'success'
+            )
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+      }
+    })
+
+  }
+
   return (
     <div className={`d-flex flex-wrap ${styles.tableWrapper}`}>
-      {orders.length && orders.map((order, index) => {
+      {orders.length === 0 ? (
+        <div style={{ margin: "auto" }}>
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ScaleLoader animation="border" role="status" color="red">
+                <span className="visually-hidden">Loading...</span>
+              </ScaleLoader>
+              <p>Loading orders...</p>
+            </div>
+          ) : (
+            <img
+              src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+              alt="Loaded"
+            />
+          )}
+        </div>
+      ) : (
+        orders.length !== 0 &&
+        orders.map((order, index) => {
           // const dateString = "2023-08-01T:36:25.914+00:00";
           const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
           const isExpRet = dateFromISOString > new Date();
@@ -107,16 +151,18 @@ const BuyerOrder = () => {
                   className={`rounded-circle ${styles.imgcircle}`}
                 />
                 <div key={order.id} className="d-flex align-items-center mb-3">
+                {/* <Link  to={`/orderDetails/${order._id}`}> to= */}
                   <img
-                    src={order.prdDeta.images}
+                    src={order.prdData.images}
                     alt=""
                     style={{ width: "45px", height: "45px" }}
                     className="rounded-circle"
                   />
+                {/* </Link> */}
 
                   <div className="ms-3">
-                    <p className="fw-bold mb-1">{order.prdDeta.barnd}</p>
-                    <p className="text-muted mb-0">{order.prdDeta.category}</p>
+                    <p className="fw-bold mb-1">{order.brand}</p>
+                    <p className="text-muted mb-0">{order.category}</p>
                   </div>
                   <select>
                     {order.sizeWithQuantity &&
@@ -150,6 +196,7 @@ const BuyerOrder = () => {
                   </select>
                 </div>
 
+
                 <div className={`mb-3 ${styles.addressSection}`}>
                   <h6 className="my-2">Tracking ID: {order.trackId}</h6>
                   <h6 className="text-muted">Address:</h6>
@@ -180,10 +227,20 @@ const BuyerOrder = () => {
                     order.orderStatus !== "Return Successful" &&
                     order.orderStatus !== "confirm Return" && (
                       <>
-                        <button className="btn btn-warning my-2">
+                        {/* <button className="btn btn-warning my-2">
                           CHANGE ADDRESS
-                        </button>
-                        <button className="btn btn-danger">CANCEL ORDER</button>
+                        </button> */}
+                        {
+                          order.orderStatus !== 'Cancelled' ? (
+                            <button
+                              onClick={() => cancelorder(order._id)}
+                              className="btn btn-danger"
+                            >
+                              CANCEL ORDER
+                            </button>
+                          ) : null
+                        }
+
                       </>
                     )}
 
@@ -201,7 +258,8 @@ const BuyerOrder = () => {
               </Card.Body>
             </Card>
           );
-        })}
+        })
+      )}
     </div>
   );
 };

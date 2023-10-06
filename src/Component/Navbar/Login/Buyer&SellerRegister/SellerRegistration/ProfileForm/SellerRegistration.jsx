@@ -18,17 +18,16 @@ import {
 } from "mdb-react-ui-kit";
 import { Dropdown } from "react-bootstrap";
 import { useEffect } from "react";
-import httpService from '../../../../../Error Handling/httpService'
+import httpService from "../../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../../const/config";
+import { toast } from "react-toastify";
 
- const SellerRegister = () => {
+const SellerRegister = () => {
   // const history = useNavigate();
   const dispatch = useDispatch();
   const [phone, setPhone] = useState("");
 
   const [phoneOtp, setPhoneOtp] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
   const [Afterotp, setAfterotp] = useState(false);
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -42,6 +41,18 @@ import { apiURL } from "../../../../../../const/config";
   const [GstError, setGstError] = useState("");
   const [otpError, setOtperror] = useState("");
   const [userFilledData, setUserFilledData] = useState({});
+  const[userType,setUsertype]=("Seller registration")
+
+
+
+
+
+
+
+
+
+
+
   const countries = ["India", "Australia", "Srilanka"];
   const stateData = {
     India: [
@@ -84,16 +95,11 @@ import { apiURL } from "../../../../../../const/config";
     USA: ["State A", "State B", "State C"],
     // Add more countries and states as needed
   };
+  const [showButton, setShowButton] = useState(true);
+
   const navigate = useNavigate();
 
-  const handleCountrySelect = (country) => {
-    setSelectedCountry(country);
-    setSelectedState("");
-  };
-
-  const handleResendOTP = () => {
-    alert("otp sended");
-  };
+  
   const handleCustomerLogin = (e) => {
     const isValid = validate();
 
@@ -137,14 +143,20 @@ import { apiURL } from "../../../../../../const/config";
 
   const sendOtp = () => {
     if (phone.length == 10) {
+      toast.success("otp sended successfuly");
+      setShowButton(false);
       httpService
-        .post(`${apiURL}/user/send-otp`, { phone })
+        .post(`${apiURL}/user/send-otp`, { phone,userType })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data + "this is data");
         })
+
         .catch((error) => {
           console.error(error);
         });
+      setTimeout(() => {
+        setShowButton(true);
+      }, 20000);
     } else {
       alert("phone number should 10");
     }
@@ -155,10 +167,22 @@ import { apiURL } from "../../../../../../const/config";
       .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status == "approved") {
+        if (response.data.message == "success") {
           setAfterotp(true);
           setOtperror("");
-        } else {
+        } 
+       else if(response.data.message == "failed") {
+          setAfterotp(false);
+          setOtperror("Wrong otp");
+        } 
+
+        else if(response.data.message == "failed") {
+          setAfterotp(false);
+          setOtperror("Wrong otp");
+        } 
+
+
+        else {
           setAfterotp(false);
           setOtperror("Wrong otp");
         }
@@ -170,7 +194,7 @@ import { apiURL } from "../../../../../../const/config";
 
   const handlePhoneOtpChange = (e) => {
     setPhoneOtp(e.target.value);
-    setAfterotp(e.target.value === "12345");
+    setAfterotp(e.target.value === "111113");
   };
 
   const validate = () => {
@@ -187,7 +211,7 @@ import { apiURL } from "../../../../../../const/config";
     let otpError = "";
 
     if (!userFilledData.name) {
-      nameError = "Email address is required";
+      nameError = " Name is required";
     } else if (!/\S+@\S+\.\S+/.test(userFilledData.email)) {
       emailError = "Email address is invalid";
     }
@@ -288,13 +312,15 @@ import { apiURL } from "../../../../../../const/config";
     if (userFilledData.phoneOtp == 12345) setAfterotp(true);
   }, [userFilledData]);
   return (
-    <div>
-      <MDBContainer className="my-5">
+    
+      <div>
+      <MDBContainer>
         <MDBCard>
           <MDBRow className="g-0">
             {/* {userData.map((data)=>{
             return( */}
             <div>
+              <div>
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
                   <div className="d-flex flex-row mt-2">
@@ -366,12 +392,14 @@ import { apiURL } from "../../../../../../const/config";
                       onChange={onchangeHandler}
                       className="w-85"
                     />{" "}
-                    <button
-                      className="btn btn-link bg-warning text-dark"
-                      onClick={sendOtp}
-                    >
-                      Send OTP
-                    </button>
+                    {showButton && (
+                      <button
+                        className="btn btn-link bg-warning text-dark"
+                        onClick={sendOtp}
+                      >
+                        Send OTP
+                      </button>
+                    )}
                     {phoneError && (
                       <div className="text-danger">{phoneError}</div>
                     )}
@@ -379,6 +407,11 @@ import { apiURL } from "../../../../../../const/config";
 
                   {/* <button onClick={verifyOtp}>Submit otp</button> */}
                   {otpError && <div className="text-danger">{otpError}</div>}
+
+
+<div>
+  
+</div>
                   <div className="d-flex flex-row align-items-center mb-4">
                     <label
                       htmlFor="formControlLg"
@@ -399,11 +432,11 @@ import { apiURL } from "../../../../../../const/config";
                       className="btn btn-link bg-warning text-dark"
                       onClick={verifyOtp}
                     >
-                      Submit otp
+                      Submit OTP
                     </button>
                   </div>
 
-                  {Afterotp && (
+                   {Afterotp && ( 
                     <div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <label
@@ -423,26 +456,6 @@ import { apiURL } from "../../../../../../const/config";
                         />
                         {GstError && (
                           <div className="text-danger">{GstError}</div>
-                        )}
-                      </div>
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Full name
-                        </label>
-                        <MDBInput
-                          id="formControlLg"
-                          type="text"
-                          size="lg"
-                          name="full name"
-                          // value={.name}
-                          onChange={onchangeHandler}
-                          className="w-85"
-                        />
-                        {nameError && (
-                          <div className="text-danger">{nameError}</div>
                         )}
                       </div>
 
@@ -466,12 +479,18 @@ import { apiURL } from "../../../../../../const/config";
                         )}
                       </div>
                     </div>
-                  )}
+
+                    
+                   )} 
                 </MDBCardBody>
               </MDBCol>
+              </div>
+              <div>
+
+              
               <MDBCol md="6">
                 <MDBCardBody className="d-flex flex-column">
-                  {Afterotp && (
+                   {Afterotp && (
                     <div>
                       <hr></hr>
                       <div>
@@ -516,7 +535,7 @@ import { apiURL } from "../../../../../../const/config";
                             className="w-85"
                           />
                         </div>
-
+                        
                         <div className="d-flex flex-row align-items-center mb-4">
                           <label
                             htmlFor="formControlLg"
@@ -530,7 +549,7 @@ import { apiURL } from "../../../../../../const/config";
                               size="lg"
                               className="w-85 bg-warning"
                             >
-                              {selectedCountry || "Select Country"}
+                              {userFilledData.country || "select a country"}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                               {countries.map((country, index) => (
@@ -548,6 +567,7 @@ import { apiURL } from "../../../../../../const/config";
                             </Dropdown.Menu>
                           </Dropdown>
                         </div>
+                        
                         <div className="d-flex flex-row align-items-center mb-4">
                           <label
                             htmlFor="formControlLg"
@@ -561,7 +581,7 @@ import { apiURL } from "../../../../../../const/config";
                               size="lg"
                               className="w-85 bg-warning"
                             >
-                              {selectedState || "Select State"}
+                              {userFilledData.state || "Select State"}
                             </Dropdown.Toggle>
                             <Dropdown.Menu
                               style={{ maxHeight: "200px", overflowY: "auto" }}
@@ -665,36 +685,34 @@ import { apiURL } from "../../../../../../const/config";
                           </div>
                         )}
                       </div>
+                      <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By register, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
 
                       <button
-                        className="btn btn-dark "
+                        className="btn btn-dark mt-3 "
                         color="dark"
                         size="lg"
                         onClick={handleCustomerLogin}
                       >
                         Registration
                       </button>
-                      <a className="small text-muted" href="#!">
-                        Forgot password?
-                      </a>
                       <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                         Already have an account?{" "}
                         <Link to="/login" style={{ color: "#393f81" }}>
                           login here
                         </Link>
                       </p>
-                      <div className="d-flex flex-row justify-content-start">
-                        <a href="#!" className="small text-muted me-1">
-                          Terms of use.
-                        </a>
-                        <a href="#!" className="small text-muted">
-                          Privacy policy
-                        </a>
-                      </div>
+                     
                     </div>
-                  )}
+                  )} 
                 </MDBCardBody>
               </MDBCol>
+              
+              </div>
             </div>
           </MDBRow>
         </MDBCard>
@@ -702,4 +720,4 @@ import { apiURL } from "../../../../../../const/config";
     </div>
   );
 };
-export default SellerRegister
+export default SellerRegister;

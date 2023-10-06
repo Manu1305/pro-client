@@ -1,7 +1,7 @@
 .one{
     height: 500px;
     width: 100%;
-    background-image: url('https://img.freepik.com/free-photo/frame-with-leaves-it-frame-with-words-autumn-it_1340-24635.jpg?t=st=1687594718~exp=1687595318~hmac=1a6134e954c67a205565da033bc7ebd589d79be2ac3a58bcedf3f2848174200c&w=2000');
+    background-image: url('../../../../../images/whoweare\ \(1\).png');
 background-size: cover;
 
 }
@@ -48,12 +48,15 @@ float: left;
 margin-top: 20px;
 }
 
+.mainheading:hover{
+    display: none;
+}
 
 @media (max-width: 1280px) {
     .one{
         height: 400px;
         width: 100%;
-        background-image: url('https://img.freepik.com/free-photo/frame-with-leaves-it-frame-with-words-autumn-it_1340-24635.jpg?t=st=1687594718~exp=1687595318~hmac=1a6134e954c67a205565da033bc7ebd589d79be2ac3a58bcedf3f2848174200c&w=2000');
+        background-image: url('../../../../../images/whoweare\ \(1\).png');
     background-size: cover;
     
     }
@@ -107,7 +110,7 @@ margin-top: 20px;
     .one{
         height: 350px;
         width: 100%;
-        background-image: url('https://img.freepik.com/free-photo/aerial-view-business-team_53876-124515.jpg?w=1060&t=st=1687761209~exp=1687761809~hmac=e2194fb1235bf16ec65ac5b3c42aef52806e7a06c630a20911edae3d2c9c8790 ');
+        background-image: url('../../../../../images/whoweare\ \(1\).png');
     background-size: cover;
     }
     .top{

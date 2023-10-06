@@ -30,12 +30,11 @@ const SamplePrevArrow = (props) => {
   );
 };
 
-const SellerRelatedPro = ({ addToCart }) => {
+const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
   const [productItems, setProductItems] = useState([]);
   const [userData, setUserData] = useState([]);
-  // const [related, setRelated]= useState("")
 
-  
+  // console.log("ffff", prodd)
   useEffect(() => {
     httpService
       .get(`${apiURL}/product/get-all-products`)
@@ -47,9 +46,8 @@ const SellerRelatedPro = ({ addToCart }) => {
       });
   }, []);
 
-
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -67,7 +65,7 @@ const SellerRelatedPro = ({ addToCart }) => {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2   ,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -81,7 +79,7 @@ const SellerRelatedPro = ({ addToCart }) => {
         },
       },
     ],
-  }
+  };
   const settingsImageSlider = {
     dots: true,
     infinite: true,
@@ -93,35 +91,63 @@ const SellerRelatedPro = ({ addToCart }) => {
   };
   return (
     <div className={`${styless.bg}`}>
-      <h2>Related Products from this Supplier</h2>
+      {/* <h2>Related Products </h2> */}
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          {productItems.map((product) => (
-            <div key={product.id} className={styless.customerheading}>
-              <div className={`${styless.card}`}>
-                <Slider {...settingsImageSlider}>
-                  {product.images.map((img, index) => (
-                    <div key={index}>
-                      <img
-                        src={img}
-                        className={styless.mage}
-                        alt=""
-                      />
-                    </div>
-                  ))}
-                </Slider>
-                <h5 className={styless.title}>{product.productDetail.brand}</h5>
-                <span className={styless.description}>
-                  {product.productDetail.description}
-                </span>
-                <p className={styless["prices"]}>Rs. {product.sellingPrice}</p>
-              </div>
+          {/* { productItems && productItems.map((productItems) => (
+            <div>
+            <div className={styless.customerheading}>
+              <Link to={`/ViewDetails/${productItems._id}`}>
+                <div className={`${styless.card}`}>
+                  <img
+                    src={productItems.productDetails[0].images[0]}
+                    alt="imge"
+                    className={styless.igfff}
+                  />
+                </div>
+              </Link>
             </div>
-          ))}
+            <div className={styless.marbtm}>
+             <h5 className={styless.title}>{productItems.brand}</h5>
+             <h5 className={styless.titlee}>{productItems.title}</h5>
+
+            <Link style={{ textDecoration: "none" }}>
+            </Link>
+          </div>
+          </div>
+          ))} */}
+          {productItems &&
+            productItems.map((item) => {
+              if (item.collections === prodd) {
+                return (
+                  <div key={item._id}>
+                    <div className={styless.customerheading}>
+                      {console.log("hhhhhhh", productId)}
+                      <a href={`/ViewDetails/${item._id}`}>
+                        <div className={`${styless.card}`}>
+                          <img
+                            src={item.productDetails[0].images[0]}
+                            alt="image"
+                            className={styless.igfff}
+                          />
+                        </div>
+                      </a>
+                    </div>
+                    <div className={styless.marbtm}>
+                      <h5 className={styless.title}>{item.brand}</h5>
+                      <h5 className={styless.titlee}>{item.title}</h5>
+                      {/* Add any other content you want to display */}
+                    </div>
+                  </div>
+                );
+              } else {
+                return null; // Return null for items that don't match the condition
+              }
+            })}
         </Slider>
       </div>
       <Link to="/shoppingPage">
-        <button className={styless.seeMore}>SEE MORE...</button>
+        <button className={styless.seeMore}>Go to shop...</button>
       </Link>
     </div>
   );

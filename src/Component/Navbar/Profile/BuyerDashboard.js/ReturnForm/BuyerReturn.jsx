@@ -45,7 +45,7 @@ const BuyerReturn = () => {
             ...userFilledData,
             images,
             orderId: filteredOrders[0]._id,
-            seller: filteredOrders[0].prdDeta.seller,
+            seller: filteredOrders[0].prdData.seller,
             amount: filteredOrders.ordPrc,
             paymentId: filteredOrders[0].raz_paymentId,
             // seller: "",
@@ -216,9 +216,6 @@ const BuyerReturn = () => {
                     Return
                   </button>
                 </MDBCardBody>
-              </MDBCol>
-              <MDBCol md="6">
-                <h1>uiydrxfghvh</h1>
               </MDBCol>
             </div>
           </MDBRow>

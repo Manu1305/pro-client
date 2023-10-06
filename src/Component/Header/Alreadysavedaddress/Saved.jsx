@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
+import {TiDelete} from 'react-icons/ti'
 const SavedAddress = ({addresses,getSavedAddress}) => {
 
 
@@ -82,7 +83,7 @@ const SavedAddress = ({addresses,getSavedAddress}) => {
                 cursor: "pointer",
               }}
             >
-               remove
+               <TiDelete/>
             </button>
 
             <div>

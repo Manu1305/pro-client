@@ -4,58 +4,29 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
-import { useNavigate } from "react-router-dom";
-import { addProduct } from "../../Redux/product/productAction";
 
-import Slider from "react-slick";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdNavigateNext } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import { apiURL } from "../../const/config";
-import httpService from "../Error Handling/httpService";
+
 import { Footer } from "../Footer/Footer";
 
-const SampleNextArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.next}>
-        <MdNavigateNext className={styless.icon} />
-      </button>
-    </div>
-  );
-};
+import { PiHeartLight } from "react-icons/pi";
+import { CategCart } from "./CategCart/CategCart";
 
-const SamplePrevArrow = (props) => {
-  const { onClick } = props;
-  return (
-    <div className={styless["control-btn"]} onClick={onClick}>
-      <button className={styless.prev}>
-        <GrFormPrevious className={styless.icon} />
-      </button>
-    </div>
-  );
-};
+const Shopping = ({ products }) => {
+  const { category, collections } = useParams();
 
-const Shopping = ({}) => {
-  const { category } = useParams();
+  const colletionResults = collections;
+
   const selectedCategory = category ? category : "all";
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.userReducer.user);
 
-  const [nameFilter, setNameFilter] = useState("");
-  const [price, setPrice] = useState(10000);
+  const [price, setPrice] = useState(100000);
   const [categories, setCategories] = useState([]);
-  const [data, setData] = useState([]);
+
   const [pageNumber, setPageNumber] = useState(0);
 
-  const [flag, setFlag] = useState(false);
-
-  // const handleNameFilterChange = (e) => {
-  //   setNameFilter(e.target.value);
-  // };
-  const navigate = useNavigate();
-  const userId = useSelector((state) => state.userReducer.user?.email);
+  const [collectionstate, setCollections] = useState([]);
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
@@ -67,284 +38,286 @@ const Shopping = ({}) => {
 
   useEffect(() => {
     if (selectedCategory === "all") {
-      setCategories([]);
+      // setCategories([]);
     } else {
       setCategories([selectedCategory]);
     }
   }, [selectedCategory]);
-
-  const viewproductDetails = () => {};
   useEffect(() => {
-    httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        setData(res.data);
-        dispatch(addProduct(res.data));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
-  const sellingPrices = data.map((item) => item.sellingPrice);
+    setCollections([colletionResults]);
+  }, [colletionResults]);
+  const sellingPrices = products.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
-  const lowestprice = Math.min(...sellingPrices);
-  const filteredProducts =
-    data &&
-    data.filter((data) => {
-      const productNameMatch =
-        data.productDetail.description
-          .toLowerCase()
-          .includes(nameFilter.toLowerCase()) ||
-        data.selectedCategory.toLowerCase().includes(nameFilter.toLowerCase());
+  const lowestprice = 0;
 
+  const filteredProducts =
+    products &&
+    products.filter((data) => {
       const categoryMatch =
         categories.length === 0 ||
-        categories.some(
-          (categoryy) =>
-            data.selectedCategory.toLowerCase() === categoryy.toLowerCase()
-        );
+        categories.some((categoryy) => data.selectedCategory === categoryy);
+      const collectionMatch =
+        collectionstate.length === 0 ||
+        collectionstate.includes(data.collections);
+
       const priceMatch =
         data.sellingPrice >= lowestprice && data.sellingPrice <= price;
 
-      return productNameMatch && categoryMatch && priceMatch;
+      return (categoryMatch || collectionMatch) && priceMatch;
     });
 
-  function addToCartHandle(_id) {
-    if (!userId) {
-      navigate("/login");
-      return;
-    }
-    try {
-      httpService
-        .post(`${apiURL}/cart/add-to-cart`, { _id, userId })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const settings = {
-    infinite: true,
-    speed: 500,
-    dots: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
-  };
-
-  const usersPerpage = 5;
+  const usersPerpage = 20;
   const pagesVisited = pageNumber * usersPerpage;
 
   const displayUsers = filteredProducts
-
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
-        // <div className={`${styless.card}`}>
-        <div key={data.id} className="col-lg-4 col-md-6 col-sm-6 d-flex ">
-          {" "}
-          <div className={`card w-100 my-2 shadow-2-strong`}>
-            <div className={styless["image-container"]}>
-              <Slider {...settings}>
-                {data.images.map((img) => (
-                  <div key={img}>
-                    <img
-                      src={img}
-                      className={styless["hover-image"]}
-                      alt=""
-                      onClick={() => viewproductDetails(data)}
-                    />
+        <div
+          key={data.id}
+          className="col-lg-3 col-md-4 col-6 mb-5"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div className="d-flex flex-column">
+            <div className={styless.container}>
+            
+              <Link
+                style={{
+                  cursor: "pointer",
+                  position: "relative",
+                  display: "inline-block",
+                }}
+                to={user && user.email ? `/ViewDetails/${data._id}` : "/login"}
+              >
+                <div className={styless.imagediv}>
+                  <img src={data.productDetails[0].images[0]} alt="" />
+                  <div className={styless.like}>
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        right: 0,
+                        margin: "5px",
+                      }}
+                    >
+                      <PiHeartLight
+                        className={styless.like_button}
+                        style={{
+                          height: "22px",
+                          width: "22px",
+                          fontWeight: "50px",
+                        }}
+                        onClick={() => {
+                          console.log("Wish list");
+                        }}
+                      />
+                    </div>
                   </div>
-                ))}
-              </Slider>
-
-              <div className={styless["image-overlay"]}>
-                {/* <i
-                          style={{ color: "green" }}
-                          className={`fas fa-heart fa-lg text-danger px-1 ${styless.bg23}`}
-                          onClick={() => addToWishHandle(data._id)}
-                        ></i> */}
-                {/* </a> */}
-                <p style={{ color: "red", fontFamily: "lolita" }}>
-                  {(
-                    ((data.realPrice - data.sellingPrice) / data.realPrice) *
-                    100
-                  ).toFixed(2)}
-                  % off
-                </p>
-              </div>
+                </div>
+              </Link>
             </div>
 
-            <div className={`card-body d-flex flex-column `}>
-              <Link
-                style={{ cursor: "pointer" }}
-                to={`/ViewDetails/${data._id}`}
-              >
-                <p>{data.productDetail.brand}</p>
-                <p className={styless["card-text"]}>
-                  {data.productDetail.description}
-                </p>
-                {user && user.email ? (
-                  <div className="d-flex flex-row">
-                    <h6 className="mb-1 me-1 mx-4">Rs. {data.sellingPrice}</h6>
-
-                    {data.productDetail.brand && (
-                      <small className="text-danger mx-3">
-                        <s>Rs. {data.realPrice}</s>
-                        <p style={{ color: "green", fontFamily: "lolita" }}>
-                          {(
-                            ((data.realPrice - data.sellingPrice) /
-                              data.realPrice) *
-                            100
-                          ).toFixed(2)}
-                          % off
-                        </p>
-                      </small>
-                    )}
-                  </div>
-                ) : null}
-              </Link>
-              <div className="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                {/* <button
-                  className="btn btn-primary shadow-0 me-1"
-                  onClick={() => addToCartHandle(data._id)}
+            {/* Description */}
+            <div className="card-body">
+              <div className="cart-title m-1">
+                {" "}
+                <p
+                  style={{
+                    textTransform: "uppercase",
+                    fontFamily: "Martian Mono, monospace",
+                  }}
                 >
-                  Add to cart
-                </button> */}
+                  {data.brand}
+                </p>
+                <p
+                  style={{
+                    textTransform: "uppercase",
+                    fontFamily: "sans-serif",
+                  }}
+                  className={`text-gray-600 ${styless.tittt}`}
+                >
+                  {data.title.slice(0, 22)}
+                </p>
               </div>
+              {user && user.email ? (
+                <div className="m-2 d-flex justify-content-between">
+                  <div className="mb-1" style={{ fontSize: "bold" }}>
+                    <p className="font-semibold">&#8377;{data.sellingPrice}</p>
+                  </div>
+                  <div className="mb-1" style={{ fontSize: "bold" }}>
+                    <p className="text-gray-400 line-through">
+                      {data.realPrice}
+                    </p>
+                  </div>
+
+                  <div className="mb-1">
+                    <p className="text-green-500 font-semibold">
+                      {`${Math.floor(
+                        ((data.realPrice - data.sellingPrice) /
+                          data.realPrice) *
+                          100
+                      )}% Off`}
+                    </p>
+                  </div>
+                </div>
+              ) : 
+              // (
+              //   <div className="m-2" style={{ fontWeight: "30px" }}>
+              //     {data.title}
+              //   </div>
+              // )
+              null
+              }
             </div>
           </div>
         </div>
-        // </div>
       );
     });
-  const pageCount = Math.ceil(data.length / usersPerpage);
+  const pageCount = Math.ceil(filteredProducts.length / usersPerpage);
+
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
+
   return (
-    <div
-      style={{
-        marginLeft: "50px",
-        background: "white",
-        color: "black",
-        //   backgroundImage:
-        //     "url('https://img.freepik.com/premium-photo/abstract-blurred-gradient-nature-wallpaper-backgroundsoft-background-wallpaperdesigngraphic-presentation_532332-1415.jpg')",
-        // backgroundSize:'cover'
-      }}
-    >
-      <section>
-        <div className="container">
-          <div className="row">
-            {/* Sidebar */}
-            <div className="col-lg-3">
-              <div className="card mb-5">
+    <>
+      <div style={{ background: "#ffffff" }}>
+        <div>
+          <CategCart />
+          <div className="container">
+            <div className="row p-3">
+              <div className="col-lg-3">
+                
+                  <div
+                    className={`card-body mb-7 shadow-xl ${styless.categggg}`}
+                  >
+                    <div style={{ color: "black", fontWeight: "bolder" }}>
+                      PRODUCT CATEGORIES
+                    </div>
+                    <div>
+                      <div>
+                        <button
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories.length === 0 ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("all")}
+                        >
+                          All
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories[0] === "Mens" ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("Mens")}
+                        >
+                          Men
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories[0] === "Womens" ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("Womens")}
+                        >
+                          Womens
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className={`btn btn-white mb-1 px-1 ${
+                            categories[0] === "kids" ? "active" : ""
+                          }`}
+                          onClick={() => handleCategoryChange("kids")}
+                        >
+                          Kids
+                        </button>
+                      </div>
+                    </div>
+                    {user && user.email ? (
+                      <div className={styless.pricefilterdiv}>
+                        <h1>FILTER BY PRICE</h1>
+                        <br />
+                        <input
+                          type="range"
+                          style={{ background: "red" }}
+                          min={lowestprice}
+                          max={highestPrice}
+                          onChange={(e) => {
+                            setPrice(e.target.value);
+                          }}
+                        />
+                        <br /> <br />
+                        <p>
+                          {" "}
+                          price {lowestprice}-{price}
+                        </p>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                          }}
+                        >
+                          <div>
+                            <button
+                              style={{
+                                background: "#BF0A2A",
+                                color: "white",
+                                width: "250px",
+                                height: "52px",
+                              }}
+                            >
+                              Filter
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                
+              </div>
+
+              {/* Content */}
+              <div className="col-lg-9">
+                <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+                  <strong className="d-block py-2">
+                    Total {filteredProducts.length} items
+                  </strong>
+                </header>
+
                 <div
-                  className="card-header"
-                  style={{ color: "black", fontWeight: "bolder" }}
+                  className={`row , ${styless.pages}`}
+                  style={{ color: "black", position: "relative" }}
                 >
-                  PRODUCT CATEGORIES
+                  {displayUsers}
+
+                  {filteredProducts && filteredProducts.length !== 0 && (
+                    <ReactPaginate
+                      className={styless.pagination}
+                      previousLabel={"<-prev"}
+                      nextLabel={" next->"}
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                      containerClassName={"pagination"}
+                    />
+                  )}
                 </div>
-                <div className={styless.cardbody}>
-                  <button
-                    className={`btn btn-white mb-1 px-1 ${
-                      categories.length === 0 ? "active" : ""
-                    }`}
-                    onClick={() => handleCategoryChange("all")}
-                  >
-                    All
-                  </button>
-                  <button
-                    className={`btn btn-white mb-1 px-1 ${
-                      categories[0] === "men" ? "active" : ""
-                    }`}
-                    onClick={() => handleCategoryChange("men")}
-                  >
-                    Men
-                  </button>
-                  <button
-                    className={`btn btn-white mb-1 px-1 ${
-                      categories[0] === "womens" ? "active" : ""
-                    }`}
-                    onClick={() => handleCategoryChange("womens")}
-                  >
-                    Womens
-                  </button>
-                  <button
-                    className={`btn btn-white mb-1 px-1 ${
-                      categories[0] === "kids" ? "active" : ""
-                    }`}
-                    onClick={() => handleCategoryChange("kids")}
-                  >
-                    Kids
-                  </button>
-                </div>
-                <div></div>
+                <hr />
               </div>
-              {user && user.email ? (
-                <div className={styless.pricefilterdiv}>
-                  <h1>FILTER BY PRICE</h1>
-                  <br />
-                  <input
-                    type="range"
-                    name=""
-                    min={lowestprice}
-                    max={highestPrice}
-                    id=""
-                    onChange={(e) => {
-                      setPrice(e.target.value);
-                    }}
-                    className={styless.inputprice}
-                  />
-                  <br /> <br />
-                  <p>
-                    {" "}
-                    price {lowestprice} --{price}
-                  </p>
-                </div>
-              ) : null}
-            </div>
-
-            {/* Content */}
-            <div className="col-lg-9">
-              <div
-                className="input-group mb-3"
-                style={{ borderRadius: "20px", width: "500px" }}
-              ></div>
-              <h1>{categories ? categories : category} products</h1>
-              <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
-                <strong className="d-block py-2">
-                  Total {filteredProducts.length} items
-                </strong>
-              </header>
-
-              <div
-                className={`row , ${styless.pages}`}
-                style={{ color: "black" }}
-              >
-                {displayUsers}
-
-                <ReactPaginate
-                  previousLabel={"prev"}
-                  nextLabel={"next"}
-                  pageCount={pageCount}
-                  onPageChange={changePage}
-                />
-              </div>
-              <hr />
             </div>
           </div>
         </div>
-      </section>
-      <Footer />
-    </div>
+      </div>
+      <div style={{ overflow: "hidden" }}>
+        <Footer />
+      </div>
+    </>
   );
 };
 

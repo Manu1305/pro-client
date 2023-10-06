@@ -13,7 +13,7 @@ export const CategoryNew = () => {
   const categories = [
     {
       cate: "MENS",
-      category:'Men',
+      category:'Mens',
       imgUrl:mensCatIMG    },
     {
       cate: "WOMENS",
@@ -47,10 +47,7 @@ export const CategoryNew = () => {
 
   return (
     <div className={styles["login-new"]}>
-      <a
-        href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-        rel="stylesheet"
-      />
+    
       <div style={{ marginTop: "100px" }}>
         <h1 className="font-extrabold ">CATEGORIES</h1>
       </div>

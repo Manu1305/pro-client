@@ -1,23 +1,56 @@
-
 .container {
-   /* background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg"); */
-   box-shadow: inset 10px 5px 5px rgb(255, 1, 1);
-   border-radius: 5px;
- padding-left: 0px;
- display: flex;
- justify-content: center;
- align-items: center;
-
- border: 3px solid rgba(196, 222, 0, 0);
+  /* background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg"); */
+  box-shadow: inset 10px 5px 5px rgb(255, 1, 1);
+  border-radius: 5px;
+  padding-left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid rgba(196, 222, 0, 0);
 }
-.inputField{
+
+.label {
+  font-weight: bolder;
+}
+
+.textarea {
+  height: 200px;
+  width: 500px;
+  border: " 1px solid black";
+}
+
+.inputField {
   width: 400px;
-  border: 1px solid ;
+  border: 1px solid;
   border-radius: 5px;
 }
 
+.categorydiv {
+  width: 400px;
+}
 
+.Subcategorydiv {
+  width: 400px;
+}
 
+.colorsection {
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+}
+
+.texareawash {
+  width: 800px;
+  height: 100px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.inputFieldmaterial {
+  width: 400px;
+  border: 1px solid;
+  border-radius: 5px;
+}
 
 .legend {
   font-size: 24px;
@@ -28,12 +61,6 @@
 
 .form-group {
   margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .input-wrapper {
@@ -59,10 +86,6 @@ select {
   padding-right: 30px;
 }
 
-textarea {
-  resize: vertical;
-}
-
 .input-file {
   display: none;
 }
@@ -78,7 +101,6 @@ textarea {
   border-radius: 5px;
   cursor: pointer;
 }
-
 
 .image-box {
   display: inline-block;
@@ -96,7 +118,6 @@ textarea {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
- 
 }
 
 .sizeContainer {
@@ -105,42 +126,42 @@ textarea {
   flex-wrap: wrap;
   flex: 0 0 100px;
   margin: 10px;
-
 }
 
 .sizeButton {
-
-width: 20%;
-  /* Add your size button styles */
+  width: 20%;
 }
 
 .blue {
-  border-radius: 5px;
-  background-color: rgb(148, 151, 144);
+  border-radius: 0px;
+  border: 1px solid #dddddd;
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  width: 300px;
+  text-indent: 10px;
+}
+
+.quantityInput {
+  width: 30%;
+  height: 40px;
+  margin-left: 10px;
+}
+.imgeupload {
+  width: "300px";
+  height: "100%";
+  border: "2px solid #ccc";
+  border-radius: "5px";
+  background-color: "#f8f8f8";
+  color: "#333";
+  padding: "5px";
+}
+.respo {
   display: flex;
   flex-direction: row;
 }
 
-
-.quantityInput {
-  width: 20%;
-}
-.imgeupload{
-  width: '300px';
-  height: '100%';
-  border: '2px solid #ccc';
-  border-radius: '5px';
-  background-color: '#f8f8f8';
-  color: '#333';
-  padding: '5px';
-}
-.respo{
-  display: flex;
-flex-direction: row;
-
-}
-
-@media only screen and (max-width: 518px) {
+/* @media only screen and (max-width: 518px) {
 
 .respo{
   display: flex;
@@ -149,19 +170,129 @@ flex-direction: column;
 }
 
  
- }
+ } */
 /* Example media query for screens up to 768px wide */
 @media only screen and (max-width: 768px) {
   .container {
     flex-direction: column; /* Stack items vertically on small screens */
     align-items: center;
   }
-
-  /* Adjust input fields to take up full width */
-  .inputField {
-    width: 100%;
+  .respo {
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  /* Adjust other styling for responsiveness */
-  /* ... */
+  .label {
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inputField {
+    width: 200px;
+    margin-top: 20px;
+    margin-left: 0;
+  }
+
+  .texareadiv {
+    width: "100px";
+    height: "100px";
+  }
+  .textarea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+    border: 1px solid;
+  }
+  .categorydiv {
+    width: 200px;
+    margin: auto;
+  }
+  .Subcategorydiv {
+    width: 200px;
+    margin: auto;
+    margin-left: 75px;
+  }
+  .sizeselect {
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 170px;
+  }
+  .colorsection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+  .texareawash {
+    width: 300px;
+    height: 200px;
+    border: 1px solid;
+  }
+
+  .inputFieldmaterial {
+    width: 200px;
+    border: 1px solid;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: centery;
+  }
+}
+
+/* -------------latest------------- */
+
+.headingdiv {
+  width: 100%;
+  background-color: rgb(247, 251, 255);
+
+  height: 70px;
+}
+.headingText {
+  font-weight: bold;
+  margin-right: 1000px;
+  margin-top: 10px;
+}
+.maindiv {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(247, 251, 255);
+}
+.mainone {
+  width: 50%;
+  background-color: rgb(247, 251, 255);
+}
+.maintwo {
+  width: 50%;
+  background-color: rgb(247, 251, 255);
+}
+.inputDiv {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+}
+.inputField {
+  text-indent: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .maindiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(247, 251, 255);
+  }
 }

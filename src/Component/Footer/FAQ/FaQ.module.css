@@ -1,0 +1,42 @@
+.header {
+    text-align: center;
+    color: #bf0a2a;
+    font-weight: 700;
+    font-size: 35px;
+    margin-top: 4rem;
+  }
+
+  .headerr {
+    text-align: center;
+    color:black;
+    font-weight: 700;
+    font-size: 25px;
+    /* margin-top: 4rem; */
+  }
+  .wholesaleP{
+    font-weight: 500;
+    font-size: 16px;
+    margin-left: 4rem;
+    margin-top: 1rem;
+
+
+  }
+  .wholesale{
+    color: #030303;
+  }
+  .wholesaleH1{
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 2rem;
+    margin-left: 3.8rem;
+  }
+  .bott{
+    margin-left: 22rem;
+    margin-bottom: 5rem;
+  }
+  @media screen and (max-width: 600px) {
+    .bott{
+      margin-left: 0;
+      margin-bottom: 5rem;
+    }
+  }

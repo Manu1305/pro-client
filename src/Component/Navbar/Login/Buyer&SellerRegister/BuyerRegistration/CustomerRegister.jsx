@@ -14,9 +14,11 @@ import {
 } from "mdb-react-ui-kit";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
+import { toast } from "react-toastify";
+
 
 const CustomerRegister = () => {
-   const history = useNavigate();
+  const history = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,49 +26,56 @@ const CustomerRegister = () => {
   const [phone, setPhone] = useState("");
   const [gst, setGst] = useState("");
   const [urType, setUrType] = useState("buyer");
+  const [phoneOtp,setPhoneOtp]=useState('')
+const [button,setButton]=useState(true)
+const [otpbutton,setotpButton]=useState(false)
+const[userType,setUsertype]=("customer")
+
+
+
+
+
+
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmpasswordError, setConfirmPasswordError] = useState("");
-  
   const [phoneError, setPhoneError] = useState("");
-
-
-
+  const[otpError,setOtpError]=useState(false)
   async function handleCustomerSignup(e) {
     e.preventDefault();
 
     const isValid = validate();
-    if (isValid) {
+    if (isValid ) {
       try {
         await httpService
           .post(`${apiURL}/user/signup`, {
-            userData: { name, email, password, phone, gst, urType: "buyer" }})
+            userData: { name, email, password, phone, gst, urType: "buyer"},
+          })
           .then((res) => {
-            
-            console.log(res)
-            if (res.data.message=="emailexist") {
+            console.log(res);
+            if (res.data.message == "emailexist") {
               Swal.fire({
-                icon: 'error',
-                title: 'Email already registered',
-               
-                footer: '<a href="/login">Go to Login page</a>'
-              })
-            } 
-             else if (res.data.message == "Phonexist") {
-               Swal.fire({
-                 icon: "error",
-                 title: "this phone already registered",
+                icon: "error",
+                title: "Email already registered",
 
-                 footer: '<a href="/login">Go to Login page</a>',
-               });
-             } else if (res.data.message == "success") {
-               history("/login");
-             }
+                footer: '<a href="/login">Go to Login page</a>',
+              });
+            } else if (res.data.message == "Phonexist") {
+              Swal.fire({
+                icon: "error",
+                title: "this phone already registered",
+
+                footer: '<a href="/login">Go to Login page</a>',
+              });
+              setButton(true)
+            } else if (res.data.message == "success") {
+              history("/login");
+            }
           });
-    
       } catch (error) {
         console.log("Registration failed:", error);
+        toast.error("otp validation failed")
         // Handle error, e.g., show an error message
       }
     } else {
@@ -74,13 +83,57 @@ const CustomerRegister = () => {
     }
   }
 
+  const sendOtp = () => {
+    if (phone.length == 10) {
+      
+      toast.success("otp sended successfuly");
+      setotpButton(true)
+      httpService
+        .post(`${apiURL}/user/send-otp`, { phone,userType })
+        .then((response) => {
+         
+          console.log(response.data + "this is data")
+        })
+
+        .catch((error) => {
+          console.error(error);
+          toast.error("otp not sended",error);
+        });
+      setTimeout(() => {
+       
+      }, 20000);
+    } else {
+      alert("phone number should 10");
+    }
+  };
+
+  const verifyOtp = () => {
+    httpService
+      .post(`${apiURL}/user/verify-otp`, {  phoneOtp })
+      .then((response) => {
+        console.log(response.data+"otp response");
+        if (response.data.message == "success") {
+          toast.success("otp succesfully verified")
+          setButton(false)
+
+
+          
+        } else {
+          toast.error("wrong otp ")
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   const validate = () => {
     let emailError = "";
     let passwordError = "";
     let confirmpasswordError = "";
     let phoneError = "";
     let nameError = "";
-
+    let otpError=""
+    
 
     if (!name) {
       nameError = "Email address is required";
@@ -115,7 +168,12 @@ const CustomerRegister = () => {
     } else if (!/^[a-zA-Z\s]+$/.test(name)) {
       nameError = "Please enter a valid full name 😊";
     }
-  
+
+    if (button===true) {
+      otpError = "please verify phone number with otp";
+    } 
+
+
 
     setNameError(nameError);
     setEmailError(emailError);
@@ -123,15 +181,14 @@ const CustomerRegister = () => {
     setNameError(nameError);
     setConfirmPasswordError(confirmpasswordError);
     setPhoneError(phoneError);
-
-
-
+    setOtpError(otpError)
     if (
       emailError ||
       passwordError ||
       confirmpasswordError ||
       phoneError ||
-      nameError
+      nameError ||
+      otpError
     ) {
       return false;
     }
@@ -141,11 +198,15 @@ const CustomerRegister = () => {
 
   return (
     <div>
-      <MDBContainer className="my-5">
+      <MDBContainer>
         <MDBCard>
           <MDBRow className="g-0">
             <MDBCol md="6">
-              <img src="https://e1.pxfuel.com/desktop-wallpaper/344/686/desktop-wallpaper-european-and-american-trend-fashion-clothing-shop-industrial-decor-backgrounds-3d-teen-clothing-store-wall-paper-murals.jpg" className={register.img1} />
+              <img
+                src="https://img.freepik.com/free-vector/online-school-platform-abstract-concept-vector-illustration-homeschooling-covid2019-qarantine-online-education-platform-digital-classes-virtual-courses-lms-school-abstract-metaphor_335657-5850.jpg?w=740&t=st=1692789217~exp=1692789817~hmac=a0b139faac079ad1e25e5e690d35a0c444261aa1f2cacb1eddc3acad93aba0e2"
+                alt="login"
+                className={register.img1}
+              />
             </MDBCol>
             <MDBCol md="6">
               <MDBCardBody className="d-flex flex-column">
@@ -159,95 +220,160 @@ const CustomerRegister = () => {
                   Register as Customer
                 </h5>
                 {nameError && <div className="text-danger">{nameError}</div>}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Full name"
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                <div className="mb-4">
+                  <label htmlFor="formControlLg" className="mb-1">
+                    Full name 
+                  </label>
+                  <MDBInput
+                    id="formControlLg"
+                    type="text"
+                    size="lg"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
                 {emailError && <div className="text-danger">{emailError}</div>}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Email address"
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <div className="mb-4">
+                  <label htmlFor="emailFormControlLg" className="mb-1">
+                    Email address
+                  </label>
+                  <MDBInput
+                    id="emailFormControlLg"
+                    type="email"
+                    size="lg"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
                 {passwordError && (
                   <div className="text-danger">{passwordError}</div>
                 )}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Password"
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {confirmpasswordError && (
-  <div className="text-danger">{confirmpasswordError}</div>
-)}
-                <MDBInput
-  wrapperclassName="mb-4"
-  label="Confirm Password"
-  id="formControlLg"
-  type="password"
-  size="lg"
-  value={confirmpassword}
-  onChange={(e) => setConfirmPassword(e.target.value)}
-/>
+                <div className="mb-4">
+                  <label htmlFor="passwordFormControlLg" className="mb-1">
+                    Password
+                  </label>
+                  <MDBInput
+                    id="passwordFormControlLg"
+                    type="password"
+                    size="lg"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
 
+                {confirmpasswordError && (
+                  <div className="text-danger">{confirmpasswordError}</div>
+                )}
+                <div className="mb-4">
+                  <label
+                    htmlFor="confirmPasswordFormControlLg"
+                    className="mb-1"
+                  >
+                    Confirm Password
+                  </label>
+                  <MDBInput
+                    id="confirmPasswordFormControlLg"
+                    type="password"
+                    size="lg"
+                    value={confirmpassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
 
                 {phoneError && <div className="text-danger">{phoneError}</div>}
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="Phone No."
-                  id="formControlLg"
-                  type="number"
-                  size="lg"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
+                
+                      <div>
+
+                     
+                <div className="mb-4" style={{width:'90%'}} >
+                  <label htmlFor="phoneFormControlLg" className="mb-1">
+                    Phone No.
+                  </label>
                   
-                <MDBInput
-                  wrapperclassName="mb-4"
-                  label="GST No."
-                  id="formControlLg"
-                  type="string"
-                  size="lg"
-                  value={gst}
-                  onChange={(e) => setGst(e.target.value)}
-                />
-                   
+<div className="flex flex-row gap-3">
+                  <MDBInput
+                    id="phoneFormControlLg"
+                    type="tel"
+                    size="lg"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                   <button className="rounded bg-green-500 w-20" onClick={sendOtp} >Send otp</button> 
+                  
+                
+  
+</div>
+
+                  </div>
+                    
+
+                <div className="mb-4" style={{width:'40%'}}>
+                {otpError && <div className="text-danger">{otpError}</div>}
+               {otpbutton&& (
+
+                <div>
+
+                  <label htmlFor="phoneFormControlLg" className="mb-1">
+                    OTP
+                  </label>
+                  <div className="flex flex-row gap-3">
+
+                  <MDBInput
+                    id="phoneFormControlLg"
+                    type="tel"
+                    size="lg"
+                    value={phoneOtp}
+                    onChange={(e) => setPhoneOtp(e.target.value)}
+                  />
+                  {
+                    button&& ( <button className="rounded bg-green-500 w-20"  onClick={verifyOtp} >verify</button>)
+                  }
+                 
+                  </div>
+                </div>
+               )
+
+               }
+                </div>
+                </div>
+
+
+                <div className="mb-4">
+                  <label htmlFor="gstFormControlLg" className="mb-1">
+                    GST No.
+                  </label>
+                  <MDBInput
+                    id="gstFormControlLg"
+                    type="text"
+                    size="lg"
+                    value={gst}
+                    onChange={(e) => setGst(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By register, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
                 <button
-                  className="btn btn-dark"
+                  className="btn btn-dark mt-3"
                   color="dark"
                   size="lg"
                   onClick={handleCustomerSignup}
                 >
                   Register
                 </button>
-                
+
                 <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                   Already have an account?{" "}
                   <Link to="/login" style={{ color: "#393f81" }}>
                     login here
                   </Link>
                 </p>
-                <div className="d-flex flex-row justify-content-start">
-                  <a href="#!" className="small text-muted me-1">
-                    Terms of use.
-                  </a>
-                  <a href="#!" className="small text-muted">
-                    Privacy policy
-                  </a>
-                </div>
+              
               </MDBCardBody>
             </MDBCol>
           </MDBRow>
@@ -256,7 +382,5 @@ const CustomerRegister = () => {
     </div>
   );
 };
-
-
 
 export default CustomerRegister;

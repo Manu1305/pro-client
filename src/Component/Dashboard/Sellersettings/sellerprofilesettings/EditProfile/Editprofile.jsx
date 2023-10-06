@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Styles from "./Editprofile.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../../../../Redux/user/userAction";
+import { currentUserData } from "../../../../../Redux/user/userAction";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../../const/config";
@@ -30,15 +30,16 @@ function Editprofile() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         };
+        
         const response = await httpService.patch(
           `${apiURL}/user/updateProfile`,
           { name, phone },
           config
         );
+       
 
         if (response && response.data && response.data.user) {
-          dispatch(addUser(response.data.user));
-          sessionStorage.setItem("user", JSON.stringify(response.data.user));
+          dispatch(currentUserData(response.data.user));
         }
         Swal.fire({
           position: "center",

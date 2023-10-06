@@ -2,22 +2,29 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
 function ReasonModal(props) {
-  const [heading, setHeading] = useState("");
+  const [selectedReason, setSelectedReason] = useState("");
   const [desc, setDesc] = useState("");
+  const [showDescriptionInput, setShowDescriptionInput] = useState(false);
 
-  // alert(props.id)
+  const handleReasonChange = (e) => {
+    const reason = e.target.value;
+    setSelectedReason(reason);
+    setShowDescriptionInput(reason === "Others");
+  };
+
   const submitHandler = async () => {
     try {
       props.onHide();
       props.removeFromShop(props.product.id, {
-        heading,
-        desc,
+        heading: selectedReason,
+        desc: showDescriptionInput ? desc : "",
         email: props.product.seller,
       });
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <Modal
       {...props}
@@ -27,24 +34,32 @@ function ReasonModal(props) {
     >
       <Modal.Header closeButton>
         <Form.Control
-          type="text"
-          value={heading}
-          onChange={(e) => setHeading(e.target.value)}
-          placeholder="Enter Reason"
+          as="select"
+          value={selectedReason}
+          onChange={handleReasonChange}
           size="lg"
-        />
+        >
+          <option value="" disabled>Select Reason</option>
+          <option value="Product quality bad">Product images quality issue</option>
+          <option value="Not fast delivery">Form all are not filled</option>
+          <option value="Others">Others</option>
+        </Form.Control>
       </Modal.Header>
-      <Modal.Body>
-        <Form.Label>Write Descrtiption</Form.Label>
-        <Form.Control
-          as="textarea"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-          rows={4}
-        />
-      </Modal.Body>
+      {showDescriptionInput && (
+        <Modal.Body>
+          <Form.Label>Write Reason for reject </Form.Label>
+          <Form.Control
+            as="textarea"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            rows={4}
+          />
+        </Modal.Body>
+      )}
       <Modal.Footer>
-        <Button onClick={submitHandler}>Submit</Button>
+        <Button className="bg-red-700" onClick={submitHandler}>
+          Submit
+        </Button>
       </Modal.Footer>
     </Modal>
   );

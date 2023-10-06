@@ -1,759 +1,717 @@
-// akashay
-
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import styles from "./Addproduct.module.css";
-import Swal from 'sweetalert2'
-import { apiURL } from "../../../../../const/config";
+import { useState } from "react";
+import Swal from "sweetalert2";
 import httpService from "../../../../Error Handling/httpService";
-const initialValues={
-  name: "",
-  price: "",
-  description: "",
-  image: "",
-  category: "",
-}
-const AddProduct = () => {
+import { apiURL } from "../../../../../const/config";
+import { useNavigate } from "react-router-dom";
+import Section2 from "./Setion2";
 
-  const user = useSelector((state) => state.userReducer.user);
+function AddProduct() {
+  const [isButtonVisible, setButtonVisible] = useState(true);
   const history = useNavigate();
 
   const categorySizes = {
-    Men: ["S", "M", "L", "XL"],
-    Womens: ["XS", "S", "M", "L"],
-    Kids: ["3-4 Years", "5-6 Years", "7-8 Years", "9-10 Years"],
+    Mens: [],
+    Womens: [],
+    Kids: [],
   };
+
+  const productInfoArray = [
+    "Material",
+    "Packoff",
+    "Closure",
+    "Fit",
+    "Pattern",
+    "Idealfor",
+    "Washcare",
+    "Convertible",
+  ];
+
+  const productCategories = Object.keys(categorySizes);
+
+  const Collections = {
+    Shirts: [
+      "Dress Shirts",
+      "T-Shirts",
+      "Polo Shirts",
+      "Casual Button-Up Shirts",
+      "Flannel Shirts",
+      "Henley Shirts",
+      "Sweatshirts",
+      "Hoodies",
+    ],
+    Pants: [
+      "Jeans",
+      "Chinos",
+      "Dress Pants",
+      "Cargo Pants",
+      "Sweatpants",
+      "Joggers",
+      "Track Pants",
+      "Corduroy Pants",
+    ],
+    top: [
+      "Blouses",
+      "T-Shirts",
+      "Tank Tops",
+      "Crop Tops",
+      "Sweaters",
+      "Cardigans",
+      "Hoodies",
+      "Peplum Tops",
+      "Tunics",
+      "Button-Up Shirts",
+      "Bodysuits",
+      "Off-the-Shoulder Tops",
+      "Wrap Tops",
+      "Tube Tops",
+      "Kimono Tops",
+      "Polo Shirts",
+      "Camisoles",
+      "Cold Shoulder Tops",
+      "Cowl Neck Tops",
+      "Ruffle Tops",
+    ],
+    Bottom: [
+      "Jeans",
+      "Leggings",
+      "Trousers",
+      "Skirts",
+      "Shorts",
+      "Culottes",
+      "Palazzo Pants",
+      "Joggers",
+      "Capri Pants",
+      "Wide-Leg Pants",
+      "Cargo Pants",
+      "Pencil Skirts",
+      "A-line Skirts",
+      "Maxi Skirts",
+      "Mini Skirts",
+      "Flared Skirts",
+      "Denim Skirts",
+      "Pleated Skirts",
+      "High-Waisted Pants",
+      "Harem Pants",
+    ],
+    Sarees: [
+      "Silk Sarees",
+      "Cotton Sarees",
+      "Chiffon Sarees",
+      "Georgette Sarees",
+      "Banarasi Sarees",
+      "Kanjivaram Sarees",
+      "Designer Sarees",
+      "Bridal Sarees",
+      "Linen Sarees",
+      "Printed Sarees",
+      "Net Sarees",
+      "Half-and-Half Sarees",
+      "Satin Sarees",
+      "Embroidered Sarees",
+      "Saree with Blouse Sets",
+      "Traditional Sarees",
+      "Bollywood Sarees",
+      "Party Wear Sarees",
+      "Casual Sarees",
+      "Lehenga Sarees",
+    ],
+    KidsShirt: [
+      "T-Shirts",
+      "Polo Shirts",
+      "Button-Up Shirts",
+      "Graphic Tees",
+      "Long Sleeve Shirts",
+      "Hoodies",
+      "Sweatshirts",
+      "Tank Tops",
+      "Henley Shirts",
+      "Flannel Shirts",
+      "Sport Jerseys",
+      "Printed Shirts",
+      "Casual Shirts",
+      "Dress Shirts",
+      "Chambray Shirts",
+      "Uniform Shirts",
+      "Ruffle Tops (for girls)",
+      "Peplum Tops (for girls)",
+      "Bodysuits (for infants)",
+    ],
+
+    kidspants: [
+      "Jeans",
+      "Leggings",
+      "Trousers",
+      "Shorts",
+      "Cargo Pants",
+      "Sweatpants",
+      "Joggers",
+      "Track Pants",
+      "Corduroy Pants",
+      "Khaki Pants",
+      "Chinos",
+      "Capri Pants",
+      "Denim Pants",
+      "Athletic Pants",
+      "Overalls",
+      "School Uniform Pants",
+      "Printed Pants",
+      "Convertible Pants (with zip-off legs)",
+      "Dress Pants",
+      "Stretch Pants",
+    ],
+    shorts: [
+      "Denim Shorts",
+      "Athletic Shorts",
+      "Cargo Shorts",
+      "Bermuda Shorts",
+      "Chino Shorts",
+      "Board Shorts",
+      "Cotton Shorts",
+      "Khaki Shorts",
+      "Printed Shorts",
+      "Linen Shorts",
+      "Track Shorts",
+      "Pull-On Shorts",
+      "School Uniform Shorts",
+      "Sweat Shorts",
+      "Jogger Shorts",
+      "Running Shorts",
+      "Basketball Shorts",
+      "Active Shorts",
+      "Pleated Shorts",
+      "Swim Shorts",
+    ],
+    GirlsShirts : [
+      "T-Shirts",
+      "Blouses",
+      "Tank Tops",
+      "Polo Shirts",
+      "Button-Up Shirts",
+      "Sweaters",
+      "Hoodies",
+      "Long Sleeve Shirts",
+      "Crop Tops",
+      "Graphic Tees",
+    ],
+     GirlsPants : [
+      "Jeans",
+      "Leggings",
+      "Trousers",
+      "Yoga Pants",
+      "Culottes",
+      "Jeggings",
+      "Cargo Pants",
+      "Sweatpants",
+      "Capri Pants",
+      "Palazzo Pants",
+    ],
+    
+    GirlsShorts : [
+      "Denim Shorts",
+      "Athletic Shorts",
+      "Cargo Shorts",
+      "Bermuda Shorts",
+      "Chino Shorts",
+      "Board Shorts",
+      "Cotton Shorts",
+      "Khaki Shorts",
+      "Printed Shorts",
+      "Linen Shorts",
+      "Track Shorts",
+      "Pull-On Shorts",
+      "School Uniform Shorts",
+      "Sweat Shorts",
+      "Jogger Shorts",
+      "Running Shorts",
+      "Basketball Shorts",
+      "Active Shorts",
+      "Pleated Shorts",
+      "Swim Shorts",
+    ],
+    
+     Frock : [
+      "A-Line Frocks",
+      "Party Frocks",
+      "Casual Frocks",
+      "Maxi Frocks",
+      "Pinafore Frocks",
+      "Sundresses",
+      "Floral Frocks",
+      "Ruffle Frocks",
+      "Smocked Frocks",
+      "Tiered Frocks",
+    ]
+  };
+
+  const sizeSelected = {
+    Shirts: ["S", "M", "L", "XL","XXL"],
+    Pants: [28, 30, 32, 34, 36, 38, 40],
+    top: ["XS", "S", "M", "L", "XL"],
+    Bottom: ["XS", "S", "M", "L", "XL"],
+    Sarees: ["5.5 meters", "6 meters", "6.5 meters", "7 meters", "9 yards"],
+    KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsShirts:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsPants:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsShorts:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    Frock:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+  };
+
+  const [productInfo, setProductInfo] = useState({});
+  const [productInfoDet, setProductInfoDet] = useState({});
+
+  const [errors, setErrors] = useState({});
+  // const [colorError, setColorError] = useState("");
+  // const [validation, setvalidation] = useState(false);
+  const [uplProductId, setUplProductId] = useState("");
+
+  const [secondModal, setSecondModal] = useState(false);
 
   const categoriesWithSubcategories = {
-    Men: ["Casual Shirts", "Formal Shirts",  "T-shirts",
-    "Polo shirts",
-    "Button-down shirts",
-    "Flannel shirts",
-    "Henley shirts",
-    "Sweatshirts",
-    "Hoodies",
-    "Tank tops",
-    "Long-sleeve shirts",
-    "Short-sleeve shirts",
-    "Oxford shirts",
-    "Chambray shirts",
-    "Denim shirts",
-    "Plaid shirts",
-    "Striped shirts",
-    "Printed shirts",
-    "Graphic shirts",
-    "Sport shirts",
-    "Work shirts",
-    "Dress shirts"],
-    Womens: ["Casual Dresses", "Maxi Dresses", "Pinafore Dresses", "T-shirts",
-    "Blouses",
-    "Tank tops",
-    "Crop tops",
-    "Button-down shirts",
-    "Tunics",
-    "Peplum tops",
-    "Off-the-shoulder tops",
-    "Wrap tops",
-    "Polo shirts",
-    "Sweatshirts",
-    "Hoodies",
-    "Bodysuits",
-    "Kimono tops",
-    "Cami tops",
-    "Bell sleeve tops",
-    "Cold shoulder tops",
-    "Ruffled tops",
-    "Lace tops",
-    "Embroidered tops"],
-    Kids: ["Cartoon Dresses", "Printed Dresses",  "Casual dresses",
-    "Party dresses",
-    "Formal dresses",
-    "Summer dresses",
-    "Maxi dresses",
-    "Floral dresses",
-    "Tutu dresses",
-    "Sundresses",
-    "A-line dresses",
-    "Pinafore dresses",
-    "Smock dresses",
-    "Denim dresses",
-    "Ruffle dresses",
-    "Embroidered dresses",
-    "Printed dresses",
-    "Princess dresses",
-    "Holiday dresses",
-    "Special occasion dresses",
-    "Birthday dresses",
-    "Prom dresses",
-    "Christening dresses",
-    "Pageant dresses",
-    "Wedding dresses",
-    "Costume dresses"],
-  };
-  
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
-  const productCategories = Object.keys(categorySizes);
-  const [productId, setProductId] = useState("");
-  const [realPrice, setRealPrice] = useState("");
-  const [sellingPrice, setSellingPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [quantities, setQuantities] = useState({});
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [primaryColor, setPrimaryColor] = useState("");
-  const [otherColors, setOtherColors] = useState("");
-  const [WashcareInstructions, setCareInstructions] = useState("");
-  const [material, setMaterial] = useState("");
-  const [brand, setbBrand] = useState("");
-  const [images, setImages] = useState({});
-
-  const [selectedCategoryError, setSelectedCategoryError] = useState("");
-  const [selectedSubcategoryError, setSelectedSubcategoryError] = useState("");
- 
-  const [productIdError, setProductIdError] = useState("");
-  const [realPriceError, setRealPriceError] = useState("");
-  const [sellingPriceError, setSellingPriceError] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
-  const [quantitiesError, setQuantitiesError] = useState({});
-
-  const [primaryColorError, setPrimaryColorError] = useState("");
-  const [otherColorsError, setOtherColorsError] = useState("");
-  const [WashcareInstructionsError, setCareInstructionsError] = useState("");
-  const [materialError, setMaterialError] = useState("");
-  const [brandError, setbBrandError] = useState("");
-
-
-  const [selectedSizes, setSelectedSizes] = useState([]);
-
-  const handleQuantityChange = (size, event) => {
-    const { value } = event.target;
-    const updatedQuantities = { ...quantities, [size]: value };
-    setQuantities(updatedQuantities);
-
-    let sum = 0;
-    for (const size in updatedQuantities) {
-      sum += Number(updatedQuantities[size]);
-    }
-    setTotalQuantity(sum);
-  };
-
-  const handleCategoryChange = (e) => {
-    const category = e.target.value;
-    setSelectedCategory(category);
-    setSelectedSubcategory("");
-  };
-
-  const handleRealPriceChange = (e) => {
-    setRealPrice(e.target.value);
-  };
-
-  const handleSellingPriceChange = (e) => {
-    setSellingPrice(e.target.value);
-  };
-
-  const convertToBase64 = (event) => {
-    
-    let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = () => {
-   
-      setImages({ ...images, [event.target.name]: reader.result });
-    };
-    reader.onerror = (error) => {
-      console.log("ERROR", error);
-    };
+    Mens: ["Shirts", "Pants"],
+    Womens: ["top", "Bottom", "Sarees"],
+    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts", "GirlsShirts", "GirlsPants", "GirlsShorts",'Frock'],
   };
 
   useEffect(() => {
-    
-  }, [images]);
+    console.log("ProductInfo", productInfo);
+  }, [productInfo]);
 
-  // add product btn
-  const addToCart = async (e) => {
-    e.preventDefault();
-    const isValid = validate();
-    if (isValid) {
+  const onchangeHandler = (e) => {
+    const { name, value } = e.target;
+    setProductInfo((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!productInfo.productCode) {
+      newErrors.productCode = "Add ProductCode ";
+    }
+
+    if (!productInfo.Material) {
+      newErrors.material = "Material name is required";
+    }
+
+    if (!productInfo.brand) {
+      newErrors.brand = "Brand name is required";
+    }
+    if (!productInfo.realPrice) {
+      newErrors.realPrice = "Product real price required";
+    }
+    if (!productInfo.sellingPrice) {
+      newErrors.sellingPrice = "sellingPrice is required";
+    }
+    if (!productInfo.selectedCategory) {
+      newErrors.selectedCategory = "Please select a category";
+    }
+    if (!productInfo.selectedSubcategory) {
+      newErrors.selectedSubcategory = "Please select subcategroy";
+    }
+    if (!productInfo.selectedSubcategory) {
+      newErrors.selectedSubcategory = "Please select subcategroy";
+    } else if (!productInfo.collections) {
+      newErrors.collections = "Please add collection name of your product";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // const errInfo = productInfoArray.map((ele) => {
+  //   const newErrors = {};
+  //   if(productInfoDet[`${ele}`]){
+  //     newErrors[`${ele}`] = `Please add ${ele}`;
+
+  //   }
+  // });
+
+  const InfoHandler = (e) => {
+    const { name, value } = e.target;
+    setProductInfoDet((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  // const deleteAnyColor = (ind, prod) => {
+  //   setprviewProdcts((prev) => {
+  //     const newItems = prev.filter((item) => item !== prod);
+  //     return [...newItems];
+  //   });
+  //   toast.success("deleted");
+  // };
+
+  const addNewProduct = async () => {
+    // e.preventDefault();
+    const isValid = validateForm();
+    setButtonVisible(false);
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
     try {
       await httpService
-        .post(`${apiURL}/product/add-new-product`, {
-          seller: user.email,
-          productId,
-          brand,
-          sellingPrice,
-          selectedCategory,
-          selectedSizes: [
-            selectedSizes[0],
-            selectedSizes[1],
-            selectedSizes[2],
-            selectedSizes[3],
-          ],
-          images,
-          quantities: quantities,
-          description,
-          selectedSubcategory,
-          realPrice,
-          totalQuantity,
-          WashcareInstructions,
-          otherColors,
-          primaryColor,
-          material,
-        })
+        .post(
+          `${apiURL}/product/add-new-product`,
+          { productInfo: productInfoDet, genInfo: productInfo },
+          config
+        )
         .then((res) => {
-          if (res.data === "added") {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Your product successfully added',
-              showConfirmButton: false,
-              timer: 5000
-            })
-          } else if (res.data === "!added") {
-       
-          }
+          setSecondModal(true);
+          setUplProductId(res.data._id);
+          console.log("PRODUCT RESPONSE", res.data);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Saved",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          setButtonVisible(true);
         });
-;
     } catch (error) {
       console.log("Couldn't add product: ", error);
-    }}
-    else{
-
-      Swal.fire(
-        'Fill the all fields',
-        'All field should be filled',
-        'error'
-      )
+      setButtonVisible(true);
     }
-    history("/dashboard")
-
-  };
-  const validate = () => {
-    let selectedCategoryError = "";
-    let selectedSubcategoryError = "";
-    let productIdError = "";
-    let realPriceError = "";
-    let sellingPriceError = "";
-    let descriptionError = "";
-    let quantitiesError = "";
-    let primaryColorError = "";
-    let otherColorsError = "";
-    let WashcareInstructionsError = "";
-    let materialError = "";
-    let brandError = "";
-
-    if (!selectedCategory) {
-      selectedCategoryError = "Select catregory";
-    } 
-    if (!selectedSubcategory) {
-      selectedSubcategoryError = "Select subcategory";
-    } 
-
-    if (!productId) {
-      productIdError = "type productid";
-    } 
-
-    if (!realPrice) {
-      realPriceError = "please type a real price";
-    } 
-    if (!sellingPrice) {
-      sellingPriceError = "please add selling price";
-    } 
-    if (!description) {
-      descriptionError = "Please type description";
-    } 
-    if (!quantities) {
-      quantitiesError = "Please type quantity";
-    }
-    if (!primaryColor) {
-      primaryColorError = "Please type Primary color";
-    } 
-    if (!otherColors) {
-      otherColorsError = "Please type secondary color";
-    }
-    if (!WashcareInstructions) {
-      WashcareInstructionsError = "Please add some washcare instructions";
-    }
-    if (!material) {
-      materialError = "Please add some materials";
-    }
-    if (!brand) {
-      brandError = "Please add brand";
-    }
- 
-    setSelectedCategoryError(selectedCategoryError);
-    setSelectedSubcategoryError(selectedSubcategoryError);
-    setProductIdError(productIdError);
-    setRealPriceError(realPriceError);
-    setSellingPriceError(sellingPriceError);
-    setDescriptionError(descriptionError);
-    setQuantitiesError(quantitiesError);
-    setPrimaryColorError(primaryColorError);
-    setOtherColorsError(otherColorsError);
-    setCareInstructionsError(WashcareInstructionsError);
-    setMaterialError(materialError);
-    setbBrandError(brandError);
-
-    if (
-      productIdError ||
-      realPriceError ||
-      sellingPriceError ||
-      descriptionError ||
-      primaryColorError ||
-      otherColorsError ||
-      WashcareInstructionsError||
-      materialError||
-      brandError
-    ) {
-      return false;
-    }
-
-    return true;
   };
 
-
-    const inputStyles = {
-     
-      border: '2px solid #ccc',
-      borderRadius: '5px',
-      backgroundColor: '#f8f8f8',
-      color: '#333',
-      padding: '5px',
-      
-    };
-    
   return (
-    <div className={`${styles.container}`}>
-      <form style={{marginTop:'50px'}} >
-        <fieldset >
-          <h1 className="text-red-400 font-extrabold">ADD PRODUCTS</h1>
-          <div className="shadow-inner mt-3" >
-           
-           <div   className={styles.respo} >
-
-         <div>
-          
-     
-            <label className="control-label font-extrabold" for="product_id">
-              PRODUCT ID
-            </label>
-            {productIdError && (
-                <span className="help-block text-danger">{productIdError}</span>
-              )}
-            <div className="input-wrapper">
-              <input
-                id="product_id"
-                name="product_id"
-                type="text"
-                requiredTxt
-                value={productId}
-                onChange={(e) => setProductId(e.target.value)}
-                className={styles.inputField}
-              />
-              
-            </div>
-            </div>
-
-
-
-          <div className="ml-3">
-            <label className="control-label font-extrabold" for="product_name">
-              PRODUCT BRAND
-            </label>
-            {brandError && (
-                <span className="help-block text-danger">{brandError}</span>
-              )}
-            <div className="input-wrapper">
-              <input
-                id="product_name"
-                name="product_name"
-                // placeholder="PRODUCT BRAND"
-                className={styles.inputField}
-                required=""
-                type="text"
-                value={brand}
-                onChange={(e) => setbBrand(e.target.value)}
-              />
-            
-            </div>
-          </div>
-       
-          </div>
-          </div>
-          <div className="form-group">
-            <label className="control-label font-extrabold" for="product_description">
-              PRODUCT DESCRIPTION
-            </label>
-            <div className="input-wrapper">
-              <textarea
-                className="form-control"
-                id="product_description"
-                name="product_description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                style={{width:'400px',height:'200px', border:" 1px solid"}}
-              ></textarea>
-              {descriptionError && (
-                <span className="help-block text-danger">{descriptionError}</span>
-              )}
-            </div>
-          </div>
-          
-            <label className="font-extrabold"  for="product_category">
-              PRODUCT CATEGORY
-            </label>
-            <div  className={styles.respo}  >
-
-            
-            <div className="input-wrapper" style={{width:'400px'}}>
-              <select
-                id="product_category"
-                name="product_category"
-                className="form-control"
-                value={selectedCategory}
-                onChange={handleCategoryChange}
-              >
-                <option value="">Select a category</option>
-                {productCategories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-        
-
-          {selectedCategory && (
-            <div style={{marginLeft:'50px', width:'400px'}}>
-              <label className="control-label font-extrabold" for="product_subcategory">
-                SUBCATEGORY
-              </label>
+    <div className="bg-gray">
+      {secondModal ? (
+        <Section2
+          productId={uplProductId}
+          sizeSelected={sizeSelected}
+          productInfo={productInfo}
+          setSecondModal={setSecondModal}
+        />
+      ) : (
+        <div className={styles.maindiv}>
+          <div className={styles.mainone}>
+            <div className="bg-white p-1">
               <div>
-                <select
-                  id="product_subcategory"
-                  name="product_subcategory"
-                  className="form-control"
-                  value={selectedSubcategory}
-                  onChange={(e) => setSelectedSubcategory(e.target.value)}
+                <label
+                  for="title"
+                  className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  <option value="">Select a subcategory</option>
-                  {categoriesWithSubcategories[selectedCategory].map(
-                    (subcategory, index) => (
+                  Title
+                </label>
+                {errors.title && (
+                  <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+                )}
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter product title"
+                  required
+                  onChange={(e) => onchangeHandler(e)}
+                />
+              </div>
+              <div>
+                <label
+                  for="title"
+                  className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Product Code
+                </label>
+                {errors.productCode && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.productCode}
+                  </p>
+                )}
+                <input
+                  type="text"
+                  id="title"
+                  name="productCode"
+                  className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter product code"
+                  required
+                  onChange={(e) => onchangeHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="brand"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  {errors.brand && (
+                    <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
+                  )}
+                  Brand
+                </label>
+                <input
+                  type="text"
+                  id="brand"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter Brand name"
+                  name="brand"
+                  onChange={(e) => onchangeHandler(e)}
+                  required
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Orginal price
+                </label>
+                {errors.realPrice && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.realPrice}
+                  </p>
+                )}
+                <input
+                  type="number"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter price"
+                  name="realPrice"
+                  onChange={(e) => onchangeHandler(e)}
+                  required
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="selling"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Selling price
+                </label>
+                {errors.sellingPrice && (
+                  <p className="text-red-500 text-sm mt-1">{errors.material}</p>
+                )}
+                <input
+                  type="number"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter Selling price"
+                  required
+                  name="sellingPrice"
+                  onChange={(e) => onchangeHandler(e)}
+                />
+              </div>
+            </div>
+
+            {/* General Info */}
+
+            <div className="mt-4 w-full" style={{ background: "white" }}>
+              <div className="m-2 w-97">
+                <label
+                  for="countries"
+                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  {errors.selectedCategory && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.selectedCategory}
+                    </p>
+                  )}
+                  Select product category
+                </label>
+                <select
+                  id="product_category"
+                  name="selectedCategory"
+                  onChange={(e) => onchangeHandler(e)}
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option selected>Choose a category</option>
+                  {productCategories.map((category, index) => {
+                    return (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              {productInfo.selectedCategory && (
+                <div className="m-2 w-97">
+                  <label
+                    for="countries"
+                    className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Select product Subcategory
+                  </label>
+                  {errors.selectedSubcategory && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.selectedSubcategory}
+                    </p>
+                  )}
+                  <select
+                    id="category"
+                    name="selectedSubcategory"
+                    onChange={(e) => onchangeHandler(e)}
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option selected>Choose a subcategory</option>
+                    {categoriesWithSubcategories[
+                      productInfo.selectedCategory
+                    ].map((subcategory, index) => (
                       <option key={index} value={subcategory}>
                         {subcategory}
                       </option>
-                    )
-                  )}
-                </select>
-                {selectedSubcategoryError && (
-                  <span className="help-block text-danger">{selectedSubcategoryError}</span>
-                )}
-              </div>
-            </div>
-          )}
-          </div>
-
-          {selectedCategory && (
-            <div className={`${styles.formGroup}`}>
-              <label className={styles.controlLabel} htmlFor="product_size">
-                PRODUCT SIZE
-              </label>
-              <div >
-                <div className={`${styles.sizeButtons}`}>
-                <div>
-                  <h3>Total Quantity: {totalQuantity}</h3>
-                  </div>
-                  <div>
-                  {categorySizes[selectedCategory].map((size, index) => (
-                    <div key={index} className={styles.sizeContainer} style={{display:'flex',flexDirection:'row'}}>
-                      <div style={{width:'100px', display:'flex', flexDirection:'row'}}>
-                      <h5
-                        className={`${styles.sizeButton} ${
-                          selectedSizes.includes(size)
-                            ? styles.blue
-                            : styles.blue
-                        }`}
-                        style={{width:'100px', display:'flex', flexDirection:'row'}}
-                      >
-
-                       
-
-                        {size}
-                      </h5>
-                      </div>
-                      <div>           
-                                   <input
-                        type="text"
-                        // placeholder="Enter quantity"
-                        value={quantities[size]}
-                        onChange={(e) => handleQuantityChange(size, e)}
-                        className={styles.quantityInput}
-                        style={{border:'1px solid black', display:'flex', flexDirection:'row'}}
-                      />
-</div>
-
-                    </div>
-                  ))}
-                  </div>
+                    ))}
+                  </select>
                 </div>
-              </div>
-            </div>
-          )}
-
-          <div >
-            <label className="control-label" htmlFor="product_price">
-              PRODUCT PRICE
-            </label>
-            <div  className={styles.respo}  >
-           
-              <input
-
-                id="product_real_price"
-                name="product_real_price"
-                placeholder="REAL PRICE"
-                className={styles.inputField}
-                required=""
-                type="text"
-                // style={{
-                //   width: "45%",
-                //   display: "inline-block",
-                //   marginRight: "5px",
-                // }}
-                value={realPrice}
-                onChange={handleRealPriceChange}
-               
-              
-              />
-              {realPriceError && (
-                <span className="help-block text-danger">{realPriceError}</span>
               )}
-             
-              <input
-                id="product_selling_price"
-                name="product_selling_price"
-                placeholder="SELLING PRICE"
-                className={styles.inputField}
-                required=""
-                type="text"
-                // style={{ width: "45%", display: "inline-block" }}
-                value={sellingPrice}
-                onChange={handleSellingPriceChange}
-                style={{marginLeft:'20px'}}
-          
-              />
-              {sellingPriceError && (
-                <span className="help-block text-danger">{sellingPriceError}</span>
-              )}
-            </div>
-          </div>
-          <div>
-            {realPrice !== "" &&
-              sellingPrice !== "" &&
-              sellingPrice <= realPrice && (
-                <div>
-                  <span
-                    style={{
-                      fontSize: "1rem",
-                    }}
+              {productInfo.selectedSubcategory && (
+                <div className="m-2 w-97">
+                  <label
+                    for="countries"
+                    className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    {sellingPrice === "0"
-                      ? "FREE"
-                      : `${
-                          (
-                            ((realPrice - sellingPrice) / realPrice) *
-                            100
-                          ).toFixed(2) || 0
-                        }% OFF`}
-                  </span>
+                    Select collection
+                  </label>
+                  {errors.collections && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.collections}
+                    </p>
+                  )}
+                  <select
+                    id="subcategory"
+                    name="collections"
+                    onChange={(e) => onchangeHandler(e)}
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option selected>Choose a Collections</option>
+                    {Collections[productInfo.selectedSubcategory].map(
+                      (collections, index) => (
+                        <option key={index} value={collections}>
+                          {collections}
+                        </option>
+                      )
+                    )}
+                  </select>
                 </div>
               )}
-          </div>
-          <div style={{display:'flex', flexDirection:'row',marginTop:'50px'}}
-           
-          >
-            <div
-              className="form-group"
-              style={{ display:'flex' ,flexDirection: "column" }}
-            >
-              <label className="control-label" htmlFor="product_color">
-                PRIMARY COLOR
-              </label>
-              <div className="input-wrapper" style={{display:'flex' ,flexDirection:'column'}}>
-              
-                <input
-                  id="product_color"
-                  name="product_color"
-                  // placeholder="PRIMARY COLOR"
-                  className={styles.inputField}
-                  required=""
-                  type="color"
-                  value={primaryColor}
-                  onChange={(e) => setPrimaryColor(e.target.value)}
-                  style={{ width: "400px" }}
-                />
-                <h5>  <div style={{backgroundColor:primaryColor ,height:"30px",width:"30px"}}></div></h5>
-                {primaryColorError && (
-                  <span className="help-block text-danger">{primaryColorError}</span>
-                )}
-              </div>
-            </div>
 
-            <div
-              className="form-group"
-              style={{ flexBasis: "100%", maxWidth: "100%" }}
-            >
-              <label className="control-label font-extrabold" htmlFor="product_other_colors">
-                OTHER COLOR
-              </label>
-              <div className="input-wrapper" style={{display:'flex',flexDirection:'column'}}>
-                <input
-                  id="product_other_colors"
-                  name="product_other_colors"
-                  // placeholder="OTHER COLORS"
-                  className={styles.inputField}
-                  type="color"
-                  value={otherColors}
-                  style={{ width: "50%%" }}
-                  onChange={(e) => setOtherColors(e.target.value)}
-                /> <h5>  <div style={{backgroundColor:otherColors,width:'30px',height:'30px'}}></div></h5>
-                {otherColorsError && (
-                  <span className="help-block text-danger">{otherColorsError}</span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label className="control-label font-extrabold" for="product_care_instructions">
-              WASHCARE INSTRUCTIONS
-            </label>
-            <div >
-              <textarea
-                className="form-control"
-                id="product_care_instructions"
-                name="product_care_instructions"
-                value={WashcareInstructions}
-                onChange={(e) => setCareInstructions(e.target.value)}
-                style={{width:'400px',height:'250px', border:" 1px solid"}}
-              ></textarea>
-              {WashcareInstructionsError && (
-                <span className="help-block text-danger">{WashcareInstructionsError}</span>
-              )}
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label className="control-label font-extrabold" for="product_material">
-              MATERIAL
-            </label>
-            <div className="input-wrapper">
-              <input
-                id="product_material"
-                name="product_material"
-                // placeholder="MATERIAL"
-                className={styles.inputField}
-                required=""
-                type="text"
-                value={material}
-                onChange={(e) => setMaterial(e.target.value)}
-              />
-              {materialError && (
-                <span className="help-block text-danger">{materialError}</span>
-              )}
-            </div>
-          </div>
-
-      
-
-       
-            <div>
-              <h3 className="font-extrabold">Upload images</h3>
-              {/* <div className="flex-col">
-                <div>
-
-              
-                <label htmlFor="">Main image</label>
-                <input
-      type="file"
-      accept="image/png/jpg/jpeg"
-      name="img1"
-      onChange={convertToBase64}
-      style={inputStyles}
-    />  </div>
-    <div>
-
-
-                <label className="font-extrabold" htmlFor="">2nd image</label>
-                <input
-                  type="file"
-                  accept="image/png/jpg/jpeg"
-                  name="img2"
-                  onChange={convertToBase64}
-                   style={inputStyles}
-                />
-                    </div>
-                    <div>
-
-                 
-                <label className="font-extrabold" htmlFor="">3rd image</label>
-                <input
-                  type="file"
-                  accept="image/png/jpg/jpeg"
-                  name="img3"
-                  onChange={convertToBase64}
-                  style={inputStyles}
-                  
-                />
-                   </div>
-
-                   <div>
-
-                  
-                <label className="font-extrabold" htmlFor="">4th image</label>
-                <input
-                  type="file"
-                  accept="image/png/jpg/jpeg"
-                  name="img4"
-                  onChange={convertToBase64}
-                  style={inputStyles}
-                />
-                 </div>
-              </div> */}
-
-<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Main image</label>
-<input  onChange={convertToBase64} className="block w-full text-sm
- text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file"/>
-<p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
-<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">2nd image</label>
-<input  onChange={convertToBase64} className="block w-full text-sm
- text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file"/>
-<p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
-<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">3rd image</label>
-<input  onChange={convertToBase64} className="block w-full text-sm
- text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file"/>
-<p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
-<label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">4th image</label>
-<input  onChange={convertToBase64} className="block w-full text-sm
- text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file"/>
-<p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
-
-
-              <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-                <button
-                  id="singlebutton"
-                  name="singlebutton"
-                  className="btn btn-danger"
-                  onClick={addToCart}
-                  
+              <form style={{ marginTop: "10px" }}>
+                <label
+                  htmlFor="editor"
+                  className="m-1 text-sm font-medium text-gray-900"
                 >
-                  Click me to Add
-                </button>
-              </div>
+                  Product description
+                </label>
+                {errors.description && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.description}
+                  </p>
+                )}
+                <div className="w-full mb-4 p-2 dark:bg-gray-700 dark:border-gray-600">
+                  <div className="rounded-b-lg ">
+                    <textarea
+                      id="editor"
+                      rows="8"
+                      className="block w-full text-sm text-gray-800 border-1  focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                      placeholder="Write product description here"
+                      required
+                      name="description"
+                      onChange={(e) => onchangeHandler(e)}
+                    />
+                  </div>
+                </div>
+              </form>
             </div>
-          
-        </fieldset>
-      </form>
+            <br />
+            {/* Color removed */}
+            <div style={{ marginBottom: "20px", background: "white" }}>
+              <label
+                for="message"
+                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
+              >
+                Additional Text
+              </label>
+              {errors["Additional Text"] && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors["Additional Text"]}
+                </p>
+              )}
+              <textarea
+                name="MoreDetails"
+                onChange={(e) => onchangeHandler(e)}
+                rows="4"
+                required
+                maxLength={"70"}
+                className="block p-4 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter washcare description of product here..."
+              />
+            </div>
+          </div>
+
+          <br />
+
+          <div className={`${styles.maintwo} m-2 p-1`}>
+            <div className="bg-white p-2">
+              <h3 className="fw-bolder">General info</h3>
+
+              {productInfoArray.map((ele) => (
+                <div className="mt-3" key={ele}>
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    {ele}
+                  </label>
+
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Enter ${ele}`}
+                    required
+                    name={ele}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-white mt-4">
+              <label
+                for="message"
+                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
+              >
+                Tags
+              </label>
+              {errors.tags && (
+                <p className="text-red-500 text-sm mt-1">{errors.tags}</p>
+              )}
+              <textarea
+                name="tags"
+                onChange={(e) => onchangeHandler(e)}
+                rows="4"
+                maxLength={"70"}
+                required
+                className="block p-4 w-full text-sm border-1"
+                placeholder="Enter tages for searching product"
+              />
+            </div>
+          </div>
+          <div className="m-2 d-flex justify-center items-center">
+            <button
+              onClick={addNewProduct}
+              style={{ background: "#4BB543" }}
+              className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
+            >
+              Submit
+            </button>
+            <button className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+}
+
 export default AddProduct;

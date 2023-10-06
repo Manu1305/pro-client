@@ -1,29 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../../../Redux/user/userAction";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { currentUserData } from "../../../../Redux/user/userAction";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../../const/config";
-import httpService from "../../../Error Handling/httpService";
+// import httpService from "../../../Error Handling/httpService";
+import axios from "axios";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {toast} from "react-toastify"
 const CustomerLogin = () => {
   const history = useNavigate();
   const localStorage = window.localStorage;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [inpType, setInpType] = useState("password");
   const dispatch = useDispatch();
-  const pandaRef = useRef(null);
 
   const handleCustomerLogin = async (e) => {
     e.preventDefault();
 
-    const isValid = validate();
-
     try {
-      const response = await httpService
+      const response = await axios
         .post(`${apiURL}/user/login`, { email, password })
         .then((res) => res)
         .catch((err) => {
@@ -44,68 +44,57 @@ const CustomerLogin = () => {
             );
           }
         });
-      if (response && response.data && response.data.user)
-        dispatch(addUser(response.data.user));
-      sessionStorage.setItem("user", JSON.stringify(response.data.user));
 
-      if (response.data.token) {
+      // if (
+      //   response &&
+      //   response.data &&
+      //   response.data.user &&
+      //   response.data.status === true
+      // ) {
+      //   console.log("CHECK", response.data.user);
+      //   dispatch(currentUserData(response.data.user));
+      // } else {
+      //   console.log("CHECK", response.data.user);
+      //   dispatch(currentUserData(response.data.user));
+      // }
+
+      console.log(response)
+      if (response.data.user.status) {
         localStorage.setItem("token", response.data.token);
+        dispatch(currentUserData(response.data.user));
+
         const route =
           response.data.user.urType === "seller"
             ? !response.data.user?.storeSetup
               ? "/StorePage"
               : "/dashboard"
-            : `/Profilepage/${email}`;
+            : `/`;
         history(route, {
           state: {
             id: email,
             name: response.data.name,
           },
         });
+      } else {
+        toast.error("Your account temprorely is suspended",{
+         icon: "🚫"
+        });
       }
     } catch (error) {
       // alert("Wrong details: " + error);
       console.log(error);
     }
-
-    if (isValid) {
-      //   Perform login logic using email and password
-      // console.log("Email:", email);
-      // console.log("Password:", password);
-    }
   };
 
-  const validate = () => {
-    let emailError = "";
-    let passwordError = "";
-
-    if (!email) {
-      emailError = "Email address is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      emailError = "Email address is invalid";
+  const handleCheckPass = () => {
+    if (inpType === "password") {
+      setInpType("text");
+    } else {
+      setInpType("password");
     }
-
-    if (!password) {
-      passwordError = "Password is required";
-    } else if (password.length < 6) {
-      passwordError = "Password must be at least 6 characters long";
-    }
-
-    setEmailError(emailError);
-    setPasswordError(passwordError);
-
-    if (emailError || passwordError) {
-      return false;
-    }
-
-    return true;
   };
-
   return (
-    <section
-      className="vh-90"
-      style={{ "background-color": "rgb(191,10,41)" }}
-    >
+    <section className="vh-90" style={{ "background-color": "rgb(191,10,41)" }}>
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col col-xl-10">
@@ -124,8 +113,8 @@ const CustomerLogin = () => {
                     <form>
                       <div className="d-flex align-items-center mb-3 pb-1">
                         <i
-                          className="fas fa-cubes fa-2x me-3"
-                          style={{ color: "#ff6219" }}
+                          className="fas fa-face-smile fa-2x me-3"
+                          style={{ color: "red" }}
                         ></i>
                         <span className="h1 fw-bold mb-0">Login</span>
                       </div>
@@ -136,55 +125,77 @@ const CustomerLogin = () => {
                         Sign into your account
                       </h5>
                       <div className="form-outline mb-4">
+                        <label className="form-label" for="form2Example17">
+                          Email address
+                        </label>
                         <input
                           type="email"
                           id="form2Example17"
                           className="form-control form-control-lg"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          error={emailError}
+                          // error={emailError}
+                          placeholder="please enter your email address..."
                         />
-                        <label className="form-label" for="form2Example17">
-                          Email address
-                        </label>
                       </div>
                       <div className="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="form2Example27"
-                          className="form-control form-control-lg"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          error={passwordError}
-                        />
                         <label className="form-label" for="form2Example27">
                           Password
                         </label>
+
+                        <div class="mb-4 flex">
+                          <input
+                            className="form-control form-control-lg"
+                            type={inpType}
+                            id="form2Example27"
+                            placeholder="please enter your password..."
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            autoComplete="current-password"
+                          />
+                          <span
+                            className="flex justify-around items-center"
+                            onClick={handleCheckPass}
+                          >
+                            {inpType === "password" ? (
+                              <RemoveRedEyeIcon className="absolute mr-10" />
+                            ) : (
+                              <VisibilityOffIcon className="absolute mr-10" />
+                            )}
+                          </span>
+                        </div>
                       </div>
                       <div className="pt-1 mb-4">
+                    
+                      <div className="flex flex-row">
+                      <p className="small text-muted">
+                      By login, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
+                      </p>
+                      </div>
                         <button
-                          className="btn btn-dark btn-lg btn-block bg-dark"
+                          className="btn btn-dark btn-lg btn-block bg-dark mt-3"
                           // type="button"
                           onClick={handleCustomerLogin}
                         >
                           Login
                         </button>
+                   
                       </div>
                       <Link className="small text-muted" to="/passwordupdate">
                         Forgot password?
-                      </Link>{" "}
+                      </Link>
                       <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
                         Don't have an account?{" "}
                         <Link to="/register" style={{ color: "#393f81" }}>
                           Register here
                         </Link>
                       </p>
-                      <a href="#!" className="small text-muted">
-                        Terms of use.
-                      </a>
-                      <a href="#!" className="small text-muted">
-                        Privacy policy
-                      </a>
+                      
+                      <div >
+
+                     
+                      </div>
                     </form>
                   </div>
                 </div>

@@ -1,0 +1,10 @@
+.dives{
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+@media (max-width: 768px) {
+    .dives {
+      flex-direction: column;
+    }
+  }
