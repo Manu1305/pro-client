@@ -86,12 +86,10 @@ const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    // nextArrow: <SampleNextArrow />,
-    // prevArrow: <SamplePrevArrow />,
+   
   };
   return (
     <div className={`${styless.bg}`}>
-      {/* <h2>Related Products </h2> */}
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
           {/* { productItems && productItems.map((productItems) => (
