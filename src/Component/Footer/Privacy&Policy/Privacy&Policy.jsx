@@ -9,7 +9,7 @@ export const PrivacyPolicy = () => {
         Thank you for visiting Hitecmart, a Company incorporated under the provisions of the Companies
         Act 2013 is the owners the website- Hitecmart is committed to ensuring and protecting the
         privacy of any user who accesses and uses the Website
-        (___________________________). In the Privacy Policy, the use of terms
+        www.hitecmart.com. In the Privacy Policy, the use of terms
         such as “Company” “we”, “us” and “our” refers to Certon Technologies
         Private Limited. The Privacy Policy explains how we deal with your
         Personal Information (“PI”) and/or Sensitive Personal Data or
@@ -161,7 +161,9 @@ export const PrivacyPolicy = () => {
               systems, (ii) update the personal information that you have
               provided to the Company, and (iii) change your preferences with
               respect to marketing contacts by contacting our grievance officer
-              at ____________________ or write to __________________________.
+              at Plot No: 128-P2,
+              Ground Floor, EPIP Zone Whitefield Rd, near Ginger Hotel,
+              Whitefield, EPIP Zone, Bengaluru, Karnataka 560066 or write to support@hitecmart.com.
             </p>
           </li>
           <li className={idea.wholesale}>
