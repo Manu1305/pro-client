@@ -1,6 +1,7 @@
 import React from "react";
 import idea from "./Franchise.module.css";
 import Retail from "../../../images/ratailfranch.png";
+import { Footer } from "../../Footer/Footer";
 
 export const RetailFranchise = () => {
   return (
@@ -112,6 +113,8 @@ export const RetailFranchise = () => {
           </ol>
         </div>
       </div>
+      <Footer/>
+
     </>
   );
 };
