@@ -143,7 +143,6 @@ const Shopping = ({ products }) => {
                   {data.title.slice(0, 22)}
                 </p>
               </div>
-              {user && user.email ? (
                 <div className="m-2 d-flex justify-content-between">
                   <div className="mb-1" style={{ fontSize: "bold" }}>
                     <p className="font-semibold">&#8377;{data.sellingPrice}</p>
@@ -164,14 +163,14 @@ const Shopping = ({ products }) => {
                     </p>
                   </div>
                 </div>
-              ) : 
-              // (
+              {/* ) :  */}
+              {/* // (
               //   <div className="m-2" style={{ fontWeight: "30px" }}>
               //     {data.title}
               //   </div>
-              // )
-              null
-              }
+              // ) */}
+              {/* null
+              } */}
             </div>
           </div>
         </div>
