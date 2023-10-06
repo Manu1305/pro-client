@@ -4,6 +4,7 @@ import styles from "./Addproduct.module.css";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
@@ -11,8 +12,25 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   //   const [prviewProdcts, setprviewProdcts] = useState([]);
   //   const [totalStocks, setTotalStocks] = useState(0);
   const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+
 
   const navigate =useNavigate()
+
+
+  const handleImageSelection = (e) => {
+    const selectedImages = e.target.files;
+    const previews = [];
+    const selected = [];
+
+    for (let i = 0; i < selectedImages.length; i++) {
+      selected.push(selectedImages[i]);
+      previews.push(URL.createObjectURL(selectedImages[i]));
+    }
+
+    setImages((prevImages) => [...prevImages, ...selected]);
+    setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
+  };
 
   const submitHandler = async () => {
     console.log("color => ", color);
@@ -45,7 +63,14 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
         .then((res) => {
           console.log(res.data);
         //   navigate('/dashboard')
-        setSecondModal(false)
+        setSecondModal(false);
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "The product successfully added",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -182,33 +207,47 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
                 id="dropzone-file"
                 type="file"
                 className="hidden border-0"
-                onChange={(e) => setImages(e.target.files)}
+                onChange={handleImageSelection}
                 accept="image/*"
                 multiple
               />
             </label>
-            {/* preview */}
-            <div>
-              <img
-              src={images}
-                alt="jius"
+             <div className="image-previews flex flex-row">
+        {imagePreviews.map((preview, index) => (
+          <div key={index} className="image-preview">
+            <img
+              src={preview}
+              alt="SDC"
+              style={{
+                maxWidth: "100px",
+                maxHeight: "100px",
+                margin: "10px",
+              }}
+            />
+            <button
+              onClick={() => {
+                
+                const updatedImages = [...images];
+                updatedImages.splice(index, 1);
+                setImages(updatedImages);
+
+                const updatedPreviews = [...imagePreviews];
+                updatedPreviews.splice(index, 1);
+                setImagePreviews(updatedPreviews);
+              }}
+            >
+              <MdDeleteSweep
                 style={{
-                  maxWidth: "100px",
-                  maxHeight: "100px",
-                  margin: "10px",
+                  display: "flex",
+                  height: "40px",
+                  alignItems: "center",
+                  color: "red",
                 }}
               />
-              <button>
-                <MdDeleteSweep
-                  style={{
-                    display: "flex",
-                    height: "40px",
-                    alignItems: "center",
-                    color: "red",
-                  }}
-                />
-              </button>
-            </div>
+            </button>
+          </div>
+        ))}</div>
+         
           </div>
         </div>
       </div>
@@ -233,62 +272,3 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
 
 export default Section2;
 
-{
-  /* Prview */
-}
-{
-  /* <div className="mt-4 w-full bg-white">
-  <div>
-    <h3 style={{ marginLeft: "40px", margin: "20px" }} className="fw-bolder">
-      Product Prview
-    </h3>
-  </div>
-
-  <div
-    style={{ marginLeft: "30px" }}
-    className="block w-80 text-sm text-gray-900  border-1 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-  >
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <h2>Product category</h2>{" "}
-      <h2>
-        {prviewProdcts.length >= 0 ? productInfo.selectedCategory : "Men"}
-      </h2>{" "}
-    </div>
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <span className="m-2 text-sm font-medium text-gray-900">
-        Product Description
-      </span>
-      <h2>
-        {prviewProdcts.length >= 0
-          ? productInfo.description
-          : "Puma mens T shirt"}
-      </h2>
-    </div>
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <h2>Selling price</h2>
-      <h2>{prviewProdcts.length >= 0 ? productInfo.sellingPrice : 600}</h2>
-    </div>
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <h2>Real price</h2>
-      <h2>{prviewProdcts.length >= 0 ? productInfo.realPrice : 600}</h2>
-    </div>
-    <div
-      style={{ marginLeft: "10px" }}
-      className="block p-2.5 w-full text-sm text-gray-900"
-    >
-      {prviewProdcts.length >= 0 &&
-        prviewProdcts.map((prd, ind) => (
-          <div className="m-2 p-1 border-1 border-gray d-flex column" key={ind}>
-            <div>
-              <div>Product color code : {prd.color}</div>
-              <div>Qunatity : 45</div>
-            </div>
-            <div className="ml-6" onClick={() => deleteAnyColor(ind, prd)}>
-              <DeleteOutlineIcon />
-            </div>
-          </div>
-        ))}
-    </div>
-  </div>
-</div>; */
-}

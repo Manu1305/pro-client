@@ -51,6 +51,7 @@ export const ContactUs = () => {
                   placeholder="Email"
                   name="Email"
                   className="form-control"
+                  required
                 />
               </div>
             </div>

@@ -258,8 +258,8 @@ const ViewProduct = () => {
                   ?  product.productDetails[prdDetInd].images[0]
                   : imgPreview
               }
-              className={`img-fluid img-responsive rounded product-image ${styles.iggg}`}
-              // style={{ height: "400px", width: "770px" }}
+              className={`img-fluid img-responsive rounded product-image`}
+              style={{ height: "500px", width: "770px" }}
               alt="img"
             />
           </div>
@@ -422,7 +422,7 @@ const ViewProduct = () => {
                   <label htmlFor="product_size">CHOOSE SIZE</label>
                 )}
               </div>
-              <div>
+              <div >
                 {product.productDetails && (
                   <div style={{ marginLeft: "30px" }}>
                     <div className={`mt-1 left-0 ${styles.sizeresponsive}`}>
@@ -534,7 +534,7 @@ const ViewProduct = () => {
             </div>
 
             {user?.email && user?.urType === "buyer" && (
-              <div className={styles.lasthead}>
+              <div className={`${styles.lasthead}`} style={{marginLeft:'10px'}}>
                 <div className={styles.headone}>
                   <div className={styles.oneone}>
                     <TbTruckDelivery />
@@ -575,7 +575,7 @@ const ViewProduct = () => {
             <div>
               <p className={`about m-1 ${styles.about}`}>Product description</p>
               <div className={`m-2 w-75 ${styles["text1"]}`}>
-                {product.description}
+                {product.description.slice(0,350)}
               </div>
             </div>
           </div>

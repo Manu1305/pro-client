@@ -9,8 +9,8 @@ function WhoWeAre() {
     <div className={styles.top}>
       <div className={styles.one}>
         <h1 className={styles.mainheading}>
-          WHO <br />   
-               
+          WHO  WE<br />   
+            ARE   
         </h1>
       
       </div>

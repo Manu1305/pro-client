@@ -132,7 +132,7 @@ const OrderHistory = () => {
                     className="btn btn-success btn-sm"
                     onClick={() => handleShow(params.row["Order Id"])}
                   >
-                    Dipatch
+                    Dispatch
                   </p>
                 </div>
               )}
