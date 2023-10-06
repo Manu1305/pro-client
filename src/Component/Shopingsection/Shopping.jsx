@@ -143,7 +143,6 @@ const Shopping = ({ products }) => {
                   {data.title.slice(0, 22)}
                 </p>
               </div>
-              {/* {user && user.email ? ( */}
                 <div className="m-2 d-flex justify-content-between">
                   <div className="mb-1" style={{ fontSize: "bold" }}>
                     <p className="font-semibold">&#8377;{data.sellingPrice}</p>
