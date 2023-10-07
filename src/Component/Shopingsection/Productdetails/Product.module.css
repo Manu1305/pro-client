@@ -15,6 +15,13 @@
   font-size: 20px;
   color: #ab8181;
 }
+.relatdd
+{
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
 .sizes {
   -ms-overflow-style: none;
   scrollbar-width: none;

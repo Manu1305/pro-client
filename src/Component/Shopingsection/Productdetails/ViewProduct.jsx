@@ -321,11 +321,11 @@ const ViewProduct = () => {
               >
                 
                  <div>
-                 {user && user.email ? (
+                 {/* {user && user.email ? ( */}
                 <h5 className="fw-bold text-3xl font-mono">
                   ₹{product.sellingPrice}
                 </h5>
-                 ):null}
+                {/* //  ):null} */}
 
                  </div>
  
@@ -664,6 +664,7 @@ const ViewProduct = () => {
             </div>
           )}
         </div>
+        <h2 className={styles.relatdd}>Related Product</h2>
         { <SellerRelatedPro 
            prodd={product.
             collections}
