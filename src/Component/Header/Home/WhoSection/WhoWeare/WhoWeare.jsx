@@ -3,6 +3,7 @@ import styles from "./WhoWeare.module.css";
 import { BsGraphUp, BsStar ,BsTelephone} from "react-icons/bs";
 import {IoCallOutline} from 'react-icons'
 import {TbGitBranch,TbTruckDelivery} from 'react-icons/tb'
+import { Footer } from "../../../../Footer/Footer";
 
 function WhoWeAre() {
   return (
@@ -48,6 +49,7 @@ function WhoWeAre() {
 
         
       </div>
+      <Footer/>
     </div>
   );
 }
