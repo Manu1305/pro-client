@@ -552,7 +552,7 @@ export const TermsCondition = () => {
             </p>
           </li>
           <li className={idea.wholesale}>
-            <h3 className={idea.wholesaleH1}> 14.MISCELLANEOUS PROVISIONS </h3>
+            <h93 className={idea.wholesaleH1}> 14.MISCELLANEOUS PROVISIONS </h93>
             <p className={idea.wholesaleP}>
               {" "}
               14.1 Unless HiTec Mart communicates otherwise to you, the Terms
