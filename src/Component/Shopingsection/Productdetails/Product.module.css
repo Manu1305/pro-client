@@ -134,6 +134,7 @@
   scrollbar-width: none;
   overflow-x: scroll;
   gap: 10px;
+  overflow: auto;
 }
 .star {
   height: 100%;

@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
 import Styles from "./cart.module.css";
 import { BsTrash } from "react-icons/bs";
 import httpService from "../../Error Handling/httpService";
-import { ScaleLoader } from "react-spinners";
+// import { ScaleLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { userCartItem } from "../../../Redux/cart/cartAction";
 
 const Cart = () => {
+ 
 
   const CartItem = useSelector((state) => state.cartReducer.userCart);
 

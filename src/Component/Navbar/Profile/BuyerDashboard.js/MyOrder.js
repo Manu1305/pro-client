@@ -10,6 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { ScaleLoader } from "react-spinners";
 import axios from "axios";
 import Swal from "sweetalert2";
+
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
@@ -150,12 +151,14 @@ const BuyerOrder = () => {
                   className={`rounded-circle ${styles.imgcircle}`}
                 />
                 <div key={order.id} className="d-flex align-items-center mb-3">
+                {/* <Link  to={`/orderDetails/${order._id}`}> to= */}
                   <img
                     src={order.prdData.images}
                     alt=""
                     style={{ width: "45px", height: "45px" }}
                     className="rounded-circle"
                   />
+                {/* </Link> */}
 
                   <div className="ms-3">
                     <p className="fw-bold mb-1">{order.brand}</p>
@@ -192,6 +195,7 @@ const BuyerOrder = () => {
                       )}
                   </select>
                 </div>
+
 
                 <div className={`mb-3 ${styles.addressSection}`}>
                   <h6 className="my-2">Tracking ID: {order.trackId}</h6>

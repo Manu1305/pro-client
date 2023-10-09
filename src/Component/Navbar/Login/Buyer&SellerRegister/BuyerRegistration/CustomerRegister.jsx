@@ -113,7 +113,7 @@ const[userType,setUsertype]=("customer")
       .then((response) => {
         console.log(response.data+"otp response");
         if (response.data.message == "success") {
-          toast.success("otp succesfully verified ✅")
+          toast.success("otp succesfully verified")
           setButton(false)
 
 
