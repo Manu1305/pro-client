@@ -151,6 +151,7 @@ export const DeliveryFranchise = () => {
             </li>
           </ol>
         </div>
+        <Footer/>
       </div>
       <Footer/>
 

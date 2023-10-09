@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./CategoryNew.module.css";
 import womenCatImg from "../../../../../images/womencategory.png"
 import mensCatIMG from "../../../../../images/mencategory.png"

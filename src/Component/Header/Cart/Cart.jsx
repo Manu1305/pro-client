@@ -6,7 +6,7 @@ import { apiURL } from "../../../const/config";
 import Styles from "./cart.module.css";
 import { BsTrash } from "react-icons/bs";
 import httpService from "../../Error Handling/httpService";
-import { ScaleLoader } from "react-spinners";
+// import { ScaleLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { userCartItem } from "../../../Redux/cart/cartAction";

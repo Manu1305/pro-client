@@ -6,8 +6,8 @@ export const TermsCondition = () => {
     <div>
       <h1 className={idea.header}>Terms & Condition</h1>
       <p className={idea.parag}>
-        This Terms of Use for access or usage of domain name/website
-        __________________ (“Platform”). This document is a legally binding
+        This Terms of Use for access or usage of Hitecmart.com
+        . This document is a legally binding
         agreement (“Terms”) between a Seller (as defined below) or a Buyer (as
         defined below), as the case may be (acting by itself or through its
         representatives) (collectively referred to as “you”, “your”, “User”
@@ -46,7 +46,7 @@ export const TermsCondition = () => {
             <p className={idea.wholesaleP}>
               {" "}
               These Terms of Use shall come into force with effect from
-              _________ 2023.
+              April 2023.
             </p>
           </li>
           <li className={idea.wholesale}>
@@ -358,11 +358,11 @@ export const TermsCondition = () => {
           </li>
           <li className={idea.wholesale}>
             <h3 className={idea.wholesaleH1}>
-              {" "}
+             
               9.TRANSACTIONS BETWEEN BUYER AND SELLER
             </h3>
             <p className={idea.wholesaleP}>
-              {" "}
+              
               9.1 HiTec Mart is merely a facilitator and is not and cannot be a
               party to or control in any manner any advertisement, exhibition,
               making available, offer to sell or transactions of sale or
@@ -431,11 +431,11 @@ export const TermsCondition = () => {
           </li>
           <li className={idea.wholesale}>
             <h3 className={idea.wholesaleH1}>
-              {" "}
+             
               10.LIMITATION OF LIABILITY AND INDEMNITY{" "}
             </h3>
             <p className={idea.wholesaleP}>
-              {" "}
+              
               10.1 To the maximum extent permitted by law, the Services provided
               by HiTec Mart on or through the Platform are provided “as is”, “as
               available” and “with all faults”, and HiTec Mart hereby expressly
@@ -691,10 +691,11 @@ export const TermsCondition = () => {
             <h3 className={idea.wholesaleH1}> 18.GRIEVANCE OFFICER </h3>
             <p className={idea.wholesaleP}>
               {" "}
-              Name: ___________________ Grievance Officer, Plot No: 128-P2,
+              Grievance Officer, Plot No: 128-P2,
               Ground Floor, EPIP Zone Whitefield Rd, near Ginger Hotel,
               Whitefield, EPIP Zone, Bengaluru, Karnataka 560066 Phone:
-              +91-______________ Email:________________________ Time: Mon - Sat
+              +91-9711811030 
+               Email: support@hitecmart.com Time: Mon - Sat
               (10:00 AM - 07:00 PM)
             </p>
           </li>
