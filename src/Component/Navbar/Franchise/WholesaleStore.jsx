@@ -139,6 +139,7 @@ export const WholesaleStore = () => {
         </div>
         <Footer/>
       </div>
+      <Footer/>
     </>
   );
 };

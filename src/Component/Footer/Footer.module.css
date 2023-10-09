@@ -114,9 +114,8 @@
   flex-direction: column;
   gap: 20px;
   margin-left: 100px;
-  
 }
-.links{
+.links {
   margin: 0.4rem;
   color: aliceblue;
 }
@@ -237,6 +236,5 @@
     align-items: center;
     color: aliceblue;
     margin-top: -3rem;
-  
   }
 }

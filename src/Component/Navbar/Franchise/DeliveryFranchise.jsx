@@ -153,6 +153,8 @@ export const DeliveryFranchise = () => {
         </div>
         <Footer/>
       </div>
+      <Footer/>
+
     </>
   );
 };

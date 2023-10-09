@@ -321,11 +321,11 @@ const ViewProduct = () => {
               >
                 
                  <div>
-                 {user && user.email ? (
+                 {/* {user && user.email ? ( */}
                 <h5 className="fw-bold text-3xl font-mono">
                   ₹{product.sellingPrice}
                 </h5>
-                 ):null}
+                {/* //  ):null} */}
 
                  </div>
  
@@ -451,7 +451,7 @@ const ViewProduct = () => {
                                     {quantity} left
                                   </div>
                                 </div>
-                                {user?.email && user?.urType === "buyer" && (
+                                {/* {user?.email && user?.urType === "buyer" && ( */}
                                   <div className="mt-1 ml-3 d-flex flex-row align-items-center">
                                     <div>
                                       <AiOutlineMinusCircle
@@ -488,7 +488,7 @@ const ViewProduct = () => {
                                       />
                                     </div>
                                   </div>
-                                )}
+                                {/* // )} */}
                               </div>
                             )}
                           </div>
@@ -499,15 +499,15 @@ const ViewProduct = () => {
 
                 <div className={`mb-3 mt-4 align-items-center`}>
                   <>
-                    {user?.email && user?.urType === "buyer" && (
-                      <button style={{display:'flex',justifyContent:'center', alignItems:'center', alignSelf:'center', marginLeft:"10px" }}
+                    {/* {user?.email && user?.urType === "buyer" && ( */}
+                      <button
                         className={`text-uppercase mr-2 ${styles.add_to_cart}`}
                         onClick={() => addtoCartButton(product)}
                       >
                         <BsHandbagFill className="mb-1 mr-3" />
                         Add to Cart
                       </button>
-                    )}
+                    {/* // )} */}
                   </>
                   {offerBtn ? (
                     <div className="container m-4">
@@ -574,8 +574,8 @@ const ViewProduct = () => {
           <div className={styles.descrip}>
             <div>
               <p className={`about m-1 ${styles.about}`}>Product description</p>
-              <div className={`m-2 w-75 ${styles["text1"]}`}>
-                {product.description.slice(0,350)}
+              <div className={`ml-20 w-75 ${styles["text1"]}`}>
+                {product.description}
               </div>
             </div>
           </div>
@@ -664,6 +664,7 @@ const ViewProduct = () => {
             </div>
           )}
         </div>
+        <h2 className={styles.relatdd}>Related Product</h2>
         { <SellerRelatedPro 
            prodd={product.
             collections}

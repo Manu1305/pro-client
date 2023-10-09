@@ -11,6 +11,8 @@ import { Footer } from "../Footer/Footer";
 
 import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const Shopping = ({ products }) => {
   const { category, collections } = useParams();
@@ -125,53 +127,25 @@ const Shopping = ({ products }) => {
             <div className="card-body">
               <div className="cart-title m-1">
                 {" "}
-                <p
-                  style={{
-                    textTransform: "uppercase",
-                    fontFamily: "Martian Mono, monospace",
-                  }}
-                >
-                  {data.brand}
-                </p>
-                <p
-                  style={{
-                    textTransform: "uppercase",
-                    fontFamily: "sans-serif",
-                  }}
-                  className={`text-gray-600 ${styless.tittt}`}
-                >
-                  {data.title.slice(0, 22)}
-                </p>
+                <p className={styless.tittt}>{data.title.slice(0, 22)}</p>
               </div>
               {/* {user && user.email ? ( */}
-                <div className="m-2 d-flex justify-content-between">
-                  <div className="mb-1" style={{ fontSize: "bold" }}>
-                    <p className="font-semibold">&#8377;{data.sellingPrice}</p>
-                  </div>
-                  <div className="mb-1" style={{ fontSize: "bold" }}>
-                    <p className="text-gray-400 line-through">
-                      {data.realPrice}
-                    </p>
-                  </div>
-
-                  <div className="mb-1">
-                    <p className="text-green-500 font-semibold">
-                      {`${Math.floor(
-                        ((data.realPrice - data.sellingPrice) /
-                          data.realPrice) *
-                          100
-                      )}% Off`}
-                    </p>
-                  </div>
+              <div className="d-flex justify-content-between">
+                <div className="mb-1" style={{ fontSize: "bold" }}>
+                  <p className="font-semibold">&#8377;{data.sellingPrice}</p>
                 </div>
-              {/* ) : 
-              // (
-              //   <div className="m-2" style={{ fontWeight: "30px" }}>
-              //     {data.title}
-              //   </div>
-              // )
-              null
-              } */}
+                <div className="mb-1" style={{ fontSize: "bold" }}>
+                  <p className="text-gray-400 line-through">{data.realPrice}</p>
+                </div>
+                <div className="mb-1">
+                  <p className="text-green-500 font-semibold">
+                    {`${Math.floor(
+                      ((data.realPrice - data.sellingPrice) / data.realPrice) *
+                        100
+                    )}% Off`}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -298,17 +272,20 @@ const Shopping = ({ products }) => {
                   {displayUsers}
 
                   {filteredProducts && filteredProducts.length !== 0 && (
-                    <ReactPaginate
-                      className={styless.pagination}
-                      previousLabel={"<-prev"}
-                      nextLabel={" next->"}
-                      pageCount={pageCount}
-                      onPageChange={changePage}
-                      containerClassName={"pagination"}
-                    />
+                    <div className="d-flex justify-center">
+                      <ReactPaginate
+                        style={{ color: "white" }}
+                        className={styless.pagination}
+                        previousLabel={<ArrowBackIosIcon />}
+                        nextLabel={<ArrowForwardIosIcon />}
+                        pageCount={pageCount}
+                        onPageChange={changePage}
+                        containerClassName={"pagination"}
+                      />
+                    </div>
                   )}
                 </div>
-                <hr />
+                {/* <hr /> */}
               </div>
             </div>
           </div>
