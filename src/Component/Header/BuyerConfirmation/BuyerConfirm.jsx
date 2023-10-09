@@ -121,7 +121,6 @@ const BuyerConfirm = () => {
     }
   };
 
-
   // payment razorpay
   const makePayment = async (amount) => {
     return await httpService
