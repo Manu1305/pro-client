@@ -72,9 +72,9 @@ const LazyMainPage = React.lazy(() =>
 );
 
 const App = () => {
+  
   const [produts, setProducts] = useState([]);
   const [ProductLength, setProductLength] = useState();
-  // const [cartItems, setCartItems] = useState(0);
 
   const user = useSelector((state) => state.userReducer.user);
 

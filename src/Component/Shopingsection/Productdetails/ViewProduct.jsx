@@ -574,7 +574,7 @@ const ViewProduct = () => {
           <div className={styles.descrip}>
             <div>
               <p className={`about m-1 ${styles.about}`}>Product description</p>
-              <div className={`m-2 w-75 ${styles["text1"]}`}>
+              <div className={`ml-20 w-75 ${styles["text1"]}`}>
                 {product.description}
               </div>
             </div>
