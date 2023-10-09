@@ -574,8 +574,8 @@ const ViewProduct = () => {
           <div className={styles.descrip}>
             <div>
               <p className={`about m-1 ${styles.about}`}>Product description</p>
-              <div className={`m-2 w-75 ${styles["text1"]}`}>
-                {product.description.slice(0,350)}
+              <div className={`ml-20 w-75 ${styles["text1"]}`}>
+                {product.description}
               </div>
             </div>
           </div>
@@ -664,6 +664,7 @@ const ViewProduct = () => {
             </div>
           )}
         </div>
+        <h2 className={styles.relatdd}>Related Product</h2>
         { <SellerRelatedPro 
            prodd={product.
             collections}
