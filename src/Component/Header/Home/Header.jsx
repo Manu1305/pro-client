@@ -9,8 +9,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { MdNavigateNext } from "react-icons/md";
 import { cards } from "./BigOfferData";
-
-import { Logoslider } from "./LogoSlider/LogoSlider";
 import { CategoryNew } from "./Goodcards/Category/CategoryNew";
 import Who from "./WhoSection/Who";
 import TrendingItems from "./TopTrends/Trends";
@@ -86,7 +84,6 @@ const Header = ({ products }) => {
         </div>
       </div>
       <Who />
-      {/* <Logoslider /> */}
       <CategoryNew />
       <NewData products={products} />
       <TrendingItems  />
