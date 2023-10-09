@@ -4,11 +4,13 @@ import { Footer } from '../../../Footer/Footer'
 import Imgg1 from "../../../../images/Aboutus/2nd.png"
 import Flip from 'react-reveal/Flip'
 import LightSpeed from 'react-reveal/Flip'
+import Jello from 'react-reveal/Jello';
 import Fade from 'react-reveal/Fade'
 import Bounce from 'react-reveal/Bounce';
-import Jello from 'react-reveal/Jello';
 import Zoom from 'react-reveal/Zoom';
 import Rotate from 'react-reveal/Rotate';
+
+// import {} from 'react-r'
 
 function AboutUs() {
   return (
