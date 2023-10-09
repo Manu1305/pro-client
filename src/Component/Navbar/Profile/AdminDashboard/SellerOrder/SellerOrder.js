@@ -6,13 +6,14 @@ import { ScaleLoader } from "react-spinners";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import DataTable from "../../../../Reuseable Comp/DataTable";
 import { IconButton, Tooltip } from "@mui/material";
-import DeliveryDiningSharpIcon from '@mui/icons-material/DeliveryDiningSharp';
+import DeliveryDiningSharpIcon from "@mui/icons-material/DeliveryDiningSharp";
 import { toast } from "react-toastify";
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 const SellerOrder = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // const [rowData,setRowData] = useState([])
   const navigate = useNavigate();
 
   const getOrders = async () => {
@@ -25,27 +26,45 @@ const SellerOrder = () => {
       };
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
-        .then((res) => res.data)
+        .then((res) => {
+          // const allData = res.data.filter((ele) => {
+          //   const date = new Date(ele.createdAt).toISOString().split("T")[0];
+
+          //   if (ele.orderStatus !== "Pending") {
+          //     console.log("ID Recived", ele._id);
+          //     return {
+          //       id: ele._id,
+          //       "Order Id": ele._id,
+          //       prdId: ele.productId,
+          //       Product: ele.prdData.images,
+          //       "Orderd On": date,
+          //       Price: ele.ordPrc,
+          //       "Payment Method": ele.pType,
+          //       "Delivery Status": ele.orderStatus,
+          //     };
+          //   }
+          // });
+          // setRowData(allData)
+          return res.data;
+        })
         .catch((err) => {
           console.log(err);
         });
       setOrders(res);
 
-      res && setIsLoading(false)
-
+      res && setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
-
 
   const addToDelivery = async (id) => {
     await httpService
       .put(`${apiURL}/delivery/assign-delivery-product/${id}`)
       .then((res) => {
         getOrders();
-        toast('Assigned Delivery', {
+        toast("Assigned Delivery", {
           position: "top-center",
           autoClose: 2500,
           hideProgressBar: false,
@@ -83,7 +102,7 @@ const SellerOrder = () => {
         })
         .then((json) => {
           getOrders();
-          toast('Product Delivered', {
+          toast("Product Delivered", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -101,7 +120,6 @@ const SellerOrder = () => {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -129,7 +147,12 @@ const SellerOrder = () => {
           console.log("parmas*******************", params);
           return (
             <div>
-              <img src={params.row.Product} alt="refresh" width={30} onClick={() => navigate(`/ViewDetails/${params.row.prdId}`)} />
+              <img
+                src={params.row.Product}
+                alt="refresh"
+                width={30}
+                onClick={() => navigate(`/ViewDetails/${params.row.prdId}`)}
+              />
             </div>
           );
         },
@@ -143,20 +166,25 @@ const SellerOrder = () => {
           // console.log("Check KR", params.row);
           return (
             <div style={{ alignItems: "center" }}>
-              {params.row["Delivery Status"] === "Ready To PickUp" &&
+              {params.row["Delivery Status"] === "Ready To PickUp" && (
                 <div>
-                  <Tooltip title="Assign Delivery" onClick={() => addToDelivery(params.row.id)}>
+                  <Tooltip
+                    title="Assign Delivery"
+                    onClick={() => addToDelivery(params.row.id)}
+                  >
                     <IconButton>
                       <DeliveryDiningSharpIcon />
                     </IconButton>
                   </Tooltip>
                 </div>
-              }
-              {
-                params.row["Delivery Status"] === "confirm Delivery" &&
+              )}
+              {params.row["Delivery Status"] === "confirm Delivery" && (
                 <div>
                   <div>
-                    <Tooltip title="Confirm Delivery" onClick={() => confirmDelivery(params.row.id)}>
+                    <Tooltip
+                      title="Confirm Delivery"
+                      onClick={() => confirmDelivery(params.row.id)}
+                    >
                       <IconButton>
                         <ThumbUpAltIcon />
                       </IconButton>
@@ -164,21 +192,22 @@ const SellerOrder = () => {
                   </div>
                   <BiDotsVerticalRounded />
                 </div>
-              }
-              {
-                params.row["Delivery Status"] === "confirm Return" &&
+              )}
+              {params.row["Delivery Status"] === "confirm Return" && (
                 <div>
                   <div>
-                    <Tooltip title="Confirm Return" onClick={() => confirmDelivery(params.row.id)}>
+                    <Tooltip
+                      title="Confirm Return"
+                      onClick={() => confirmDelivery(params.row.id)}
+                    >
                       <IconButton>
                         <ThumbUpAltIcon />
                       </IconButton>
                     </Tooltip>
                   </div>
                 </div>
-              }
+              )}
             </div>
-
           );
         },
       };
@@ -189,52 +218,61 @@ const SellerOrder = () => {
         headerName: string,
         width: 150,
         editable: true,
+      };
+    }
+  });
 
+  const rowData = orders.map((ele) => {
+    const date = new Date(ele.createdAt).toISOString().split("T")[0];
+
+    if (ele.length!== 0) {
+      console.log("ID Recived", ele._id);
+      return {
+        id: ele._id,
+        "Order Id": ele._id,
+        prdId: ele.productId,
+        Product: ele.prdData.images,
+        "Orderd On": date,
+        Price: ele.ordPrc,
+        "Payment Method": ele.pType,
+        "Delivery Status": ele.orderStatus,
       };
     }
   });
 
 
 
-  const rowData = orders.map((ele) => {
-    const date = new Date(ele.createdAt).toISOString().split('T')[0]
-    return {
-      id: ele._id,
-      "Order Id": ele._id,
-      prdId: ele.productId,
-      Product: ele.prdData.images,
-      "Orderd On": date,
-      Price: ele.ordPrc,
-      "Payment Method": ele.pType,
-      "Delivery Status": ele.orderStatus,
-    };
-  });
-
   return (
-    <div style={{ marginTop: "30px", }}>
+    <div style={{ marginTop: "30px" }}>
       <div>
         {/* <h1>Seller</h1> */}
-        {rowData.length !== 0 ?
+        {rowData.length !== 0 ? (
           <DataTable columns={header} rows={rowData} autoHeight />
-          :
-          <div style={{ margin: 'auto' }} >
-            {isLoading ?
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        ) : (
+          <div style={{ margin: "auto" }}>
+            {isLoading ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <ScaleLoader animation="border" role="status" color="red">
                   <span className="visually-hidden">Loading...</span>
-                </ScaleLoader
-                >
+                </ScaleLoader>
               </div>
-              : (
-                <img src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352" alt="Loaded" />
-              )}
+            ) : (
+              <img
+                src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                alt="Loaded"
+              />
+            )}
           </div>
-        }
+        )}
       </div>
     </div>
   );
 };
 
 export default SellerOrder;
-
-

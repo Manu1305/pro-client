@@ -258,8 +258,8 @@ const ViewProduct = () => {
                   ?  product.productDetails[prdDetInd].images[0]
                   : imgPreview
               }
-              className={`img-fluid img-responsive rounded product-image ${styles.iggg}`}
-              // style={{ height: "400px", width: "770px" }}
+              className={`img-fluid img-responsive rounded product-image`}
+              style={{ height: "500px", width: "770px" }}
               alt="img"
             />
           </div>
@@ -422,7 +422,7 @@ const ViewProduct = () => {
                   <label htmlFor="product_size">CHOOSE SIZE</label>
                 )}
               </div>
-              <div>
+              <div >
                 {product.productDetails && (
                   <div style={{ marginLeft: "30px" }}>
                     <div className={`mt-1 left-0 ${styles.sizeresponsive}`}>
@@ -451,7 +451,7 @@ const ViewProduct = () => {
                                     {quantity} left
                                   </div>
                                 </div>
-                                {user?.email && user?.urType === "buyer" && (
+                                {/* {user?.email && user?.urType === "buyer" && ( */}
                                   <div className="mt-1 ml-3 d-flex flex-row align-items-center">
                                     <div>
                                       <AiOutlineMinusCircle
@@ -488,7 +488,7 @@ const ViewProduct = () => {
                                       />
                                     </div>
                                   </div>
-                                )}
+                                {/* // )} */}
                               </div>
                             )}
                           </div>
@@ -499,7 +499,7 @@ const ViewProduct = () => {
 
                 <div className={`mb-3 mt-4 align-items-center`}>
                   <>
-                    {user?.email && user?.urType === "buyer" && (
+                    {/* {user?.email && user?.urType === "buyer" && ( */}
                       <button
                         className={`text-uppercase mr-2 ${styles.add_to_cart}`}
                         onClick={() => addtoCartButton(product)}
@@ -507,7 +507,7 @@ const ViewProduct = () => {
                         <BsHandbagFill className="mb-1 mr-3" />
                         Add to Cart
                       </button>
-                    )}
+                    {/* // )} */}
                   </>
                   {offerBtn ? (
                     <div className="container m-4">
@@ -534,7 +534,7 @@ const ViewProduct = () => {
             </div>
 
             {user?.email && user?.urType === "buyer" && (
-              <div className={styles.lasthead}>
+              <div className={`${styles.lasthead}`} style={{marginLeft:'10px'}}>
                 <div className={styles.headone}>
                   <div className={styles.oneone}>
                     <TbTruckDelivery />

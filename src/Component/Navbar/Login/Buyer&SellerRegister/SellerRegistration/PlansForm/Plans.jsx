@@ -118,6 +118,7 @@ const Plans = () => {
       console.log(error);
     }
   };
+  
 
   return (
     <div className={plans.App}>
