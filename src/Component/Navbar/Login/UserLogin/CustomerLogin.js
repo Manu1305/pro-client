@@ -9,15 +9,52 @@ import { apiURL } from "../../../../const/config";
 import axios from "axios";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
+import httpService from "../../../Error Handling/httpService";
+import { userCartItem } from "../../../../Redux/cart/cartAction";
+
+
+
 const CustomerLogin = () => {
+
+
   const history = useNavigate();
+  // const dispatch = useDispatch();
   const localStorage = window.localStorage;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inpType, setInpType] = useState("password");
+
   const dispatch = useDispatch();
+
+
+  const getCarts = async () => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      return await httpService
+        .get(`${apiURL}/cart/user-cart`, config)
+        .then((res) => {
+          if (res.data.Message === "Your cart is empty...!") {
+            // setCartItem([]);
+          } else {
+            console.log("UserCARt", res);
+            dispatch(userCartItem(res.data));
+            // setCartItem(res.data);
+
+          }
+        })
+        .catch((err) => console.log(err.config.message));
+    } catch (error) {
+      console.log("API Error", error);
+    }
+  };
 
   const handleCustomerLogin = async (e) => {
     e.preventDefault();
@@ -62,7 +99,7 @@ const CustomerLogin = () => {
       if (response.data.user.status) {
         localStorage.setItem("token", response.data.token);
         dispatch(currentUserData(response.data.user));
-
+        getCarts()
         const route =
           response.data.user.urType === "seller"
             ? !response.data.user?.storeSetup
@@ -76,8 +113,8 @@ const CustomerLogin = () => {
           },
         });
       } else {
-        toast.error("Your account temprorely is suspended",{
-         icon: "🚫"
+        toast.error("Your account temprorely is suspended", {
+          icon: "🚫"
         });
       }
     } catch (error) {
@@ -166,13 +203,13 @@ const CustomerLogin = () => {
                         </div>
                       </div>
                       <div className="pt-1 mb-4">
-                    
-                      <div className="flex flex-row">
-                      <p className="small text-muted">
-                      By login, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
-                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
-                      </p>
-                      </div>
+
+                        <div className="flex flex-row">
+                          <p className="small text-muted">
+                            By login, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                              terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link>
+                          </p>
+                        </div>
                         <button
                           className="btn btn-dark btn-lg btn-block bg-dark mt-3"
                           // type="button"
@@ -180,7 +217,7 @@ const CustomerLogin = () => {
                         >
                           Login
                         </button>
-                   
+
                       </div>
                       <Link className="small text-muted" to="/passwordupdate">
                         Forgot password?
@@ -191,10 +228,10 @@ const CustomerLogin = () => {
                           Register here
                         </Link>
                       </p>
-                      
+
                       <div >
 
-                     
+
                       </div>
                     </form>
                   </div>
