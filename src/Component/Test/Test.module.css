@@ -95,6 +95,8 @@ font-weight: bold;
    
     display: flex;
     flex-direction: row;
+    margin-right: 20px;
+
 }
 
 @media only screen and (max-width: 600px) {

@@ -10,7 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { ScaleLoader } from "react-spinners";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import imge from '../../../../images/logoooo.jpg'
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
@@ -144,21 +144,21 @@ const BuyerOrder = () => {
             <Card key={index} className={`m-2 ${styles.orderCard}`}>
               <Card.Body>
                 <Card.Title>Order: {index + 1}</Card.Title>
-                <img
-                  src="../Image/hiLogo.jpg"
+                {/* <img
+                  src={imge}
                   alt=""
-                  style={{ width: "45px", height: "45px" }}
+                  style={{ width: "100px", height: "100px" }}
                   className={`rounded-circle ${styles.imgcircle}`}
-                />
+                /> */}
                 <div key={order.id} className="d-flex align-items-center mb-3">
-                {/* <Link  to={`/orderDetails/${order._id}`}> to= */}
+                <Link  to={`/orderDetails/${order._id}`}> 
                   <img
                     src={order.prdData.images}
                     alt=""
                     style={{ width: "45px", height: "45px" }}
                     className="rounded-circle"
                   />
-                {/* </Link> */}
+                </Link>
 
                   <div className="ms-3">
                     <p className="fw-bold mb-1">{order.brand}</p>
