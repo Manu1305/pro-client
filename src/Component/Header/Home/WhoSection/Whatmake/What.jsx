@@ -6,6 +6,7 @@ import { TbGitBranch, TbTruckDelivery } from "react-icons/tb";
 import { BsShop } from "react-icons/bs";
 import {MdDeleteSweep} from "react-icons/md"
 import {AiOutlineShopping,AiOutlineMobile} from 'react-icons/ai'
+import { Footer } from "../../../../Footer/Footer";
 function Whatmakeus() {
   return (
     <div className={styles.top}>
@@ -120,6 +121,7 @@ function Whatmakeus() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
