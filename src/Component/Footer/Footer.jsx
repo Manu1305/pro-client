@@ -83,6 +83,8 @@ export const Footer = () => {
                   <Link className={styles.listhead}>Legal</Link>
                   <Link to="/termsCond" className={styles.links}>Terms and conditions </Link>
                   <Link to="/privacyPol" className={styles.links}>Privacy and policy</Link>
+                  <Link to="/sellerTermAndCond" className={styles.links}>Retailer Terms</Link>
+
                 </ul>
               </div>
             </div>
