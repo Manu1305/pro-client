@@ -3,6 +3,7 @@ import idea from "./SellerTermAndCond.module.css";
 import { Footer } from "../Footer";
 
 export const SellerTermAndCond = () => {
+    
   return (
     <div>
       <h1 className={idea.header}>RETAIL SERVICE AGREEMENT</h1>
