@@ -129,7 +129,7 @@ const Cart = () => {
                               obj={item.sizeAndQua}
                               select={Styles.select}
                             /> */}
-                            Quntities :{" "}
+                            Quntities :
                             {Object.entries(item.sizeAndQua)
                               .map(([size, value]) => {
                                 return `${size}-${value}`;

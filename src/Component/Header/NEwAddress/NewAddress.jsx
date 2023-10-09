@@ -67,8 +67,8 @@ const saveAddressHandler = async (e) => {
   return (
 
       <div className={styles.formdiv}>
+          <input className={styles.inputbox} type="text" placeholder="Name" name="name" onChange={onChangeHandler} />
           <div className={styles.divresponsive}>
-            
           <input className={`  ${styles.responsiveinput} `}  type="text" name="state" placeholder="State" onChange={onChangeHandler} />
           <input className={` ${styles.responsiveinput1}`}  type="text" name="area" placeholder="Dist" onChange={onChangeHandler} />
           </div>
