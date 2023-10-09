@@ -1,46 +1,44 @@
-.header{
-    text-align: center;
-    color: #BF0A2A;
-    font-weight: 700;
-    font-size: 35px;
-margin-top: 4rem;
+.header {
+  text-align: center;
+  color: #bf0a2a;
+  font-weight: 700;
+  font-size: 35px;
+  margin-top: 4rem;
 }
-.wholesaleP{
-    font-weight: 500;
-    font-size: 16px;
-    margin-left: 4rem;
-    margin-top: 1rem;
+.wholesaleP {
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 4rem;
+  margin-top: 1rem;
+}
+.wholesale {
+  color: #030303;
+}
+.wholesaleH1 {
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 2rem;
+  margin-left: 3.8rem;
+}
+.parag {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+.bott {
+  margin-bottom: 5rem;
+}
 
-
-  }
-  .wholesale{
-    color: #030303;
-  }
-  .wholesaleH1{
-    font-weight: 700;
-    font-size: 16px;
-    margin-top: 2rem;
-    margin-left: 3.8rem;
-  }
-  .parag{
+@media screen and (max-width: 600px) {
+  .parag {
     text-align: center;
     font-size: 16px;
     font-weight: 500;
     margin-top: 1rem;
-    margin-left: 4rem;
-    margin-right: 4rem;
+    margin-left: 0rem;
+    margin-right: 0rem;
   }
-  .bott{
-    margin-bottom: 5rem;
-  }
-
-  @media screen and (max-width: 600px) {
-    .parag{
-        text-align: center;
-        font-size: 16px;
-        font-weight: 500;
-        margin-top: 1rem;
-        margin-left: 0rem;
-        margin-right: 0rem;
-      }
-  }
+}
