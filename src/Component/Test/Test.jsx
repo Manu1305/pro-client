@@ -202,6 +202,10 @@ function Test() {
                       Amount need to collect from customer:
                       
 
+
+
+
+
                       
                       {order.pType === "cash" ? (parseInt(order.ordPrc) * 90) / 100 +
                       (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100 : 0}
