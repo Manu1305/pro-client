@@ -114,7 +114,7 @@ const BuyerConfirm = () => {
         .catch((err) => {
           console.log(err);
         });
-      console.log(res);
+      console.log("ERROR WHILE PLACING",res);
       return res;
     } catch (error) {
       console.log(error);
@@ -133,77 +133,83 @@ const BuyerConfirm = () => {
       });
   };
 
-
   const placeOrderButton = async () => {
     const valid = Object.keys(deliveryAddress).length > 0;
 
-    if (valid && payType !== "") {
-      const pType = payType === "Cash on delivery" ? "cash" : "online";
+    try {
+      if (valid && payType !== "") {
+        const pType = payType === "Cash on delivery" ? "cash" : "online";
 
-      // payment checkout
+        // payment checkout
 
-      const amount =
-        payType === "Cash on delivery"
-          ? (totalPrice * 10) / 100 +
-            sum +
-            (((totalPrice * 10) / 100) * 5) / 100
-          : parseInt(totalPrice) + GST + sum;
-      let payment = await makePayment(amount);
+        const amount =
+          payType === "Cash on delivery"
+            ? (totalPrice * 10) / 100 +
+              sum +
+              (((totalPrice * 10) / 100) * 5) / 100
+            : parseInt(totalPrice) + GST + sum;
+        let payment = await makePayment(amount);
 
-      let orderStoreInDB = await placeOrder(
-        payment.data.id,
-        payment.data.amount
-      );
+        let orderStoreInDB = await placeOrder(
+          payment.data.id,
+          payment.data.amount
+        );
 
-      console.log("Order Ids", orderStoreInDB);
-      console.log("payment", payment);
+        console.log("Order Ids", orderStoreInDB);
+        console.log("payment", payment);
 
-      const options = {
-        key: "rzp_live_m3oBDZHhzp8QRY",
-        amount: payment.data.amount,
-        currency: "INR",
-        name: "Hitech Mart",
-        description: "B2B Cloth store",
-        image:
-          "https://hitecmart.com/wp-content/uploads/2022/10/20221008_194021_0000.png",
-        order_id: payment.data.id,
-        callback_url: `${apiURL}/payment/payment-verification/${orderStoreInDB.ids}?pType=${pType}`,
-        prefill: {
-          name: user.name, //login user name
-          email: user.email, //login user email
-          contact: user.phone, //contact number
-          order: orderStoreInDB,
-          pTyp: pType,
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
+        const options = {
+          key: "rzp_live_m3oBDZHhzp8QRY",
+          amount: payment.data.amount,
+          currency: "INR",
+          name: "Hitech Mart",
+          description: "B2B Cloth store",
+          image:
+            "https://hitecmart.com/wp-content/uploads/2022/10/20221008_194021_0000.png",
+          order_id: payment.data.id,
+          callback_url: `${apiURL}/payment/payment-verification/${orderStoreInDB.ids}?pType=${pType}`,
+          prefill: {
+            name: user.name, //login user name
+            email: user.email, //login user email
+            contact: user.phone, //contact number
+            order: orderStoreInDB,
+            pTyp: pType,
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
 
-      const razor = new window.Razorpay(options);
+        const razor = new window.Razorpay(options);
 
-      if (orderStoreInDB.ids) {
-        return razor.open();
+        if (orderStoreInDB.ids) {
+          return razor.open();
+        }
+        razor.on("payment.failed", function (response) {
+          alert(response.error.code);
+          alert(response.error.description);
+          alert(response.error.source);
+          alert(response.error.step);
+          alert(response.error.reason);
+          alert(response.error.metadata.order_id);
+          alert(response.error.metadata.payment_id);
+
+          console.log("Resposne", response);
+        });
+      } else {
+        // return  <Alert/>
+        warningMsg("Plese selete address or add address");
       }
-      razor.on("payment.failed", function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
-
-        console.log("Resposne", response);
-      });
-    } else {
-      // return  <Alert/>
-      warningMsg("Plese selete address or add address");
+    } catch (error) {
+      console.log("ERORR  ==>",error)
+      // alert("refresh the page")
     }
   };
+
+
 
   if (cartItems.length === 0) {
     return (

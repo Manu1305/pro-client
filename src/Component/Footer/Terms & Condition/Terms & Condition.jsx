@@ -552,7 +552,7 @@ export const TermsCondition = () => {
             </p>
           </li>
           <li className={idea.wholesale}>
-            <h3 className={idea.wholesaleH1}> 14.MISCELLANEOUS PROVISIONS </h3>
+            <h93 className={idea.wholesaleH1}> 14.MISCELLANEOUS PROVISIONS </h93>
             <p className={idea.wholesaleP}>
               {" "}
               14.1 Unless HiTec Mart communicates otherwise to you, the Terms
@@ -600,7 +600,95 @@ export const TermsCondition = () => {
             </p>
           </li>
           <li className={idea.wholesale}>
-            <h3 className={idea.wholesaleH1}> 16.GRIEVANCE OFFICER </h3>
+            <h3 className={idea.wholesaleH1}> 16. Cancellation Policy </h3>
+            <p className={idea.wholesaleP}>
+              {" "}
+              Customers have the option to cancel an order at any time before it
+              is dispatched. Once the order is out for delivery, it cannot be
+              canceled, but customers can choose to reject it when it arrives at
+              their doorstep. The timeframe for canceling an order varies
+              depending on the product category, and once the specified time has
+              passed, cancellation is not possible. In certain situations, there
+              may be a cancellation fee for orders canceled after the specified
+              time, as indicated on the product page or order confirmation page.
+              If the seller cancels an order due to unforeseen circumstances, a
+              full refund will be initiated for prepaid orders. Please note that
+              HiTecmart retains the right to accept or reject order
+              cancellations, and we also reserve the right to adjust the
+              cancellation timeframe or cancellation fee as needed.
+              Additionally, for orders cancelled after placement, a 10% deduction
+              from the paid amount may apply and won't be refundable.
+            </p>
+          </li>
+          <li className={idea.wholesale}>
+            <h3 className={idea.wholesaleH1}> 17.Return Policy </h3>
+            {/* <p className={idea.wholesaleP}>
+              {" "}
+              The User has the option to report any complaints related to the
+              Platform or its Services, such as issues involving abuse on the
+              Platform or problems with information processing, to the Grievance
+              Officer using the contact information provided in Clause 16. We
+              will make every effort to address your concerns and complaints
+              within the specified timeframes as required by relevant laws.
+            </p> */}
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}>1. Return Window:</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                You can return clothing items within 60 days from the date of
+                delivery.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}>2. Condition of the Item:</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Clothing items must be unworn, unwashed, and with original tags
+                attached.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}>3. Proof of Purchase:</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                A copy of the packing slip or order confirmation email is
+                required for all clothing returns.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}>4. Refund Method:</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Refunds will be issued to the original payment method within
+                7-14 business days after receiving the returned clothing.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}>5. Restocking Fees:</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                No restocking fees apply to clothing returns.
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}>6. Return Shipping:</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Customers are responsible for return shipping costs, except for
+                returns due to an error on the retailer's part
+              </p>
+            </li>
+            <li className={idea.wholesale}>
+              <h3 className={idea.wholesaleH1}>7. Exchanges:</h3>
+              <p className={idea.wholesaleP}>
+                {" "}
+                Exchanges for a different size or color are accepted within the
+                60-day return window.
+              </p>
+            </li>
+          </li>
+          <li className={idea.wholesale}>
+            <h3 className={idea.wholesaleH1}> 18.GRIEVANCE OFFICER </h3>
             <p className={idea.wholesaleP}>
               {" "}
               Grievance Officer, Plot No: 128-P2,
