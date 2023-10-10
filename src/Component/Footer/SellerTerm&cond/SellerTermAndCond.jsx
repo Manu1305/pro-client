@@ -3,7 +3,7 @@ import idea from "./SellerTermAndCond.module.css";
 import { Footer } from "../Footer";
 
 export const SellerTermAndCond = () => {
-    
+
   return (
     <div>
       <h1 className={idea.header}>RETAIL SERVICE AGREEMENT</h1>
@@ -32,6 +32,7 @@ export const SellerTermAndCond = () => {
               garments, footwears for men, women and children also with mobile
               accessories;
             </p>
+
             <p className={idea.wholesaleP}>
               {" "}
               B. The Manufacturer is engaged in the manufacturing and
@@ -39,6 +40,8 @@ export const SellerTermAndCond = () => {
               base by leveraging the Company’s HiTec Mart Store;
             </p>
             <p className={idea.wholesaleP}>
+
+                
               {" "}
               C. The Company possesses expertise in in-store sales, customer
               engagement, and retail management, and is willing to provide its
