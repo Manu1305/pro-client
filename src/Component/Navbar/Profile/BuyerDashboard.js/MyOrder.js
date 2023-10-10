@@ -11,6 +11,8 @@ import { ScaleLoader } from "react-spinners";
 import axios from "axios";
 import Swal from "sweetalert2";
 import imge from '../../../../images/logoooo.jpg'
+import DataTable from "../../../Reuseable Comp/DataTable";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
@@ -21,18 +23,12 @@ const BuyerOrder = () => {
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.userReducer.user);
 
-  const returnButton = (order) => {
-    alert(order.updatedAt);
+ 
 
-    const currentDate = new Date();
 
-    console.log(order.updatedAt);
-    console.log(currentDate);
-    console.log("Check difference ", currentDate < order.updatedAt);
-  };
 
-  // const user = useSelector((state) => state.userReducer.user)
-  console.log("user", user);
+
+
   const getOrders = async () => {
     try {
       const config = {
@@ -66,6 +62,99 @@ const BuyerOrder = () => {
       console.log(error);
     }
   };
+
+  const returnButton = (order) => {
+    // alert(order.updatedAt);
+
+    const currentDate = new Date();
+
+    console.log(order.updatedAt);
+    console.log(currentDate);
+    console.log("Check difference ", currentDate < order.updatedAt);
+  };
+
+  // const user = useSelector((state) => state.userReducer.user)
+  console.log("user", user);
+  const header = [
+    "Name",
+    "Phone",
+    "Email",
+    "Plan",
+    "expire",
+    "remainingDays",
+  ].map((ele) => {
+    let string = ele;
+    string.replace(/^./, string[0].toUpperCase());
+
+    if (ele === "images") {
+      return {
+        field: "image",
+        type: "image",
+        renderCell: (params) => {
+          return (
+            <div>
+              <img
+                src={params.row.images}
+                // onClick={() => navigate(`/ViewDetails/${params.row.id}`)}
+                alt=""
+                width={30}
+              />
+            </div>
+          );
+        },
+      };
+    }
+    // if (ele === "action") {
+    //   return {
+    //     field: "Action",
+    //     type: "action",
+    //     width: "150px",
+    //     renderCell: (params) => {
+    //       console.log("Check here", params.row);
+    //       return (
+    //         <div style={{ display: "flex", flexDirection: "row" }}>
+    //           <div
+    //             className="mr-5"
+                
+    //           >
+    //             <RiDeleteBin6Fill />
+    //           </div>
+    //           {/* <div onClick={() => quantityHandler(params.row)}>
+    //               <FiEdit />
+    //             </div> */}
+    //         </div>
+    //       );
+    //     },
+    //   };
+    // }
+     else {
+      return {
+        field: ele,
+        headerName: string,
+        width: 150,
+        editable: true,
+      };
+    }
+  });
+
+  const rowData = orders.map((ele) => {
+    const expDate = new Date(ele.subscription.expDate);
+    const currentDate = new Date();
+    const timeDifference = expDate - currentDate;
+
+    // Calculate the remaining days
+    const remainingDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+    return {
+      id: ele._id,
+      Name: ele.name,
+      Phone: ele.phone,
+      Email: ele.email,
+      Plan: ele.subscription.subsStatus,
+      expire: new Date(ele.subscription.expDate).toLocaleDateString("en-US"),
+      remainingDays: remainingDays,
+    };
+  });
 
 
   useEffect(() => {
@@ -134,131 +223,36 @@ const BuyerOrder = () => {
             />
           )}
         </div>
-      ) : (
-        orders.length !== 0 &&
-        orders.map((order, index) => {
-          // const dateString = "2023-08-01T:36:25.914+00:00";
-          const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
-          const isExpRet = dateFromISOString > new Date();
-          return (
-            <Card key={index} className={`m-2 ${styles.orderCard}`}>
-              <Card.Body>
-                <Card.Title>Order: {index + 1}</Card.Title>
-                {/* <img
-                  src={imge}
-                  alt=""
-                  style={{ width: "100px", height: "100px" }}
-                  className={`rounded-circle ${styles.imgcircle}`}
-                /> */}
-                <div key={order.id} className="d-flex align-items-center mb-3">
-                <Link  to={`/orderDetails/${order._id}`}> 
-                  <img
-                    src={order.prdData.images}
-                    alt=""
-                    style={{ width: "45px", height: "45px" }}
-                    className="rounded-circle"
-                  />
-                </Link>
-
-                  <div className="ms-3">
-                    <p className="fw-bold mb-1">{order.brand}</p>
-                    <p className="text-muted mb-0">{order.category}</p>
-                  </div>
-                  <select>
-                    {order.sizeWithQuantity &&
-                      Object.entries(order.sizeWithQuantity).map(
-                        ([key, value]) => (
-                          <option key={key} value={key}>
-                            {value.selectedSizes ? (
-                              <p
-                                style={{
-                                  fontSize: 13,
-                                  color: "GrayText",
-                                }}
-                              >
-                                {value.selectedSizes}
-                              </p>
-                            ) : null}{" "}
-                            -
-                            {value.quantities ? (
-                              <p
-                                style={{
-                                  fontSize: 13,
-                                  color: "GrayText",
-                                }}
-                              >
-                                {value.quantities}
-                              </p>
-                            ) : null}
-                          </option>
-                        )
-                      )}
-                  </select>
+      ) : 
+      (
+        <>
+          {rowData.length !== 0 ? (
+            <div className="mt-3">
+              <DataTable columns={header} rows={rowData} />
+            </div>
+          ) : (
+            <div style={{ margin: "auto" }}>
+              {isLoading ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ScaleLoader animation="border" role="status" color="red">
+                    <span className="visually-hidden">Loading...</span>
+                  </ScaleLoader>
                 </div>
-
-
-                <div className={`mb-3 ${styles.addressSection}`}>
-                  <h6 className="my-2">Tracking ID: {order.trackId}</h6>
-                  <h6 className="text-muted">Address:</h6>
-                  <h6>Locality: {order.dlvAddr.locality} </h6>
-                  <h6>Area: {order.dlvAddr.area} </h6>
-                  <h6>
-                    City & State: {order.dlvAddr.city}, {order.dlvAddr.state}
-                  </h6>
-                  <h6>Pincode: {order.dlvAddr.pincode} </h6>
-                </div>
-                <div className="mb-3">
-                  <h6>
-                    Status:{" "}
-                    {order.orderStatus === "confirm Delivery"
-                      ? "Shipped"
-                      : order.orderStatus}
-                  </h6>
-                </div>
-                <div className="mb-3">
-                  <h6>Amount: {order.ordPrc}</h6>
-                </div>
-                <div className="mb-3">
-                  {order.orderStatus !== "Shipped" &&
-                    order.orderStatus !== "Dispatched 1" &&
-                    order.orderStatus !== "Dispatced 1" &&
-                    order.orderStatus !== "Delivered" &&
-                    order.orderStatus !== "confirm Delivery" &&
-                    order.orderStatus !== "Return Successful" &&
-                    order.orderStatus !== "confirm Return" && (
-                      <>
-                        {/* <button className="btn btn-warning my-2">
-                          CHANGE ADDRESS
-                        </button> */}
-                        {
-                          order.orderStatus !== 'Cancelled' ? (
-                            <button
-                              onClick={() => cancelorder(order._id)}
-                              className="btn btn-danger"
-                            >
-                              CANCEL ORDER
-                            </button>
-                          ) : null
-                        }
-
-                      </>
-                    )}
-
-                  {order.orderStatus === "Delivered" && isExpRet ? (
-                    <Link to={`/returnPro/${order._id}`}>
-                      <button
-                        onClick={() => returnButton(order)}
-                        className="btn btn-warning my-2"
-                      >
-                        RETURN ORDER
-                      </button>
-                    </Link>
-                  ) : null}
-                </div>
-              </Card.Body>
-            </Card>
-          );
-        })
+              ) : (
+                <img
+                  src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+                  alt="Loaded"
+                />
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

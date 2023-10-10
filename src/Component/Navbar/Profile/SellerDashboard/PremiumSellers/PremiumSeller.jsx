@@ -188,7 +188,8 @@ export const PremiumSellers = () => {
                 />
               )}
             </div>
-          ) : (
+          ) :
+           (
             <>
               {rowData.length !== 0 ? (
                 <div className="mt-3">

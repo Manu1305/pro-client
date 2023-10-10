@@ -687,7 +687,7 @@ const SellerRegister = () => {
                       </div>
                       <div className="flex flex-row">
                       <p className="small text-muted">
-                      By register, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
+                      By register, you accept Hitecmart's <Link to="/sellerTermAndCond" className="text-blue-400 font-semibold">
                       terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
                       </p>
                       </div>

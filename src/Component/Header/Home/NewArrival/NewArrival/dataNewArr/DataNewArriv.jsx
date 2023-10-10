@@ -149,9 +149,9 @@ const DataNewArriv = ({
       </Slider>
 
       {/* </div> */}
-      <Link to="/shoppingPage">
+      {/* <Link to="/shoppingPage">
         <button className={styless.seeMore}>Go to shop...</button>
-      </Link>
+      </Link> */}
     </div>
   );
 };

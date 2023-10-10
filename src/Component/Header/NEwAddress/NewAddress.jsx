@@ -7,6 +7,7 @@ import httpService from "../../Error Handling/httpService";
 
 function NewAddress({getSavedAddress}) {
 const [address, setAddress] = useState({
+  name:'',
   pincode: "",
   locality: "",
   area: "",
