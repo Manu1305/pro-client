@@ -184,6 +184,7 @@ function Test() {
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1">Transaction: {order.raz_paymentId}</p>
                 </div>
+                
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1"> Payment method:{order.pType}</p>
                 </div>
@@ -206,7 +207,7 @@ function Test() {
 
 
 
-                      
+
                       {order.pType === "cash" ? (parseInt(order.ordPrc) * 90) / 100 +
                       (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100 : 0}
                     </p>
