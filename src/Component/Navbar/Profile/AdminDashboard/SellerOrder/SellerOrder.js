@@ -144,7 +144,6 @@ const SellerOrder = () => {
         type: "image",
 
         renderCell: (params) => {
-          console.log("parmas*******************", params);
           return (
             <div>
               <img
