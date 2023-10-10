@@ -201,6 +201,8 @@ function Test() {
                     <p className="ml-1 text-red-600 font-bold">
                       Amount need to collect from customer:
                       
+
+                      
                       {order.pType === "cash" ? (parseInt(order.ordPrc) * 90) / 100 +
                       (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100 : 0}
                     </p>
