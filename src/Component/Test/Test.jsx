@@ -145,11 +145,10 @@ function Test() {
   const orderPrice = order?.ordPrc;
 
   const tax = orderPrice * taxRate;
-  const subtotal = orderPrice;
 
   const shipping = order?.quantity * 10;
-
   const totalAmount = orderPrice + tax + shipping;
+
   console.log("Tax:", tax);
 
 
@@ -382,7 +381,7 @@ const paidAmount = totalAmount * 0.1
               <div className="ml-3">
                 <div className="flex flex-row">
                   <p>Order Price : </p>
-                  <p style={{ marginLeft: "65px" }}>{subtotal}</p>
+                  <p style={{ marginLeft: "65px" }}>{orderPrice}</p>
                 </div>
 
                 <div className="flex flex-row">

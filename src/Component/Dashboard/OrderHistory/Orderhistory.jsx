@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { element } from "prop-types";
 
 const OrderHistory = () => {
   const user = useSelector((state) => state.userReducer.user);
@@ -140,7 +141,7 @@ const OrderHistory = () => {
     "Orderd On",
     "Payment Method",
     "Price",
-    "Collect",
+    // "Collect",
     "Delivery Status",
     "Action",
   ].map((ele) => {
@@ -159,7 +160,9 @@ const OrderHistory = () => {
                 src={params.row.Product}
                 alt="refresh"
                 width={30}
-                onClick={() => navigate(`/orderDetails/${params.row["Order_Id"]}`)}
+                onClick={() =>
+                  navigate(`/orderDetails/${params.row["Order_Id"]}`)
+                }
               />
             </div>
           );
@@ -281,19 +284,19 @@ const OrderHistory = () => {
 
   const rowData = orders.map((ele) => {
     const date = new Date(ele.createdAt).toISOString().split("T")[0];
-    const collect =
-      (parseInt(ele.ordPrc) * 90) / 100 +
-      (((parseInt(ele.ordPrc) * 90) / 100) * 5) / 100;
+    // const collect =
+    //   (parseInt(ele.ordPrc) * 90) / 100 +
+    //   (((parseInt(ele.ordPrc) * 90) / 100) * 5) / 100;
     return {
       id: ele._id,
-      Customer:ele.dlvAddr.name,
+      Customer: ele.dlvAddr.name,
       "Order Id": `HTM-${ele._id.substr(ele._id.length - 6)}`,
-      "Order_Id":ele._id,
+      Order_Id: ele._id,
       prdId: ele.productId,
       Product: ele.prdData.images,
       "Orderd On": date,
-      Price: ele.ordPrc,
-      Collect: ele.pType === "cash" ? collect : 0,
+      Price: ele.ordPrc + ( Number(ele.ordPrc) * 0.05) +( Number(ele.quantity) * 10),
+      // Collect: ele.pType === "cash" ? collect : 0,
       "Payment Method": ele.pType,
       "Delivery Status": ele.orderStatus,
     };
