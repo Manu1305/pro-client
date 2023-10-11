@@ -4,14 +4,15 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
-import { addProduct } from "../../Redux/product/productAction";
+
 import { useParams } from "react-router-dom";
-import { apiURL } from "../../const/config";
-import httpService from "../Error Handling/httpService";
+
 import { Footer } from "../Footer/Footer";
-import { ScaleLoader } from "react-spinners";
+
 import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const Shopping = ({ products }) => {
   const { category, collections } = useParams();
@@ -19,14 +20,14 @@ const Shopping = ({ products }) => {
   const colletionResults = collections;
 
   const selectedCategory = category ? category : "all";
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.userReducer.user);
 
   const [price, setPrice] = useState(100000);
   const [categories, setCategories] = useState([]);
-  const [data, setData] = useState([]);
+
   const [pageNumber, setPageNumber] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+
   const [collectionstate, setCollections] = useState([]);
 
   const handleCategoryChange = (categor) => {
@@ -85,13 +86,14 @@ const Shopping = ({ products }) => {
         >
           <div className="d-flex flex-column">
             <div className={styless.container}>
+            
               <Link
                 style={{
                   cursor: "pointer",
                   position: "relative",
                   display: "inline-block",
                 }}
-                to={`/ViewDetails/${data._id}`}
+                to={user && user.email ? `/ViewDetails/${data._id}` : "/login"}
               >
                 <div className={styless.imagediv}>
                   <img src={data.productDetails[0].images[0]} alt="" />
@@ -125,53 +127,25 @@ const Shopping = ({ products }) => {
             <div className="card-body">
               <div className="cart-title m-1">
                 {" "}
-                <p
-                  style={{
-                    textTransform: "uppercase",
-                    fontFamily: "Martian Mono, monospace",
-                  }}
-                >
-                  {data.brand}
-                </p>
-                <p
-                  style={{
-                    textTransform: "uppercase",
-                    fontFamily: "sans-serif",
-                  }}
-                  className={`text-gray-600 ${styless.tittt}`}
-                >
-                  {data.title.slice(0, 22)}
-                </p>
+                <p className={styless.tittt}>{data.title.slice(0, 22)}</p>
               </div>
-              {user && user.email ? (
-                <div className="m-2 d-flex justify-content-between">
-                  <div className="mb-1" style={{ fontSize: "bold" }}>
-                    <p className="font-semibold">&#8377;{data.sellingPrice}</p>
-                  </div>
-                  <div className="mb-1" style={{ fontSize: "bold" }}>
-                    <p className="text-gray-400 line-through">
-                      {data.realPrice}
-                    </p>
-                  </div>
-
-                  <div className="mb-1">
-                    <p className="text-green-500 font-semibold">
-                      {`${Math.floor(
-                        ((data.realPrice - data.sellingPrice) /
-                          data.realPrice) *
-                          100
-                      )}% Off`}
-                    </p>
-                  </div>
+              {/* {user && user.email ? ( */}
+              <div className="d-flex justify-content-between">
+                <div className="mb-1" style={{ fontSize: "bold" }}>
+                  <p className="font-semibold">&#8377;{data.sellingPrice}</p>
                 </div>
-              ) : 
-              // (
-              //   <div className="m-2" style={{ fontWeight: "30px" }}>
-              //     {data.title}
-              //   </div>
-              // )
-              null
-              }
+                <div className="mb-1" style={{ fontSize: "bold" }}>
+                  <p className="text-gray-400 line-through">{data.realPrice}</p>
+                </div>
+                <div className="mb-1">
+                  <p className="text-green-500 font-semibold">
+                    {`${Math.floor(
+                      ((data.realPrice - data.sellingPrice) / data.realPrice) *
+                        100
+                    )}% Off`}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -191,7 +165,7 @@ const Shopping = ({ products }) => {
           <div className="container">
             <div className="row p-3">
               <div className="col-lg-3">
-                <div className="card mb-5">
+                
                   <div
                     className={`card-body mb-7 shadow-xl ${styless.categggg}`}
                   >
@@ -280,7 +254,7 @@ const Shopping = ({ products }) => {
                       </div>
                     ) : null}
                   </div>
-                </div>
+                
               </div>
 
               {/* Content */}
@@ -298,17 +272,20 @@ const Shopping = ({ products }) => {
                   {displayUsers}
 
                   {filteredProducts && filteredProducts.length !== 0 && (
-                    <ReactPaginate
-                      className={styless.pagination}
-                      previousLabel={"<-prev"}
-                      nextLabel={" next->"}
-                      pageCount={pageCount}
-                      onPageChange={changePage}
-                      containerClassName={"pagination"}
-                    />
+                    <div className="d-flex justify-center">
+                      <ReactPaginate
+                        style={{ color: "white" }}
+                        className={styless.pagination}
+                        previousLabel={<ArrowBackIosIcon />}
+                        nextLabel={<ArrowForwardIosIcon />}
+                        pageCount={pageCount}
+                        onPageChange={changePage}
+                        containerClassName={"pagination"}
+                      />
+                    </div>
                   )}
                 </div>
-                <hr />
+                {/* <hr /> */}
               </div>
             </div>
           </div>

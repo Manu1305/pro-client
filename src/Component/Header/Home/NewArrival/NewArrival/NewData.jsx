@@ -1,14 +1,19 @@
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styless from "./NewArrival.module.css";
+
+import top1 from "../../../../../images/top1.png";
+import DataNewArriv from "./dataNewArr/DataNewArriv";
+import { useSelector } from "react-redux";
+import Slider from "react-slick";
 import { Link } from "react-router-dom";
 
-import top1 from '../../../../../images/top1.png';
-import top2 from '../../../../../images/top1.png';
-import top3 from '../../../../../images/top1.png';
+// import SellerRelatedPro from "../../../../Shopingsection/SellerRelatedProduct/sellerRelatedPro";
 
 const NewData = ({ products }) => {
+
+  const user = useSelector((state) => state.userReducer.user);
+
   const settings = {
     dots: false,
     infinite: true,
@@ -43,7 +48,7 @@ const NewData = ({ products }) => {
       price: "199",
       category: "men",
     },
- 
+
     {
       id: 4,
 
@@ -64,7 +69,7 @@ const NewData = ({ products }) => {
       price: "450",
       category: "kid",
     },
-  
+
     {
       id: 7,
 
@@ -75,26 +80,31 @@ const NewData = ({ products }) => {
       price: "4999",
       category: "women",
     },
-    
   ];
 
   const sortedData = products
-  ? products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  : [];
+    ? products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    : [];
 
   return (
     <div className={`${styless.bg}`}>
       <h2 className={styless.hhhhaa}>NEW ARRIVAL</h2>
       <div className={`${styless.sliderContainer}`}>
+        {/* { (user.subscription.subsStatus === "Active") && */}
+          <DataNewArriv
+          //  prodd={product.collections}
+          //   productId={product._id}
+          />
+        {/* } */}
         <Slider {...settings}>
-          {productItems &&
-            productItems.map((productItems) => (
+          {products &&
+            products.map((productItems) => (
               <div >
                 <div className={styless.customerheading}>
-                  <Link to='/shoppingpage' >
+                  <Link to={`/ViewDetails/${productItems._id}`} >
                     <div className={`${styless.card} shadow-md`}>
                       <img 
-                        src={productItems.image}
+                        src={productItems.productDetails[0].images[0]}
                         alt=""
                       />
                     </div>

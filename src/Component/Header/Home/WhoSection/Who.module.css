@@ -4,8 +4,17 @@
   box-shadow: 15px 6px 10px 
 }
 
+.redBox1 {
+  /* background-color: #BF0A2A; */
+  background: #BF0A2A;
+
+  height: 300px;
+  width: 50%;
+  cursor: pointer;
+  transition: width 2s;
+}
 .redBox {
-  background-color: red;
+  background-color: #BF0A2A;
   height: 300px;
   width: 50%;
   cursor: pointer;
@@ -19,13 +28,149 @@
   cursor: pointer;
 }
 
+.whiteBox :hover{
+  font-weight: 900;
+  /* font-size: 10rem; */
+}
+
 .text {
-  font-weight: bold;
+  font-weight: 900;
   font-size: 14rem;
 }
 
+.text1 {
+  font-weight: 900;
+  font-size: 14rem;
+  color: white;
+}
+.text2 {
+  font-weight: 900;
+  font-size: 14rem;
+  color: #BF0A2A;
+}
+.text3 {
+  font-weight: 900;
+  font-size: 14rem;
+  position: relative;
+  right: auto;
+  color: #BF0A2A;
+  float: right;
+  margin-left: 265px;
+}
+.text4 {
+  font-weight: 900;
+  font-size: 14rem;
+  position: relative;
+  left: auto;
+  color: white;
+  float: left;
+  margin-right: 265px;
+}
+
+
+.text1Hover {
+  font-weight: 900;
+  font-size: 14rem;
+  color: white;
+  margin-top: -35px;
+  transition: margin-top 1.5s;
+}
+
+.text2Hover {
+  font-weight: 900;
+  font-size: 14rem;
+  color: #BF0A2A;
+  margin-top: -35px;
+  transition: margin-top 1.5s;
+}
+.text3Hover {
+  font-weight: 900;
+  font-size: 14rem;
+  color: #BF0A2A;
+
+  margin-top: -35px;
+  margin-left: 270px;
+  transition: margin-top 1.5s;
+}
+.text4Hover {
+  font-weight: 900;
+  font-size: 14rem;
+  color: white;
+  margin-top: -35px;
+  margin-right: 300px;
+  margin-left: -90px;
+  transition: margin-top 1.5s;
+}
+
+
+.hovertext{
+  font-weight: 900;
+  font-size: 4rem; 
+  margin-left: 100px;
+  top: 0;
+  color: white;
+  padding-bottom:100px;
+  line-height: 0px;
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+
+
+
+.hover1text{
+  font-weight: 900;
+  font-size: 4rem; 
+  margin-left: 120px;
+  top: 0;
+  color: #BF0A2A;
+  padding-bottom:100px;
+  line-height: 0px;
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.hover3text{
+  font-weight: 900;
+  font-size: 4rem; 
+  margin-left: 390px;
+  top: 0;
+  color: #BF0A2A;
+  padding-bottom:100px;
+  line-height: 0px;
+  right: 0;
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+.hover4text{
+  font-weight: 900;
+  font-size: 4rem; 
+  margin-right: 320px;
+  top: 0;
+  color: white;
+  padding-bottom:100px;
+  line-height: 0px;
+  right: 0;
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
 .redText {
-  color: red;
+  color: #BF0A2A;
 }
 
 .whiteText {
@@ -41,10 +186,15 @@
 }
 
 
+.redBox1.hovered {
+  height: 40px;
+  transition: height 2s;
+  
+
+}
 .redBox.hovered {
   height: 40px;
   transition: height 2s;
-  display: block;
 
 }
 
@@ -69,7 +219,7 @@
 .redTextlast{
   position: relative;
  right: auto;
- color: red;
+ color: #BF0A2A;
  float: right;
 }
 
@@ -80,7 +230,9 @@
 @media screen and (max-width:800px) {
   
 .redBox {
-  background-color: red;
+  /* background-color: #BF0A2A; */
+  background: #BF0A2A;
+
   height: 150px;
   width: 50%;
   
@@ -91,13 +243,19 @@
   width: 50%;
 }
 
-.text {
-  font-weight: bold;
+.text1 {
+  font-weight: 900;
   font-size: 5rem;
 }
 
+.text {
+  font-weight: 900;
+  font-size: 5rem;
+}
+
+
 .redText {
-  color: red;
+  color: #BF0A2A;
 }
 
 .whiteText {
@@ -113,7 +271,38 @@
 }  
 
 .redTextlast{
-  color: red;
+  color: #BF0A2A;;
   
+}
+.redBox1 {
+  /* background-color: #BF0A2A; */
+  background: #BF0A2A;
+
+  height: 150px;
+  width: 50%;
+  cursor: pointer;
+  transition: width 2s;
+}
+.text1 {
+  font-weight: 900;
+  font-size: 4rem;
+  color: white;
+  
+}
+.text2 {
+  font-weight: 900;
+  font-size: 4rem;
+  color: #BF0A2A;
+}
+.text3 {
+  font-weight: 900;
+  font-size: 4rem;
+  color: #BF0A2A;
+}
+.text4 {
+  font-weight: 900;
+  font-size: 4rem;
+  color: white;
+
 }
 }

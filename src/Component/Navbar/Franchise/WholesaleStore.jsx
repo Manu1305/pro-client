@@ -3,6 +3,7 @@ import idea from "./Franchise.module.css";
 import { AiOutlineStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Wholesale from "../../../images/wholesaleFran.png";
+import { Footer } from "../../Footer/Footer";
 
 export const WholesaleStore = () => {
   return (
@@ -136,7 +137,9 @@ export const WholesaleStore = () => {
             </li>
           </ol>
         </div>
+        <Footer/>
       </div>
+      <Footer/>
     </>
   );
 };

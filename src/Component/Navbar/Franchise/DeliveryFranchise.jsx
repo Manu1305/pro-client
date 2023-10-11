@@ -1,6 +1,7 @@
 import React from "react";
 import idea from "./Franchise.module.css";
 import ImageWholesale from "../../../images/DeliveryFranch.png";
+import { Footer } from "../../Footer/Footer";
 
 export const DeliveryFranchise = () => {
   return (
@@ -150,7 +151,10 @@ export const DeliveryFranchise = () => {
             </li>
           </ol>
         </div>
+        <Footer/>
       </div>
+      <Footer/>
+
     </>
   );
 };

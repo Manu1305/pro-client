@@ -61,7 +61,7 @@ import { SizeChart } from "./Footer/Size&Chart/Size&Chart";
 import { FaQ } from "./Footer/FAQ/FaQ";
 import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
 import SellerRelatedPro from "./Shopingsection/SellerRelatedProduct/sellerRelatedPro";
-
+import Test from "./Test/Test";
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
@@ -72,9 +72,9 @@ const LazyMainPage = React.lazy(() =>
 );
 
 const App = () => {
+  
   const [produts, setProducts] = useState([]);
   const [ProductLength, setProductLength] = useState();
-  // const [cartItems, setCartItems] = useState(0);
 
   const user = useSelector((state) => state.userReducer.user);
 
@@ -210,6 +210,7 @@ const App = () => {
             <Route path="/whyus" element={<Whydetail />} />
             <Route path="/whatus" element={<Whatmakeus />} />
             <Route path="/whoweare" element={<WhoWeAre />} />
+            <Route path="/orderDetails/:orderId" element={<Test />} />
             <Route
               path="/productVerification/:id"
               element={<ProductVerification />}

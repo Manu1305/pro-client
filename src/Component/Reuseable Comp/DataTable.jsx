@@ -1,6 +1,9 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 function DataTable({ rows, columns }) {
+
+
+  console.log("ROWS",rows)
   return (
     <DataGrid
       rows={rows}
