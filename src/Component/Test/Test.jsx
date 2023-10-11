@@ -157,7 +157,7 @@ function Test() {
       {order !== null && (
         <div style={{ backgroundColor: "#F7FBFF", width: "100%", overflow:'hidden' }}>
           <div className={styles.headingdiv}>
-            <h3>Order Id : {order._id}</h3>
+            <h3 className="font-bold ">Order Id : HTM-{order._id.substr(order._id.length - 6)}</h3>
           </div>
           <div className={styles.secondiv}>
             <div className={styles.insidediv}>
