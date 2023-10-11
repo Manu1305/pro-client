@@ -135,21 +135,30 @@ function Test() {
     }
   };
 
-  useEffect(() => {
-    console.log(seller + "seller data ");
-  }, [seller]);
+  
 
   useEffect(() => {
     getOrderDetails();
-    // getSellerDetails();
   }, []);
 
-  const taxRate = 0.15;
+  const taxRate = 0.05;
   const orderPrice = order?.ordPrc;
 
   const tax = orderPrice * taxRate;
-  const subtotal = orderPrice - tax;
+  const subtotal = orderPrice;
+
+  const shipping = order?.quantity * 10;
+
+  const totalAmount = orderPrice + tax + shipping;
   console.log("Tax:", tax);
+
+
+  // cash
+  // paid amount  ==>
+const paidAmount = totalAmount * 0.1
+
+  // remaining amount
+  const remainingAmount = totalAmount - paidAmount
 
   return (
     <>
@@ -167,7 +176,8 @@ function Test() {
             </h3>
           </div>
           <div className={styles.secondiv}>
-            <div className={styles.insidediv}>
+            {
+              user.urType !== "seller" && <div className={styles.insidediv}>
               <div className={styles.boxheading}>
                 <h3>Customer details</h3>
               </div>
@@ -193,7 +203,10 @@ function Test() {
                 </div>
               </div>
             </div>
-            <div className={styles.insidediv}>
+            }
+            
+            {
+              user.urType !== "seller" && <div className={styles.insidediv}>
               <div className={styles.boxheading}>
                 <h3>Shipping address</h3>
               </div>
@@ -211,7 +224,6 @@ function Test() {
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1"> State :{order.dlvAddr.state}</p>
                   <div className="flex flex-row ml-3 mt-3">
-                    {/* <p className="ml-1">Landmark :{order.dlvAddr.landmark === "" ? "":order.dlvAddr.landmark } </p> */}
                   </div>
                 </div>
                 <div className="flex flex-row ml-3 mt-3">
@@ -219,6 +231,7 @@ function Test() {
                 </div>
               </div>
             </div>
+            }
             <div className={styles.insidediv}>
               <div className={styles.boxheading}>
                 <h3>Payment details</h3>
@@ -239,17 +252,15 @@ function Test() {
               <p className="ml-1">Card number :</p>
             </div> */}
                 <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">Total amount: {order.ordPrc}</p>
+                  <p className="ml-1">Total amount: {totalAmount}</p>
                 </div>
                 {user.email && user.urType === "admin" ? (
                   <div className="flex flex-row ml-3 mt-3 border border-black">
                     <p className="ml-1 text-green-600 font-bold ">
                       Customer paid amount:
                       {order.pType === "cash"
-                        ? order.ordPrc -
-                          ((parseInt(order.ordPrc) * 90) / 100 +
-                            (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100)
-                        : 0}
+                        ? paidAmount.toFixed(2)
+                        : totalAmount}
                     </p>
                   </div>
                 ) : (
@@ -257,10 +268,8 @@ function Test() {
                     <p className="ml-1 text-green-600 font-bold ">
                       paid amount:
                       {order.pType === "cash"
-                        ? order.ordPrc -
-                          ((parseInt(order.ordPrc) * 90) / 100 +
-                            (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100)
-                        : 0}
+                        ? paidAmount.toFixed(2)
+                        : totalAmount}
                     </p>
                   </div>
                 )}
@@ -270,8 +279,7 @@ function Test() {
                     <p className="ml-1 text-red-600 font-bold">
                       Amount need to collect from customer:
                       {order.pType === "cash"
-                        ? (parseInt(order.ordPrc) * 90) / 100 +
-                          (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100
+                        ? remainingAmount
                         : 0}
                     </p>
                   </div>
@@ -280,8 +288,7 @@ function Test() {
                     <p className="ml-1 text-red-600 font-bold">
                       Pending amount:
                       {order.pType === "cash"
-                        ? (parseInt(order.ordPrc) * 90) / 100 +
-                          (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100
+                        ? remainingAmount
                         : 0}
                     </p>
                   </div>
@@ -296,12 +303,9 @@ function Test() {
               <table className={`${styles.table}`}>
                 <tr style={{ backgroundColor: "white" }}>
                   <th className="bg-white">Product</th>
-                  {/* <th className="bg-white">Product Id</th> */}
                   <th className="bg-white">Single product price</th>
-                  {/* <th className="bg-white">Quantity</th> */}
-                  <th className="bg-white ">Total Amount</th>
+                  <th className="bg-white ">Order Price</th>
                   <th className="bg-white"> size and quantity</th>
-                  {/* <th className="bg-white w-20">Seller Details</th> */}
                   <tr />
                   <tr>
                     <td className={styles.table1}>
@@ -377,13 +381,13 @@ function Test() {
               <p className="ml-3 mt-1 font-bold">Total Bill</p>
               <div className="ml-3">
                 <div className="flex flex-row">
-                  <p>Subtotal : </p>
+                  <p>Order Price : </p>
                   <p style={{ marginLeft: "65px" }}>{subtotal}</p>
                 </div>
 
                 <div className="flex flex-row">
                   <p>Logistics : </p>
-                  <p style={{ marginLeft: "64px" }}>0 </p>
+                  <p style={{ marginLeft: "64px" }}>{shipping} </p>
                 </div>
                 <div className="flex flex-row">
                   <p>tax : </p>
@@ -393,7 +397,7 @@ function Test() {
                 <div className="flex flex-row mt-3">
                   <p className="font-bold">Total Amount : </p>
                   <p style={{ marginLeft: "22px", fontWeight: "bold" }}>
-                    {order.ordPrc}
+                    {totalAmount}
                   </p>
                 </div>
               </div>
