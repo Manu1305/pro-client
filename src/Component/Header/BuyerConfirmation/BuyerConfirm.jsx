@@ -21,7 +21,6 @@ const BuyerConfirm = () => {
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [payType, setPayType] = useState("");
-  const [dlvCharges, setDlvChagres] = useState(null);
   // const [paid, setPaid] = useState(params.totalPrice);
 
   // selected delivery addrees

@@ -110,8 +110,7 @@ function Test() {
   };
 
   const getSellerDetails = async () => {
-
-    console.log(Selleremail)
+    console.log(Selleremail);
     try {
       const config = {
         headers: {
@@ -155,9 +154,17 @@ function Test() {
   return (
     <>
       {order !== null && (
-        <div style={{ backgroundColor: "#F7FBFF", width: "100%", overflow:'hidden' }}>
+        <div
+          style={{
+            backgroundColor: "#F7FBFF",
+            width: "100%",
+            overflow: "hidden",
+          }}
+        >
           <div className={styles.headingdiv}>
-            <h3 className="font-bold ">Order Id : HTM-{order._id.substr(order._id.length - 6)}</h3>
+            <h3 className="font-bold ">
+              Order Id : HTM-{order._id.substr(order._id.length - 6)}
+            </h3>
           </div>
           <div className={styles.secondiv}>
             <div className={styles.insidediv}>
@@ -247,15 +254,15 @@ function Test() {
                   </div>
                 ) : (
                   <div className="flex flex-row ml-3 mt-3 border border-black">
-                  <p className="ml-1 text-green-600 font-bold ">
-                   paid amount:
-                   {order.pType === "cash"
+                    <p className="ml-1 text-green-600 font-bold ">
+                      paid amount:
+                      {order.pType === "cash"
                         ? order.ordPrc -
                           ((parseInt(order.ordPrc) * 90) / 100 +
                             (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100)
                         : 0}
-                  </p>
-                </div>
+                    </p>
+                  </div>
                 )}
 
                 {user.email && user.urType === "admin" ? (
@@ -268,15 +275,17 @@ function Test() {
                         : 0}
                     </p>
                   </div>
-                ) :  <div className="flex flex-row ml-3 mt-3 border border-black">
-                <p className="ml-1 text-red-600 font-bold">
-                  Pending amount:
-                  {order.pType === "cash"
-                    ? (parseInt(order.ordPrc) * 90) / 100 +
-                      (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100
-                    : 0}
-                </p>
-              </div>}
+                ) : (
+                  <div className="flex flex-row ml-3 mt-3 border border-black">
+                    <p className="ml-1 text-red-600 font-bold">
+                      Pending amount:
+                      {order.pType === "cash"
+                        ? (parseInt(order.ordPrc) * 90) / 100 +
+                          (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100
+                        : 0}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -291,7 +300,7 @@ function Test() {
                   <th className="bg-white">Single product price</th>
                   {/* <th className="bg-white">Quantity</th> */}
                   <th className="bg-white ">Total Amount</th>
-                  <th className="bg-white"> size and  quantity</th>
+                  <th className="bg-white"> size and quantity</th>
                   {/* <th className="bg-white w-20">Seller Details</th> */}
                   <tr />
                   <tr>
@@ -317,24 +326,25 @@ function Test() {
                         .join(", ")}
                     </td>
                     {user.email && user.urType === "admin" ? (
-                    <td>
-                      <button className="bg-green-500 rounded"
-                        onClick={() => {
-                          setShow(true);
-                          getSellerDetails()
-                        }}
-                      >
-                        {" "}
-                        view Seller details
-                      </button>
-                    </td>):null }
+                      <td>
+                        <button
+                          className="bg-green-500 rounded"
+                          onClick={() => {
+                            setShow(true);
+                            getSellerDetails();
+                          }}
+                        >
+                          {" "}
+                          view Seller details
+                        </button>
+                      </td>
+                    ) : null}
                   </tr>
                 </tr>
                 <hr />
               </table>
             </div>
           </div>
-
 
           <div className={styles.four}>
             <div className={styles.logisticdetailsdiv}>
@@ -371,10 +381,6 @@ function Test() {
                   <p style={{ marginLeft: "65px" }}>{subtotal}</p>
                 </div>
 
-                {/* <div className="flex flex-row">
-              <p>Discount : </p>
-              <p style={{marginLeft:'63px'}}>2323</p>
-            </div> */}
                 <div className="flex flex-row">
                   <p>Logistics : </p>
                   <p style={{ marginLeft: "64px" }}>0 </p>
@@ -491,7 +497,7 @@ function Test() {
                 <th>Shop name</th>
                 <td>{seller?.shopName} </td>
               </tr>
-             
+
               <tr>
                 <th>State</th>
                 <td>{seller?.address?.state} </td>
