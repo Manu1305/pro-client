@@ -43,10 +43,10 @@ const DataNewArriv = ({
   console.log("ffff", user);
   useEffect(() => {
     httpService
-      .get(`${apiURL}/product/get-all-filter-products`)
+      .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
         console.log("dddddddddd", res.data);
-       
+
         setProductItems(res.data);
       })
       .catch((error) => {
@@ -103,9 +103,8 @@ const DataNewArriv = ({
         {productItems &&
           productItems.map((item) => {
             //   if (item.collections === prodd)  {
-            console.log("ffffffrrrrrr", user.subscription.subsStatus);
+            // console.log("ffffffrrrrrr", user.subscription.subsStatus);
             return (
-             
               <div key={item._id}>
                 <div className={styless.customerheading}>
                   <a href={`/ViewDetails/${item._id}`}>

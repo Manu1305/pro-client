@@ -292,7 +292,7 @@ const OrderHistory = () => {
       Product: ele.prdData.images,
       "Orderd On": date,
       Price: ele.ordPrc,
-      Collect: ele.pType === "cash" ? collect : null,
+      Collect: ele.pType === "cash" ? collect : 0,
       "Payment Method": ele.pType,
       "Delivery Status": ele.orderStatus,
     };

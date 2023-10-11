@@ -5,6 +5,8 @@ import styless from "./NewArrival.module.css";
 import top1 from "../../../../../images/top1.png";
 import DataNewArriv from "./dataNewArr/DataNewArriv";
 import { useSelector } from "react-redux";
+import Slider from "react-slick";
+import { Link } from "react-router-dom";
 
 // import SellerRelatedPro from "../../../../Shopingsection/SellerRelatedProduct/sellerRelatedPro";
 
@@ -94,15 +96,15 @@ const NewData = ({ products }) => {
           //   productId={product._id}
           />
         {/* } */}
-        {/* <Slider {...settings}>
-          {productItems &&
-            productItems.map((productItems) => (
+        <Slider {...settings}>
+          {products &&
+            products.map((productItems) => (
               <div >
                 <div className={styless.customerheading}>
-                  <Link to='/shoppingpage' >
+                  <Link to={`/ViewDetails/${productItems._id}`} >
                     <div className={`${styless.card} shadow-md`}>
                       <img 
-                        src={productItems.image}
+                        src={productItems.productDetails[0].images[0]}
                         alt=""
                       />
                     </div>
@@ -120,7 +122,7 @@ const NewData = ({ products }) => {
                 </div>
               </div>
             ))}
-        </Slider> */}
+        </Slider>
       </div>
     </div>
   );
