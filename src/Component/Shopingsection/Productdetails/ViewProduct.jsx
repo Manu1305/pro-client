@@ -499,15 +499,16 @@ const ViewProduct = () => {
 
                 <div className={`mb-3 mt-4 align-items-center`}>
                   <>
-                    {/* {user?.email && user?.urType === "buyer" && ( */}
+                    {user?.email && user?.urType === "buyer" && (
                       <button
                         className={`text-uppercase mr-2 ${styles.add_to_cart}`}
                         onClick={() => addtoCartButton(product)}
                       >
                         <BsHandbagFill className="mb-1 mr-3" />
                         Add to Cart
-                      </button>
-                    {/* // )} */}
+                      </button> ) 
+                      }
+                    
                   </>
                   {offerBtn ? (
                     <div className="container m-4">

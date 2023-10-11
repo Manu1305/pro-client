@@ -14,13 +14,17 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { apiURL } from "../../const/config";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Modal from "react-bootstrap/Modal";
 
 function Test() {
   const { orderId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
   const [order, setOrder] = useState(null);
+  const [show, setShow] = useState(false);
+  const [seller, setseller] = useState(null);
+  const [Selleremail, setSelleremail] = useState("");
   const navigate = useNavigate();
 
   const steps = [
@@ -95,6 +99,34 @@ function Test() {
           // alert("worked")
 
           setOrder(res.data);
+          setSelleremail(res.data.seller);
+        })
+        .catch((error) => {
+          console.error("Error", error);
+        });
+    } catch (error) {
+      console.log(error, "its new errror");
+    }
+  };
+
+  const getSellerDetails = async () => {
+
+    console.log(Selleremail)
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      await axios
+        .get(`${apiURL}/user/singleUserData/${Selleremail}`, config)
+        .then((res) => {
+          console.log("singleseller", res.data);
+
+          setseller(res.data);
+          console.log(res.data + "this is seller data");
         })
         .catch((error) => {
           console.error("Error", error);
@@ -105,7 +137,12 @@ function Test() {
   };
 
   useEffect(() => {
+    console.log(seller + "seller data ");
+  }, [seller]);
+
+  useEffect(() => {
     getOrderDetails();
+    // getSellerDetails();
   }, []);
 
   const taxRate = 0.15;
@@ -184,7 +221,7 @@ function Test() {
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1">Transaction: {order.raz_paymentId}</p>
                 </div>
-                
+
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1"> Payment method:{order.pType}</p>
                 </div>
@@ -198,18 +235,28 @@ function Test() {
                   <p className="ml-1">Total amount: {order.ordPrc}</p>
                 </div>
                 {user.email && user.urType === "admin" ? (
-                  <div className="flex flex-row ml-3 mt-3">
+                  <div className="flex flex-row ml-3 mt-3 border border-black">
+                    <p className="ml-1 text-green-600 font-bold ">
+                      Customer paid amount:
+                      {order.pType === "cash"
+                        ? order.ordPrc -
+                          ((parseInt(order.ordPrc) * 90) / 100 +
+                            (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100)
+                        : 0}
+                    </p>
+                  </div>
+                ) : (
+                  order.ordPrc
+                )}
+
+                {user.email && user.urType === "admin" ? (
+                  <div className="flex flex-row ml-3 mt-3 border border-black">
                     <p className="ml-1 text-red-600 font-bold">
                       Amount need to collect from customer:
-                      
-
-
-
-
-
-
-                      {order.pType === "cash" ? (parseInt(order.ordPrc) * 90) / 100 +
-                      (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100 : 0}
+                      {order.pType === "cash"
+                        ? (parseInt(order.ordPrc) * 90) / 100 +
+                          (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100
+                        : 0}
                     </p>
                   </div>
                 ) : null}
@@ -228,14 +275,17 @@ function Test() {
                   {/* <th className="bg-white">Quantity</th> */}
                   <th className="bg-white w-7">Total amount</th>
                   <th className="bg-white w-20">Size and quantity</th>
+                  <th className="bg-white w-20">Seller Details</th>
                   <tr />
                   <tr>
                     <td className={styles.table1}>
-                      <img
-                        src={order.prdData.images}
-                        alt="hello"
-                        className="h-10 w-10 "
-                      />
+                      <Link to={`/ViewDetails/${order.productId}`}>
+                        <img
+                          src={order.prdData.images}
+                          alt="hello"
+                          className="h-10 w-10 "
+                        />
+                      </Link>
                       {order.prdData.title}
                     </td>
                     {/* <td>{order.productId}</td> */}
@@ -248,6 +298,17 @@ function Test() {
                           return `${size}-${value}`;
                         })
                         .join(", ")}
+                    </td>
+                    <td>
+                      <button className="bg-green-500 rounded"
+                        onClick={() => {
+                          setShow(true);
+                          getSellerDetails()
+                        }}
+                      >
+                        {" "}
+                        view details
+                      </button>
                     </td>
                   </tr>
                 </tr>
@@ -372,6 +433,66 @@ function Test() {
           ) : null}
         </div>
       )}
+
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            Seller details
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <table style={{ height: "100%" }}>
+              <tr>
+                <th>Name:</th>
+                <td>{seller?.name}</td>
+              </tr>
+              <tr>
+                <th>Phone:</th>
+                <td>{seller?.phone}</td>
+              </tr>
+              <tr>
+                <th>email</th>
+                <td>{seller?.email} </td>
+              </tr>
+              <tr>
+                <th>Subscription</th>
+                <td>{seller?.subscription?.subsStatus}</td>
+              </tr>
+              <tr>
+                <th>Gst:</th>
+                <td>{seller?.gst}</td>
+              </tr>
+              <tr>
+                <th>Shop name</th>
+                <td>{seller?.shopName} </td>
+              </tr>
+             
+              <tr>
+                <th>State</th>
+                <td>{seller?.address?.state} </td>
+              </tr>
+              <tr>
+                <th>City</th>
+                <td>{seller?.address?.city} </td>
+              </tr>
+              <tr>
+                <th>Area</th>
+                <td>{seller?.address?.area} </td>
+              </tr>
+              <tr>
+                <th>pincode</th>
+                <td>{seller?.address?.pincode} </td>
+              </tr>
+            </table>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

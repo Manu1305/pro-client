@@ -179,10 +179,10 @@ const DeliveryDash = () => {
   const verifyOtp = async (phone, orderId) => {
     console.log(phone, "====", phoneOtp);
     await httpService
-      .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
+      .post(`${apiURL}/user/verify-otp`, {  phoneOtp })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status === "approved") {
+        if (response.data.message === "success") {
           setButtonStates((prevStates) => ({
             ...prevStates,
             [orderId]: true,
