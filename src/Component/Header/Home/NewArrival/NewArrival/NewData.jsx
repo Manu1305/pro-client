@@ -112,12 +112,12 @@ const NewData = ({ products }) => {
                 </div>
                 <div className="ml-10">
                 <h5 className={styless.title}>{productItems.title}</h5>
-                <Link
+                {/* <Link
                   
                   style={{ textDecoration: "none" }}
                 >
                   <p>Explore Now!</p>
-                </Link>
+                </Link> */}
 
                 </div>
               </div>
