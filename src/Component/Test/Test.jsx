@@ -155,7 +155,7 @@ function Test() {
   return (
     <>
       {order !== null && (
-        <div style={{ backgroundColor: "#F7FBFF", width: "100%" }}>
+        <div style={{ backgroundColor: "#F7FBFF", width: "100%", overflow:'hidden' }}>
           <div className={styles.headingdiv}>
             <h3>Order Id : {order._id}</h3>
           </div>
@@ -246,7 +246,16 @@ function Test() {
                     </p>
                   </div>
                 ) : (
-                  order.ordPrc
+                  <div className="flex flex-row ml-3 mt-3 border border-black">
+                  <p className="ml-1 text-green-600 font-bold ">
+                   paid amount:
+                   {order.pType === "cash"
+                        ? order.ordPrc -
+                          ((parseInt(order.ordPrc) * 90) / 100 +
+                            (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100)
+                        : 0}
+                  </p>
+                </div>
                 )}
 
                 {user.email && user.urType === "admin" ? (
@@ -259,7 +268,15 @@ function Test() {
                         : 0}
                     </p>
                   </div>
-                ) : null}
+                ) :  <div className="flex flex-row ml-3 mt-3 border border-black">
+                <p className="ml-1 text-red-600 font-bold">
+                  Pending amount:
+                  {order.pType === "cash"
+                    ? (parseInt(order.ordPrc) * 90) / 100 +
+                      (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100
+                    : 0}
+                </p>
+              </div>}
               </div>
             </div>
           </div>
@@ -271,11 +288,11 @@ function Test() {
                 <tr style={{ backgroundColor: "white" }}>
                   <th className="bg-white">Product</th>
                   {/* <th className="bg-white">Product Id</th> */}
-                  <th className="bg-white">Price</th>
+                  <th className="bg-white">Single product price</th>
                   {/* <th className="bg-white">Quantity</th> */}
-                  <th className="bg-white w-7">Total amount</th>
-                  <th className="bg-white w-20">Size and quantity</th>
-                  <th className="bg-white w-20">Seller Details</th>
+                  <th className="bg-white ">Total Amount</th>
+                  <th className="bg-white"> size and  quantity</th>
+                  {/* <th className="bg-white w-20">Seller Details</th> */}
                   <tr />
                   <tr>
                     <td className={styles.table1}>
@@ -289,16 +306,17 @@ function Test() {
                       {order.prdData.title}
                     </td>
                     {/* <td>{order.productId}</td> */}
-                    <td>{order.prdData.price}</td>
+                    <td>&#8377; {order.prdData.price}</td>
                     {/* <td>{order.quantity}</td> */}
-                    <td>{order.ordPrc}</td>
-                    <td>
+                    <td>&#8377;{order.ordPrc}</td>
+                    <td className="font-bold border border-blue-500 ">
                       {Object.entries(order.sizeAndQua)
                         .map(([size, value]) => {
                           return `${size}-${value}`;
                         })
                         .join(", ")}
                     </td>
+                    {user.email && user.urType === "admin" ? (
                     <td>
                       <button className="bg-green-500 rounded"
                         onClick={() => {
@@ -307,15 +325,16 @@ function Test() {
                         }}
                       >
                         {" "}
-                        view details
+                        view Seller details
                       </button>
-                    </td>
+                    </td>):null }
                   </tr>
                 </tr>
                 <hr />
               </table>
             </div>
           </div>
+
 
           <div className={styles.four}>
             <div className={styles.logisticdetailsdiv}>
