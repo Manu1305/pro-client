@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../const/config";
@@ -22,6 +22,7 @@ const BuyerConfirm = () => {
   const [showForm, setShowForm] = useState(false);
   const [payType, setPayType] = useState("");
   const [dlvCharges, setDlvChagres] = useState(null);
+  // const [paid, setPaid] = useState(params.totalPrice);
 
   // selected delivery addrees
   const [deliveryAddress, setDeliveryAddress] = useState({});
@@ -103,9 +104,9 @@ const BuyerConfirm = () => {
           {
             products: cartItems,
             address: deliveryAddress.addressDetails,
-            paymentId,
-            orderStatus: "Success",
-            totalAmount: amount,
+            // paymentId,
+            // totalAmount: amount,
+            
           },
           config
         )
@@ -114,6 +115,8 @@ const BuyerConfirm = () => {
         })
         .catch((err) => {
           console.log(err);
+          toast.warning(err.response.data.message);
+          // return ;
         });
       console.log("ERROR WHILE PLACING", res);
       return res;
@@ -186,7 +189,7 @@ const BuyerConfirm = () => {
 
         const razor = new window.Razorpay(options);
 
-        if (orderStoreInDB.ids) {
+        if (orderStoreInDB.ids && orderStoreInDB !== undefined) {
           return razor.open();
         }
         razor.on("payment.failed", function (response) {
@@ -229,15 +232,32 @@ const BuyerConfirm = () => {
     );
   }
 
-  // calculate Gst 
-  const calGST = () =>{
+  // calculate Gst
+  const calGST = () => {
     // (((parseInt(totalPrice) * 10) / 100) * 5) / 100
-    if(payType === "Online Payment"){
-      return GST
+    if (payType === "Online Payment") {
+      return GST;
     } else {
-      return (((parseInt(totalPrice) * 10) / 100) * 5) / 100
+      return (((parseInt(totalPrice) * 10) / 100) * 5) / 100;
     }
-  } 
+  };
+
+  // paid amount
+  const calPaidAmount = () => {
+    if (payType !== "Cash on delivery") {
+      return parseInt(params.totalPrice) + GST + sum;
+    } else {
+      const amount =
+        (parseInt(params.totalPrice) * 10) / 100 +
+        (((parseInt(params.totalPrice) * 10) / 100) * 5) / 100 +
+        sum;
+      return amount;
+    }
+  };
+
+
+
+  // console.log(calPaidAmount(), "ORDER PRICE");
   return (
     <div style={{ marginTop: "20px" }}>
       <div className="row" style={{ backgroundColor: "white" }}>
@@ -313,10 +333,8 @@ const BuyerConfirm = () => {
                         />
                       </div>
                       <div className="m-3">
-                      <p>
-                          <span>
-                            Name: {address.addressDetails.name}
-                          </span>
+                        <p>
+                          <span>Name: {address.addressDetails.name}</span>
                         </p>
                         <p>
                           <span>
@@ -443,14 +461,7 @@ const BuyerConfirm = () => {
                   </div>
                   <div className="d-flex justify-content-between m-3">
                     <div>GST- (5%)</div>
-
-                    {/* {payType === "Online Payment" ? ( */}
-                      <div>{calGST()}</div>
-                    {/* ) : ( */}
-                      {/* <div> */}
-                        {/* {(((parseInt(totalPrice) * 10) / 100) * 5) / 100} */}
-                      {/* </div> */}
-                    {/* )} */}
+                    <div>{calGST()}</div>
                   </div>
                 </div>
                 <div>
@@ -467,26 +478,12 @@ const BuyerConfirm = () => {
                     <b>Order Total:</b>
                   </div>
 
-                  {payType !== "Cash on delivery" ? (
-                    <div
-                      className="font-weight-bold"
-                      style={{ marginRight: "46px" }}
-                    >
-                      <b>{parseInt(totalPrice) + GST + sum}</b>
-                      {/* <b>{parseInt(totalPrice) + GST + sum}</b> */}
-                    </div>
-                  ) : (
-                    <div
-                      className="font-weight-bold"
-                      style={{ marginRight: "46px" }}
-                    >
-                      <b>
-                        {(parseInt(totalPrice) * 10) / 100 +
-                          (((parseInt(totalPrice) * 10) / 100) * 5) / 100 +
-                          sum}
-                      </b>
-                    </div>
-                  )}
+                  <div
+                    className="font-weight-bold"
+                    style={{ marginRight: "46px" }}
+                  >
+                    <b>{calPaidAmount()}</b>
+                  </div>
                 </div>
               </div>
               {payType === "Cash on delivery" && (
