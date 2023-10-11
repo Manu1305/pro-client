@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button, Card, Container, Form, Modal, Row } from "react-bootstrap";
+import { Container, Form, Modal, Row } from "react-bootstrap";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import DataTable from "../../Reuseable Comp/DataTable";
-
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const OrderHistory = () => {
   const user = useSelector((state) => state.userReducer.user);
@@ -15,17 +17,34 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [show, setShow] = useState(false);
   const [id, setId] = useState("");
+  const [orderIdSts, setOrderIdSts] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = (orderId) => {
     setShow(true);
     setId(orderId);
   };
+
+  const [showStatus, setShowStatus] = useState(false);
+
+  const handleCloseStatus = () => setShowStatus(false);
+  const handleShowStatus = (orderId) => {
+    console.log(orderId);
+    setOrderIdSts(orderId);
+    setShowStatus(true);
+  };
+
   const [packageDetails, setPackageDetails] = useState({});
   const changeHandler = (e) => {
     setPackageDetails((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
+
+  const [selected, setSelected] = useState(null);
+
+  function onChangeHandler(i) {
+    setSelected((prev) => (i === prev ? null : i));
+  }
 
   const updateStatus = async (event) => {
     event.preventDefault();
@@ -77,6 +96,36 @@ const OrderHistory = () => {
     }
   };
 
+  // Order status only admin
+  const UpdateOrderStatus = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    try {
+      await httpService
+        .post(
+          `${apiURL}/delivery/update-order-status/${orderIdSts}`,
+          {
+            orderStatus: selected,
+          },
+          config
+        )
+        .then((res) => {
+          console.log("Res", res);
+          getOrders();
+          toast.success("Status Updated");
+          handleCloseStatus();
+        })
+        .catch((err) => {
+          console.log("Err", err);
+        });
+    } catch (error) {
+      console.log("EROOR", error);
+    }
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -104,7 +153,6 @@ const OrderHistory = () => {
         type: "image",
 
         renderCell: (params) => {
-          console.log("parmas*******************", params);
           return (
             <div>
               <img
@@ -118,13 +166,32 @@ const OrderHistory = () => {
         },
       };
     }
+    if (ele === "Delivery Status") {
+      return {
+        field: "Delivery Status",
+        type: "image",
+        width: 200,
+
+        renderCell: (params) => {
+          return (
+            <>
+              <p className="m-2">{params.row["Delivery Status"]}</p>
+              <br />
+              <EditNoteIcon
+                onClick={() => handleShowStatus(params.row["Order Id"])}
+              />
+            </>
+          );
+        },
+      };
+    }
     if (ele === "Action") {
       return {
         field: "Action",
         type: "action",
         width: 150,
         renderCell: (params) => {
-          console.log("Check KR", params.row);
+          // console.log("Check KR", params.row);
           return (
             <div style={{ alignItems: "center" }}>
               {params.row["Delivery Status"] === "Placed" && (
@@ -234,7 +301,44 @@ const OrderHistory = () => {
   return (
     <div>
       {rowData.length !== 0 ? (
-        <DataTable columns={header} rows={rowData} autoHeight />
+        <>
+          <DataTable columns={header} rows={rowData} autoHeight />
+          <Modal
+            show={showStatus}
+            onHide={handleCloseStatus}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Update Order Status</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {[
+                "Placed",
+                "Ready To PickUp",
+                "Dispatched 1",
+                "Shipped",
+                "confirm Delivery",
+                "Deliverd",
+              ].map((stat) => (
+                <FormGroup key={stat} onChange={() => onChangeHandler(stat)}>
+                  <FormControlLabel
+                    control={<Checkbox checked={stat === selected} />}
+                    label={stat}
+                  />
+                </FormGroup>
+              ))}
+            </Modal.Body>
+            <Modal.Footer>
+              <button className="btn btn-danger" onClick={handleCloseStatus}>
+                Cancel
+              </button>
+              <button className="btn btn-success" onClick={UpdateOrderStatus}>
+                Update Status
+              </button>
+            </Modal.Footer>
+          </Modal>
+        </>
       ) : (
         <div style={{ margin: "auto" }}>
           {isLoading ? (

@@ -313,11 +313,11 @@ const BuyerConfirm = () => {
                         />
                       </div>
                       <div className="m-3">
-                      <p>
+                        {/* <p>
                           <span>
                             Name: {address.addressDetails.name}
                           </span>
-                        </p>
+                        </p> */}
                         <p>
                           <span>
                             Locality: {address.addressDetails.locality}

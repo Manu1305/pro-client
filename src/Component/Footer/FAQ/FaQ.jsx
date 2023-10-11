@@ -2,6 +2,9 @@ import React from "react";
 import idea from "./FaQ.module.css";
 export const FaQ = () => {
   return (
+
+
+    
     <div>
       <h1 className={idea.header}>Frequently Asked Questions</h1>
       <h2 className={idea.headerr}>Welcome, How can we help you?</h2>
