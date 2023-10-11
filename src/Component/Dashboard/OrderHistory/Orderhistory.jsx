@@ -135,6 +135,7 @@ const OrderHistory = () => {
 
   const header = [
     "Product",
+    "Customer",
     "Order Id",
     "Orderd On",
     "Payment Method",
@@ -158,7 +159,7 @@ const OrderHistory = () => {
                 src={params.row.Product}
                 alt="refresh"
                 width={30}
-                onClick={() => navigate(`/ViewDetails/${params.row.prdId}`)}
+                onClick={() => navigate(`/orderDetails/${params.row["Order Id"]}`)}
               />
             </div>
           );
@@ -285,6 +286,7 @@ const OrderHistory = () => {
       (((parseInt(ele.ordPrc) * 90) / 100) * 5) / 100;
     return {
       id: ele._id,
+      Customer:ele.dlvAddr.name,
       "Order Id": ele._id,
       prdId: ele.productId,
       Product: ele.prdData.images,

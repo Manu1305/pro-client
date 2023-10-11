@@ -49,21 +49,20 @@ function Test() {
     if (order !== null) {
       if (order.orderStatus === "Placed") {
         setActiveStep(0);
-      }  if (order.orderStatus === "Dispatched 1") {
+      }
+      if (order.orderStatus === "Dispatched 1") {
         setActiveStep(1);
       }
-     
-       if (order.orderStatus === "confirm Delivery") {
+
+      if (order.orderStatus === "confirm Delivery") {
         setActiveStep(2);
-      }
-     else if (order.orderStatus === "Delivered") {
+      } else if (order.orderStatus === "Delivered") {
         setActiveStep(4);
+      } else {
+        console.log("errror");
       }
-     else {
-      console.log("errror");
     }
   };
-  }
   useEffect(() => {
     handleNext();
   }, [order]);
@@ -110,12 +109,12 @@ function Test() {
   }, []);
 
   const taxRate = 0.15;
-const orderPrice = order?.ordPrc
+  const orderPrice = order?.ordPrc;
 
-const tax = orderPrice * taxRate;
-const subtotal=orderPrice-tax
-console.log("Tax:", tax);
-  
+  const tax = orderPrice * taxRate;
+  const subtotal = orderPrice - tax;
+  console.log("Tax:", tax);
+
   return (
     <>
       {order !== null && (
@@ -135,11 +134,14 @@ console.log("Tax:", tax);
 
                   <p className="ml-1"> {order.dlvAddr.name}</p>
                 </div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <TfiEmail className="h-5 w-5" />
+                {user.email && user.urType === "buyer" ? (
+                  <div className="flex flex-row ml-3 mt-3">
+                    <TfiEmail className="h-5 w-5" />
 
-                  <p className="ml-1"> {user.email}</p>
-                </div>
+                    <p className="ml-1"> {user.email}</p>
+                  </div>
+                ) : null}
+
                 <div className="flex flex-row ml-3 mt-3">
                   <BsTelephoneFill className="h-5 w-5" />
 
@@ -154,16 +156,22 @@ console.log("Tax:", tax);
               <hr className={styles.line} />
               <div>
                 <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">{order.dlvAddr.area}</p>
+                  <p className="ml-1">Locality :{order.dlvAddr.locality}</p>
                 </div>
                 <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1"> {order.dlvAddr.city}</p>
+                  <p className="ml-1">Area :{order.dlvAddr.area}</p>
                 </div>
                 <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">{order.dlvAddr.state}</p>
+                  <p className="ml-1">City :{order.dlvAddr.city}</p>
                 </div>
                 <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">{order.dlvAddr.state}</p>
+                  <p className="ml-1"> State :{order.dlvAddr.state}</p>
+                  <div className="flex flex-row ml-3 mt-3">
+                    {/* <p className="ml-1">Landmark :{order.dlvAddr.landmark === "" ? "":order.dlvAddr.landmark } </p> */}
+                  </div>
+                </div>
+                <div className="flex flex-row ml-3 mt-3">
+                  <p className="ml-1">Pincode :{order.dlvAddr.pincode}</p>
                 </div>
               </div>
             </div>
@@ -176,6 +184,7 @@ console.log("Tax:", tax);
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1">Transaction: {order.raz_paymentId}</p>
                 </div>
+                
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1"> Payment method:{order.pType}</p>
                 </div>
@@ -188,6 +197,22 @@ console.log("Tax:", tax);
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1">Total amount: {order.ordPrc}</p>
                 </div>
+                {user.email && user.urType === "admin" ? (
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1 text-red-600 font-bold">
+                      Amount need to collect from customer:
+                      
+
+
+
+
+
+
+                      {order.pType === "cash" ? (parseInt(order.ordPrc) * 90) / 100 +
+                      (((parseInt(order.ordPrc) * 90) / 100) * 5) / 100 : 0}
+                    </p>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -195,27 +220,35 @@ console.log("Tax:", tax);
           <div className={styles.productdetailDiv}>
             <div>
               <p className={styles.boxheading}>Product details</p>
-              <table className={styles.table}>
+              <table className={`${styles.table}`}>
                 <tr style={{ backgroundColor: "white" }}>
                   <th className="bg-white">Product</th>
-                  <th className="bg-white">Product Id</th>
+                  {/* <th className="bg-white">Product Id</th> */}
                   <th className="bg-white">Price</th>
-                  <th className="bg-white">Quantity</th>
-                  <th className="bg-white w-5">Total amount</th>
+                  {/* <th className="bg-white">Quantity</th> */}
+                  <th className="bg-white w-7">Total amount</th>
+                  <th className="bg-white w-20">Size and quantity</th>
                   <tr />
                   <tr>
                     <td className={styles.table1}>
                       <img
-                        src="https://media.istockphoto.com/id/479382464/vector/blue-sport-shoes-for-running.jpg?s=612x612&w=0&k=20&c=v_fkHkodSuuZnH3dswhtKJz8aZmNgwxjfYOQ0ocvOdA="
+                        src={order.prdData.images}
                         alt="hello"
-                        className="h-10 w-10 mob:hidden"
+                        className="h-10 w-10 "
                       />
                       {order.prdData.title}
                     </td>
-                    <td>{order.productId}</td>
+                    {/* <td>{order.productId}</td> */}
                     <td>{order.prdData.price}</td>
-                    <td>{order.quantity}</td>
+                    {/* <td>{order.quantity}</td> */}
                     <td>{order.ordPrc}</td>
+                    <td>
+                      {Object.entries(order.sizeAndQua)
+                        .map(([size, value]) => {
+                          return `${size}-${value}`;
+                        })
+                        .join(", ")}
+                    </td>
                   </tr>
                 </tr>
                 <hr />
@@ -235,11 +268,12 @@ console.log("Tax:", tax);
                   justifyContent: "center",
                 }}
               >
+                {/* <img src="https://media.tenor.com/WYKoRh1NGPEAAAAM/truck-delivery.gif" style={{ fontSize: "30px", color: "green", margin: "auto" }} alt="" /> */}
                 <LocalShippingOutlinedIcon
                   style={{ fontSize: "70px", color: "green", margin: "auto" }}
                 />
               </div>
-              <div className="ml-2">
+              <div className="ml-2 leading-10">
                 <h4 className="mt-4">Certon exports</h4>
                 <p>info@certonexport.com</p>
                 <p>+91 96488 74887</p>
@@ -279,63 +313,63 @@ console.log("Tax:", tax);
               </div>
             </div>
           </div>
-          <div className={styles.five}>
-            <div className={styles.stepper}>
-              <p className="font-bold mt-2 ml-2">Order Status</p>
-              <Box sx={{ maxWidth: 400 }}>
-                <Stepper activeStep={activeStep} orientation="vertical">
-                  {steps.map((step, index) => (
-                    <Step key={step.label}>
-                      <StepLabel
-                        optional={
-                          index === 2 ? (
-                            <Typography variant="caption"></Typography>
-                          ) : null
-                        }
-                      >
-                        {step.label}
-                      </StepLabel>
-                      <StepContent>
-                        <Typography>{step.description}</Typography>
-                        <Box sx={{ mb: 2 }}>
-                          {/* <div>
-                        <Button
-                          variant="contained"
-                          onClick={handleNext}
-                          sx={{ mt: 1, mr: 1 }}
-                          style={{ backgroundColor: "orange" }}
+          {user.email && user.urType === "buyer" ? (
+            <div className={styles.five}>
+              <div className={styles.stepper}>
+                <p className="font-bold mt-2 ml-2">Order Status</p>
+                <Box sx={{ maxWidth: 400 }}>
+                  <Stepper activeStep={activeStep} orientation="vertical">
+                    {steps.map((step, index) => (
+                      <Step key={step.label}>
+                        <StepLabel
+                          optional={
+                            index === 2 ? (
+                              <Typography variant="caption"></Typography>
+                            ) : null
+                          }
                         >
-                          {index === steps.length - 1 ? "Finish" : "Continue"}
-                        </Button>
-                        <Button
-                          disabled={index === 0}
-                          onClick={handleBack}
-                          sx={{ mt: 1, mr: 1 }}
-                        >
-                          Back
-                        </Button>
-                      </div> */}
-                        </Box>
-                      </StepContent>
-                    </Step>
-                  ))}
-                </Stepper>
-                {activeStep === steps.length && (
-                  <Paper square elevation={0} sx={{ p: 3 }}>
-                    <Typography>
-                     Product delivered&apos;
-                    </Typography>
-                    {/* <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                      Reset
-                    </Button> */}
-                  </Paper>
-                )}
-              </Box>
+                          {step.label}
+                        </StepLabel>
+                        <StepContent>
+                          <Typography>{step.description}</Typography>
+                          <Box sx={{ mb: 2 }}>
+                            {/* <div>
+                              <Button
+                                variant="contained"
+                                onClick={handleNext}
+                                sx={{ mt: 1, mr: 1 }}
+                                style={{ backgroundColor: "orange" }}
+                              >
+                                {index === steps.length - 1 ? "Finish" : "Continue"}
+                              </Button>
+                              <Button
+                                disabled={index === 0}
+                                onClick={handleBack}
+                                sx={{ mt: 1, mr: 1 }}
+                              >
+                                Back
+                              </Button>
+                            </div> */}
+                          </Box>
+                        </StepContent>
+                      </Step>
+                    ))}
+                  </Stepper>
+                  {activeStep === steps.length && (
+                    <Paper square elevation={0} sx={{ p: 3 }}>
+                      <Typography>Product delivered&apos;</Typography>
+                      {/* <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+                            Reset
+                          </Button> */}
+                    </Paper>
+                  )}
+                </Box>
+              </div>
+              {/* <div className={styles.prevOrder}>
+                    <h1>No previous Order from this customer</h1>
+                  </div> */}
             </div>
-            <div className={styles.prevOrder}>
-              <h1>No previous Order from this customer</h1>
-            </div>
-          </div>
+          ) : null}
         </div>
       )}
     </>
