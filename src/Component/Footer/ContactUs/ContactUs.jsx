@@ -23,7 +23,7 @@ export const ContactUs = () => {
 
   return (
     <div>
-      <h4>ContactUs</h4>
+      {/* <h4>ContactUs</h4> */}
       <h1 className={styles.header}>Get in Touch</h1>
       <p className={styles.para}>
         we want to hear from you. Let us know how we can help
