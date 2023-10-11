@@ -159,7 +159,7 @@ const OrderHistory = () => {
                 src={params.row.Product}
                 alt="refresh"
                 width={30}
-                onClick={() => navigate(`/orderDetails/${params.row["Order Id"]}`)}
+                onClick={() => navigate(`/orderDetails/${params.row["Order_Id"]}`)}
               />
             </div>
           );
@@ -287,7 +287,8 @@ const OrderHistory = () => {
     return {
       id: ele._id,
       Customer:ele.dlvAddr.name,
-      "Order Id": ele._id,
+      "Order Id": `HTM-${ele._id.substr(ele._id.length - 6)}`,
+      "Order_Id":ele._id,
       prdId: ele.productId,
       Product: ele.prdData.images,
       "Orderd On": date,
