@@ -48,6 +48,7 @@
     "react-icons": "^4.8.0",
     "react-images-uploading": "^3.1.7",
     "react-leaflet": "^4.2.1",
+    "react-loader-spinner": "^5.4.5",
     "react-modal": "^3.16.1",
     "react-paginate": "^8.2.0",
     "react-redux": "^8.0.7",

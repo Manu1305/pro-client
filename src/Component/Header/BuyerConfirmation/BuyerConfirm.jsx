@@ -9,6 +9,7 @@ import { getUserAddress } from "../../../const/api";
 import { MDBRadio } from "mdb-react-ui-kit";
 import httpService from "../../Error Handling/httpService";
 import { toast } from "react-toastify";
+import { Triangle, Vortex } from "react-loader-spinner";
 
 const BuyerConfirm = () => {
   const params = useParams();
@@ -22,6 +23,7 @@ const BuyerConfirm = () => {
   const [showForm, setShowForm] = useState(false);
   const [payType, setPayType] = useState("");
   const [dlvCharges, setDlvChagres] = useState(null);
+  const [loader,setLoader]=useState(true)
   // const [paid, setPaid] = useState(params.totalPrice);
 
   // selected delivery addrees
@@ -138,6 +140,9 @@ const BuyerConfirm = () => {
   };
 
   const placeOrderButton = async () => {
+
+    setLoader(false)
+
     const valid = Object.keys(deliveryAddress).length > 0;
 
     try {
@@ -161,7 +166,7 @@ const BuyerConfirm = () => {
 
         console.log("Order Ids", orderStoreInDB);
         console.log("payment", payment);
-
+        setLoader(true)
         const options = {
           key: "rzp_live_m3oBDZHhzp8QRY",
           amount: payment.data.amount,
@@ -202,10 +207,12 @@ const BuyerConfirm = () => {
           alert(response.error.metadata.payment_id);
 
           console.log("Resposne", response);
+          setLoader(true)
         });
       } else {
         // return  <Alert/>
         warningMsg("Plese selete address or add address");
+        setLoader(true)
       }
     } catch (error) {
       console.log("ERORR  ==>", error);
@@ -496,6 +503,8 @@ const BuyerConfirm = () => {
           </div>
 
           <div>
+            {loader ?
+            (
             <button
               className="btn btn-danger w-100 border p-3"
               style={{
@@ -505,8 +514,25 @@ const BuyerConfirm = () => {
               }}
               onClick={placeOrderButton}
             >
+            
               Place Order
             </button>
+
+            ) :(
+              <div className="bg-red-600 w-100 border p-3 flex justify-center text-center">
+
+<Vortex
+  visible={true}
+  height="80"
+  width="80"
+  ariaLabel="vortex-loading"
+  wrapperStyle={{}}
+  wrapperClass="vortex-wrapper"
+  colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
+/>
+              </div>
+            )
+            }
           </div>
         </div>
         <div className="col-md-1"></div>
