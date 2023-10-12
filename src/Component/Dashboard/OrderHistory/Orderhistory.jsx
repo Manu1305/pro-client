@@ -29,7 +29,7 @@ const OrderHistory = () => {
 
   const handleCloseStatus = () => setShowStatus(false);
   const handleShowStatus = (orderId) => {
-    console.log(orderId);
+   
     setOrderIdSts(orderId);
     setShowStatus(true);
   };
