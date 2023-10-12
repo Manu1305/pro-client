@@ -22,8 +22,8 @@ const BuyerConfirm = () => {
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [payType, setPayType] = useState("");
-  const [dlvCharges, setDlvChagres] = useState(null);
-  const [loader,setLoader]=useState(true)
+
+  const [loader, setLoader] = useState(false);
   // const [paid, setPaid] = useState(params.totalPrice);
 
   // selected delivery addrees
@@ -108,7 +108,6 @@ const BuyerConfirm = () => {
             address: deliveryAddress.addressDetails,
             // paymentId,
             // totalAmount: amount,
-            
           },
           config
         )
@@ -141,12 +140,12 @@ const BuyerConfirm = () => {
 
   const placeOrderButton = async () => {
 
-    setLoader(false)
-
     const valid = Object.keys(deliveryAddress).length > 0;
 
     try {
       if (valid && payType !== "") {
+    setLoader(true);
+
         const pType = payType === "Cash on delivery" ? "cash" : "online";
 
         // payment checkout
@@ -166,7 +165,7 @@ const BuyerConfirm = () => {
 
         console.log("Order Ids", orderStoreInDB);
         console.log("payment", payment);
-        setLoader(true)
+        setLoader(false);
         const options = {
           key: "rzp_live_m3oBDZHhzp8QRY",
           amount: payment.data.amount,
@@ -207,12 +206,12 @@ const BuyerConfirm = () => {
           alert(response.error.metadata.payment_id);
 
           console.log("Resposne", response);
-          setLoader(true)
+          setLoader(false);
         });
       } else {
         // return  <Alert/>
         warningMsg("Plese selete address or add address");
-        setLoader(true)
+        setLoader(false);
       }
     } catch (error) {
       console.log("ERORR  ==>", error);
@@ -262,176 +261,149 @@ const BuyerConfirm = () => {
     }
   };
 
-
-
   // console.log(calPaidAmount(), "ORDER PRICE");
   return (
-    <div style={{ marginTop: "20px" }}>
-      <div className="row" style={{ backgroundColor: "white" }}>
-        <div className="col-md-1"></div>
+    <>
+      { loader ? <div className="flex justify-center items-center" style={{marginTop:"17%"}}>
+        <div><Vortex
+  visible={true}
+  height="80"
+  width="80"
+  ariaLabel="vortex-loading"
+  wrapperStyle={{}}
+  wrapperClass="vortex-wrapper"
+  colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
+/></div>
+      </div> :
+        <div style={{ marginTop: "20px" }}>
+          <div className="row" style={{ backgroundColor: "white" }}>
+            <div className="col-md-1"></div>
 
-        <div
-          className="col-md-6 mb-4 w-50 "
-          style={{ overflowX: "auto", backgroundColor: "#eeeeee" }}
-        >
-          <div
-            className="row justify-content-center"
-            style={{ marginTop: "45px" }}
-          >
-            <h1
-              style={{
-                color: "#bf0a2a",
-                fontSize: "30px",
-                fontFamily: "poppins",
-                fontWeight: "bold",
-              }}
+            <div
+              className="col-md-6 mb-4 w-50 "
+              style={{ overflowX: "auto", backgroundColor: "#eeeeee" }}
             >
-              Deliver to
-            </h1>
-          </div>
-
-          <div className="card m-2">
-            <div className="card-header p-3">
-              <h5 className="mb-0">Select Address or add new address</h5>
-            </div>
-          </div>
-          <button
-            className="btn btn-danger w-90 border m-2"
-            style={{
-              color: "#fff7e9",
-              borderRadius: "0px",
-              backgroundColor: "#bf0a2a",
-              cursor: "pointer",
-            }}
-            onClick={handleAddAddress}
-          >
-            Add new Address
-          </button>
-          {/* saved Address */}
-          <div
-            className="card "
-            style={{ backgroundColor: "#eeeeee", borderRadius: 0, border: 0 }}
-          >
-            {!showForm ? (
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                {addresses.map((address) => (
-                  <div
-                    key={address._id}
-                    style={{
-                      cursor: "pointer",
-                      backgroundColor: "#ffffff",
-                      margin: "20px",
-                      alignItems: "center",
-                    }}
-                    // getting address
-                    onClick={() => setDeliveryAddress(address)}
-                  >
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <div
-                        style={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        <MDBRadio
-                          name={address.area}
-                          id={address._id}
-                          inline
-                          checked={deliveryAddress._id === address._id}
-                        />
-                      </div>
-                      <div className="m-3">
-                        <p>
-                          <span>Name: {address.addressDetails.name}</span>
-                        </p>
-                        <p>
-                          <span>
-                            Locality: {address.addressDetails.locality}
-                          </span>
-                        </p>
-                        <p>
-                          <span>Area: {address.addressDetails.area}</span>
-                        </p>
-                        <p>
-                          <span>
-                            Landmark: {address.addressDetails.landmark}
-                          </span>
-                        </p>
-                        <p>
-                          <span>City: {address.addressDetails.city}</span>
-                        </p>
-                        <p>
-                          <span>State: {address.addressDetails.state}</span>
-                        </p>
-                        <p>
-                          <span>Pincode: {address.addressDetails.pincode}</span>{" "}
-                        </p>
-                        <p>
-                          <span>Phone: {address.addressDetails.phone}</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <NewAddress getSavedAddress={getSavedAddress} />
-            )}
-          </div>
-        </div>
-
-        <div className="col-md-4" style={{ borderRadius: 0 }}>
-          <div
-            className="card "
-            style={{ backgroundColor: "#EEEEEE", borderRadius: 0, border: 0 }}
-          >
-            <div className="row justify-content-center m-3">
-              <h1
-                style={{
-                  color: "#bf0a2a",
-                  fontSize: "30px",
-                  fontFamily: "poppins",
-                  fontWeight: "bold",
-                }}
-              >
-                Pay With
-              </h1>
-            </div>
-            {["Cash on delivery", "Online Payment"].map((type, index) => (
               <div
+                className="row justify-content-center"
+                style={{ marginTop: "45px" }}
+              >
+                <h1
+                  style={{
+                    color: "#bf0a2a",
+                    fontSize: "30px",
+                    fontFamily: "poppins",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Deliver to
+                </h1>
+              </div>
+
+              <div className="card m-2">
+                <div className="card-header p-3">
+                  <h5 className="mb-0">Select Address or add new address</h5>
+                </div>
+              </div>
+              <button
+                className="btn btn-danger w-90 border m-2"
                 style={{
-                  display: "flex",
-                  margin: "10px",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  color: "#fff7e9",
+                  borderRadius: "0px",
+                  backgroundColor: "#bf0a2a",
                   cursor: "pointer",
                 }}
-                key={`reverse-${index}`}
+                onClick={handleAddAddress}
               >
-                <MDBRadio
-                  name="inlineRadio"
-                  id={`inlineRadio${index}`}
-                  value={type}
-                  onChange={() => setPayType(type)}
-                  inline
-                />
-                <div style={{ display: "flex" }}>{type}</div>
+                Add new Address
+              </button>
+              {/* saved Address */}
+              <div
+                className="card "
+                style={{
+                  backgroundColor: "#eeeeee",
+                  borderRadius: 0,
+                  border: 0,
+                }}
+              >
+                {!showForm ? (
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    {addresses.map((address) => (
+                      <div
+                        key={address._id}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor: "#ffffff",
+                          margin: "20px",
+                          alignItems: "center",
+                        }}
+                        // getting address
+                        onClick={() => setDeliveryAddress(address)}
+                      >
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <div
+                            style={{
+                              cursor: "pointer",
+                            }}
+                          >
+                            <MDBRadio
+                              name={address.area}
+                              id={address._id}
+                              inline
+                              checked={deliveryAddress._id === address._id}
+                            />
+                          </div>
+                          <div className="m-3">
+                            <p>
+                              <span>Name: {address.addressDetails.name}</span>
+                            </p>
+                            <p>
+                              <span>
+                                Locality: {address.addressDetails.locality}
+                              </span>
+                            </p>
+                            <p>
+                              <span>Area: {address.addressDetails.area}</span>
+                            </p>
+                            <p>
+                              <span>
+                                Landmark: {address.addressDetails.landmark}
+                              </span>
+                            </p>
+                            <p>
+                              <span>City: {address.addressDetails.city}</span>
+                            </p>
+                            <p>
+                              <span>State: {address.addressDetails.state}</span>
+                            </p>
+                            <p>
+                              <span>
+                                Pincode: {address.addressDetails.pincode}
+                              </span>{" "}
+                            </p>
+                            <p>
+                              <span>Phone: {address.addressDetails.phone}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <NewAddress getSavedAddress={getSavedAddress} />
+                )}
               </div>
-            ))}
-          </div>
+            </div>
 
-          {/* Order summary */}
-          <div
-            className="card"
-            style={{
-              backgroundColor: "#EEEEEE",
-              borderRadius: 0,
-              border: 0,
-              fontFamily: "Inter,sans-serif",
-            }}
-          >
-            <div className="container py-5">
-              <div className="row d-flex justify-content-center align-items-center">
-                <div className="row justify-content-center mb-4 mt-0">
+            <div className="col-md-4" style={{ borderRadius: 0 }}>
+              <div
+                className="card "
+                style={{
+                  backgroundColor: "#EEEEEE",
+                  borderRadius: 0,
+                  border: 0,
+                }}
+              >
+                <div className="row justify-content-center m-3">
                   <h1
                     style={{
                       color: "#bf0a2a",
@@ -440,104 +412,137 @@ const BuyerConfirm = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    Order Summary
+                    Pay With
                   </h1>
                 </div>
-
-                <div className="col-10">
-                  <div className="d-flex justify-content-between m-3">
-                    <div className="font-weight-bold">Items</div>
-                    <div>{totalPrice}</div>
+                {["Cash on delivery", "Online Payment"].map((type, index) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      margin: "10px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      cursor: "pointer",
+                    }}
+                    key={`reverse-${index}`}
+                  >
+                    <MDBRadio
+                      name="inlineRadio"
+                      id={`inlineRadio${index}`}
+                      value={type}
+                      onChange={() => setPayType(type)}
+                      inline
+                    />
+                    <div style={{ display: "flex" }}>{type}</div>
                   </div>
+                ))}
+              </div>
 
-                  {payType === "Cash on delivery" && (
-                    <>
-                      <div>
-                        <hr className="hr" />
+              {/* Order summary */}
+              <div
+                className="card"
+                style={{
+                  backgroundColor: "#EEEEEE",
+                  borderRadius: 0,
+                  border: 0,
+                  fontFamily: "Inter,sans-serif",
+                }}
+              >
+                <div className="container py-5">
+                  <div className="row d-flex justify-content-center align-items-center">
+                    <div className="row justify-content-center mb-4 mt-0">
+                      <h1
+                        style={{
+                          color: "#bf0a2a",
+                          fontSize: "30px",
+                          fontFamily: "poppins",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Order Summary
+                      </h1>
+                    </div>
+
+                    <div className="col-10">
+                      <div className="d-flex justify-content-between m-3">
+                        <div className="font-weight-bold">Items</div>
+                        <div>{totalPrice}</div>
+                      </div>
+
+                      {payType === "Cash on delivery" && (
+                        <>
+                          <div>
+                            <hr className="hr" />
+                          </div>
+                          <div className="d-flex justify-content-between m-3">
+                            <div className="font-weight-bold">Items(10%)</div>
+                            <div>{(parseInt(totalPrice) * 10) / 100}</div>
+                          </div>
+                        </>
+                      )}
+
+                      <div className="d-flex justify-content-between m-3">
+                        <div>Delivery</div>
+                        <div>{sum}</div>
                       </div>
                       <div className="d-flex justify-content-between m-3">
-                        <div className="font-weight-bold">Items(10%)</div>
-                        <div>{(parseInt(totalPrice) * 10) / 100}</div>
+                        <div>GST- (5%)</div>
+                        <div>{calGST()}</div>
                       </div>
-                    </>
+                    </div>
+                    <div>
+                      <hr className="hr" />
+                    </div>
+                    <div
+                      className="d-flex justify-content-between m-3"
+                      style={{ color: "#bf0a2a" }}
+                    >
+                      <div
+                        className="font-weight-bold"
+                        style={{ marginLeft: "30px" }}
+                      >
+                        <b>Order Total:</b>
+                      </div>
+
+                      <div
+                        className="font-weight-bold"
+                        style={{ marginRight: "46px" }}
+                      >
+                        <b>{calPaidAmount()}</b>
+                      </div>
+                    </div>
+                  </div>
+                  {payType === "Cash on delivery" && (
+                    <span className="p-3" style={{ fontSize: "13px" }}>
+                      For Cash on Delivery You need to pay Minimum 10% of the
+                      real product price. + GST + Shippment Charge will be
+                      Included
+                    </span>
                   )}
-
-                  <div className="d-flex justify-content-between m-3">
-                    <div>Delivery</div>
-                    <div>{sum}</div>
-                  </div>
-                  <div className="d-flex justify-content-between m-3">
-                    <div>GST- (5%)</div>
-                    <div>{calGST()}</div>
-                  </div>
-                </div>
-                <div>
-                  <hr className="hr" />
-                </div>
-                <div
-                  className="d-flex justify-content-between m-3"
-                  style={{ color: "#bf0a2a" }}
-                >
-                  <div
-                    className="font-weight-bold"
-                    style={{ marginLeft: "30px" }}
-                  >
-                    <b>Order Total:</b>
-                  </div>
-
-                  <div
-                    className="font-weight-bold"
-                    style={{ marginRight: "46px" }}
-                  >
-                    <b>{calPaidAmount()}</b>
-                  </div>
                 </div>
               </div>
-              {payType === "Cash on delivery" && (
-                <span className="p-3" style={{ fontSize: "13px" }}>
-                  For Cash on Delivery You need to pay Minimum 10% of the real
-                  product price. + GST + Shippment Charge will be Included
-                </span>
-              )}
+
+              <div>
+
+                  <button
+                    className="btn btn-danger w-100 border p-3"
+                    style={{
+                      color: "#fff7e9",
+                      borderRadius: "0px",
+                      backgroundColor: "#bf0a2a",
+                    }}
+                    onClick={placeOrderButton}
+                  >
+                    Place Order
+                  </button>
+                
+              </div>
             </div>
-          </div>
-
-          <div>
-            {loader ?
-            (
-            <button
-              className="btn btn-danger w-100 border p-3"
-              style={{
-                color: "#fff7e9",
-                borderRadius: "0px",
-                backgroundColor: "#bf0a2a",
-              }}
-              onClick={placeOrderButton}
-            >
-            
-              Place Order
-            </button>
-
-            ) :(
-              <div className="bg-red-600 w-100 border p-3 flex justify-center text-center">
-
-<Vortex
-  visible={true}
-  height="80"
-  width="80"
-  ariaLabel="vortex-loading"
-  wrapperStyle={{}}
-  wrapperClass="vortex-wrapper"
-  colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
-/>
-              </div>
-            )
-            }
+            <div className="col-md-1"></div>
           </div>
         </div>
-        <div className="col-md-1"></div>
-      </div>
-    </div>
+      }
+    </>
   );
 };
 
