@@ -135,8 +135,6 @@ function Test() {
     }
   };
 
-  
-
   useEffect(() => {
     getOrderDetails();
   }, []);
@@ -149,15 +147,14 @@ function Test() {
   const shipping = order?.quantity * 10;
   const totalAmount = orderPrice + tax + shipping;
 
-  console.log("Tax:", tax);
-
-
   // cash
   // paid amount  ==>
-const paidAmount = totalAmount * 0.1
+  const casTax = orderPrice * 0.1 * 0.05; // gst = 10% of order amount + 5%
+  
+  const paidAmount = orderPrice * 0.1 + casTax + shipping;
 
   // remaining amount
-  const remainingAmount = totalAmount - paidAmount
+  const remainingAmount = totalAmount - paidAmount;
 
   return (
     <>
@@ -175,62 +172,61 @@ const paidAmount = totalAmount * 0.1
             </h3>
           </div>
           <div className={styles.secondiv}>
-            {
-              user.urType !== "seller" && <div className={styles.insidediv}>
-              <div className={styles.boxheading}>
-                <h3>Customer details</h3>
-              </div>
-              <hr className={styles.line} />
-              <div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <BiSolidUserCircle className="h-5 w-5" />
-
-                  <p className="ml-1"> {order.dlvAddr.name}</p>
+            {user.urType !== "seller" && (
+              <div className={styles.insidediv}>
+                <div className={styles.boxheading}>
+                  <h3>Customer details</h3>
                 </div>
-                {user.email && user.urType === "buyer" ? (
+                <hr className={styles.line} />
+                <div>
                   <div className="flex flex-row ml-3 mt-3">
-                    <TfiEmail className="h-5 w-5" />
+                    <BiSolidUserCircle className="h-5 w-5" />
 
-                    <p className="ml-1"> {user.email}</p>
+                    <p className="ml-1"> {order.dlvAddr.name}</p>
                   </div>
-                ) : null}
+                  {user.email && user.urType === "buyer" ? (
+                    <div className="flex flex-row ml-3 mt-3">
+                      <TfiEmail className="h-5 w-5" />
 
-                <div className="flex flex-row ml-3 mt-3">
-                  <BsTelephoneFill className="h-5 w-5" />
+                      <p className="ml-1"> {user.email}</p>
+                    </div>
+                  ) : null}
 
-                  <p className="ml-1"> {order.dlvAddr.phone}</p>
-                </div>
-              </div>
-            </div>
-            }
-            
-            {
-              user.urType !== "seller" && <div className={styles.insidediv}>
-              <div className={styles.boxheading}>
-                <h3>Shipping address</h3>
-              </div>
-              <hr className={styles.line} />
-              <div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">Locality :{order.dlvAddr.locality}</p>
-                </div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">Area :{order.dlvAddr.area}</p>
-                </div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">City :{order.dlvAddr.city}</p>
-                </div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1"> State :{order.dlvAddr.state}</p>
                   <div className="flex flex-row ml-3 mt-3">
+                    <BsTelephoneFill className="h-5 w-5" />
+
+                    <p className="ml-1"> {order.dlvAddr.phone}</p>
                   </div>
                 </div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">Pincode :{order.dlvAddr.pincode}</p>
+              </div>
+            )}
+
+            {user.urType !== "seller" && (
+              <div className={styles.insidediv}>
+                <div className={styles.boxheading}>
+                  <h3>Shipping address</h3>
+                </div>
+                <hr className={styles.line} />
+                <div>
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1">Locality :{order.dlvAddr.locality}</p>
+                  </div>
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1">Area :{order.dlvAddr.area}</p>
+                  </div>
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1">City :{order.dlvAddr.city}</p>
+                  </div>
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1"> State :{order.dlvAddr.state}</p>
+                    <div className="flex flex-row ml-3 mt-3"></div>
+                  </div>
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1">Pincode :{order.dlvAddr.pincode}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            }
+            )}
             <div className={styles.insidediv}>
               <div className={styles.boxheading}>
                 <h3>Payment details</h3>
@@ -277,18 +273,14 @@ const paidAmount = totalAmount * 0.1
                   <div className="flex flex-row ml-3 mt-3 border border-black">
                     <p className="ml-1 text-red-600 font-bold">
                       Amount need to collect from customer:
-                      {order.pType === "cash"
-                        ? remainingAmount
-                        : 0}
+                      {order.pType === "cash" ? remainingAmount : 0}
                     </p>
                   </div>
                 ) : (
                   <div className="flex flex-row ml-3 mt-3 border border-black">
                     <p className="ml-1 text-red-600 font-bold">
                       Pending amount:
-                      {order.pType === "cash"
-                        ? remainingAmount
-                        : 0}
+                      {order.pType === "cash" ? remainingAmount : 0}
                     </p>
                   </div>
                 )}
