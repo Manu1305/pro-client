@@ -145,11 +145,10 @@ function Test() {
   const orderPrice = order?.ordPrc;
 
   const tax = orderPrice * taxRate;
-  const subtotal = orderPrice;
 
   const shipping = order?.quantity * 10;
-
   const totalAmount = orderPrice + tax + shipping;
+
   console.log("Tax:", tax);
 
 
@@ -303,12 +302,9 @@ const paidAmount = totalAmount * 0.1
               <table className={`${styles.table}`}>
                 <tr style={{ backgroundColor: "white" }}>
                   <th className="bg-white">Product</th>
-                  {/* <th className="bg-white">Product Id</th> */}
                   <th className="bg-white">Single product price</th>
-                  {/* <th className="bg-white">Quantity</th> */}
                   <th className="bg-white ">Order Price</th>
                   <th className="bg-white"> size and quantity</th>
-                  {/* <th className="bg-white w-20">Seller Details</th> */}
                   <tr />
                   <tr>
                     <td className={styles.table1}>
@@ -385,13 +381,9 @@ const paidAmount = totalAmount * 0.1
               <div className="ml-3">
                 <div className="flex flex-row">
                   <p>Order Price : </p>
-                  <p style={{ marginLeft: "65px" }}>{subtotal}</p>
+                  <p style={{ marginLeft: "65px" }}>{orderPrice}</p>
                 </div>
 
-                {/* <div className="flex flex-row">
-              <p>Discount : </p>
-              <p style={{marginLeft:'63px'}}>2323</p>
-            </div> */}
                 <div className="flex flex-row">
                   <p>Logistics : </p>
                   <p style={{ marginLeft: "64px" }}>{shipping} </p>
