@@ -2,10 +2,13 @@ import axios from "axios";
 import React, { useState } from "react";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { apiURL } from "../../../../../const/config";
+import { useSelector } from "react-redux";
 
 function Adminfee() {
   const [button, setButton] = useState(false);
   const [fee, setFee] = useState(10);
+  const user = useSelector((state) => state.userReducer.user);
+
   const toggleEdit = () => {
 
     setButton(!button);
@@ -44,6 +47,10 @@ function Adminfee() {
             />
             <p className="text-4xl text-red-500 font-bold">%</p>
           </div>
+
+          {
+            user?.urType=="admin" && (
+
           <div className="absolute bottom-0 right-0">
             {!button && (
               <h2 className="text-green-400 font-semibold" onClick={toggleEdit}>
@@ -56,6 +63,8 @@ function Adminfee() {
               </h2>
             )}
           </div>
+            ) 
+          }
         </div>
       </div>
     </div>
