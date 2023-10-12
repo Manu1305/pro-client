@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styless from "./ProductSec.module.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { GrFormPrevious } from "react-icons/gr";
-import { MdNavigateNext } from "react-icons/md";
 import { useSelector } from "react-redux";
 import SizeModal from "./modal/SizeModal";
 import { apiURL } from "../../../../../const/config";
@@ -19,7 +15,8 @@ import { FiEdit } from "react-icons/fi";
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
-  // const [quantityModal, setQuantityModal] = useState(false);
+  const [quantityModal, setQuantityModal] = useState(false);
+  const [product, setProduct] = useState(null)
   const [deleteId, setDeleteId] = useState(null);
   const [seller, setSellerName] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -57,8 +54,11 @@ export const ProductSec = () => {
   // add qunatity
 
   const quantityHandler = (product) => {
-    // setQuantityModal(true);
-    // setProduct(product);
+
+    
+    const filterdProduct = reqProducts.filter(newPrd => newPrd._id === product.id)
+    setQuantityModal(true);
+    setProduct(filterdProduct[0]);
   };
 
   const notify = () => {
@@ -84,13 +84,11 @@ export const ProductSec = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("check", reqProducts);
-  }, [reqProducts]);
 
   const header = [
     "ProductAdded",
     "Date",
+    // "stock",
     "images",
     "brand",
     "price",
@@ -123,7 +121,6 @@ export const ProductSec = () => {
         type: "action",
         width: "150px",
         renderCell: (params) => {
-          console.log("Check here", params.row);
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div
@@ -134,10 +131,10 @@ export const ProductSec = () => {
                   setModalShow(true);
                 }}
               >
-                <RiDeleteBin6Fill />
+                <RiDeleteBin6Fill className="cursor-pointer"/>
               </div>
               <div onClick={() => quantityHandler(params.row)}>
-                <FiEdit />
+                <FiEdit className="cursor-pointer" />
               </div>
             </div>
           );
@@ -161,7 +158,7 @@ export const ProductSec = () => {
       images:
         ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
       brand: ele.brand,
-      // stock: ele.stock,
+      stock: ele.stock,
       price: ele.sellingPrice,
       ProductAdded: ele.seller,
       Date: date,
@@ -239,12 +236,12 @@ export const ProductSec = () => {
           removeFromShop={removeFromShop}
         />
 
-        {/* <SizeModal
+        <SizeModal
           getProducts={getProducts}
           setQuantityModal={setQuantityModal}
           quantityModal={quantityModal}
           product={product}
-        /> */}
+        />
       </div>
     </div>
   );

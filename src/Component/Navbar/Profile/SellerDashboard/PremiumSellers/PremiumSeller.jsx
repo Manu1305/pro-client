@@ -112,7 +112,6 @@ export const PremiumSellers = () => {
         type: "action",
         width: "150px",
         renderCell: (params) => {
-          console.log("Check here", params.row);
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div

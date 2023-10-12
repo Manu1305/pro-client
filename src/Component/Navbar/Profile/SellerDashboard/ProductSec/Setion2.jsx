@@ -8,15 +8,13 @@ import Swal from "sweetalert2";
 
 function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
-  const [qtyAndSizes, setQtyAndSizes] = useState();
+  const [qtyAndSizes, setQtyAndSizes] = useState(null);
   //   const [prviewProdcts, setprviewProdcts] = useState([]);
   //   const [totalStocks, setTotalStocks] = useState(0);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
 
-
-  const navigate =useNavigate()
-
+  const navigate = useNavigate();
 
   const handleImageSelection = (e) => {
     const selectedImages = e.target.files;
@@ -37,8 +35,6 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
     console.log("qtyAndSizes => ", qtyAndSizes);
     console.log("images => ", images);
 
-
-    
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -62,9 +58,13 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
         )
         .then((res) => {
           console.log(res.data);
-        //   navigate('/dashboard')
-        setSecondModal(false);
-        Swal.fire({
+          //   navigate('/dashboard')
+          // setSecondModal(false);
+          setColor("");
+          setImages([]);
+          setQtyAndSizes({});
+          setImagePreviews([]);
+          Swal.fire({
             position: "center",
             icon: "success",
             title: "The product successfully added",
@@ -80,7 +80,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
     }
   };
 
-//   console.log("ProductID", productId);
+  //   console.log("ProductID", productId);
 
   return (
     <div className="bg-gray">
@@ -173,13 +173,12 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
           <h3 className="m-1 fw-bold">Product image</h3>
 
           <br />
-          <h4>Add the product main image</h4>
-          <div className="flex items-center justify-center w-auto">
+          <div className="flex items-start justify-start">
             <label
               for="dropzone-file"
-              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
             >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <div className="flex items-center justify-center pt-5 pb-6">
                 <svg
                   className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
                   aria-hidden="true"
@@ -212,42 +211,42 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
                 multiple
               />
             </label>
-             <div className="image-previews flex flex-row">
-        {imagePreviews.map((preview, index) => (
-          <div key={index} className="image-preview">
-            <img
-              src={preview}
-              alt="SDC"
-              style={{
-                maxWidth: "100px",
-                maxHeight: "100px",
-                margin: "10px",
-              }}
-            />
-            <button
-              onClick={() => {
-                
-                const updatedImages = [...images];
-                updatedImages.splice(index, 1);
-                setImages(updatedImages);
+            <div className="image-previews flex flex-row">
+              {imagePreviews.map((preview, index) => (
+                <div key={index} className="image-preview">
+                  <img
+                    src={preview}
+                    alt="SDC"
+                    style={{
+                      maxWidth: "100px",
+                      maxHeight: "100px",
+                      margin: "10px",
+                    }}
+                  />
+                  <button
+                  className="text-center"
+                    onClick={() => {
+                      const updatedImages = [...images];
+                      updatedImages.splice(index, 1);
+                      setImages(updatedImages);
 
-                const updatedPreviews = [...imagePreviews];
-                updatedPreviews.splice(index, 1);
-                setImagePreviews(updatedPreviews);
-              }}
-            >
-              <MdDeleteSweep
-                style={{
-                  display: "flex",
-                  height: "40px",
-                  alignItems: "center",
-                  color: "red",
-                }}
-              />
-            </button>
-          </div>
-        ))}</div>
-         
+                      const updatedPreviews = [...imagePreviews];
+                      updatedPreviews.splice(index, 1);
+                      setImagePreviews(updatedPreviews);
+                    }}
+                  >
+                    <MdDeleteSweep
+                      style={{
+                        display: "flex",
+                        height: "40px",
+                        alignItems: "center",
+                        color: "red",
+                      }}
+                    />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -260,8 +259,14 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
           Submit
         </button>
         <button
+          onClick={() => navigate(-1)}
+          className="bg-emerald-400 py-2.5 px-5 w-75 mr-2 mb-2 rounded-none text-sm font-medium text-white"
+        >
+          Back
+        </button>
+        <button
           onClick={() => setSecondModal(false)}
-          className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
+          className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white rounded-none border-gray-200"
         >
           Cancel
         </button>
@@ -271,4 +276,3 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
 }
 
 export default Section2;
-

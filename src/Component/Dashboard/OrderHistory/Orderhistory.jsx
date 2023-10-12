@@ -141,7 +141,6 @@ const OrderHistory = () => {
     "Orderd On",
     "Payment Method",
     "Price",
-    // "Collect",
     "Delivery Status",
     "Action",
   ].map((ele) => {
@@ -284,9 +283,7 @@ const OrderHistory = () => {
 
   const rowData = orders.map((ele) => {
     const date = new Date(ele.createdAt).toISOString().split("T")[0];
-    // const collect =
-    //   (parseInt(ele.ordPrc) * 90) / 100 +
-    //   (((parseInt(ele.ordPrc) * 90) / 100) * 5) / 100;
+
     return {
       id: ele._id,
       Customer: ele.dlvAddr.name,
@@ -296,7 +293,6 @@ const OrderHistory = () => {
       Product: ele.prdData.images,
       "Orderd On": date,
       Price: ele.ordPrc + ( Number(ele.ordPrc) * 0.05) +( Number(ele.quantity) * 10),
-      // Collect: ele.pType === "cash" ? collect : 0,
       "Payment Method": ele.pType,
       "Delivery Status": ele.orderStatus,
     };
