@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { apiURL } from "../../../../../../const/config";
@@ -21,20 +20,15 @@ function SizeModal({ quantityModal, setQuantityModal, getProducts, product }) {
   const updateStatus = async (event) => {
     event.preventDefault();
 
-    let total;
-    for (const key in selectedSizes) {
-      total += parseInt(selectedSizes[key], 10);
-    }
+    console.log(selectedSizes)
 
     try {
-      const response = await httpService
-        .put(`${apiURL}/product/update-seller-product/${product._id}`, {
-          size: selectedSizes,
-          total,
-        })
+       await httpService
+        .put(`${apiURL}/product/update-seller-product/${product._id}`, {selectedSizes})
         .then((res) => {
           setQuantityModal(false);
           getProducts();
+          console.log("RES",res)
           return res;
         })
         .catch((err) => {
@@ -61,7 +55,7 @@ function SizeModal({ quantityModal, setQuantityModal, getProducts, product }) {
                       <Form.Label>Size {size}</Form.Label>
                       <Form.Control
                         type="number"
-                        name={selectedSizes}
+                        name={size}
                         placeholder="Enter quanities"
                         onChange={changeHandler}
                       />

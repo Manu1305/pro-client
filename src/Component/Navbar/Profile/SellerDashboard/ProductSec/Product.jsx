@@ -36,7 +36,6 @@ export const ProductSec = () => {
         const filteredProducts = res.data.filter(
           (product) => product.seller === user.email
         );
-        console.log("seller Produc", filteredProducts);
         setRequestedProducts(filteredProducts);
         setIsLoading(false);
       })
