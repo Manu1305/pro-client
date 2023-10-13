@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Test.module.css";
+import styles from "./Singleorder.module.css";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { TfiEmail } from "react-icons/tfi";
 import { BsTelephoneFill } from "react-icons/bs";
@@ -18,7 +18,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 
-function Test() {
+function SingleOrder() {
   const { orderId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
   const [order, setOrder] = useState(null);
@@ -517,4 +517,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default SingleOrder;

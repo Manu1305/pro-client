@@ -61,7 +61,7 @@ import { SizeChart } from "./Footer/Size&Chart/Size&Chart";
 import { FaQ } from "./Footer/FAQ/FaQ";
 import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
 import SellerRelatedPro from "./Shopingsection/SellerRelatedProduct/sellerRelatedPro";
-import Test from "./Test/Test";
+import SingleOrder from "./singleOrderdetail/SingleOrder";
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
@@ -210,7 +210,7 @@ const App = () => {
             <Route path="/whyus" element={<Whydetail />} />
             <Route path="/whatus" element={<Whatmakeus />} />
             <Route path="/whoweare" element={<WhoWeAre />} />
-            <Route path="/orderDetails/:orderId" element={<Test />} />
+            <Route path="/orderDetails/:orderId" element={<SingleOrder />} />
             <Route
               path="/productVerification/:id"
               element={<ProductVerification />}

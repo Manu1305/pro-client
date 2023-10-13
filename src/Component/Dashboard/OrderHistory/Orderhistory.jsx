@@ -181,7 +181,7 @@ const OrderHistory = () => {
               <p className="m-2">{params.row["Delivery Status"]}</p>
               <br />
               <EditNoteIcon
-                onClick={() => handleShowStatus(params.row["Order Id"])}
+                onClick={() => handleShowStatus(params.row["Order_Id"])}
               />
             </>
           );
@@ -201,7 +201,7 @@ const OrderHistory = () => {
                 <div>
                   <p
                     className="btn btn-success btn-sm"
-                    onClick={() => handleShow(params.row["Order Id"])}
+                    onClick={() => handleShow(params.row["Order_Id"])}
                   >
                     Dispatch
                   </p>
