@@ -19,7 +19,7 @@ const[customerLength,setCustomerLength]=useState('')
 const[sellerLength,setSellerLength]=useState('')
 const[Allproductlength,setAllproductlength]=useState('')
 const[productrequestlength,setproductrequestlength]=useState('')
-
+const [fee,setFee]=useState()
 
   const user = useSelector((state) => state.userReducer.user);
   const getOrders = async () => {
@@ -74,21 +74,7 @@ const[productrequestlength,setproductrequestlength]=useState('')
       console.log(error);
     }
   };
-  // const getAllProducts = async () => {
-  //   await httpService
-  //     .get(`${apiURL}/product/get-all-products`)
-  //     .then((res) => {
-  //       setAllproductlength(res.data.length);
-  //       console.log(res.data);
-  //       // dispatch(addProduct(res.data));
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     })
-  //     // .finally(() => {
-  //     //   setIsLoading(false);
-  //     // });
-  // };
+ 
   const getProductrequest = async () => {
     await httpService
       .post(`${apiURL}/product/requested-Products`, {
@@ -101,8 +87,6 @@ const[productrequestlength,setproductrequestlength]=useState('')
       })
       .catch((Err) => console.log(Err));
   };
-
-
 
   useEffect(() => {
     getOrders();
@@ -121,7 +105,7 @@ const[productrequestlength,setproductrequestlength]=useState('')
       />
       <div className="flex flex-row">
       <SaleChart  />
-      <Adminfee/>
+      <Adminfee fee={fee}/>
       </div>
       
       <ExtraData Allproductlength={products} 

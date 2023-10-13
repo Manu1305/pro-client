@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { persistor, store } from "./Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import Test from '../src/Component/Test/Test'
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

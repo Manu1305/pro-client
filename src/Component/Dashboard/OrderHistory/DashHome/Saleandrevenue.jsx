@@ -2,10 +2,24 @@ import React, { useEffect, useState } from "react";
 import httpService from "../../../Error Handling/httpService";
 import { apiURL } from "../../../../const/config";
 import { useSelector } from "react-redux";
+import axios from "axios";
 function Saleandrevenue({ userLength,totalsales,ordersLength,handleLoginTypeChange}) {
   const user = useSelector((state) => state.userReducer.user);
 
+const [fee,setFee]=useState()
 
+  const getadminfee=()=>{
+    axios.get(`${apiURL}/product/get-admin-fee`).then((res)=>{
+      console.log(res,'its res')
+      console.log(res.data.fee,'its res..fee')
+      setFee(res.data.fee)
+    })
+
+    }
+  
+    useEffect(()=>{
+      getadminfee()
+    },[])
 
   const data = [
     {
@@ -17,7 +31,7 @@ function Saleandrevenue({ userLength,totalsales,ordersLength,handleLoginTypeChan
     {
       icon: "fa-solid fa-money-bill-trend-up fa-3x text-danger",
       label: "Admin Fee ",
-      value: Math.round(totalsales * 0.1.toFixed(3)),
+      value: Math.round(totalsales * (fee/100).toFixed(3)),
       link:'reversewith'
     },
     {
