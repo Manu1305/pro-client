@@ -182,7 +182,7 @@ const DeliveryDash = () => {
       .post(`${apiURL}/user/verify-otp`, { phone, phoneOtp })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status === "approved") {
+        if (response.data.message === "success") {
           setButtonStates((prevStates) => ({
             ...prevStates,
             [orderId]: true,
