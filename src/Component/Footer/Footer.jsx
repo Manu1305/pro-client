@@ -30,14 +30,14 @@ export const Footer = () => {
                   {" "}
                   <i className="fa fa-phone" style={{color:"white"}} aria-hidden="true"></i> : 9711811030{" "}
                 </Link>
-                <Link className={styles.links}><i class="fa fa-building" aria-hidden="true"></i> :
+                <Link className={styles.links}><i className="fa fa-building" aria-hidden="true"></i> :
 
                   {" "}
                   Plot No: 128-P2, Ground Floor, EPIP Zone Whitefield Rd, near
                   Ginger Hotel, Whitefield, EPIP Zone, Bengaluru, Karnataka
                   560066
                 </Link>
-                <Link className={styles.links}><i class="fa fa-envelope-o" aria-hidden="true"></i> : support@hitecmart.com </Link>
+                <Link className={styles.links}><i className="fa fa-envelope-o" aria-hidden="true"></i> : support@hitecmart.com </Link>
               </ul>
             </div>
             <div className={styles.iconsmain}>

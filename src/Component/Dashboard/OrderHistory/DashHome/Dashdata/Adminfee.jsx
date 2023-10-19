@@ -2,22 +2,40 @@ import axios from "axios";
 import React, { useState } from "react";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { apiURL } from "../../../../../const/config";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function Adminfee() {
   const [button, setButton] = useState(false);
-  const [fee, setFee] = useState(10);
+  const [fee, setFee] = useState();
+  const user = useSelector((state) => state.userReducer.user);
+
   const toggleEdit = () => {
 
     setButton(!button);
    
   };
 
+  const getadminfee=()=>{
+    axios.get(`${apiURL}/product/get-admin-fee`).then((res)=>{
+      console.log(res,'its res')
+      console.log(res.data.fee,'its res..fee')
+      setFee(res.data.fee)
+    })
+
+    }
+  
+    useEffect(()=>{
+      getadminfee()
+    },[])
+
 
   
   const save = () => {
     setButton(!button);
-    axios.put(`${apiURL}/adminfee/updateFees`,{fee}).then((res) => {
-      console.log(res)
+    console.log("clikced save "+fee)
+    axios.post(`${apiURL}/product/admin-fee/${fee}`).then((res) => {
+      console.log(res+ "this is res")
     }).catch((err) => {
       console.log(err)
     })
@@ -44,6 +62,10 @@ function Adminfee() {
             />
             <p className="text-4xl text-red-500 font-bold">%</p>
           </div>
+
+          {
+            user?.urType=="admin" && (
+
           <div className="absolute bottom-0 right-0">
             {!button && (
               <h2 className="text-green-400 font-semibold" onClick={toggleEdit}>
@@ -51,11 +73,13 @@ function Adminfee() {
               </h2>
             )}
             {button && (
-              <h2 className="text-green-400 font-semibold" onClick={save}>
+              <h2 className="text-green-400 font-semibold" onClick={()=>save()}>
                 Save
               </h2>
             )}
           </div>
+            ) 
+          }
         </div>
       </div>
     </div>

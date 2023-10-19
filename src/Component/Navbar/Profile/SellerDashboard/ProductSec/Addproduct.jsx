@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Addproduct.module.css";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -9,6 +9,7 @@ import Section2 from "./Setion2";
 
 function AddProduct() {
   const [isButtonVisible, setButtonVisible] = useState(true);
+  
   const history = useNavigate();
 
   const categorySizes = {
@@ -183,7 +184,7 @@ function AddProduct() {
       "Pleated Shorts",
       "Swim Shorts",
     ],
-    GirlsShirts : [
+    GirlsShirts: [
       "T-Shirts",
       "Blouses",
       "Tank Tops",
@@ -195,7 +196,7 @@ function AddProduct() {
       "Crop Tops",
       "Graphic Tees",
     ],
-     GirlsPants : [
+    GirlsPants: [
       "Jeans",
       "Leggings",
       "Trousers",
@@ -207,8 +208,8 @@ function AddProduct() {
       "Capri Pants",
       "Palazzo Pants",
     ],
-    
-    GirlsShorts : [
+
+    GirlsShorts: [
       "Denim Shorts",
       "Athletic Shorts",
       "Cargo Shorts",
@@ -230,8 +231,8 @@ function AddProduct() {
       "Pleated Shorts",
       "Swim Shorts",
     ],
-    
-     Frock : [
+
+    Frock: [
       "A-Line Frocks",
       "Party Frocks",
       "Casual Frocks",
@@ -242,11 +243,11 @@ function AddProduct() {
       "Ruffle Frocks",
       "Smocked Frocks",
       "Tiered Frocks",
-    ]
+    ],
   };
 
   const sizeSelected = {
-    Shirts: ["S", "M", "L", "XL","XXL"],
+    Shirts: ["S", "M", "L", "XL", "XXL"],
     Pants: [28, 30, 32, 34, 36, 38, 40],
     top: ["XS", "S", "M", "L", "XL"],
     Bottom: ["XS", "S", "M", "L", "XL"],
@@ -255,18 +256,16 @@ function AddProduct() {
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsShirts:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsPants:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsShorts:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    Frock:["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsShirts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsPants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsShorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    Frock: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
   };
 
   const [productInfo, setProductInfo] = useState({});
   const [productInfoDet, setProductInfoDet] = useState({});
 
   const [errors, setErrors] = useState({});
-  // const [colorError, setColorError] = useState("");
-  // const [validation, setvalidation] = useState(false);
   const [uplProductId, setUplProductId] = useState("");
 
   const [secondModal, setSecondModal] = useState(false);
@@ -274,12 +273,17 @@ function AddProduct() {
   const categoriesWithSubcategories = {
     Mens: ["Shirts", "Pants"],
     Womens: ["top", "Bottom", "Sarees"],
-    Kids: ["KidsShirt", "KidsBaniyans", "kidspants", "shorts", "GirlsShirts", "GirlsPants", "GirlsShorts",'Frock'],
+    Kids: [
+      "KidsShirt",
+      "KidsBaniyans",
+      "kidspants",
+      "shorts",
+      "GirlsShirts",
+      "GirlsPants",
+      "GirlsShorts",
+      "Frock",
+    ],
   };
-
-  useEffect(() => {
-    console.log("ProductInfo", productInfo);
-  }, [productInfo]);
 
   const onchangeHandler = (e) => {
     const { name, value } = e.target;
@@ -338,14 +342,6 @@ function AddProduct() {
       return { ...prev, [name]: value };
     });
   };
-
-  // const deleteAnyColor = (ind, prod) => {
-  //   setprviewProdcts((prev) => {
-  //     const newItems = prev.filter((item) => item !== prod);
-  //     return [...newItems];
-  //   });
-  //   toast.success("deleted");
-  // };
 
   const addNewProduct = async () => {
     // e.preventDefault();

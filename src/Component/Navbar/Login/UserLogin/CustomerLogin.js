@@ -180,7 +180,7 @@ const CustomerLogin = () => {
                           Password
                         </label>
 
-                        <div class="mb-4 flex">
+                        <div className="mb-4 flex">
                           <input
                             className="form-control form-control-lg"
                             type={inpType}

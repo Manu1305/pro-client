@@ -104,43 +104,43 @@ const DataNewArriv = ({
           productItems.map((item) => {
             //   if (item.collections === prodd)  {
             // console.log("ffffffrrrrrr", user.subscription.subsStatus);
-            return (
-              <div key={item._id}>
-                <div className={styless.customerheading}>
-                  <a href={`/ViewDetails/${item._id}`}>
-                    <div className={`${styless.card}`}>
-                      <img
-                        src={item.productDetails[0].images[0]}
-                        alt="image"
-                        className={styless.igfff}
-                      />
-                    </div>
-                  </a>
-                </div>
-                <div className={styless.marbtm}>
-                  <h5 className={styless.title}>{item.brand}</h5>
-                  <h5 className={styless.titlee}>{item.title}</h5>
-                  <h5 className={styless.titlee}>Rs. {item.sellingPrice}</h5>
-                </div>
-              </div>
-              //     <div key={item._id}>
-              //     <div className={styless.customerheading}>
-              //       <a href={`/ViewDetails/${item._id}`}>
-              //         <div className={`${styless.card}`}>
-              //           <img
-              //             src={item.productDetails[0].images[0]}
-              //             alt="image"
-              //             className={styless.igfff}
-              //           />
-              //         </div>
-              //       </a>
-              //     </div>
-              //     <div className={styless.marbtm}>
-              //       <h5 className={styless.title}>{item.brand}</h5>
-              //       <h5 className={styless.titlee}>{item.title}</h5>
-              //     </div>
-              //   </div>
-            );
+            // return (
+            //   <div key={item._id}>
+            //     <div className={styless.customerheading}>
+            //       <a href={`/ViewDetails/${item._id}`}>
+            //         <div className={`${styless.card}`}>
+            //           <img
+            //             src={item.productDetails[0].images[0]}
+            //             alt="image"
+            //             className={styless.igfff}
+            //           />
+            //         </div>
+            //       </a>
+            //     </div>
+            //     <div className={styless.marbtm}>
+            //       <h5 className={styless.title}>{item.brand}</h5>
+            //       <h5 className={styless.titlee}>{item.title}</h5>
+            //       <h5 className={styless.titlee}>Rs. {item.sellingPrice}</h5>
+            //     </div>
+            //   </div>
+            //   //     <div key={item._id}>
+            //   //     <div className={styless.customerheading}>
+            //   //       <a href={`/ViewDetails/${item._id}`}>
+            //   //         <div className={`${styless.card}`}>
+            //   //           <img
+            //   //             src={item.productDetails[0].images[0]}
+            //   //             alt="image"
+            //   //             className={styless.igfff}
+            //   //           />
+            //   //         </div>
+            //   //       </a>
+            //   //     </div>
+            //   //     <div className={styless.marbtm}>
+            //   //       <h5 className={styless.title}>{item.brand}</h5>
+            //   //       <h5 className={styless.titlee}>{item.title}</h5>
+            //   //     </div>
+            //   //   </div>
+            // );
             //   } else {
             //     return null; // Return null for items that don't match the condition
             //   }
@@ -148,9 +148,9 @@ const DataNewArriv = ({
       </Slider>
 
       {/* </div> */}
-      <Link to="/shoppingPage">
+      {/* <Link to="/shoppingPage">
         <button className={styless.seeMore}>Go to shop...</button>
-      </Link>
+      </Link> */}
     </div>
   );
 };
