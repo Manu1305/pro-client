@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ReturnReq.module.css";
 import { Link } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
+// import { Card, Button } from "react-bootstrap";
+import { Card, Button, Modal } from "react-bootstrap"
 import Slider from "react-slick";
 import Swal from "sweetalert2";
 import "slick-carousel/slick/slick.css";
@@ -40,6 +41,20 @@ const SamplePrevArrow = (props) => {
 export const ReturnReq = () => {
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0);
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
+  const handleShowModal = (rowData) => {
+    setSelectedRowData(rowData);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRowData(null);
+    setShowModal(false);
+  };
 
   const getReturnReq = async () => {
     try {
@@ -78,6 +93,14 @@ export const ReturnReq = () => {
         console.log("ERROR", err);
       });
   };
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+  
 
   const AssignReturnDelivery = async (id) => {
     await httpService
@@ -112,6 +135,14 @@ export const ReturnReq = () => {
                   <>
                     <div className="m-2">
                       <p
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleShowModal(selectedRowData)}
+                      >
+                        Details
+                      </p>
+                    </div>
+                    <div className="m-2">
+                      <p
                         className="btn btn-danger btn-sm"
                         onClick={() => removeFromReq(params.row["Order Id"])}
                       >
@@ -129,6 +160,7 @@ export const ReturnReq = () => {
                         Approve
                       </p>
                     </div>
+                   
                   </>
                 )}
               </div>
@@ -186,6 +218,46 @@ export const ReturnReq = () => {
           rowData.length !== 0 && <DataTable columns={header} rows={rowData} />
         )}
       </div>
+      <Modal show={showModal} onHide={handleCloseModal}>
+  <Modal.Header closeButton>
+    <Modal.Title>Details</Modal.Title>
+  </Modal.Header>
+  {/* <Modal.Body>
+    {userData && userData.map((rowData) => (
+      <div key={rowData.id}>
+        <p>User: {rowData.userId}</p>
+        <p>Order Id: {rowData.orderId}</p>
+        <p>Phone: {rowData.phone}</p>
+        <p> Product Issue: {rowData.productIssue}</p>
+      </div>
+    ))}
+  </Modal.Body> */}
+  <Modal.Body>
+  {userData && userData.map((rowData, index) => (
+  <div key={rowData.id} style={{ display: selectedRowIndex === index ? 'block' : 'none' }}>
+    <p>User: {rowData.userId}</p>
+    <p>Order Id: {rowData.orderId}</p>
+    <p>Phone: {rowData.phone}</p>
+    <p>Product Issue: {rowData.productIssue}</p>
+    <Slider {...settings}>
+      {rowData.images.map((image, i) => (
+        <div key={i}>
+          <img src={image} alt={`Image ${i + 1}`} />
+        </div>
+      ))}
+    </Slider>
+  </div>
+))}
+
+</Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleCloseModal} className="bg-dark text-white">
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+
     </>
   );
 };
