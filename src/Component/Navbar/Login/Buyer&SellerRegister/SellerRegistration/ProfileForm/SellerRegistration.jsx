@@ -20,6 +20,8 @@ import { Dropdown } from "react-bootstrap";
 import { useEffect } from "react";
 import httpService from "../../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../../const/config";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { toast } from "react-toastify";
 
 const SellerRegister = () => {
@@ -41,17 +43,9 @@ const SellerRegister = () => {
   const [GstError, setGstError] = useState("");
   const [otpError, setOtperror] = useState("");
   const [userFilledData, setUserFilledData] = useState({});
-  const[userType,setUsertype]=("Seller registration")
-
-
-
-
-
-
-
-
-
-
+  const [inpType, setInpType] = useState("password");
+  const [inpTypeConf, setInpTypeConf] = useState("password");
+  const [userType, setUsertype] = "Seller registration";
 
   const countries = ["India", "Australia", "Srilanka"];
   const stateData = {
@@ -99,7 +93,6 @@ const SellerRegister = () => {
 
   const navigate = useNavigate();
 
-  
   const handleCustomerLogin = (e) => {
     const isValid = validate();
 
@@ -141,12 +134,27 @@ const SellerRegister = () => {
     setPhone(userFilledData.phone);
   }, [userFilledData]);
 
+  const handleCheckPass = () => {
+    if (inpType === "password") {
+      setInpType("text");
+    } else {
+      setInpType("password");
+    }
+  };
+  const handleCheckPassConf = () => {
+    if (inpTypeConf === "password") {
+      setInpTypeConf("text");
+    } else {
+      setInpTypeConf("password");
+    }
+  };
+
   const sendOtp = () => {
     if (phone.length == 10) {
       toast.success("otp sended successfuly");
       setShowButton(false);
       httpService
-        .post(`${apiURL}/user/send-otp`, { phone,userType })
+        .post(`${apiURL}/user/send-otp`, { phone, userType })
         .then((response) => {
           console.log(response.data + "this is data");
         })
@@ -170,19 +178,13 @@ const SellerRegister = () => {
         if (response.data.message == "success") {
           setAfterotp(true);
           setOtperror("");
-        } 
-       else if(response.data.message == "failed") {
+        } else if (response.data.message == "failed") {
           setAfterotp(false);
           setOtperror("Wrong otp");
-        } 
-
-        else if(response.data.message == "failed") {
+        } else if (response.data.message == "failed") {
           setAfterotp(false);
           setOtperror("Wrong otp");
-        } 
-
-
-        else {
+        } else {
           setAfterotp(false);
           setOtperror("Wrong otp");
         }
@@ -305,15 +307,18 @@ const SellerRegister = () => {
     });
   };
 
+
   useEffect(() => {
     console.log(userFilledData);
     // console.log("shsh")
 
     if (userFilledData.phoneOtp == 12345) setAfterotp(true);
   }, [userFilledData]);
+
+
+
   return (
-    
-      <div>
+    <div>
       <MDBContainer>
         <MDBCard>
           <MDBRow className="g-0">
@@ -321,397 +326,434 @@ const SellerRegister = () => {
             return( */}
             <div>
               <div>
-              <MDBCol md="6">
-                <MDBCardBody className="d-flex flex-column">
-                  <div className="d-flex flex-row mt-2">
-                    <span className="h1 fw-bold mb-0">HitecMart</span>
-                  </div>
-                  <h5
-                    className="fw-normal my-4 pb-3"
-                    style={{ letterSpacing: "1px" }}
-                  >
-                    Register as seller
-                  </h5>
-                  {/* {nameError && <div className="text-danger">{nameError}</div>} */}
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <label
-                      htmlFor="formControlLg"
-                      className="form-label me-3 w-25"
-                    >
-                      UserName
-                    </label>
-                    <div className="w-85">
-                      <MDBInput
-                        id="formControlLg"
-                        type="text"
-                        size="lg"
-                        name="name"
-                        // value={userData.username}
-                        onChange={onchangeHandler}
-                      />
-                      {nameError && (
-                        <div className="text-danger">{nameError}</div>
-                      )}
+                <MDBCol md="6">
+                  <MDBCardBody className="d-flex flex-column">
+                    <div className="d-flex flex-row mt-2">
+                      <span className="h1 fw-bold mb-0">HitecMart</span>
                     </div>
-                  </div>
-
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <label
-                      htmlFor="formControlLg"
-                      className="form-label me-3 w-25"
+                    <h5
+                      className="fw-normal my-4 pb-3"
+                      style={{ letterSpacing: "1px" }}
                     >
-                      Email address.
-                    </label>
-                    <MDBInput
-                      id="formControlLg"
-                      type="email"
-                      size="lg"
-                      name="email"
-                      // value={userData.email}
-                      onChange={onchangeHandler}
-                      className="w-85"
-                    />
-                    {emailError && (
-                      <div className="text-danger">{emailError}</div>
-                    )}
-                  </div>
-
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <label
-                      htmlFor="formControlLg"
-                      className="form-label me-3 w-25"
-                    >
-                      Phone No.
-                    </label>
-                    <MDBInput
-                      id="formControlLg"
-                      type="number"
-                      size="lg"
-                      name="phone"
-                      // value={userData.phone}
-                      onChange={onchangeHandler}
-                      className="w-85"
-                    />{" "}
-                    {showButton && (
-                      <button
-                        className="btn btn-link bg-warning text-dark"
-                        onClick={sendOtp}
+                      Register as seller
+                    </h5>
+                    {/* {nameError && <div className="text-danger">{nameError}</div>} */}
+                    <div className="d-flex flex-row align-items-center mb-4">
+                      <label
+                        htmlFor="formControlLg"
+                        className="form-label me-3 w-25"
                       >
-                        Send OTP
-                      </button>
-                    )}
-                    {phoneError && (
-                      <div className="text-danger">{phoneError}</div>
-                    )}
-                  </div>
-
-                  {/* <button onClick={verifyOtp}>Submit otp</button> */}
-                  {otpError && <div className="text-danger">{otpError}</div>}
-
-
-<div>
-  
-</div>
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <label
-                      htmlFor="formControlLg"
-                      className="form-label me-3 w-25"
-                    >
-                      OTP
-                    </label>
-                    <MDBInput
-                      id="formControlLg"
-                      type="text"
-                      size="lg"
-                      name="phoneOtp"
-                      // value={userData.phoneOtp}
-                      onChange={handlePhoneOtpChange}
-                      className="w-75"
-                    />
-                    <button
-                      className="btn btn-link bg-warning text-dark"
-                      onClick={verifyOtp}
-                    >
-                      Submit OTP
-                    </button>
-                  </div>
-
-                   {Afterotp && ( 
-                    <div>
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Gst number.
-                        </label>
-                        <MDBInput
-                          id="formControlLg"
-                          type="email"
-                          size="lg"
-                          name="gst"
-                          // value={userData.gst}
-                          onChange={onchangeHandler}
-                          className="w-85"
-                        />
-                        {GstError && (
-                          <div className="text-danger">{GstError}</div>
-                        )}
-                      </div>
-
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Shop Name
-                        </label>
+                        UserName
+                      </label>
+                      <div className="w-85">
                         <MDBInput
                           id="formControlLg"
                           type="text"
                           size="lg"
-                          name="shopName"
+                          name="name"
+                          // value={userData.username}
                           onChange={onchangeHandler}
-                          className="85"
                         />
-                        {shopNameError && (
-                          <div className="text-danger">{shopNameError}</div>
+                        {nameError && (
+                          <div className="text-danger">{nameError}</div>
                         )}
                       </div>
                     </div>
 
-                    
-                   )} 
-                </MDBCardBody>
-              </MDBCol>
+                    <div className="d-flex flex-row align-items-center mb-4">
+                      <label
+                        htmlFor="formControlLg"
+                        className="form-label me-3 w-25"
+                      >
+                        Email address.
+                      </label>
+                      <MDBInput
+                        id="formControlLg"
+                        type="email"
+                        size="lg"
+                        name="email"
+                        // value={userData.email}
+                        onChange={onchangeHandler}
+                        className="w-85"
+                      />
+                      {emailError && (
+                        <div className="text-danger">{emailError}</div>
+                      )}
+                    </div>
+
+                    <div className="d-flex flex-row align-items-center mb-4">
+                      <label
+                        htmlFor="formControlLg"
+                        className="form-label me-3 w-25"
+                      >
+                        Phone No.
+                      </label>
+                      <MDBInput
+                        id="formControlLg"
+                        type="number"
+                        size="lg"
+                        name="phone"
+                        // value={userData.phone}
+                        onChange={onchangeHandler}
+                        className="w-85"
+                      />{" "}
+                      {showButton && (
+                        <button
+                          className="btn btn-link bg-warning text-dark"
+                          onClick={sendOtp}
+                        >
+                          Send OTP
+                        </button>
+                      )}
+                      {phoneError && (
+                        <div className="text-danger">{phoneError}</div>
+                      )}
+                    </div>
+
+                    {/* <button onClick={verifyOtp}>Submit otp</button> */}
+                    {otpError && <div className="text-danger">{otpError}</div>}
+
+                    <div></div>
+                    <div className="d-flex flex-row align-items-center mb-4">
+                      <label
+                        htmlFor="formControlLg"
+                        className="form-label me-3 w-25"
+                      >
+                        OTP
+                      </label>
+                      <MDBInput
+                        id="formControlLg"
+                        type="text"
+                        size="lg"
+                        name="phoneOtp"
+                        // value={userData.phoneOtp}
+                        onChange={handlePhoneOtpChange}
+                        className="w-75"
+                      />
+                      <button
+                        className="btn btn-link bg-warning text-dark"
+                        onClick={verifyOtp}
+                      >
+                        Submit OTP
+                      </button>
+                    </div>
+
+                    {Afterotp && (
+                      <div>
+                        <div className="d-flex flex-row align-items-center mb-4">
+                          <label
+                            htmlFor="formControlLg"
+                            className="form-label me-3 w-25"
+                          >
+                            Gst number.
+                          </label>
+                          <MDBInput
+                            id="formControlLg"
+                            type="email"
+                            size="lg"
+                            name="gst"
+                            // value={userData.gst}
+                            onChange={onchangeHandler}
+                            className="w-85"
+                          />
+                          {GstError && (
+                            <div className="text-danger">{GstError}</div>
+                          )}
+                        </div>
+
+                        <div className="d-flex flex-row align-items-center mb-4">
+                          <label
+                            htmlFor="formControlLg"
+                            className="form-label me-3 w-25"
+                          >
+                            Shop Name
+                          </label>
+                          <MDBInput
+                            id="formControlLg"
+                            type="text"
+                            size="lg"
+                            name="shopName"
+                            onChange={onchangeHandler}
+                            className="85"
+                          />
+                          {shopNameError && (
+                            <div className="text-danger">{shopNameError}</div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </MDBCardBody>
+                </MDBCol>
               </div>
               <div>
-
-              
-              <MDBCol md="6">
-                <MDBCardBody className="d-flex flex-column">
-                   {Afterotp && (
-                    <div>
-                      <hr></hr>
+                <MDBCol md="6">
+                  <MDBCardBody className="d-flex flex-column">
+                    {Afterotp && (
                       <div>
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Address :
-                        </label>
-                        <div className="d-flex flex-row align-items-center mb-4">
+                        <hr></hr>
+                        <div>
                           <label
                             htmlFor="formControlLg"
                             className="form-label me-3 w-25"
                           >
-                            House No. or Locality
+                            Address :
                           </label>
-                          <MDBInput
-                            id="formControlLg"
-                            type="text"
-                            size="lg"
-                            name="locality"
-                            onChange={onchangeHandler}
-                            className="w-85"
-                          />
-                          {address1Error && (
-                            <div className="text-danger">{address1Error}</div>
-                          )}
-                        </div>
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <label
-                            htmlFor="formControlLg"
-                            className="form-label me-3 w-25"
-                          >
-                            Area & Streat
-                          </label>
-                          <MDBInput
-                            id="formControlLg"
-                            type="text"
-                            size="lg"
-                            name="area"
-                            onChange={onchangeHandler}
-                            className="w-85"
-                          />
-                        </div>
-                        
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <label
-                            htmlFor="formControlLg"
-                            className="form-label me-3 w-25"
-                          >
-                            Country
-                          </label>
-                          <Dropdown>
-                            <Dropdown.Toggle
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <label
+                              htmlFor="formControlLg"
+                              className="form-label me-3 w-25"
+                            >
+                              House No. or Locality
+                            </label>
+                            <MDBInput
                               id="formControlLg"
+                              type="text"
                               size="lg"
-                              className="w-85 bg-warning"
-                            >
-                              {userFilledData.country || "select a country"}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {countries.map((country, index) => (
-                                <Dropdown.Item
-                                  key={index}
-                                  onClick={() =>
-                                    setUserFilledData((prev) => {
-                                      return { ...prev, ["country"]: country };
-                                    })
-                                  }
-                                >
-                                  {country}
-                                </Dropdown.Item>
-                              ))}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
-                        
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <label
-                            htmlFor="formControlLg"
-                            className="form-label me-3 w-25"
-                          >
-                            State
-                          </label>
-                          <Dropdown>
-                            <Dropdown.Toggle
-                              id="stateDropdown"
-                              size="lg"
-                              className="w-85 bg-warning"
-                            >
-                              {userFilledData.state || "Select State"}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu
-                              style={{ maxHeight: "200px", overflowY: "auto" }}
-                            >
-                              {userFilledData.country &&
-                                stateData[userFilledData.country]?.map(
-                                  (state, index) => (
-                                    <Dropdown.Item
-                                      key={index}
-                                      onClick={() =>
-                                        setUserFilledData((prev) => {
-                                          return { ...prev, ["state"]: state };
-                                        })
-                                      }
-                                    >
-                                      {state}
-                                    </Dropdown.Item>
-                                  )
-                                )}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <label
-                            htmlFor="formControlLg"
-                            className="form-label me-3 w-25"
-                          >
-                            City/Town
-                          </label>
-                          <MDBInput
-                            id="formControlLg"
-                            type="text"
-                            size="lg"
-                            name="city"
-                            onChange={onchangeHandler}
-                            className="w-85"
-                          />
-                          {cityError && (
-                            <div className="text-danger">{cityError}</div>
-                          )}
-                        </div>
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <label
-                            htmlFor="formControlLg"
-                            className="form-label me-3 w-25"
-                          >
-                            Pincode/Zip code
-                          </label>
-                          <MDBInput
-                            id="formControlLg"
-                            type="number"
-                            size="lg"
-                            name="pincode"
-                            onChange={onchangeHandler}
-                            className="w-85"
-                          />
-                          {pincodeError && (
-                            <div className="text-danger">{pincodeError}</div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Password
-                        </label>
-                        <MDBInput
-                          id="formControlLg"
-                          type="password"
-                          size="lg"
-                          name="password"
-                          onChange={onchangeHandler}
-                          className="w-85"
-                        />
-                        {passwordError && (
-                          <div className="text-danger">{passwordError}</div>
-                        )}
-                      </div>
-
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <label
-                          htmlFor="formControlLg"
-                          className="form-label me-3 w-25"
-                        >
-                          Confirm Password
-                        </label>
-                        <MDBInput
-                          id="formControlLg"
-                          type="password"
-                          size="lg"
-                          name="confirmPassword"
-                          onChange={onchangeHandler}
-                          className="w-85"
-                        />
-                        {confirmpasswordError && (
-                          <div className="text-danger">
-                            {confirmpasswordError}
+                              name="locality"
+                              onChange={onchangeHandler}
+                              className="w-85"
+                            />
+                            {address1Error && (
+                              <div className="text-danger">{address1Error}</div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                      <div className="flex flex-row">
-                      <p className="small text-muted">
-                      By register, you accept Hitecmart's <Link to="/sellerTermAndCond" className="text-blue-400 font-semibold">
-                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
-                      </p>
-                      </div>
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <label
+                              htmlFor="formControlLg"
+                              className="form-label me-3 w-25"
+                            >
+                              Area & Streat
+                            </label>
+                            <MDBInput
+                              id="formControlLg"
+                              type="text"
+                              size="lg"
+                              name="area"
+                              onChange={onchangeHandler}
+                              className="w-85"
+                            />
+                          </div>
 
-                      <button
-                        className="btn btn-dark mt-3 "
-                        color="dark"
-                        size="lg"
-                        onClick={handleCustomerLogin}
-                      >
-                        Registration
-                      </button>
-                      <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>
-                        Already have an account?{" "}
-                        <Link to="/login" style={{ color: "#393f81" }}>
-                          login here
-                        </Link>
-                      </p>
-                     
-                    </div>
-                  )} 
-                </MDBCardBody>
-              </MDBCol>
-              
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <label
+                              htmlFor="formControlLg"
+                              className="form-label me-3 w-25"
+                            >
+                              Country
+                            </label>
+                            <Dropdown>
+                              <Dropdown.Toggle
+                                id="formControlLg"
+                                size="lg"
+                                className="w-85 bg-warning"
+                              >
+                                {userFilledData.country || "select a country"}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                {countries.map((country, index) => (
+                                  <Dropdown.Item
+                                    key={index}
+                                    onClick={() =>
+                                      setUserFilledData((prev) => {
+                                        return {
+                                          ...prev,
+                                          ["country"]: country,
+                                        };
+                                      })
+                                    }
+                                  >
+                                    {country}
+                                  </Dropdown.Item>
+                                ))}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </div>
+
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <label
+                              htmlFor="formControlLg"
+                              className="form-label me-3 w-25"
+                            >
+                              State
+                            </label>
+                            <Dropdown>
+                              <Dropdown.Toggle
+                                id="stateDropdown"
+                                size="lg"
+                                className="w-85 bg-warning"
+                              >
+                                {userFilledData.state || "Select State"}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu
+                                style={{
+                                  maxHeight: "200px",
+                                  overflowY: "auto",
+                                }}
+                              >
+                                {userFilledData.country &&
+                                  stateData[userFilledData.country]?.map(
+                                    (state, index) => (
+                                      <Dropdown.Item
+                                        key={index}
+                                        onClick={() =>
+                                          setUserFilledData((prev) => {
+                                            return {
+                                              ...prev,
+                                              ["state"]: state,
+                                            };
+                                          })
+                                        }
+                                      >
+                                        {state}
+                                      </Dropdown.Item>
+                                    )
+                                  )}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </div>
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <label
+                              htmlFor="formControlLg"
+                              className="form-label me-3 w-25"
+                            >
+                              City/Town
+                            </label>
+                            <MDBInput
+                              id="formControlLg"
+                              type="text"
+                              size="lg"
+                              name="city"
+                              onChange={onchangeHandler}
+                              className="w-85"
+                            />
+                            {cityError && (
+                              <div className="text-danger">{cityError}</div>
+                            )}
+                          </div>
+                          <div className="d-flex flex-row align-items-center mb-4">
+                            <label
+                              htmlFor="formControlLg"
+                              className="form-label me-3 w-25"
+                            >
+                              Pincode/Zip code
+                            </label>
+                            <MDBInput
+                              id="formControlLg"
+                              type="number"
+                              size="lg"
+                              name="pincode"
+                              onChange={onchangeHandler}
+                              className="w-85"
+                            />
+                            {pincodeError && (
+                              <div className="text-danger">{pincodeError}</div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="d-flex flex-row align-items-center mb-4">
+                          <label
+                            htmlFor="formControlLg"
+                            className="form-label me-3 w-25"
+                          >
+                            Password
+                          </label>
+                          <MDBInput
+                            id="formControlLg"
+                            type={inpType}
+                            size="lg"
+                            name="password"
+                            onChange={onchangeHandler}
+                            className="w-85"
+                          />
+
+                          <span
+                            className="flex justify-around items-center"
+                            onClick={handleCheckPass}
+                          >
+                            {inpType === "password" ? (
+                              <RemoveRedEyeIcon className="absolute mr-10" />
+                            ) : (
+                              <VisibilityOffIcon className="absolute mr-10" />
+                            )}
+                          </span>
+                          {passwordError && (
+                            <div className="text-danger">{passwordError}</div>
+                          )}
+                        </div>
+
+                        <div className="d-flex flex-row align-items-center mb-4">
+                          <label
+                            htmlFor="formControlLg"
+                            className="form-label me-3 w-25"
+                          >
+                            Confirm Password
+                          </label>
+                          <MDBInput
+                            id="formControlLg"
+                            type={inpTypeConf}
+                            size="lg"
+                            name="confirmPassword"
+                            onChange={onchangeHandler}
+                            className="w-85"
+                          />
+                          <span
+                            className="flex justify-around items-center"
+                            onClick={handleCheckPassConf}
+                          >
+                            {inpTypeConf === "password" ? (
+                              <RemoveRedEyeIcon className="absolute mr-10" />
+                            ) : (
+                              <VisibilityOffIcon className="absolute mr-10" />
+                            )}
+                          </span>
+                          {confirmpasswordError && (
+                            <div className="text-danger">
+                              {confirmpasswordError}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex flex-row">
+                          <p className="small text-muted">
+                            By register, you accept Hitecmart's{" "}
+                            <Link
+                              to="/sellerTermAndCond"
+                              className="text-blue-400 font-semibold"
+                            >
+                              terms{" "}
+                            </Link>{" "}
+                            and{" "}
+                            <Link
+                              to="/privacyPol"
+                              className="text-blue-400 font-semibold"
+                            >
+                              {" "}
+                              privacy policy{" "}
+                            </Link>
+                          </p>
+                        </div>
+
+                        <button
+                          className="btn btn-dark mt-3 "
+                          color="dark"
+                          size="lg"
+                          onClick={handleCustomerLogin}
+                        >
+                          Registration
+                        </button>
+                        <p
+                          className="mb-5 pb-lg-2"
+                          style={{ color: "#393f81" }}
+                        >
+                          Already have an account?{" "}
+                          <Link to="/login" style={{ color: "#393f81" }}>
+                            login here
+                          </Link>
+                        </p>
+                      </div>
+                    )}
+                  </MDBCardBody>
+                </MDBCol>
               </div>
             </div>
           </MDBRow>

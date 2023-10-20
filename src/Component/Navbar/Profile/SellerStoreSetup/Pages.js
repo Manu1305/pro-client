@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import  MainPage  from "./StoreSetupMainPage/MainPage";
-import { SellerPayment } from "./SellerPayment/SellerPayment";
 import  CustomerSup  from "./SellerCustomerSupport/Customer";
-
 import  Store  from "./Store/Store";
 import ScrollToTop from "../../../../Scrolltotop";
 import { SellerReady } from "./SellerFinalPage/SellerReady";

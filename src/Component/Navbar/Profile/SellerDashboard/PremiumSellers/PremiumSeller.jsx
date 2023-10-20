@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
-
+import {  useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import { useSelector } from "react-redux";
-
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import ReasonModal from "../../AdminDashboard/ReasonModal";
-import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
 import DataTable from "../../../../Reuseable Comp/DataTable";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FiEdit } from "react-icons/fi";
 
 export const PremiumSellers = () => {
-  const [reqProducts, setRequestedProducts] = useState([]);
-  const [quantityModal, setQuantityModal] = useState(false);
+
   const [deleteId, setDeleteId] = useState(null);
   const [seller, setSellerName] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [premium, setPremium] = useState([]);
-  const [product, setProduct] = useState({});
   const user = useSelector((state) => state.userReducer.user);
 
   const navigate = useNavigate();
@@ -42,7 +35,7 @@ export const PremiumSellers = () => {
         });
       console.log("users", res.data);
       const data = res.data;
-      const premium = data.filter((data) => data.subsPlan == "active");
+      const premium = data.filter((data) => data.subsPlan === "active");
 
       setPremium(premium);
     } catch (error) {
@@ -73,9 +66,6 @@ export const PremiumSellers = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("check", reqProducts);
-  }, [reqProducts]);
 
   const header = [
     "Name",
