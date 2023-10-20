@@ -15,7 +15,11 @@ import {
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
 import { toast } from "react-toastify";
-
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const CustomerRegister = () => {
   const history = useNavigate();
@@ -25,23 +29,19 @@ const CustomerRegister = () => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [gst, setGst] = useState("");
-  const [urType, setUrType] = useState("buyer");
-  const [phoneOtp,setPhoneOtp]=useState('')
-const [button,setButton]=useState(true)
-const [otpbutton,setotpButton]=useState(false)
-const[userType,setUsertype]=("customer")
-
-
-
-
-
+  const [phoneOtp, setPhoneOtp] = useState("");
+  const [button, setButton] = useState(true);
+  const [otpbutton, setotpButton] = useState(false);
+  const [userType, setUsertype] = "customer";
+  const [inpType, setInpType] = useState("password");
+  const [inpTypeConf, setInpTypeConf] = useState("password");
 
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmpasswordError, setConfirmPasswordError] = useState("");
   const [phoneError, setPhoneError] = useState("");
-  const[otpError,setOtpError]=useState(false)
+  const [otpError, setOtpError] = useState(false);
   async function handleCustomerSignup(e) {
     e.preventDefault();
 
@@ -50,7 +50,7 @@ const[userType,setUsertype]=("customer")
       try {
         await httpService
           .post(`${apiURL}/user/signup`, {
-            userData: { name, email, password, phone, gst, urType: "buyer"},
+            userData: { name, email, password, phone, gst, urType: "buyer" },
           })
           .then((res) => {
             console.log(res);
@@ -68,14 +68,14 @@ const[userType,setUsertype]=("customer")
 
                 footer: '<a href="/login">Go to Login page</a>',
               });
-              setButton(true)
+              setButton(true);
             } else if (res.data.message == "success") {
               history("/login");
             }
           });
       } catch (error) {
         console.log("Registration failed:", error);
-        toast.error("otp validation failed")
+        toast.error("otp validation failed");
         // Handle error, e.g., show an error message
       }
     } else {
@@ -83,43 +83,61 @@ const[userType,setUsertype]=("customer")
     }
   }
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const sendOtp = () => {
-    if (phone.length == 10) {
-      
+    if (phone.length === 10) {
       toast.success("otp sended successfuly");
-      setotpButton(true)
+      setotpButton(true);
       httpService
-        .post(`${apiURL}/user/send-otp`, { phone,userType })
+        .post(`${apiURL}/user/send-otp`, { phone, userType })
         .then((response) => {
-         
-          console.log(response.data + "this is data")
+          console.log(response.data + "this is data");
         })
 
         .catch((error) => {
           console.error(error);
-          toast.error("otp not sended",error);
+          toast.error("otp not sended", error);
         });
-      setTimeout(() => {
-       
-      }, 20000);
+      setTimeout(() => {}, 20000);
     } else {
       alert("phone number should 10");
     }
   };
 
+  const handleCheckPass = () => {
+    if (inpType === "password") {
+      setInpType("text");
+    } else {
+      setInpType("password");
+    }
+  };
+  const handleCheckPassConf = () => {
+    if (inpTypeConf === "password") {
+      setInpTypeConf("text");
+    } else {
+      setInpTypeConf("password");
+    }
+  };
+
   const verifyOtp = () => {
     httpService
-      .post(`${apiURL}/user/verify-otp`, {  phoneOtp })
+      .post(`${apiURL}/user/verify-otp`, { phoneOtp })
       .then((response) => {
-        console.log(response.data+"otp response");
+        console.log(response.data + "otp response");
         if (response.data.message == "success") {
-          toast.success("otp succesfully verified")
-          setButton(false)
-
-
-          
+          toast.success("otp succesfully verified");
+          setButton(false);
         } else {
-          toast.error("wrong otp ")
+          toast.error("wrong otp ");
         }
       })
       .catch((error) => {
@@ -132,8 +150,7 @@ const[userType,setUsertype]=("customer")
     let confirmpasswordError = "";
     let phoneError = "";
     let nameError = "";
-    let otpError=""
-    
+    let otpError = "";
 
     if (!name) {
       nameError = "Email address is required";
@@ -169,11 +186,9 @@ const[userType,setUsertype]=("customer")
       nameError = "Please enter a valid full name 😊";
     }
 
-    if (button===true) {
+    if (button === true) {
       otpError = "please verify phone number with otp";
-    } 
-
-
+    }
 
     setNameError(nameError);
     setEmailError(emailError);
@@ -181,7 +196,7 @@ const[userType,setUsertype]=("customer")
     setNameError(nameError);
     setConfirmPasswordError(confirmpasswordError);
     setPhoneError(phoneError);
-    setOtpError(otpError)
+    setOtpError(otpError);
     if (
       emailError ||
       passwordError ||
@@ -222,7 +237,7 @@ const[userType,setUsertype]=("customer")
                 {nameError && <div className="text-danger">{nameError}</div>}
                 <div className="mb-4">
                   <label htmlFor="formControlLg" className="mb-1">
-                    Full name 
+                    Full name
                   </label>
                   <MDBInput
                     id="formControlLg"
@@ -254,10 +269,23 @@ const[userType,setUsertype]=("customer")
                   <label htmlFor="passwordFormControlLg" className="mb-1">
                     Password
                   </label>
-                  <MDBInput
-                    id="passwordFormControlLg"
-                    type="password"
-                    size="lg"
+
+                  <OutlinedInput
+                    className="w-full"
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -273,72 +301,81 @@ const[userType,setUsertype]=("customer")
                   >
                     Confirm Password
                   </label>
-                  <MDBInput
-                    id="confirmPasswordFormControlLg"
-                    type="password"
-                    size="lg"
+
+                  <OutlinedInput
+                    className="w-full"
+                    id="outlined-adornment-password"
+                    type={showPassword1 ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword1}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                     value={confirmpassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </div>
 
                 {phoneError && <div className="text-danger">{phoneError}</div>}
-                
-                      <div>
-
-                     
-                <div className="mb-4" style={{width:'90%'}} >
-                  <label htmlFor="phoneFormControlLg" className="mb-1">
-                    Phone No.
-                  </label>
-                  
-<div className="flex flex-row gap-3">
-                  <MDBInput
-                    id="phoneFormControlLg"
-                    type="tel"
-                    size="lg"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                   <button className="rounded bg-green-500 w-20" onClick={sendOtp} >Send otp</button> 
-                  
-                
-  
-</div>
-
-                  </div>
-                    
-
-                <div className="mb-4" style={{width:'40%'}}>
-                {otpError && <div className="text-danger">{otpError}</div>}
-               {otpbutton&& (
 
                 <div>
+                  <div className="mb-4" style={{ width: "90%" }}>
+                    <label htmlFor="phoneFormControlLg" className="mb-1">
+                      Phone No.
+                    </label>
 
-                  <label htmlFor="phoneFormControlLg" className="mb-1">
-                    OTP
-                  </label>
-                  <div className="flex flex-row gap-3">
+                    <div className="flex flex-row gap-3">
+                      <MDBInput
+                        id="phoneFormControlLg"
+                        type="tel"
+                        size="lg"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                      <button
+                        className="rounded bg-green-500 w-20"
+                        onClick={sendOtp}
+                      >
+                        Send otp
+                      </button>
+                    </div>
+                  </div>
 
-                  <MDBInput
-                    id="phoneFormControlLg"
-                    type="tel"
-                    size="lg"
-                    value={phoneOtp}
-                    onChange={(e) => setPhoneOtp(e.target.value)}
-                  />
-                  {
-                    button&& ( <button className="rounded bg-green-500 w-20"  onClick={verifyOtp} >verify</button>)
-                  }
-                 
+                  <div className="mb-4" style={{ width: "40%" }}>
+                    {otpError && <div className="text-danger">{otpError}</div>}
+                    {otpbutton && (
+                      <div>
+                        <label htmlFor="phoneFormControlLg" className="mb-1">
+                          OTP
+                        </label>
+                        <div className="flex flex-row gap-3">
+                          <MDBInput
+                            id="phoneFormControlLg"
+                            type="tel"
+                            size="lg"
+                            value={phoneOtp}
+                            onChange={(e) => setPhoneOtp(e.target.value)}
+                          />
+                          {button && (
+                            <button
+                              className="rounded bg-green-500 w-20"
+                              onClick={verifyOtp}
+                            >
+                              verify
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-               )
-
-               }
-                </div>
-                </div>
-
 
                 <div className="mb-4">
                   <label htmlFor="gstFormControlLg" className="mb-1">
@@ -353,11 +390,24 @@ const[userType,setUsertype]=("customer")
                   />
                 </div>
                 <div className="flex flex-row">
-                      <p className="small text-muted">
-                      By register, you accept Hitecmart's <Link to="/termsCond" className="text-blue-400 font-semibold">
-                      terms </Link>  and <Link to="/privacyPol" className="text-blue-400 font-semibold">  privacy policy  </Link> 
-                      </p>
-                      </div>
+                  <p className="small text-muted">
+                    By register, you accept Hitecmart's{" "}
+                    <Link
+                      to="/termsCond"
+                      className="text-blue-400 font-semibold"
+                    >
+                      terms{" "}
+                    </Link>{" "}
+                    and{" "}
+                    <Link
+                      to="/privacyPol"
+                      className="text-blue-400 font-semibold"
+                    >
+                      {" "}
+                      privacy policy{" "}
+                    </Link>
+                  </p>
+                </div>
                 <button
                   className="btn btn-dark mt-3"
                   color="dark"
@@ -373,7 +423,6 @@ const[userType,setUsertype]=("customer")
                     login here
                   </Link>
                 </p>
-              
               </MDBCardBody>
             </MDBCol>
           </MDBRow>

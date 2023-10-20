@@ -30,8 +30,6 @@ import {
   const [logoError, setLogoError] = useState(null);
   const [bannerError, setBannerError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmpasswordError, setConfirmPasswordError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [shopNameError, setShopNameError] = useState("");
   const [address1Error, setAddress1Error] = useState("");
@@ -71,6 +69,7 @@ import {
 
     setLogoError(""); //
   };
+
   const handleBannerUpload = (e) => {};
 
   const handleCountrySelect = (country) => {
@@ -147,9 +146,7 @@ import {
 
     setNameError(nameError);
     setEmailError(emailError);
-    setPasswordError(passwordError);
     setNameError(nameError);
-    setConfirmPasswordError(confirmpasswordError);
     setPhoneError(phoneError);
     setShopNameError(shopNameError);
     setAddress1Error(address1Error);
@@ -180,6 +177,7 @@ import {
               <img
                 src="https://cdn.dribbble.com/users/836931/screenshots/3004436/retail.gif"
                 className={register.img1}
+                alt="s"
               />
 
             </MDBCol>
@@ -193,6 +191,7 @@ import {
                 <h5
                   className="fw-normal my-4 pb-3"
                   style={{ letterSpacing: "1px" }}
+                  
                 ></h5>
                 {/* {nameError && <div className="text-danger">{nameError}</div>} */}
                 <div className="d-flex flex-row align-items-center mb-4">

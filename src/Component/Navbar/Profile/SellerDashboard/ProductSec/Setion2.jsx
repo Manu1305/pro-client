@@ -9,8 +9,6 @@ import Swal from "sweetalert2";
 function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
   const [qtyAndSizes, setQtyAndSizes] = useState(null);
-  //   const [prviewProdcts, setprviewProdcts] = useState([]);
-  //   const [totalStocks, setTotalStocks] = useState(0);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
 
@@ -31,9 +29,6 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   };
 
   const submitHandler = async () => {
-    console.log("color => ", color);
-    console.log("qtyAndSizes => ", qtyAndSizes);
-    console.log("images => ", images);
 
     const config = {
       headers: {
