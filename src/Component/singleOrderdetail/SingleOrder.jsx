@@ -373,7 +373,7 @@ function SingleOrder() {
               <div className="ml-3">
                 <div className="flex flex-row">
                   <p>Order Price : </p>
-                  <p style={{ marginLeft: "65px" }}>{orderPrice}</p>
+                  <p style={{ marginLeft: "43px" }}>{orderPrice}</p>
                 </div>
 
                 <div className="flex flex-row">

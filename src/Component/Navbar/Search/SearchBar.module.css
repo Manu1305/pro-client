@@ -34,7 +34,7 @@
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   min-width: 200px;
-  max-width: 500px;
+ width: 100%;
 }
 
 .resultsContainer ul {
@@ -51,6 +51,12 @@
 .link {
   text-decoration: none;
   color: rgb(1, 1, 1);
+  font-weight: bolder;
+}
+.link :hover{
+  text-decoration: none;
+  color: rgb(216, 4, 4);
+  font-weight: bolder;
 }
 
 @media (max-width: 600px) {
