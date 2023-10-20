@@ -87,13 +87,14 @@ const CustomerRegister = () => {
   const [showPassword1, setShowPassword1] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
   const sendOtp = () => {
-    if (phone.length == 10) {
+    if (phone.length === 10) {
       toast.success("otp sended successfuly");
       setotpButton(true);
       httpService
@@ -309,7 +310,7 @@ const CustomerRegister = () => {
                       <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
+                          onClick={handleClickShowPassword1}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
