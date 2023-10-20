@@ -31,6 +31,7 @@ function SearchBar({ products }) {
       return items;
     }
 
+    
     const uniqueItems = [];
     const addedCollections = new Set();
 

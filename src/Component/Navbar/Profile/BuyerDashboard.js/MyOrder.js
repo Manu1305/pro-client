@@ -10,7 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { ScaleLoader } from "react-spinners";
 import axios from "axios";
 import Swal from "sweetalert2";
-import imge from '../../../../images/logoooo.jpg'
+import imge from "../../../../images/logoooo.jpg";
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
@@ -52,7 +52,6 @@ const BuyerOrder = () => {
         .catch((err) => {
           console.log(err);
           setIsLoading(false);
-
         });
       console.log(res);
       dispatch(addorder(res));
@@ -67,7 +66,6 @@ const BuyerOrder = () => {
     }
   };
 
-
   useEffect(() => {
     setIsLoading(true);
     getOrders();
@@ -75,14 +73,14 @@ const BuyerOrder = () => {
 
   function cancelorder(id) {
     Swal.fire({
-      title: 'Are you sure to cancel this order?',
+      title: "Are you sure to cancel this order?",
       text: "",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
         const config = {
@@ -95,19 +93,13 @@ const BuyerOrder = () => {
           .put(`${apiURL}/orders/update-order/${id}`, config)
           .then((res) => {
             getOrders();
-            Swal.fire(
-              '!',
-              'Your Order cancelled successfully...',
-              'success'
-            )
+            Swal.fire("!", "Your Order cancelled successfully...", "success");
           })
           .catch((err) => {
             console.log(err);
           });
-
       }
-    })
-
+    });
   }
 
   return (
@@ -151,14 +143,14 @@ const BuyerOrder = () => {
                   className={`rounded-circle ${styles.imgcircle}`}
                 /> */}
                 <div key={order.id} className="d-flex align-items-center mb-3">
-                <Link  to={`/orderDetails/${order._id}`}> 
-                  <img
-                    src={order.prdData.images}
-                    alt=""
-                    style={{ width: "45px", height: "45px" }}
-                    className="rounded-circle"
-                  />
-                </Link>
+                  <Link to={`/orderDetails/${order._id}`}>
+                    <img
+                      src={order.prdData.images}
+                      alt=""
+                      style={{ width: "45px", height: "45px" }}
+                      className="rounded-circle"
+                    />
+                  </Link>
 
                   <div className="ms-3">
                     <p className="fw-bold mb-1">{order.brand}</p>
@@ -196,7 +188,6 @@ const BuyerOrder = () => {
                   </select>
                 </div>
 
-
                 <div className={`mb-3 ${styles.addressSection}`}>
                   <h6 className="my-2">Tracking ID: {order.trackId}</h6>
                   <h6 className="text-muted">Address:</h6>
@@ -230,17 +221,14 @@ const BuyerOrder = () => {
                         {/* <button className="btn btn-warning my-2">
                           CHANGE ADDRESS
                         </button> */}
-                        {
-                          order.orderStatus !== 'Cancelled' ? (
-                            <button
-                              onClick={() => cancelorder(order._id)}
-                              className="btn btn-danger"
-                            >
-                              CANCEL ORDER
-                            </button>
-                          ) : null
-                        }
-
+                        {order.orderStatus !== "Cancelled" ? (
+                          <button
+                            onClick={() => cancelorder(order._id)}
+                            className="btn btn-danger"
+                          >
+                            CANCEL ORDER
+                          </button>
+                        ) : null}
                       </>
                     )}
 

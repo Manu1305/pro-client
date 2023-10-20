@@ -7,11 +7,7 @@ axios.interceptors.response.use(null, (error) => {
 
 
 
-
-    console.warn(error.response.config.url)
-    console.warn(error.response)
-
-  if (!expectedError) {
+ if (!expectedError) {
     //console.log('Logging the error', error);
     console.log("error")
     // toast.error(`error ${error.response.config.url}`, {
