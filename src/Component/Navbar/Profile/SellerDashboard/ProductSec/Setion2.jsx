@@ -5,13 +5,14 @@ import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { InfinitySpin } from "react-loader-spinner";
 
 function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
   const [qtyAndSizes, setQtyAndSizes] = useState(null);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
-
+const[loader,setLoader]=useState(true)
   const navigate = useNavigate();
 
   const handleImageSelection = (e) => {
@@ -29,7 +30,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   };
 
   const submitHandler = async () => {
-
+    setLoader(false)
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -66,12 +67,14 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
             showConfirmButton: false,
             timer: 1000,
           });
+          setLoader(true)
         })
         .catch((err) => {
           console.log(err);
         });
     } catch (error) {
       console.log("ERROR", error);
+      setLoader(true)
     }
   };
 
@@ -246,25 +249,35 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
         </div>
       </div>
       <div className="m-2 d-flex justify-center items-center">
-        <button
+        {loader? <button
           onClick={submitHandler}
           style={{ background: "#4BB543" }}
           className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
         >
           Submit
-        </button>
-        <button
+        </button> :<button
+         
+          style={{ background: "white" }}
+          className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm flex font-medium text-white border-1 border-gray-200"
+        >
+          <InfinitySpin 
+  width='200'
+  color="red"
+/>
+        </button> }
+        
+        {/* <button
           onClick={() => navigate(-1)}
           className="bg-emerald-400 py-2.5 px-5 w-75 mr-2 mb-2 rounded-none text-sm font-medium text-white"
         >
           Back
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={() => setSecondModal(false)}
           className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white rounded-none border-gray-200"
         >
           Cancel
-        </button>
+        </button> */}
       </div>
     </div>
   );

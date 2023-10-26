@@ -244,6 +244,18 @@ function AddProduct() {
       "Smocked Frocks",
       "Tiered Frocks",
     ],
+    KidsBaniyans: [
+      "Cotton Baniyans",
+  "Sleeveless Baniyans",
+  "Patterned Baniyans",
+  "Sports Baniyans",
+  "Printed Baniyans",
+  "Vest-Style Baniyans",
+  "Crew-Neck Baniyans",
+  "Ribbed Baniyans",
+  "Colored Baniyans",
+  "Tank Top Baniyans"
+    ]
   };
 
   const sizeSelected = {
