@@ -31,6 +31,8 @@ const ViewProduct = () => {
   const [imgPreview, setImgPreview] = useState("");
   const [prdDetInd, setPrdDetInd] = useState(0);
   const [product, setProduct] = useState(null);
+  const [color, setColor] = useState();
+  const [sizeAndQuantityWithColor, setSizeAndQuantityWithColor] = useState([]);
 
   const getOneProducts = async () => {
     try {
@@ -100,8 +102,8 @@ const ViewProduct = () => {
           return { ...prev, [name]: Number(value) };
         }
       });
-    } else{
-      toast.warn(' please add available quantity !', {
+    } else {
+      toast.warn(" please add available quantity !", {
         position: "top-center",
         autoClose: 4994,
         hideProgressBar: false,
@@ -110,35 +112,35 @@ const ViewProduct = () => {
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
+      });
     }
   };
 
-  const increaseHandler = (size,quantity) => {
-    console.log('quantity',4>undefined)
+  const increaseHandler = (size, quantity) => {
+    console.log("quantity", 4 > undefined);
 
+    const flag =
+      sizeAndQua[`${size}`] === undefined ? 0 : sizeAndQua[`${size}`];
 
-    const flag = sizeAndQua[`${size}`] === undefined ? 0 :sizeAndQua[`${size}`]
-    
-    if ( quantity > flag) {
-    setSizeAndQua((prev) => {
-      return {
-        ...prev,
-        [size]: !prev[size] ? 1 : Number(prev[size]) + 1,
-      };
-    });
-  } else{
-    toast.warn(' please add available quantity !', {
-      position: "top-center",
-      autoClose: 4994,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
+    if (quantity > flag) {
+      setSizeAndQua((prev) => {
+        return {
+          ...prev,
+          [size]: !prev[size] ? 1 : Number(prev[size]) + 1,
+        };
       });
-  }
+    } else {
+      toast.warn(" please add available quantity !", {
+        position: "top-center",
+        autoClose: 4994,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   };
 
   const decreaseHandler = (size) => {
@@ -251,6 +253,10 @@ const ViewProduct = () => {
     }
   };
 
+  const changeColor = (index) => {
+    setPrdDetInd(index);
+    setSizeAndQuantityWithColor((prev) => prev.push(sizeAndQua));
+  };
   useEffect(() => {
     getOneProducts();
   }, []);
@@ -275,11 +281,14 @@ const ViewProduct = () => {
     }
   }, [totalItems]);
 
+  useEffect(() => {
+    console.log(sizeAndQuantityWithColor);
+  }, [sizeAndQuantityWithColor]);
+
   return (
     <div className={`${styles.card}`}>
       {product !== null && (
         <div className="row">
-          {/* images css*/}
           <div className={`col-md-6`}>
             <div className={`text-center p-4`}>
               <img
@@ -314,9 +323,6 @@ const ViewProduct = () => {
               <div className={"mt-4"} style={{ marginLeft: "30px" }}>
                 <div className={styles.heads}>
                   <div>
-                    {/* {user?.email && user?.urType === "admin" && (
-                      <button> go back</button>
-                    )} */}
                     <h5 className={`text-uppercase brand ${styles.brand}`}>
                       {product.brand}
                     </h5>
@@ -379,18 +385,6 @@ const ViewProduct = () => {
                 </div>
 
                 <div className={styles.priceandpercentage}>
-                  {/* <div>
-                    <p
-                      className="line-through"
-                      style={{
-                        color: "black",
-                        marginTop: "-5px",
-                        fontSize: "13px",
-                      }}
-                    >
-                      ₹{product.realPrice}
-                    </p>
-                  </div> */}
                   {user?.email && user?.urType === "buyer" && (
                     <div className={styles.percentagetext}>
                       <h5 className="text-success">93%</h5>
@@ -424,16 +418,14 @@ const ViewProduct = () => {
                         display: "flex",
                         flexDirection: "row",
                         gap: "10px",
-                        // width:"5rem"
                         height: "50px",
-                        // marginBottom: "20px",
                       }}
                     >
                       {product.productDetails?.map((ele, index) => (
                         <div
                           className={styles.color_box}
                           style={{ background: `${ele.color}` }}
-                          onClick={() => setPrdDetInd(index)}
+                          onClick={() => changeColor(index, ele.color)}
                         ></div>
                       ))}
                     </div>
@@ -441,9 +433,6 @@ const ViewProduct = () => {
                 </div>
               </div>
               <div className="bg-red mt-4">
-                {/* {user?.email && user?.urType === "admin" && (
-                      <button> go back</button>
-                    )} */}
                 <div style={{ marginLeft: "30px" }}>
                   {user.email && user.urType === "admin" ? (
                     <label htmlFor="product_size">Stockes available</label>
@@ -484,7 +473,6 @@ const ViewProduct = () => {
                                   <div className="mt-1 ml-3 d-flex flex-row align-items-center">
                                     <div>
                                       <AiOutlineMinusCircle
-                                        // className="mr-1"
                                         onClick={() => decreaseHandler(size)}
                                       />
                                     </div>
@@ -512,7 +500,9 @@ const ViewProduct = () => {
                                     <div>
                                       <BsPlusCircle
                                         // className="m-3"
-                                        onClick={() => increaseHandler(size,quantity)}
+                                        onClick={() =>
+                                          increaseHandler(size, quantity)
+                                        }
                                       />
                                     </div>
                                   </div>

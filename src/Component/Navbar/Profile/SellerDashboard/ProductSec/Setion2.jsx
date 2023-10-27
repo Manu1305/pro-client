@@ -52,12 +52,11 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
           config
         )
         .then((res) => {
+
+          console.log("ERROR",res)
           console.log(res.data);
-          //   navigate('/dashboard')
-          // setSecondModal(false);
           setColor("");
           setImages([]);
-          setQtyAndSizes({});
           setImagePreviews([]);
           Swal.fire({
             position: "center",
@@ -75,7 +74,6 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
     }
   };
 
-  //   console.log("ProductID", productId);
 
   return (
     <div className="bg-gray">
@@ -109,7 +107,6 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
                   <div>
                     <h3 className="m-1">
                       Total Quantity:
-                      {/* {totalStocks} */}
                     </h3>
                   </div>
                   <div>
