@@ -124,7 +124,7 @@ const SellerRegister = () => {
 
       navigate("/sellerplans");
     } else {
-      alert("Wrong credentials");
+      toast.error("Please fill the all field ");
       console.log("Valid function has return false...");
     }
   };
@@ -291,7 +291,11 @@ const SellerRegister = () => {
       phoneError ||
       nameError ||
       shopNameError ||
-      cityError
+      cityError||
+      gstError||
+      pincodeError||
+      shopNameError||
+      address1Error
     ) {
       return false;
     }

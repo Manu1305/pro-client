@@ -34,15 +34,24 @@ export const ContactUs = () => {
                         <i className="fa fa-envelope fa-2x text-danger"></i>
                     </div>
                     <p className="mb-2"></p>
+                    <a href="mailto:support@hitecmart.com">
                     <p className="mb-0">support@hitecmart.com</p>
+
+                    </a>
                 </div>
+                
                 <div className="col-md-4 text-center wow fadeInUp" data-wow-delay="0.4s">
                     <div className="btn-square mx-auto mb-3">
                         <i className="fa fa-phone fa-2x text-danger"></i>
                     </div>
                     <p className="mb-2"></p>
+                    <a href="tel:9711811030">
                     <p className="mb-0"> 9711811030</p>
+
+                    </a>
                 </div>
+                
+               
                 <div className="col-md-4 text-center wow fadeInUp" data-wow-delay="0.5s">
                     <div className="btn-square mx-auto mb-3">
                         <i className="fa fa-map-marker-alt fa-2x text-danger"></i>
