@@ -366,10 +366,10 @@ async function getAddress() {
                       >
                         Register as seller
                       </h5>
-                      <button className="rounded" onClick={getAddress}>
+                      {/* <button className="rounded" onClick={getAddress}>
                         {" "}
                         allow location{" "}
-                      </button>
+                      </button> */}
                     </div>
                     {/* {nameError && <div className="text-danger">{nameError}</div>} */}
                     <div className="d-flex flex-row align-items-center mb-4">
