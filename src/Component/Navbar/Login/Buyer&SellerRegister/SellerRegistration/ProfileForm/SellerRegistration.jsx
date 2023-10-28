@@ -46,7 +46,7 @@ const SellerRegister = () => {
   const [inpType, setInpType] = useState("password");
   const [inpTypeConf, setInpTypeConf] = useState("password");
   const [userType, setUsertype] = "Seller registration";
-
+ const[add,setAdd]=useState()
   const countries = ["India", "Australia", "Srilanka"];
   const stateData = {
     India: [
@@ -279,7 +279,7 @@ const SellerRegister = () => {
     setConfirmPasswordError(confirmpasswordError);
     setPhoneError(phoneError);
     setShopNameError(shopNameError);
-    setAddress1Error(address1Error);
+    // setAddress1Error(address1Error);
     setCityError(cityError);
     setPincodeError(pincodeError);
     setGstError(gstError);
@@ -294,8 +294,8 @@ const SellerRegister = () => {
       cityError||
       gstError||
       pincodeError||
-      shopNameError||
-      address1Error
+      shopNameError
+      
     ) {
       return false;
     }
@@ -319,6 +319,30 @@ const SellerRegister = () => {
     if (userFilledData.phoneOtp == 12345) setAfterotp(true);
   }, [userFilledData]);
 
+async function getAddress() {
+  try {
+    const pos = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+
+    const { latitude, longitude } = pos.coords;
+    console.log(latitude, longitude);
+
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    setAdd(data.address);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+    console.log(add, "dfcdfk");
 
 
   return (
@@ -335,12 +359,18 @@ const SellerRegister = () => {
                     <div className="d-flex flex-row mt-2">
                       <span className="h1 fw-bold mb-0">HitecMart</span>
                     </div>
-                    <h5
-                      className="fw-normal my-4 pb-3"
-                      style={{ letterSpacing: "1px" }}
-                    >
-                      Register as seller
-                    </h5>
+                    <div className="flex flex-row">
+                      <h5
+                        className="fw-normal my-4 pb-3"
+                        style={{ letterSpacing: "1px" }}
+                      >
+                        Register as seller
+                      </h5>
+                      <button className="rounded" onClick={getAddress}>
+                        {" "}
+                        allow location{" "}
+                      </button>
+                    </div>
                     {/* {nameError && <div className="text-danger">{nameError}</div>} */}
                     <div className="d-flex flex-row align-items-center mb-4">
                       <label
@@ -516,6 +546,7 @@ const SellerRegister = () => {
                               name="locality"
                               onChange={onchangeHandler}
                               className="w-85"
+                              // value={}
                             />
                             {address1Error && (
                               <div className="text-danger">{address1Error}</div>

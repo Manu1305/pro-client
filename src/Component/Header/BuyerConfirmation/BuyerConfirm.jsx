@@ -14,6 +14,7 @@ import { Triangle, Vortex } from "react-loader-spinner";
 const BuyerConfirm = () => {
   const params = useParams();
 
+
   // getting user info
   const user = useSelector((state) => state.userReducer.user);
 
@@ -29,6 +30,10 @@ const BuyerConfirm = () => {
   // selected delivery addrees
   const [deliveryAddress, setDeliveryAddress] = useState({});
   const [sum, setSum] = useState(0);
+
+
+
+
 
   // getting saved addresses
 

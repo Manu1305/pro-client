@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDeleteSweep } from "react-icons/md";
 import styles from "./Addproduct.module.css";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { InfinitySpin } from "react-loader-spinner";
+import { InfinitySpin, Watch } from "react-loader-spinner";
 
 function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [color, setColor] = useState("");
-  const [qtyAndSizes, setQtyAndSizes] = useState(null);
+  const [qtyAndSizes, setQtyAndSizes] = useState({});
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
-const[loader,setLoader]=useState(true)
+
+  const [totQut, setTotQut] = useState(0);
+  const [loader, setLoader] = useState(true);
   const navigate = useNavigate();
 
   const handleImageSelection = (e) => {
@@ -30,7 +32,59 @@ const[loader,setLoader]=useState(true)
   };
 
   const submitHandler = async () => {
-    setLoader(false)
+    setLoader(false);
+
+    if (!color) {
+      // Color is empty
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Please select a color.",
+      });
+      setLoader(true);
+      return; //
+    }
+
+    if (images.length === 0) {
+      // No images selected
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Please select at least one image.",
+      });
+      setLoader(true);
+      return; //
+    }
+    if (images.length > 4) {
+      // More than 4 images selected
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "You can only add up to 4 images.",
+      });
+      setLoader(true);
+      return; //
+    };
+    if(totQut < 5){
+      Swal.fire({
+        icon: "warning",
+        title: "Validation Error",
+        text: "Total Quantity should be greater than 5",
+      });
+      setLoader(true);
+      return; //
+    } 
+
+    //  if (!qtyAndSizes || qtyAndSizes.quantity < 5) {
+    //    Swal.fire({
+    //      icon: "error",
+    //      title: "Validation Error",
+    //      text: "Please specify a quantity of at least 5.",
+    //    });
+    //    setLoader(true);
+    //    return;
+    //  }
+
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -58,7 +112,7 @@ const[loader,setLoader]=useState(true)
           // setSecondModal(false);
           setColor("");
           setImages([]);
-          setQtyAndSizes({});
+
           setImagePreviews([]);
           Swal.fire({
             position: "center",
@@ -67,18 +121,28 @@ const[loader,setLoader]=useState(true)
             showConfirmButton: false,
             timer: 1000,
           });
-          setLoader(true)
+
+          setLoader(true);
         })
         .catch((err) => {
           console.log(err);
+          setLoader(true);
         });
     } catch (error) {
       console.log("ERROR", error);
-      setLoader(true)
+      setLoader(true);
     }
   };
 
   //   console.log("ProductID", productId);
+
+  useEffect(() => {
+    const quantity =
+      Object.values(qtyAndSizes).length &&
+      Object.values(qtyAndSizes).reduce((acc, curr) => acc + curr);
+    console.log(quantity);
+    setTotQut(quantity);
+  }, [qtyAndSizes]);
 
   return (
     <div className="bg-gray">
@@ -222,7 +286,7 @@ const[loader,setLoader]=useState(true)
                     }}
                   />
                   <button
-                  className="text-center"
+                    className="text-center"
                     onClick={() => {
                       const updatedImages = [...images];
                       updatedImages.splice(index, 1);
@@ -249,23 +313,23 @@ const[loader,setLoader]=useState(true)
         </div>
       </div>
       <div className="m-2 d-flex justify-center items-center">
-        {loader? <button
-          onClick={submitHandler}
-          style={{ background: "#4BB543" }}
-          className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
-        >
-          Submit
-        </button> :<button
-         
-          style={{ background: "white" }}
-          className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm flex font-medium text-white border-1 border-gray-200"
-        >
-          <InfinitySpin 
-  width='200'
-  color="red"
-/>
-        </button> }
-        
+        {loader ? (
+          <button
+            onClick={submitHandler}
+            style={{ background: "#4BB543" }}
+            className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
+          >
+            Submit
+          </button>
+        ) : (
+          <button
+            style={{ background: "white" }}
+            className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm flex font-medium text-white border-1"
+          >
+            <Watch width="200" color="red" />
+          </button>
+        )}
+
         {/* <button
           onClick={() => navigate(-1)}
           className="bg-emerald-400 py-2.5 px-5 w-75 mr-2 mb-2 rounded-none text-sm font-medium text-white"
