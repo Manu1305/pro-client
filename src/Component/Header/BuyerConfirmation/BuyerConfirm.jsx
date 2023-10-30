@@ -522,7 +522,7 @@ const BuyerConfirm = () => {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
 
                   <button
                     className="btn btn-danger w-100 border p-3"
@@ -536,7 +536,25 @@ const BuyerConfirm = () => {
                     Place Order
                   </button>
                 
-              </div>
+              </div> */}
+
+              {
+                !loader && (
+                  <div>
+                    <button
+                      className="btn btn-danger w-100 border p-3"
+                      style={{
+                        color: "#fff7e9",
+                        borderRadius: "0px",
+                        backgroundColor: "#bf0a2a",
+                      }}
+                      onClick={placeOrderButton}
+                    >
+                      Place Order
+                    </button>
+                  </div>
+                )
+              }
             </div>
             <div className="col-md-1"></div>
           </div>

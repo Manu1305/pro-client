@@ -9,11 +9,13 @@ import { useSelector, useDispatch } from "react-redux";
 import ReasonModal from "./ReasonModal";
 import { apiURL } from "../../../../const/config";
 import DataTable from "../../../Reuseable Comp/DataTable";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { BiSolidShoppingBags } from "react-icons/bi";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
+import { IconButton, Tooltip } from "@mui/material";
+
 
 export const ProductRequest = () => {
   const dispatch = useDispatch();
@@ -64,8 +66,14 @@ export const ProductRequest = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await httpService.put(`${apiURL}/product/allow-requested-product/${id}`);
-        console.log(response.data);
+        await httpService.put(`${apiURL}/product/change-product-status/${id}`, { status: "Published" })
+          .then(res => {
+            console.log(res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          });
+        // console.log(response.data);
         toast("Product Added");
         getProducts();
         Swal.fire(
@@ -135,7 +143,7 @@ export const ProductRequest = () => {
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div
-                className="m-2"
+                className="cursor-pointer"
                 onClick={() => {
                   setModalShow(true);
 
@@ -146,10 +154,18 @@ export const ProductRequest = () => {
                   });
                 }}
               >
-                <RiDeleteBinLine />
+                <Tooltip title="Delete">
+                  <IconButton>
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
               </div>
-              <div className="m-2" onClick={() => addToShop(params.row.id)}>
-                <BiSolidShoppingBags />
+              <div className="cursor-pointer" onClick={() => addToShop(params.row.id)}>
+                <Tooltip title="Publish">
+                  <IconButton>
+                    <PublishedWithChangesIcon />
+                  </IconButton>
+                </Tooltip>
               </div>
             </div>
           );

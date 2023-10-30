@@ -12,11 +12,14 @@ import { ScaleLoader } from "react-spinners";
 import DataTable from "../../../../Reuseable Comp/DataTable";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
+// import { MdUnpublished } from "react-icons/md";
+import UnpublishedIcon from "@mui/icons-material/Unpublished";
+import { IconButton, Tooltip } from "@mui/material";
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
   const [quantityModal, setQuantityModal] = useState(false);
-  const [product, setProduct] = useState(null)
+  const [product, setProduct] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [seller, setSellerName] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -53,9 +56,9 @@ export const ProductSec = () => {
   // add qunatity
 
   const quantityHandler = (product) => {
-
-    
-    const filterdProduct = reqProducts.filter(newPrd => newPrd._id === product.id)
+    const filterdProduct = reqProducts.filter(
+      (newPrd) => newPrd._id === product.id
+    );
     setQuantityModal(true);
     setProduct(filterdProduct[0]);
   };
@@ -82,7 +85,6 @@ export const ProductSec = () => {
       console.log(error);
     }
   };
-
 
   const header = [
     "ProductAdded",
@@ -118,22 +120,40 @@ export const ProductSec = () => {
       return {
         field: "Action",
         type: "action",
-        width: "150px",
+        width: "160px",
         renderCell: (params) => {
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div
-                className="mr-5"
                 onClick={() => {
                   setDeleteId(params.row.id);
                   setSellerName(params.row.seller);
                   setModalShow(true);
                 }}
               >
-                <RiDeleteBin6Fill className="cursor-pointer"/>
+                <Tooltip title="Delete">
+                  <IconButton>
+                    <RiDeleteBin6Fill className="cursor-pointer" />
+                  </IconButton>
+                </Tooltip>
               </div>
-              <div onClick={() => quantityHandler(params.row)}>
-                <FiEdit className="cursor-pointer" />
+              <div
+                onClick={() =>
+                  navigate(`/dashboard/Addproduct/${params.row.id}`)
+                }
+              >
+                <Tooltip title="Edit">
+                  <IconButton>
+                    <FiEdit className="cursor-pointer" />
+                  </IconButton>
+                </Tooltip>
+              </div>
+              <div>
+                <Tooltip title="Unpublish" onClick={() => unPublishProduct(params.row.id)}>
+                  <IconButton>
+                    <UnpublishedIcon className="cursor-pointer"/>
+                  </IconButton>
+                </Tooltip>
               </div>
             </div>
           );
@@ -163,6 +183,19 @@ export const ProductSec = () => {
       Date: date,
     };
   });
+
+  const unPublishProduct = async (id) => {
+    await httpService
+      .put(`${apiURL}/product/change-product-status/${id}`, {
+        status: "unPublish",
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="container ml-5 mr-0">

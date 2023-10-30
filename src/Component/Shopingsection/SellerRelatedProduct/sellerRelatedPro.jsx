@@ -32,7 +32,6 @@ const SamplePrevArrow = (props) => {
 
 const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
   const [productItems, setProductItems] = useState([]);
-  const [userData, setUserData] = useState([]);
 
   // console.log("ffff", prodd)
   useEffect(() => {
@@ -80,47 +79,16 @@ const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
       },
     ],
   };
-  const settingsImageSlider = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-   
-  };
   return (
     <div className={`${styless.bg}`}>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          {/* { productItems && productItems.map((productItems) => (
-            <div>
-            <div className={styless.customerheading}>
-              <Link to={`/ViewDetails/${productItems._id}`}>
-                <div className={`${styless.card}`}>
-                  <img
-                    src={productItems.productDetails[0].images[0]}
-                    alt="imge"
-                    className={styless.igfff}
-                  />
-                </div>
-              </Link>
-            </div>
-            <div className={styless.marbtm}>
-             <h5 className={styless.title}>{productItems.brand}</h5>
-             <h5 className={styless.titlee}>{productItems.title}</h5>
-
-            <Link style={{ textDecoration: "none" }}>
-            </Link>
-          </div>
-          </div>
-          ))} */}
           {productItems &&
             productItems.map((item) => {
               if (item?.collections === prodd) {
                 return (
                   <div key={item._id}>
                     <div className={styless.customerheading}>
-                      {console.log("hhhhhhh", productId)}
                       <a href={`/ViewDetails/${item._id}`}>
                         <div className={`${styless.card}`}>
                           <img

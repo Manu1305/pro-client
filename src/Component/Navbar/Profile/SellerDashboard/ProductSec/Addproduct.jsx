@@ -1,33 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Addproduct.module.css";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Section2 from "./Setion2";
 
 function AddProduct() {
   const [isButtonVisible, setButtonVisible] = useState(true);
-  
+
   const history = useNavigate();
+
+  const { productId } = useParams();
 
   const categorySizes = {
     Mens: [],
     Womens: [],
     Kids: [],
   };
-
-  const productInfoArray = [
-    "Material",
-    "Packoff",
-    "Closure",
-    "Fit",
-    "Pattern",
-    "Idealfor",
-    "Washcare",
-    "Convertible",
-  ];
 
   const productCategories = Object.keys(categorySizes);
 
@@ -41,10 +32,12 @@ function AddProduct() {
       "Henley Shirts",
       "Sweatshirts",
       "Hoodies",
+      "Formal Shirts",
     ],
     Pants: [
       "Jeans",
       "Chinos",
+      "Formal Pants",
       "Dress Pants",
       "Cargo Pants",
       "Sweatpants",
@@ -246,16 +239,16 @@ function AddProduct() {
     ],
     KidsBaniyans: [
       "Cotton Baniyans",
-  "Sleeveless Baniyans",
-  "Patterned Baniyans",
-  "Sports Baniyans",
-  "Printed Baniyans",
-  "Vest-Style Baniyans",
-  "Crew-Neck Baniyans",
-  "Ribbed Baniyans",
-  "Colored Baniyans",
-  "Tank Top Baniyans"
-    ]
+      "Sleeveless Baniyans",
+      "Patterned Baniyans",
+      "Sports Baniyans",
+      "Printed Baniyans",
+      "Vest-Style Baniyans",
+      "Crew-Neck Baniyans",
+      "Ribbed Baniyans",
+      "Colored Baniyans",
+      "Tank Top Baniyans",
+    ],
   };
 
   const sizeSelected = {
@@ -274,8 +267,29 @@ function AddProduct() {
     Frock: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
   };
 
-  const [productInfo, setProductInfo] = useState({});
-  const [productInfoDet, setProductInfoDet] = useState({});
+  const [productInfo, setProductInfo] = useState({
+    title: "",
+    productCode: "",
+    brand: "",
+    realPrice: "",
+    sellingPrice: "",
+    selectedCategory: "",
+    selectedSubcategory: "",
+    collections: "",
+    description: "",
+    MoreDetails: "",
+    tags: "",
+  });
+  const [productInfoDet, setProductInfoDet] = useState({
+    Material: "",
+    Packoff: "",
+    Fit: "",
+    Pattern: "",
+    Idealfor: "",
+    Washcare: "",
+    Closure: "",
+    Convertible: "",
+  });
 
   const [errors, setErrors] = useState({});
   const [uplProductId, setUplProductId] = useState("");
@@ -340,14 +354,6 @@ function AddProduct() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // const errInfo = productInfoArray.map((ele) => {
-  //   const newErrors = {};
-  //   if(productInfoDet[`${ele}`]){
-  //     newErrors[`${ele}`] = `Please add ${ele}`;
-
-  //   }
-  // });
-
   const InfoHandler = (e) => {
     const { name, value } = e.target;
     setProductInfoDet((prev) => {
@@ -393,6 +399,74 @@ function AddProduct() {
     }
   };
 
+  const getProductForEdit = async () => {
+    try {
+      await httpService
+        .get(`${apiURL}/product/get-single-products/${productId}`)
+        .then((res) => {
+          console.log("Res", res);
+
+          const { productInfo, ...others } = res.data;
+          setProductInfoDet((prev) => {
+            return { ...productInfo };
+          });
+          setProductInfo((prev) => {
+            return { ...others };
+          });
+        }).catch((err) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Saved",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        });
+    } catch (error) {
+      alert("Error", JSON.stringify(error));
+    }
+  };
+
+  const updateUproduct = async () => {
+    try {
+      await httpService
+        .put(`${apiURL}/product/update-seller-product/${productId}`, {
+          productInfo: productInfoDet,
+          generalDetails: productInfo,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data)
+          if(res.status === 200){
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Saved",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+            const { productInfo, ...others } = res.data.ack;
+            setProductInfoDet((prev) => {
+              return { ...productInfo };
+            });
+            setProductInfo((prev) => {
+              return { ...others };
+            });
+
+          }
+        })
+        .catch((err) => {
+          console.log("Error", err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    productId && getProductForEdit();
+  }, []);
+
   return (
     <div className="bg-gray">
       {secondModal ? (
@@ -423,6 +497,7 @@ function AddProduct() {
                   className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter product title"
                   required
+                  value={productInfo.title}
                   onChange={(e) => onchangeHandler(e)}
                 />
               </div>
@@ -444,6 +519,7 @@ function AddProduct() {
                   name="productCode"
                   className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter product code"
+                  value={productInfo.productCode}
                   required
                   onChange={(e) => onchangeHandler(e)}
                 />
@@ -464,6 +540,7 @@ function AddProduct() {
                   className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter Brand name"
                   name="brand"
+                  value={productInfo.brand}
                   onChange={(e) => onchangeHandler(e)}
                   required
                 />
@@ -485,6 +562,7 @@ function AddProduct() {
                   className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter price"
                   name="realPrice"
+                  value={productInfo.realPrice}
                   onChange={(e) => onchangeHandler(e)}
                   required
                 />
@@ -505,6 +583,7 @@ function AddProduct() {
                   placeholder="Enter Selling price"
                   required
                   name="sellingPrice"
+                  value={productInfo.sellingPrice}
                   onChange={(e) => onchangeHandler(e)}
                 />
               </div>
@@ -528,6 +607,7 @@ function AddProduct() {
                 <select
                   id="product_category"
                   name="selectedCategory"
+                  value={productInfo.selectedCategory}
                   onChange={(e) => onchangeHandler(e)}
                   className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
@@ -558,6 +638,7 @@ function AddProduct() {
                     id="category"
                     name="selectedSubcategory"
                     onChange={(e) => onchangeHandler(e)}
+                    value={productInfo.selectedSubcategory}
                     className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
                     <option selected>Choose a subcategory</option>
@@ -587,6 +668,7 @@ function AddProduct() {
                   <select
                     id="subcategory"
                     name="collections"
+                    value={productInfo.collections}
                     onChange={(e) => onchangeHandler(e)}
                     className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
@@ -623,6 +705,7 @@ function AddProduct() {
                       placeholder="Write product description here"
                       required
                       name="description"
+                      value={productInfo.description}
                       onChange={(e) => onchangeHandler(e)}
                     />
                   </div>
@@ -645,6 +728,7 @@ function AddProduct() {
               )}
               <textarea
                 name="MoreDetails"
+                value={productInfo.MoreDetails}
                 onChange={(e) => onchangeHandler(e)}
                 rows="4"
                 required
@@ -661,26 +745,158 @@ function AddProduct() {
             <div className="bg-white p-2">
               <h3 className="fw-bolder">General info</h3>
 
-              {productInfoArray.map((ele) => (
-                <div className="mt-3" key={ele}>
-                  <label
-                    for="title"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    {ele}
-                  </label>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Material
+                </label>
 
-                  <input
-                    type="text"
-                    id="title"
-                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder={`Enter ${ele}`}
-                    required
-                    name={ele}
-                    onChange={(e) => InfoHandler(e)}
-                  />
-                </div>
-              ))}
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Enter Material Type`}
+                  required
+                  name="Material"
+                  value={productInfoDet.Material}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Pack Off
+                </label>
+
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Enter Packoff`}
+                  required
+                  name="Packoff"
+                  value={productInfoDet.Packoff}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Closure
+                </label>
+
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Enter Closure`}
+                  required
+                  name="Closure"
+                  value={productInfoDet.Closure}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Fit
+                </label>
+
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Enter Fit`}
+                  required
+                  name="Fit"
+                  value={productInfoDet.Fit}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Pattern
+                </label>
+
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Enter Pattern`}
+                  required
+                  name="Pattern"
+                  value={productInfoDet.Pattern}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Ideal For
+                </label>
+
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Men or Female`}
+                  required
+                  name="Idealfor"
+                  value={productInfoDet.Idealfor}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Washcare
+                </label>
+
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={`Enter Washcare instructions`}
+                  required
+                  name="Washcare"
+                  value={productInfoDet.Washcare}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
+              <div className="mt-3">
+                <label
+                  for="title"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Convertible
+                </label>
+
+                <input
+                  type="text"
+                  id="title"
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder={"Enter Yes or No"}
+                  required
+                  name="Convertible"
+                  value={productInfoDet.Convertible}
+                  onChange={(e) => InfoHandler(e)}
+                />
+              </div>
             </div>
 
             <div className="bg-white mt-4">
@@ -695,6 +911,7 @@ function AddProduct() {
               )}
               <textarea
                 name="tags"
+                value={productInfo.tags}
                 onChange={(e) => onchangeHandler(e)}
                 rows="4"
                 maxLength={"70"}
@@ -706,11 +923,11 @@ function AddProduct() {
           </div>
           <div className="m-2 d-flex justify-center items-center">
             <button
-              onClick={addNewProduct}
+              onClick={productId ? updateUproduct : addNewProduct}
               style={{ background: "#4BB543" }}
               className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
             >
-              Submit
+              {productId ? "Save and next" : "Submit"}
             </button>
             <button className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200">
               Cancel

@@ -114,7 +114,7 @@ const App = () => {
       .then((res) => {
         console.log(res.data);
 
-        const filByStaus = res.data.filter((prd) => prd.status === true);
+        const filByStaus = res.data.filter((prd) => prd.status === "Published");
         dispatch(addProduct(filByStaus));
         setProducts(filByStaus);
         setProductLength(filByStaus.length);
@@ -194,7 +194,7 @@ const App = () => {
             <Route path="/details/:id" element={<DetailsPages />} />
             <Route path="sellerplans" element={<Plans />} />
             <Route path="StorePage" element={<StorePage />} />
-            <Route path="/dashboard/Addproduct" element={<AddProduct />} />
+            <Route path="/dashboard/Addproduct/:productId" element={<AddProduct />} />
             <Route path="storeset" element={<MainPage />} />
             <Route path="store" element={<Store />} />
             <Route path="payment" element={<SellerPayment />} />
@@ -250,7 +250,7 @@ const App = () => {
             <Route path="/wholesale-store" element={<WholesaleStore />} />
             <Route path="/delivery-frenchies" element={<DeliveryFranchise />} />
             <Route path="/retail-franchise" element={<RetailFranchise />} />
-            <Route path="/ViewDetails/:id" element={<SellerRelatedPro />} />
+            <Route path="/ViewDetails/:id" element={<SellerRelatedPro  productItems={produts}/>} />
 
 
             {/* footer data */}

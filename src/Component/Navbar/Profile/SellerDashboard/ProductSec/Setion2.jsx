@@ -12,7 +12,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
   const [qtyAndSizes, setQtyAndSizes] = useState(null);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
-const[loader,setLoader]=useState(true)
+  const [loader, setLoader] = useState(true);
   const navigate = useNavigate();
 
   const handleImageSelection = (e) => {
@@ -30,7 +30,7 @@ const[loader,setLoader]=useState(true)
   };
 
   const submitHandler = async () => {
-    setLoader(false)
+    setLoader(false);
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -53,8 +53,7 @@ const[loader,setLoader]=useState(true)
           config
         )
         .then((res) => {
-
-          console.log("ERROR",res)
+          console.log("ERROR", res);
           console.log(res.data);
           setColor("");
           setImages([]);
@@ -66,17 +65,16 @@ const[loader,setLoader]=useState(true)
             showConfirmButton: false,
             timer: 1000,
           });
-          setLoader(true)
+          setLoader(true);
         })
         .catch((err) => {
           console.log(err);
         });
     } catch (error) {
       console.log("ERROR", error);
-      setLoader(true)
+      setLoader(true);
     }
   };
-
 
   return (
     <div className="bg-gray">
@@ -108,9 +106,7 @@ const[loader,setLoader]=useState(true)
               <div className={styles.sizeselect}>
                 <div className={`${styles.sizeButtons}`}>
                   <div>
-                    <h3 className="m-1">
-                      Total Quantity:
-                    </h3>
+                    <h3 className="m-1">Total Quantity:</h3>
                   </div>
                   <div>
                     {sizeSelected[
@@ -219,7 +215,7 @@ const[loader,setLoader]=useState(true)
                     }}
                   />
                   <button
-                  className="text-center"
+                    className="text-center"
                     onClick={() => {
                       const updatedImages = [...images];
                       updatedImages.splice(index, 1);
@@ -246,29 +242,24 @@ const[loader,setLoader]=useState(true)
         </div>
       </div>
       <div className="m-2 d-flex justify-center items-center">
-        {loader? <button
-          onClick={submitHandler}
-          style={{ background: "#4BB543" }}
-          className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
-        >
-          Submit
-        </button> :<button
-         
-          style={{ background: "white" }}
-          className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm flex font-medium text-white border-1 border-gray-200"
-        >
-          <InfinitySpin 
-  width='200'
-  color="red"
-/>
-        </button> }
-        
-        {/* <button
-          onClick={() => navigate(-1)}
-          className="bg-emerald-400 py-2.5 px-5 w-75 mr-2 mb-2 rounded-none text-sm font-medium text-white"
-        >
-          Back
-        </button> */}
+        {loader ? (
+          <button
+            onClick={submitHandler}
+            style={{ background: "#4BB543" }}
+            className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
+          >
+            Submit
+          </button>
+        ) : (
+          <button
+            style={{ background: "white" }}
+            className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm flex font-medium text-white border-1 border-gray-200"
+          >
+            <InfinitySpin width="200" color="red" />
+          </button>
+        )}
+
+       
         {/* <button
           onClick={() => setSecondModal(false)}
           className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white rounded-none border-gray-200"
