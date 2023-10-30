@@ -41,7 +41,7 @@ const NewData = ({ products }) => {
   };
   const productItems = [
     {
-      id: 1,
+      id: 1,  
       title: "TOMMY HILFIGER",
       image: top1,
       description: "Fashion Full Sleeve Blue Jacket.",
@@ -104,7 +104,7 @@ const NewData = ({ products }) => {
                   <Link to={`/ViewDetails/${productItems._id}`} >
                     <div className={`${styless.card} shadow-md`}>
                       <img 
-                        src={productItems.productDetails[0].images[0]}
+                        src={productItems?.productDetails[0]?.images[0]}
                         alt=""
                       />
                     </div>

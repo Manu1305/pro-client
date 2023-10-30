@@ -114,7 +114,7 @@ export const RetailFranchise = () => {
         </div>
         {/* <Footer/> */}
       </div>
-      <Footer/>
+     
 
     </>
   );

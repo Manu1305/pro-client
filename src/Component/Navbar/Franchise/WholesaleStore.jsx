@@ -137,7 +137,7 @@ export const WholesaleStore = () => {
             </li>
           </ol>
         </div>
-        {/* <Footer/> */}
+      
       </div>
       <Footer/>
     </>
