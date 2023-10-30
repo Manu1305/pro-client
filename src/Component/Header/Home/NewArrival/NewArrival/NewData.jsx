@@ -41,7 +41,7 @@ const NewData = ({ products }) => {
   };
   const productItems = [
     {
-      id: 1,
+      id: 1,  
       title: "TOMMY HILFIGER",
       image: top1,
       description: "Fashion Full Sleeve Blue Jacket.",

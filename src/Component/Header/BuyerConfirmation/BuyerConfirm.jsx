@@ -97,6 +97,7 @@ const BuyerConfirm = () => {
 
   // place order
   const placeOrder = async (paymentId, amount) => {
+    setLoader(true)
     try {
       const config = {
         headers: {
@@ -126,8 +127,10 @@ const BuyerConfirm = () => {
         });
       console.log("ERROR WHILE PLACING", res);
       return res;
+      setLoader(false);
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   };
 
@@ -269,17 +272,24 @@ const BuyerConfirm = () => {
   // console.log(calPaidAmount(), "ORDER PRICE");
   return (
     <>
-      { loader ? <div className="flex justify-center items-center" style={{marginTop:"17%"}}>
-        <div><Vortex
-  visible={true}
-  height="80"
-  width="80"
-  ariaLabel="vortex-loading"
-  wrapperStyle={{}}
-  wrapperClass="vortex-wrapper"
-  colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
-/></div>
-      </div> :
+      {loader ? (
+        <div
+          className="flex justify-center items-center"
+          style={{ marginTop: "17%" }}
+        >
+          <div>
+            <Vortex
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="vortex-loading"
+              wrapperStyle={{}}
+              wrapperClass="vortex-wrapper"
+              colors={["red", "green", "blue", "yellow", "orange", "purple"]}
+            />
+          </div>
+        </div>
+      ) : (
         <div style={{ marginTop: "20px" }}>
           <div className="row" style={{ backgroundColor: "white" }}>
             <div className="col-md-1"></div>
@@ -527,8 +537,8 @@ const BuyerConfirm = () => {
                 </div>
               </div>
 
-              <div>
-
+              {!loader && (
+                <div>
                   <button
                     className="btn btn-danger w-100 border p-3"
                     style={{
@@ -540,13 +550,13 @@ const BuyerConfirm = () => {
                   >
                     Place Order
                   </button>
-                
-              </div>
+                </div>
+              )}
             </div>
             <div className="col-md-1"></div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };
