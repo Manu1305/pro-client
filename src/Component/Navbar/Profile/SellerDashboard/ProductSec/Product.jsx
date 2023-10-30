@@ -36,7 +36,13 @@ export const ProductSec = () => {
         const filteredProducts = res.data.filter(
           (product) => product.seller === user.email
         );
-        setRequestedProducts(filteredProducts);
+        if (user?.urType === "admin") {
+ setRequestedProducts(res.data);
+        }
+        else{
+           setRequestedProducts(filteredProducts);
+        }
+       
         setIsLoading(false);
       })
       .catch((err) => {

@@ -116,7 +116,7 @@ const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
           ))} */}
           {productItems &&
             productItems.map((item) => {
-              if (item?.collections === prodd) {
+              if (item.collections === prodd) {
                 return (
                   <div key={item._id}>
                     <div className={styless.customerheading}>
@@ -124,7 +124,7 @@ const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
                       <a href={`/ViewDetails/${item._id}`}>
                         <div className={`${styless.card}`}>
                           <img
-                            src={item.productDetails[0].images[0]}
+                            src={item?.productDetails[0]?.images[0]}
                             alt="ie"
                             className={styless.igfff}
                           />

@@ -389,7 +389,7 @@ const [add, setAdd]= useState(null)
     setConfirmPasswordError(confirmpasswordError);
     setPhoneError(phoneError);
     setShopNameError(shopNameError);
-    setAddress1Error(address1Error);
+    // setAddress1Error(address1Error);
     setCityError(cityError);
     setPincodeError(pincodeError);
     setGstError(gstError);
@@ -442,12 +442,17 @@ const [add, setAdd]= useState(null)
                     <div className="d-flex flex-row mt-2">
                       <span className="h1 fw-bold mb-0">HitecMart</span>
                     </div>
+                    <div className="flex flex-row">
+                      
                     <h5
                       className="fw-normal my-4 pb-3"
                       style={{ letterSpacing: "1px" }}
                     >
                       Register as seller
                     </h5>
+                    {/* <button className="bg-red-600 border"> allow location </button> */}
+
+                    </div>
                     {/* {nameError && <div className="text-danger">{nameError}</div>} */}
                     <div className="d-flex flex-row align-items-center mb-4">
                       <label
