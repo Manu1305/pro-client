@@ -46,6 +46,7 @@
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-fetch-hook": "^1.9.5",
+    "react-geolocated": "^4.1.2",
     "react-icons": "^4.8.0",
     "react-images-uploading": "^3.1.7",
     "react-leaflet": "^4.2.1",

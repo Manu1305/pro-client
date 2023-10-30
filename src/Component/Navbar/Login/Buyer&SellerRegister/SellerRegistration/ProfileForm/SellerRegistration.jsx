@@ -46,6 +46,8 @@ const SellerRegister = () => {
   const [inpType, setInpType] = useState("password");
   const [inpTypeConf, setInpTypeConf] = useState("password");
   const [userType, setUsertype] = "Seller registration";
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
 
   const countries = ["India", "Australia", "Srilanka"];
   const stateData = {
@@ -90,44 +92,152 @@ const SellerRegister = () => {
     // Add more countries and states as needed
   };
   const [showButton, setShowButton] = useState(true);
-
+const [add, setAdd]= useState(null)
   const navigate = useNavigate();
 
-  const handleCustomerLogin = (e) => {
-    const isValid = validate();
 
+  const getAddress = async () => {
+    try {
+      const pos = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+  
+      const { latitude, longitude } = pos.coords;
+      console.log('Got latitude and longitude:', latitude, longitude);
+      
+      // Return latitude and longitude
+      return { latitude, longitude };
+    } catch (error) {
+      console.error("Error getting address:", error);
+      // Return an object with null values or handle the error as needed
+      return { latitude: null, longitude: null };
+    }
+  };
+  
+  const handleCustomerLogin = async (e) => {
+    const isValid = validate();
+  
     console.log(isValid);
     if (isValid) {
       console.log("Clicked");
       e.preventDefault();
-      dispatch(
-        saveSellerData({
-          name: userFilledData.name,
-          email: userFilledData.email,
-          phone: userFilledData.phone,
-
-          password: userFilledData.password,
-          gst: userFilledData.gst,
-          "full name": userFilledData["full name"],
-          urType: "seller",
-          address: {
-            locality: userFilledData.locality,
-            area: userFilledData.area,
-            city: userFilledData.city,
-            country: userFilledData.country,
-            state: userFilledData.state,
-            pincode: userFilledData.pincode,
-          },
-          shopName: userFilledData.shopName,
-        })
-      );
-
-      navigate("/sellerplans");
+  
+      // Call the getAddress function to get the address and latitude/longitude
+      const { latitude, longitude } = await getAddress();
+  
+      if (latitude !== null && longitude !== null) {
+        console.log('Received latitude and longitude:', latitude, longitude);
+        
+        dispatch(
+          saveSellerData({
+            name: userFilledData.name,
+            email: userFilledData.email,
+            phone: userFilledData.phone,
+            password: userFilledData.password,
+            gst: userFilledData.gst,
+            "full name": userFilledData["full name"],
+            urType: "seller",
+            address: {
+              locality: userFilledData.locality,
+              area: userFilledData.area,
+              city: userFilledData.city,
+              country: userFilledData.country,
+              state: userFilledData.state,
+              pincode: userFilledData.pincode,
+            },
+            shopName: userFilledData.shopName,
+            latitude, // Include latitude in the data
+            longitude, // Include longitude in the data
+          })
+        );
+  
+        navigate("/sellerplans");
+      } else {
+        console.log('Failed to receive latitude and longitude');
+        // Handle the case where latitude and longitude are not available
+      }
     } else {
-      toast.error("Please fill the all field ");
-      console.log("Valid function has return false...");
+      toast.error("Please fill in all fields");
+      console.log("Validation function has returned false...");
     }
   };
+  
+
+  
+  
+  
+  
+  
+
+
+  // const handleCustomerLogin = (e) => {
+  //   const isValid = validate();
+
+  //   console.log(isValid);
+  //   if (isValid) {
+  //     console.log("Clicked");
+  //     e.preventDefault();
+  //     dispatch(
+  //       saveSellerData({
+  //         name: userFilledData.name,
+  //         email: userFilledData.email,
+  //         phone: userFilledData.phone,
+
+  //         password: userFilledData.password,
+  //         gst: userFilledData.gst,
+  //         "full name": userFilledData["full name"],
+  //         urType: "seller",
+  //         address: {
+  //           locality: userFilledData.locality,
+  //           area: userFilledData.area,
+  //           city: userFilledData.city,
+  //           country: userFilledData.country,
+  //           state: userFilledData.state,
+  //           pincode: userFilledData.pincode,
+  //         },
+  //         shopName: userFilledData.shopName,
+  //       })
+  //     );
+
+  //     navigate("/sellerplans");
+  //   } else {
+  //     toast.error("Please fill the all field ");
+  //     console.log("Valid function has return false...");
+  //   }
+  // };
+
+  //longitude & latitude
+
+  // useEffect(() => {
+  //   if ("geolocation" in navigator) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       function (position) {
+  //         setLatitude(position.coords.latitude);
+  //         setLongitude(position.coords.longitude);
+  //       },
+  //       function (error) {
+  //         console.error("Error getting geolocation:", error);
+  //       }
+  //     );
+  //   } else {
+  //     console.error("Geolocation is not supported by your browser");
+  //   }
+  // }, []);
+
+  // const getAddress=()=> {
+  //   navigator.geolocation.getCurrentPosition(async(pos) => {
+  //     const { latitude, longitude } = pos.coords;
+  //     console.log(latitude, longitude);
+  //     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+  //     await fetch(url)
+  //       .then((res) => res.json())
+  //       .then((data) => setAdd(data.address)
+       
+  //       );
+  //     console.log(add, "dfcdfk");
+  //   });
+    
+  // }
 
   useEffect(() => {
     console.log("Check", userFilledData);
@@ -291,11 +401,11 @@ const SellerRegister = () => {
       phoneError ||
       nameError ||
       shopNameError ||
-      cityError||
-      gstError||
-      pincodeError||
-      shopNameError||
-      address1Error
+      cityError ||
+      gstError ||
+      pincodeError ||
+      shopNameError 
+      // address1Error
     ) {
       return false;
     }
@@ -307,10 +417,9 @@ const SellerRegister = () => {
     const { name, value } = event.target;
 
     setUserFilledData((prev) => {
-      return { ...prev, [name]: value };
+      return { ...prev, [name]: value, add };
     });
   };
-
 
   useEffect(() => {
     console.log(userFilledData);
@@ -318,8 +427,6 @@ const SellerRegister = () => {
 
     if (userFilledData.phoneOtp == 12345) setAfterotp(true);
   }, [userFilledData]);
-
-
 
   return (
     <div>
@@ -363,7 +470,6 @@ const SellerRegister = () => {
                         )}
                       </div>
                     </div>
-
                     <div className="d-flex flex-row align-items-center mb-4">
                       <label
                         htmlFor="formControlLg"
@@ -464,6 +570,26 @@ const SellerRegister = () => {
                             <div className="text-danger">{GstError}</div>
                           )}
                         </div>
+
+
+
+
+
+
+
+                        
+
+
+
+
+
+
+
+
+
+
+
+
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <label
