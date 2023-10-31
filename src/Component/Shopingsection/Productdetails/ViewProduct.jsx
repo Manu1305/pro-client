@@ -15,8 +15,10 @@ import { userCartItem } from "../../../Redux/cart/cartAction";
 import { Footer } from "../../Footer/Footer";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { addReqProduct } from "../../../Redux/productBefore/productReqAction";
+import Swal from "sweetalert2";
 
-const ViewProduct = () => {
+const ViewProduct = ({getAllProducts}) => {
   const { productId } = useParams();
   const user = useSelector((state) => state.userReducer.user);
 
@@ -31,8 +33,7 @@ const ViewProduct = () => {
   const [imgPreview, setImgPreview] = useState("");
   const [prdDetInd, setPrdDetInd] = useState(0);
   const [product, setProduct] = useState(null);
-  const [color, setColor] = useState();
-  const [sizeAndQuantityWithColor, setSizeAndQuantityWithColor] = useState([]);
+  // const [, set] = useState(second)
 
   const getOneProducts = async () => {
     try {
@@ -255,7 +256,6 @@ const ViewProduct = () => {
 
   const changeColor = (index) => {
     setPrdDetInd(index);
-    setSizeAndQuantityWithColor((prev) => prev.push(sizeAndQua));
   };
   useEffect(() => {
     getOneProducts();
@@ -269,7 +269,6 @@ const ViewProduct = () => {
     const sum = Object.values(sizeAndQua).reduce((acc, cuu) => {
       return acc + cuu;
     }, 0);
-    console.log(sum);
     setTotalItems(sum);
   }, [sizeAndQua]);
 
@@ -281,9 +280,32 @@ const ViewProduct = () => {
     }
   }, [totalItems]);
 
-  useEffect(() => {
-    console.log(sizeAndQuantityWithColor);
-  }, [sizeAndQuantityWithColor]);
+  const unPublishProduct = async (id,status) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `Are you sure. You want to ${status!== "unPublish" ?"Publish" :"unPublish"} this product..?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: status !== "unPublish" ?"Publish" :"unPublish",
+    });
+
+    if (result.isConfirmed) {
+      await httpService
+        .put(`${apiURL}/product/change-product-status/${id}`, {
+          status,
+        })
+        .then((res) => {
+          console.log("Prod Req", res.data);
+          navigate("/shoppingPage");
+          getAllProducts()
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <div className={`${styles.card}`}>
@@ -320,6 +342,22 @@ const ViewProduct = () => {
 
           <div className="col-md-6">
             <div className={`product`}>
+              {user.urType === "admin" && (
+                <div className="relative">
+                  <div className="absolute right-0">
+                      <button
+                        className={`btn ${product.status === "Published" ? "btn-danger" : "btn-success"} btn-success m-2`}
+                        onClick={() => unPublishProduct(product._id, product.status === "Published"
+                        ? "UnPublish"
+                        : "Published")}
+                      >
+                        {product.status === "Published"
+                          ? "UnPublish"
+                          : "Publish"}
+                      </button>
+                  </div>
+                </div>
+              )}
               <div className={"mt-4"} style={{ marginLeft: "30px" }}>
                 <div className={styles.heads}>
                   <div>

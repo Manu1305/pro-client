@@ -13,6 +13,8 @@ import DataTable from "../../../../Reuseable Comp/DataTable";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 // import { MdUnpublished } from "react-icons/md";
+
+import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
 import UnpublishedIcon from "@mui/icons-material/Unpublished";
 import { IconButton, Tooltip } from "@mui/material";
 import Swal from "sweetalert2";
@@ -20,8 +22,6 @@ import { addReqProduct } from "../../../../../Redux/productBefore/productReqActi
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
-  const [quantityModal, setQuantityModal] = useState(false);
-  const [product, setProduct] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [seller, setSellerName] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -44,11 +44,11 @@ export const ProductSec = () => {
         );
         if (user?.urType === "admin") {
           const filteredProduct = res.data?.filter(
-            (prd) => prd.status !== "unPublish"
+            (prd) => prd.status !== "Pending"
           );
           dispatch(addReqProduct(filteredProduct));
           setRequestedProducts(filteredProduct);
-          getProducts()
+          getProducts();
         } else {
           setRequestedProducts(filteredProducts);
         }
@@ -67,14 +67,6 @@ export const ProductSec = () => {
   }, []);
 
   // add qunatity
-
-  const quantityHandler = (product) => {
-    const filterdProduct = reqProducts.filter(
-      (newPrd) => newPrd._id === product.id
-    );
-    setQuantityModal(true);
-    setProduct(filterdProduct[0]);
-  };
 
   const notify = () => {
     toast("Removed Product");
@@ -101,11 +93,11 @@ export const ProductSec = () => {
 
   const header = [
     "ProductAdded",
-    "Date",
-    // "stock",
     "images",
-    "brand",
+    "Date",
+    "Brand",
     "price",
+    "Status",
     "action",
   ].map((ele) => {
     let string = ele;
@@ -129,6 +121,9 @@ export const ProductSec = () => {
         },
       };
     }
+    if (ele === "price") {
+      return { field: "price", type: "Number", width: 100 };
+    }
     if (ele === "action") {
       return {
         field: "Action",
@@ -137,6 +132,7 @@ export const ProductSec = () => {
         renderCell: (params) => {
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
+              {/* Delete */}
               <div
                 onClick={() => {
                   setDeleteId(params.row.id);
@@ -144,32 +140,52 @@ export const ProductSec = () => {
                   setModalShow(true);
                 }}
               >
-                <Tooltip title="Delete">
+                <Tooltip title="Delete" sx={{ fontSize: 20 }}>
                   <IconButton>
                     <RiDeleteBin6Fill className="cursor-pointer" />
                   </IconButton>
                 </Tooltip>
               </div>
+              {/* Edit */}
               <div
                 onClick={() =>
                   navigate(`/dashboard/Addproduct/${params.row.id}`)
                 }
               >
-                <Tooltip title="Edit">
+                <Tooltip title="Edit" sx={{ fontSize: 20 }}>
                   <IconButton>
                     <FiEdit className="cursor-pointer" />
                   </IconButton>
                 </Tooltip>
               </div>
+              {/* Status */}
               <div>
-                <Tooltip
-                  title="Unpublish"
-                  onClick={() => unPublishProduct(params.row.id)}
-                >
-                  <IconButton>
-                    <UnpublishedIcon className="cursor-pointer" />
-                  </IconButton>
-                </Tooltip>
+                {params.row.Status === "Published" ? (
+                  <Tooltip title="Unpublish" sx={{ fontSize: 20 }}>
+                    <IconButton>
+                      <UnpublishedIcon
+                        className="cursor-pointer"
+                        onClick={() =>
+                          unPublishProduct(params.row.id, params.row.status)
+                        }
+                      />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Tooltip
+                    title="Publish"
+                    onClick={() => unPublishProduct(params.row.id)}
+                  >
+                    <IconButton>
+                      <PublishedWithChangesIcon
+                        className="cursor-pointer"
+                        onClick={() =>
+                          unPublishProduct(params.row.id, "Published")
+                        }
+                      />
+                    </IconButton>
+                  </Tooltip>
+                )}
               </div>
             </div>
           );
@@ -192,15 +208,16 @@ export const ProductSec = () => {
       id: ele._id,
       images:
         ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
-      brand: ele.brand,
-      stock: ele.stock,
+      Brand: ele.brand,
+      Stock: ele.stock,
       price: ele.sellingPrice,
       ProductAdded: ele.seller,
+      Status: ele.status,
       Date: date,
     };
   });
 
-  const unPublishProduct = async (id) => {
+  const unPublishProduct = async (id, status) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "Are you sure. You want to unpublish this product..?",
@@ -211,18 +228,19 @@ export const ProductSec = () => {
       confirmButtonText: "Unpublish",
     });
 
+    setModalShow(true);
+
     if (result.isConfirmed) {
       await httpService
         .put(`${apiURL}/product/change-product-status/${id}`, {
-          status: "unPublish",
+          status,
         })
         .then((res) => {
-          console.log(res.data);
+          console.log("Prod Req", res.data);
           const filteredProduct = res.data?.filter(
             (prd) => prd.status !== "unPublish"
           );
           dispatch(addReqProduct(filteredProduct));
-          console.log("Prod Req", res.data);
           getProducts();
         })
         .catch((err) => {
@@ -235,12 +253,6 @@ export const ProductSec = () => {
     <div className="container ml-5 mr-0">
       <h2>All products </h2>
       <div className="d-flex justify-content-center row">
-        {/* <div className="d-flex justify-content-center mt-4">
-          <Link to="/dashboard/Addproduct" className="btn btn-danger">
-            Add Product
-          </Link>
-        </div> */}
-
         <div>
           {reqProducts.length === 0 ? (
             <div>
@@ -300,13 +312,6 @@ export const ProductSec = () => {
           show={modalShow}
           onHide={() => setModalShow(false)}
           removeFromShop={removeFromShop}
-        />
-
-        <SizeModal
-          getProducts={getProducts}
-          setQuantityModal={setQuantityModal}
-          quantityModal={quantityModal}
-          product={product}
         />
       </div>
     </div>

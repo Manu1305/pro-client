@@ -293,7 +293,7 @@ function AddProduct() {
 
   const [errors, setErrors] = useState({});
   const [uplProductId, setUplProductId] = useState("");
-
+  const [productDetails, setProductDetails] = useState([]);
   const [secondModal, setSecondModal] = useState(false);
 
   const categoriesWithSubcategories = {
@@ -413,7 +413,8 @@ function AddProduct() {
           setProductInfo((prev) => {
             return { ...others };
           });
-        }).catch((err) => {
+        })
+        .catch((err) => {
           Swal.fire({
             position: "center",
             icon: "success",
@@ -436,8 +437,8 @@ function AddProduct() {
         })
         .then((res) => {
           console.log(res);
-          console.log(res.data)
-          if(res.status === 200){
+          console.log(res.data);
+          if (res.status === 200) {
             Swal.fire({
               position: "center",
               icon: "success",
@@ -445,7 +446,7 @@ function AddProduct() {
               showConfirmButton: false,
               timer: 1000,
             });
-            const { productInfo, ...others } = res.data.ack;
+            const { productInfo, productDetails, ...others } = res.data.ack;
             setProductInfoDet((prev) => {
               return { ...productInfo };
             });
@@ -453,6 +454,9 @@ function AddProduct() {
               return { ...others };
             });
 
+            console.log("productDetails",productDetails)
+            setProductDetails(productDetails)
+            setSecondModal(true);
           }
         })
         .catch((err) => {
@@ -475,6 +479,9 @@ function AddProduct() {
           sizeSelected={sizeSelected}
           productInfo={productInfo}
           setSecondModal={setSecondModal}
+          productDetails={productDetails}
+          setProductDetails={setProductDetails}
+
         />
       ) : (
         <div className={styles.maindiv}>

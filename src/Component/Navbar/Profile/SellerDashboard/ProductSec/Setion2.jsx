@@ -6,20 +6,53 @@ import { apiURL } from "../../../../../const/config";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { InfinitySpin, Watch } from "react-loader-spinner";
-import img1 from '../../../../../images/productupload1.jpg'
+import img1 from "../../../../../images/productupload1.jpg";
 import img2 from "../../../../../images/productupload2.jpg";
 import img3 from "../../../../../images/productupload3.jpg";
 import img4 from "../../../../../images/productupload4.jpg";
-function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
+
+// sort images
+import Gallery from "react-photo-gallery";
+import { arrayMoveImmutable } from "array-move";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import Photo from "./Photo";
+
+const SortablePhoto = SortableElement((item) => <Photo {...item} />);
+const SortableGallery = SortableContainer(({ items }) => (
+  <Gallery
+    photos={items}
+    renderImage={(props) => <SortablePhoto {...props} />}
+  />
+));
+
+function Section2({
+  sizeSelected,
+  productInfo,
+  setSecondModal,
+  productId,
+  productDetails,
+  setProductDetails,
+}) {
   const [color, setColor] = useState("");
   const [qtyAndSizes, setQtyAndSizes] = useState({});
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
+  const [index, setIndex] = useState(0);
+
+
+  const photos =productDetails.length !==0&& productDetails[index].images.map((item) => {
+    return { src: item, width: 2, height: 1 };
+  });
+  
+
 
   const [totQut, setTotQut] = useState(0);
   const [loader, setLoader] = useState(true);
-  const navigate = useNavigate();
+  const [items, setItems] = useState(photos);
 
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setItems(arrayMoveImmutable(items, oldIndex, newIndex));
+  };
   const handleImageSelection = (e) => {
     const selectedImages = e.target.files;
     const previews = [];
@@ -67,8 +100,8 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
       });
       setLoader(true);
       return; //
-    };
-    if(totQut < 5){
+    }
+    if (totQut < 5) {
       Swal.fire({
         icon: "warning",
         title: "Validation Error",
@@ -76,17 +109,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
       });
       setLoader(true);
       return; //
-    } 
-
-    //  if (!qtyAndSizes || qtyAndSizes.quantity < 5) {
-    //    Swal.fire({
-    //      icon: "error",
-    //      title: "Validation Error",
-    //      text: "Please specify a quantity of at least 5.",
-    //    });
-    //    setLoader(true);
-    //    return;
-    //  }
+    }
 
     const config = {
       headers: {
@@ -110,8 +133,7 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
           config
         )
         .then((res) => {
-          console.log("ERROR", res);
-          console.log(res.data);
+          console.log("SUCCESS RES", res.data);
           setColor("");
           setImages([]);
           setImagePreviews([]);
@@ -134,13 +156,10 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
     }
   };
 
-  //   console.log("ProductID", productId);
-
   useEffect(() => {
     const quantity =
       Object.values(qtyAndSizes).length &&
       Object.values(qtyAndSizes).reduce((acc, curr) => acc + curr);
-    console.log(quantity);
     setTotQut(quantity);
   }, [qtyAndSizes]);
 
@@ -160,7 +179,9 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
           id="color"
           className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
-          value={color}
+          value={
+            Object.values(productDetails).length !== 0? productDetails[0].color : color
+          }
           name="color"
           onChange={(e) => setColor(e.target.value)}
         />
@@ -225,333 +246,364 @@ function Section2({ sizeSelected, productInfo, setSecondModal, productId }) {
             </div>
           </div>
         </div>
+
+        {productDetails.length !==0 ?<div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "10px",
+            height: "50px",
+          }}
+        >
+          {productDetails?.map((ele, index) => (
+            <div
+              style={{
+                background: `${ele.color}`,
+                width: "50px",
+                height: "50px",
+                gap: "10px",
+                textAlign: "center",
+                lineHeight: "75px",
+                fontSize: "30px",
+                margin: "left -10px",
+              }}
+              onClick={() => 
+                {setIndex(index);
+                  console.log(index)
+                }}
+            ></div>
+          ))}
+        </div> : null}
       </div>
 
-      <div className="bg-white mt-3 p-1">
-        <div style={{ marginTop: "30px" }}>
-          <h3 className="m-1 fw-bold">Product image</h3>
-
-          <br />
-          <div className="flex items-start justify-start">
-            <label
-              for="dropzone-file"
-              className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div className="flex items-center justify-center pt-5 pb-6">
-                <svg
-                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 16"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                  />
-                </svg>
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Image 1 </span> click here to
-                  upload
-                </p>
-                <img
-                  style={{ height: "200px", width: "40%" }}
-                  src={img1}
-                  alt=""
-                />
-                <p className="text-xs text-gray-500 dark:text-gray-400"></p>
-              </div>
-              <input
-                id="dropzone-file"
-                type="file"
-                className="hidden border-0"
-                onChange={handleImageSelection}
-                accept="image/*"
-                multiple
-              />
-            </label>
-
-            <div className="image-previews flex flex-row">
-              <div className="image-preview">
-                <div className="image-preview">
+      {/* {productDetails.length !==0 ? ( */}
+        <div className="bg-white mt-3 p-1">
+          <div style={{ marginTop: "30px" }}>
+            <h3 className="m-1 fw-bold">Product image</h3>
+            <br />
+            <div className="flex items-start justify-start">
+              <label
+                for="dropzone-file"
+                className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              >
+                <div className="flex items-center justify-center pt-5 pb-6">
+                  <svg
+                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                    />
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Image 1 </span> click here
+                    to upload
+                  </p>
                   <img
-                    src={imagePreviews[0]}
-                    alt="imge 1"
-                    style={{
-                      maxWidth: "200px",
-                      maxHeight: "200px",
-                      margin: "10px",
-                    }}
+                    style={{ height: "200px", width: "40%" }}
+                    src={img1}
+                    alt=""
                   />
+                  <p className="text-xs text-gray-500 dark:text-gray-400"></p>
                 </div>
+                <input
+                  id="dropzone-file"
+                  type="file"
+                  className="hidden border-0"
+                  onChange={handleImageSelection}
+                  accept="image/*"
+                  multiple
+                />
+              </label>
 
-                <button
-                  className="text-center"
-                  onClick={() => {
-                    const updatedImages = [...images];
-                    updatedImages.splice(0, 1);
-                    setImages(updatedImages);
+              <div className="image-previews flex flex-row">
+                <div className="image-preview">
+                  <div className="image-preview">
+                    <img
+                      src={imagePreviews[0]}
+                      alt="imge 1"
+                      style={{
+                        maxWidth: "200px",
+                        maxHeight: "200px",
+                        margin: "10px",
+                      }}
+                    />
+                  </div>
 
-                    const updatedPreviews = [...imagePreviews];
-                    updatedPreviews.splice(0, 1);
-                    setImagePreviews(updatedPreviews);
-                  }}
-                >
-                  <MdDeleteSweep
-                    style={{
-                      display: "flex",
-                      height: "40px",
-                      alignItems: "center",
-                      color: "red",
+                  <button
+                    className="text-center"
+                    onClick={() => {
+                      const updatedImages = [...images];
+                      updatedImages.splice(0, 1);
+                      setImages(updatedImages);
+
+                      const updatedPreviews = [...imagePreviews];
+                      updatedPreviews.splice(0, 1);
+                      setImagePreviews(updatedPreviews);
                     }}
-                  />
-                </button>
+                  >
+                    <MdDeleteSweep
+                      style={{
+                        display: "flex",
+                        height: "40px",
+                        alignItems: "center",
+                        color: "red",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-start justify-start">
-            <label
-              for="dropzone-file"
-              className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div className="flex items-center justify-center pt-5 pb-6">
-                <svg
-                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 16"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                  />
-                </svg>
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Image 2</span> click here to
-                  upload
-                </p>
-                {/* <p className="text-xs text-gray-500 dark:text-gray-400">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
-                </p> */}
-                <img
-                  style={{ height: "200px", width: "40%" }}
-                  src={img2}
-                  alt=""
-                />
-              </div>
+            <div className="flex items-start justify-start">
+              <label
+                for="dropzone-file"
+                className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              >
+                <div className="flex items-center justify-center pt-5 pb-6">
+                  <svg
+                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                    />
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Image 2</span> click here to
+                    upload
+                  </p>
 
-              <input
-                id="dropzone-file"
-                type="file"
-                className="hidden border-0"
-                onChange={handleImageSelection}
-                accept="image/*"
-                multiple
-              />
-            </label>
-            <div className="image-previews flex flex-row">
-              <div className="image-preview">
-                <div className="image-preview">
                   <img
-                    src={imagePreviews[1]}
-                    alt="imge 2"
-                    style={{
-                      maxWidth: "200px",
-                      maxHeight: "200px",
-                      margin: "10px",
-                    }}
+                    style={{ height: "200px", width: "40%" }}
+                    src={img2}
+                    alt=""
                   />
                 </div>
 
-                <button
-                  className="text-center"
-                  onClick={() => {
-                    const updatedImages = [...images];
-                    updatedImages.splice(1, 2);
-                    setImages(updatedImages);
+                <input
+                  id="dropzone-file"
+                  type="file"
+                  className="hidden border-0"
+                  onChange={handleImageSelection}
+                  accept="image/*"
+                  multiple
+                />
+              </label>
+              <div className="image-previews flex flex-row">
+                <div className="image-preview">
+                  <div className="image-preview">
+                    <img
+                      src={imagePreviews[1]}
+                      alt="imge 2"
+                      style={{
+                        maxWidth: "200px",
+                        maxHeight: "200px",
+                        margin: "10px",
+                      }}
+                    />
+                  </div>
 
-                    const updatedPreviews = [...imagePreviews];
-                    updatedPreviews.splice(1, 2);
-                    setImagePreviews(updatedPreviews);
-                  }}
-                >
-                  <MdDeleteSweep
-                    style={{
-                      display: "flex",
-                      height: "40px",
-                      alignItems: "center",
-                      color: "red",
+                  <button
+                    className="text-center"
+                    onClick={() => {
+                      const updatedImages = [...images];
+                      updatedImages.splice(1, 2);
+                      setImages(updatedImages);
+
+                      const updatedPreviews = [...imagePreviews];
+                      updatedPreviews.splice(1, 2);
+                      setImagePreviews(updatedPreviews);
                     }}
-                  />
-                </button>
+                  >
+                    <MdDeleteSweep
+                      style={{
+                        display: "flex",
+                        height: "40px",
+                        alignItems: "center",
+                        color: "red",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-start justify-start">
-            <label
-              for="dropzone-file"
-              className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div className="flex items-center justify-center pt-5 pb-6">
-                <svg
-                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 16"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                  />
-                </svg>
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Upload </span> 4th image
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400"></p>
-                <img
-                  style={{ height: "200px", width: "40%" }}
-                  src={img3}
-                  alt=""
-                />
-              </div>
-              <input
-                id="dropzone-file"
-                type="file"
-                className="hidden border-0"
-                onChange={handleImageSelection}
-                accept="image/*"
-                multiple
-              />
-            </label>
-            <div className="image-previews flex flex-row">
-              <div className="image-preview">
-                <div className="image-preview">
+            <div className="flex items-start justify-start">
+              <label
+                for="dropzone-file"
+                className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              >
+                <div className="flex items-center justify-center pt-5 pb-6">
+                  <svg
+                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                    />
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Upload </span> 4th image
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400"></p>
                   <img
-                    src={imagePreviews[2]}
-                    alt="imge 3"
-                    style={{
-                      maxWidth: "200px",
-                      maxHeight: "200px",
-                      margin: "10px",
-                    }}
+                    style={{ height: "200px", width: "40%" }}
+                    src={img3}
+                    alt=""
                   />
                 </div>
+                <input
+                  id="dropzone-file"
+                  type="file"
+                  className="hidden border-0"
+                  onChange={handleImageSelection}
+                  accept="image/*"
+                  multiple
+                />
+              </label>
+              <div className="image-previews flex flex-row">
+                <div className="image-preview">
+                  <div className="image-preview">
+                    <img
+                      src={imagePreviews[2]}
+                      alt="imge 3"
+                      style={{
+                        maxWidth: "200px",
+                        maxHeight: "200px",
+                        margin: "10px",
+                      }}
+                    />
+                  </div>
 
-                <button
-                  className="text-center"
-                  onClick={() => {
-                    const updatedImages = [...images];
-                    updatedImages.splice(2, 3);
-                    setImages(updatedImages);
+                  <button
+                    className="text-center"
+                    onClick={() => {
+                      const updatedImages = [...images];
+                      updatedImages.splice(2, 3);
+                      setImages(updatedImages);
 
-                    const updatedPreviews = [...imagePreviews];
-                    updatedPreviews.splice(2,3);
-                    setImagePreviews(updatedPreviews);
-                  }}
-                >
-                  <MdDeleteSweep
-                    style={{
-                      display: "flex",
-                      height: "40px",
-                      alignItems: "center",
-                      color: "red",
+                      const updatedPreviews = [...imagePreviews];
+                      updatedPreviews.splice(2, 3);
+                      setImagePreviews(updatedPreviews);
                     }}
-                  />
-                </button>
+                  >
+                    <MdDeleteSweep
+                      style={{
+                        display: "flex",
+                        height: "40px",
+                        alignItems: "center",
+                        color: "red",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-start justify-start">
-            <label
-              for="dropzone-file"
-              className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div className="flex items-center justify-center pt-5 pb-6">
-                <svg
-                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 16"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                  />
-                </svg>
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Upload </span> 4th image
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400"></p>
-                <img
-                  style={{ height: "200px", width: "40%" }}
-                  src={img4}
-                  alt=""
-                />
-              </div>
-              <input
-                id="dropzone-file"
-                type="file"
-                className="hidden border-0"
-                onChange={handleImageSelection}
-                accept="image/*"
-                multiple
-              />
-            </label>
-            <div className="image-previews flex flex-row">
-              <div className="image-preview">
-                <div className="image-preview">
+            <div className="flex items-start justify-start">
+              <label
+                for="dropzone-file"
+                className="flex flex-col items-center justify-center w-50 h-64 border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              >
+                <div className="flex items-center justify-center pt-5 pb-6">
+                  <svg
+                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                    />
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Upload </span> 4th image
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400"></p>
                   <img
-                    src={imagePreviews[3]}
-                    alt="imge 4"
-                    style={{
-                      maxWidth: "200px",
-                      maxHeight: "200px",
-                      margin: "10px",
-                    }}
+                    style={{ height: "200px", width: "40%" }}
+                    src={img4}
+                    alt=""
                   />
                 </div>
+                <input
+                  id="dropzone-file"
+                  type="file"
+                  className="hidden border-0"
+                  onChange={handleImageSelection}
+                  accept="image/*"
+                  multiple
+                />
+              </label>
+              <div className="image-previews flex flex-row">
+                <div className="image-preview">
+                  <div className="image-preview">
+                    <img
+                      src={imagePreviews[3]}
+                      alt="imge 4"
+                      style={{
+                        maxWidth: "200px",
+                        maxHeight: "200px",
+                        margin: "10px",
+                      }}
+                    />
+                  </div>
 
-                <button
-                  className="text-center"
-                  onClick={() => {
-                    const updatedImages = [...images];
-                    updatedImages.splice(3, 4);
-                    setImages(updatedImages);
+                  <button
+                    className="text-center"
+                    onClick={() => {
+                      const updatedImages = [...images];
+                      updatedImages.splice(3, 4);
+                      setImages(updatedImages);
 
-                    const updatedPreviews = [...imagePreviews];
-                    updatedPreviews.splice(3,4);
-                    setImagePreviews(updatedPreviews);
-                  }}
-                >
-                  <MdDeleteSweep
-                    style={{
-                      display: "flex",
-                      height: "40px",
-                      alignItems: "center",
-                      color: "red",
+                      const updatedPreviews = [...imagePreviews];
+                      updatedPreviews.splice(3, 4);
+                      setImagePreviews(updatedPreviews);
                     }}
-                  />
-                </button>
+                  >
+                    <MdDeleteSweep
+                      style={{
+                        display: "flex",
+                        height: "40px",
+                        alignItems: "center",
+                        color: "red",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      {/* ) : ( */}
+        <div>
+          {/* <SortableGallery items={items} onSortEnd={onSortEnd} axis={"xy"} /> */}
+        </div>
+      {/* )} */}
       <div className="m-2 d-flex justify-center items-center">
         {loader ? (
           <button

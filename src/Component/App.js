@@ -187,7 +187,7 @@ const App = () => {
                 </React.Suspense>
               }
             />
-            <Route path="/ViewDetails/:productId" element={<ViewProduct />} />
+            <Route path="/ViewDetails/:productId" element={<ViewProduct getAllProducts={getAllProducts}/>} />
 
             <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
             <Route path="thankyou" element={<Thankyou />} />

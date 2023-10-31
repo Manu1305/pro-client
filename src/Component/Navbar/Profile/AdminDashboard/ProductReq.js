@@ -36,7 +36,7 @@ export const ProductRequest = () => {
       .then((res) => {
         setIsLoading(false);
 
-        const filteredProduct = res.data?.filter((prd) => prd.status !== "unPublish" )
+        const filteredProduct = res.data?.filter((prd) => prd.status === "Pending" )
         dispatch(addReqProduct(filteredProduct));
         console.log("Prod Req", res.data)
         setProduct(filteredProduct);
@@ -51,8 +51,6 @@ export const ProductRequest = () => {
     setIsLoading(true);
     getProducts();
   }, []);
-
-
 
 
   const addToShop = async (id) => {
