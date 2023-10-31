@@ -112,7 +112,7 @@ export const RetailFranchise = () => {
             <li className={idea.elll}>4. 24*7 software & customer support</li>
           </ol>
         </div>
-        {/* <Footer/> */}
+        <Footer/>
       </div>
      
 

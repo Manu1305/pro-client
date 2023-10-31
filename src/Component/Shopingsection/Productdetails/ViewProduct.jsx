@@ -446,7 +446,7 @@ const ViewProduct = () => {
                       <div className={`mt-1 left-0 ${styles.sizeresponsive}`}>
                         {product.productDetails &&
                           Object.entries(
-                            product.productDetails[prdDetInd].qtyAndSizes
+                            product.productDetails[prdDetInd]?.qtyAndSizes
                           ).map(([size, quantity]) => (
                             <div key={size} className={styles.tottal}>
                               {quantity !== 0 && (

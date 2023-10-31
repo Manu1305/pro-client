@@ -150,7 +150,7 @@ const SellerOrder = () => {
                 src={params.row.Product}
                 alt="refresh"
                 width={30}
-                onClick={() => navigate(`/ViewDetails/${params.row.prdId}`)}
+                onClick={() => navigate(`/orderDetails/${params.row.prdId}`)}
               />
             </div>
           );

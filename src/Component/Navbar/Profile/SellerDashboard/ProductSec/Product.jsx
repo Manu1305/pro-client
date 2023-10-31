@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SizeModal from "./modal/SizeModal";
 import { apiURL } from "../../../../../const/config";
 import httpService from "../../../../Error Handling/httpService";
@@ -15,6 +15,8 @@ import { FiEdit } from "react-icons/fi";
 // import { MdUnpublished } from "react-icons/md";
 import UnpublishedIcon from "@mui/icons-material/Unpublished";
 import { IconButton, Tooltip } from "@mui/material";
+import Swal from "sweetalert2";
+import { addReqProduct } from "../../../../../Redux/productBefore/productReqAction";
 
 export const ProductSec = () => {
   const [reqProducts, setRequestedProducts] = useState([]);
@@ -28,6 +30,7 @@ export const ProductSec = () => {
   const user = useSelector((state) => state.userReducer.user);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const getProducts = async () => {
     await httpService
@@ -40,12 +43,16 @@ export const ProductSec = () => {
           (product) => product.seller === user.email
         );
         if (user?.urType === "admin") {
- setRequestedProducts(res.data);
+          const filteredProduct = res.data?.filter(
+            (prd) => prd.status !== "unPublish"
+          );
+          dispatch(addReqProduct(filteredProduct));
+          setRequestedProducts(filteredProduct);
+          getProducts()
+        } else {
+          setRequestedProducts(filteredProducts);
         }
-        else{
-           setRequestedProducts(filteredProducts);
-        }
-       
+
         setIsLoading(false);
       })
       .catch((err) => {
@@ -155,9 +162,12 @@ export const ProductSec = () => {
                 </Tooltip>
               </div>
               <div>
-                <Tooltip title="Unpublish" onClick={() => unPublishProduct(params.row.id)}>
+                <Tooltip
+                  title="Unpublish"
+                  onClick={() => unPublishProduct(params.row.id)}
+                >
                   <IconButton>
-                    <UnpublishedIcon className="cursor-pointer"/>
+                    <UnpublishedIcon className="cursor-pointer" />
                   </IconButton>
                 </Tooltip>
               </div>
@@ -191,16 +201,34 @@ export const ProductSec = () => {
   });
 
   const unPublishProduct = async (id) => {
-    await httpService
-      .put(`${apiURL}/product/change-product-status/${id}`, {
-        status: "unPublish",
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure. You want to unpublish this product..?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Unpublish",
+    });
+
+    if (result.isConfirmed) {
+      await httpService
+        .put(`${apiURL}/product/change-product-status/${id}`, {
+          status: "unPublish",
+        })
+        .then((res) => {
+          console.log(res.data);
+          const filteredProduct = res.data?.filter(
+            (prd) => prd.status !== "unPublish"
+          );
+          dispatch(addReqProduct(filteredProduct));
+          console.log("Prod Req", res.data);
+          getProducts();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (

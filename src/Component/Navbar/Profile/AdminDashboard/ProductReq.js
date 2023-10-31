@@ -35,9 +35,11 @@ export const ProductRequest = () => {
       })
       .then((res) => {
         setIsLoading(false);
-        dispatch(addReqProduct(res.data));
+
+        const filteredProduct = res.data?.filter((prd) => prd.status !== "unPublish" )
+        dispatch(addReqProduct(filteredProduct));
         console.log("Prod Req", res.data)
-        setProduct(res.data);
+        setProduct(filteredProduct);
       })
       .catch((Err) => {
         setIsLoading(false);
@@ -68,7 +70,8 @@ export const ProductRequest = () => {
       try {
         await httpService.put(`${apiURL}/product/change-product-status/${id}`, { status: "Published" })
           .then(res => {
-            console.log(res.data)
+            console.log(res.data);
+            getProducts()
           })
           .catch((err) => {
             console.log(err)
