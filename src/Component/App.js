@@ -62,6 +62,7 @@ import { FaQ } from "./Footer/FAQ/FaQ";
 import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
 import SellerRelatedPro from "./Shopingsection/SellerRelatedProduct/sellerRelatedPro";
 import SingleOrder from "./singleOrderdetail/SingleOrder";
+import { Publish } from "@mui/icons-material";
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
@@ -115,7 +116,7 @@ const App = () => {
     await httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        console.log(res.data);
+        console.log("All Products",res.data);
 
         const filByStaus = res.data.filter((prd) => prd.status === "Published");
         dispatch(addProduct(filByStaus));
