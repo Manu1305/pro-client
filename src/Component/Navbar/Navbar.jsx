@@ -134,10 +134,10 @@ const Navbar = ({products}) => {
               <Link to="cart" onClick={closeMenu}>
                 <Badge
                   badgeContent={
-                    Object.values(CartItem).length === 0 ||
+                    Object?.values(CartItem).length === 0 ||
                     CartItem === undefined
                       ? null
-                      : CartItem.items.length
+                      : CartItem?.items?.length
                   }
                   color="error"
                 >

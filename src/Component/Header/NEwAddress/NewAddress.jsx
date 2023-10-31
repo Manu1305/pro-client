@@ -40,20 +40,20 @@ function NewAddress({getSavedAddress}) {
   }, []);
   console.log(add, "data");
 
-  // function getAddress() {
-  //   navigator.geolocation.getCurrentPosition((pos) => {
-  //     const { latitude, longitude } = pos.coords;
-  //     console.log(latitude, longitude);
-  //     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-  //     fetch(url)
-  //       .then((res) => res.json())
-  //       .then((data) => setAdd(data.address)
+  function getAddress() {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      const { latitude, longitude } = pos.coords;
+      console.log(latitude, longitude);
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => setAdd(data.address)
        
-  //       );
-  //     console.log(add, "dfcdfk");
-  //   });
+        );
+      console.log(add, "dfcdfk");
+    });
     
-  // }
+  }
 
 
 
@@ -96,93 +96,95 @@ function NewAddress({getSavedAddress}) {
   };
 
   return (
-    <div className={styles.formdiv}>
-       {/* <button onClick={getAddress}> allow location </button>  */}
-      <input
-        className={styles.inputbox}
-        type="text"
-        placeholder="Name"
-        name="name"
-        onChange={onChangeHandler}
-      />
-      <div className={styles.divresponsive}>
-        <input
-          className={`${styles.responsiveinput} `}
-          type="text"
-          name="state"
-          placeholder="State"
-          value={add.state}
-          onChange={onChangeHandler}
-        />
-        <input
-          className={` ${styles.responsiveinput1}`}
-          type="text"
-          name="area"
-          placeholder="Dist"
-          value={add.state_district}
-          onChange={onChangeHandler}
-        />
-      </div>
-      <div className=" mob:flex-col">
+    <>
+        {/* <button className="bg-red-400 w-20" onClick={getAddress}> allow location </button> */}
+      <div className={styles.formdiv}>
         <input
           className={styles.inputbox}
           type="text"
-          placeholder="Address"
+          placeholder="Name"
+          name="name"
           onChange={onChangeHandler}
         />
-        <br />
-        <input
-          className={styles.inputbox}
-          type="text"
-          placeholder="Locality"
-          name="locality"
-          onChange={onChangeHandler}
-          value={add.city_district}
-        />
-        <div className={styles.divresponsive}></div>
-      </div>
-      <div className={styles.divresponsive}>
-        <input
-          className={`${styles.responsiveinput}`}
-          type="text"
-          name="city"
-          placeholder="City"
-          value={add.city}
-          onChange={onChangeHandler}
-        />
-        <input
-          className={` ${styles.responsiveinput1}`}
-          type="text"
-          placeholder="Landmark"
-          onChange={onChangeHandler}
-          value={add.neighbourhood}
-        />
-      </div>
-      <div className={styles.divresponsive}>
-        <input
-          className={` ${styles.responsiveinput}`}
-          type="number"
-          name="pincode"
-          onChange={onChangeHandler}
-          placeholder="Pin"
-          value={add.postcode}
-        />
-        <input
-          className={` ${styles.responsiveinput1}`}
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          onChange={onChangeHandler}
-        />
-      </div>
+        <div className={styles.divresponsive}>
+          <input
+            className={`${styles.responsiveinput} `}
+            type="text"
+            name="state"
+            placeholder="State"
+            
+            onChange={onChangeHandler}
+          />
+          <input
+            className={` ${styles.responsiveinput1}`}
+            type="text"
+            name="area"
+            placeholder="Dist"
+           
+            onChange={onChangeHandler}
+          />
+        </div>
+        <div className=" mob:flex-col">
+          <input
+            className={styles.inputbox}
+            type="text"
+            placeholder="Address"
+            onChange={onChangeHandler}
+          />
+          <br />
+          <input
+            className={styles.inputbox}
+            type="text"
+            placeholder="Locality"
+            name="locality"
+            onChange={onChangeHandler}
+           
+          />
+          <div className={styles.divresponsive}></div>
+        </div>
+        <div className={styles.divresponsive}>
+          <input
+            className={`${styles.responsiveinput}`}
+            type="text"
+            name="city"
+            placeholder="City"
+           
+            onChange={onChangeHandler}
+          />
+          <input
+            className={` ${styles.responsiveinput1}`}
+            type="text"
+            placeholder="Landmark"
+            onChange={onChangeHandler}
+         
+          />
+        </div>
+        <div className={styles.divresponsive}>
+          <input
+            className={` ${styles.responsiveinput}`}
+            type="number"
+            name="pincode"
+            onChange={onChangeHandler}
+            placeholder="Pin"
+       
+          />
+          <input
+            className={` ${styles.responsiveinput1}`}
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            onChange={onChangeHandler}
+          />
+        </div>
 
-      <button className={styles.button} onClick={saveAddressHandler}>
-        Add This Address
-      </button>
-      <div className={styles.return}>
-        {/* <div className="mt-3 text-red-600"><AiOutlineLeft/></div> */}
+        <button className={styles.button} onClick={saveAddressHandler}>
+          Add This Address
+        </button>
+        <div className={styles.return}>
+          {/* <div className="mt-3 text-red-600"><AiOutlineLeft/></div> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

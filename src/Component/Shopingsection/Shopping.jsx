@@ -379,6 +379,9 @@ import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ScrollToTop from "../../Scrolltotop";
+import { getDistance, getPreciseDistance } from "geolib";
+
 
 const Shopping = ({ products }) => {
   const { category, collections } = useParams();
@@ -531,6 +534,9 @@ console.log("prooooddata", filteredProducts)
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
+        
+
+        
         <div
           key={data.id}
           className="col-lg-3 col-md-4 col-6 mb-5"
@@ -615,172 +621,144 @@ console.log("prooooddata", filteredProducts)
 
   return (
     <>
-
-
- {/* <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            transform: 'translate(-50%, -50%)',
-            padding: '20px',
-            border: 'none',
-          },
-        }}
-      >
-        <div className={styless.modalContent}>
-          <button className={styless.closeButton} onClick={closeModal}>
-            &times;
-          </button>
-          <h2>Allow Loaction!</h2>
-          <p>Please Allow Loaction for better Experience</p>
-          <button onClick={getAddress} className="bg-primary">Allow</button>
-        </div>
-      </Modal> */}
-
-      <div style={{ background: "#ffffff" }}>
-        <div>
-          <CategCart />
-          <div className="container">
-            <div className="row p-3">
-              <div className="col-lg-3">
-                
-                  <div
-                    className={`card-body mb-7 shadow-xl ${styless.categggg}`}
-                  >
-                    <div style={{ color: "black", fontWeight: "bolder" }}>
-                      PRODUCT CATEGORIES
-                    </div>
-                    <div>
-                      <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories.length === 0 ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("all")}
-                        >
-                          All
-                        </button>
+      <ScrollToTop>
+        <>
+     
+          <div style={{ background: "#ffffff" }}>
+            <div>
+              <CategCart />
+              <div className="container">
+                <div className="row p-3">
+                  <div className="col-lg-3">
+                    <div
+                      className={`card-body mb-7 shadow-xl ${styless.categggg}`}
+                    >
+                      <div style={{ color: "black", fontWeight: "bolder" }}>
+                        PRODUCT CATEGORIES
                       </div>
                       <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "Mens" ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("Mens")}
-                        >
-                          Men
-                        </button>
-                      </div>
-                      <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "Womens" ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("Womens")}
-                        >
-                          Womens
-                        </button>
-                      </div>
-                      <div>
-                        <button
-                          className={`btn btn-white mb-1 px-1 ${
-                            categories[0] === "kids" ? "active" : ""
-                          }`}
-                          onClick={() => handleCategoryChange("kids")}
-                        >
-                          Kids
-                        </button>
-                      </div>
-                    </div>
-                    {user && user.email ? (
-                      <div className={styless.pricefilterdiv}>
-                        <h1>FILTER BY PRICE</h1>
-                        <br />
-                        <input
-                          type="range"
-                          style={{ background: "red" }}
-                          min={lowestprice}
-                          max={highestPrice}
-                          onChange={(e) => {
-                            setPrice(e.target.value);
-                          }}
-                        />
-                        <br /> <br />
-                        <p>
-                          {" "}
-                          price {lowestprice}-{price}
-                        </p>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-around",
-                          }}
-                        >
-                          <div>
-                            <button
-                              style={{
-                                background: "#BF0A2A",
-                                color: "white",
-                                width: "250px",
-                                height: "52px",
-                              }}
-                            >
-                              Filter
-                            </button>
-                          </div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories.length === 0 ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("all")}
+                          >
+                            All
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories[0] === "Mens" ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("Mens")}
+                          >
+                            Men
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories[0] === "Womens" ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("Womens")}
+                          >
+                            Womens
+                          </button>
+                        </div>
+                        <div>
+                          <button
+                            className={`btn btn-white mb-1 px-1 ${
+                              categories[0] === "kids" ? "active" : ""
+                            }`}
+                            onClick={() => handleCategoryChange("kids")}
+                          >
+                            Kids
+                          </button>
                         </div>
                       </div>
-                    ) : null}
-                  </div>
-                
-              </div>
-
-              {/* Content */}
-              <div className="col-lg-9">
-                <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
-                  <strong className="d-block py-2">
-                    Total {filteredProducts.length} items
-                  </strong>
-                </header>
-
-                <div
-                  className={`row , ${styless.pages}`}
-                  style={{ color: "black", position: "relative" }}
-                >
-                  {displayUsers}
-
-                  {filteredProducts && filteredProducts.length !== 0 && (
-                    <div className="d-flex justify-center">
-                      <ReactPaginate
-                        style={{ color: "white" }}
-                        className={styless.pagination}
-                        previousLabel={<ArrowBackIosIcon />}
-                        nextLabel={<ArrowForwardIosIcon />}
-                        pageCount={pageCount}
-                        onPageChange={changePage}
-                        containerClassName={"pagination"}
-                      />
+                      {user && user.email ? (
+                        <div className={styless.pricefilterdiv}>
+                          <h1>FILTER BY PRICE</h1>
+                          <br />
+                          <input
+                            type="range"
+                            style={{ background: "red" }}
+                            min={lowestprice}
+                            max={highestPrice}
+                            onChange={(e) => {
+                              setPrice(e.target.value);
+                            }}
+                          />
+                          <br /> <br />
+                          <p>
+                            {" "}
+                            price {lowestprice}-{price}
+                          </p>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                            }}
+                          >
+                            <div>
+                              <button
+                                style={{
+                                  background: "#BF0A2A",
+                                  color: "white",
+                                  width: "250px",
+                                  height: "52px",
+                                }}
+                              >
+                                Filter
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
-                  )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="col-lg-9">
+                    <header className="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+                      <strong className="d-block py-2">
+                        Total {filteredProducts.length} items
+                      </strong>
+                    </header>
+
+                    <div
+                      className={`row , ${styless.pages}`}
+                      style={{ color: "black", position: "relative" }}
+                    >
+                      {displayUsers}
+
+                      {filteredProducts && filteredProducts.length !== 0 && (
+                        <div className="d-flex justify-center">
+                          <ReactPaginate
+                            style={{ color: "white" }}
+                            className={styless.pagination}
+                            previousLabel={<ArrowBackIosIcon />}
+                            nextLabel={<ArrowForwardIosIcon />}
+                            pageCount={pageCount}
+                            onPageChange={changePage}
+                            containerClassName={"pagination"}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    {/* <hr /> */}
+                  </div>
                 </div>
-                {/* <hr /> */}
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div style={{ overflow: "hidden" }}>
-        <Footer />
-      </div>
+          <div style={{ overflow: "hidden" }}>
+            <Footer />
+          </div>
+        </>
+      </ScrollToTop>
     </>
   );
 };
