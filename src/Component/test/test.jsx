@@ -14,7 +14,7 @@ function GetCurrentAddress() {
         .then((data) => setAdd(data.address));
     });
   }, []);
-  console.log(add, "sfsfh");
+  console.log(add, "data");
   return (
     <>
       <p>road : {add.road}</p>

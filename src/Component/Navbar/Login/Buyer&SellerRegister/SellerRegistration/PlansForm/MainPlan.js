@@ -1,8 +1,11 @@
 import React from "react";
 import plans from "./planSec.module.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const MainPlan = ({subHandler}) => {
+  const sellerLoginData = useSelector((state) => state.userReducer.seller);
+  console.log(sellerLoginData)
   return (
     <div className={plans.dooll} >
       <div className={plans.card}>

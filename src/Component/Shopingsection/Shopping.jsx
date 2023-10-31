@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
 
 import { useParams } from "react-router-dom";
-
+import Modal from "react-modal";
 import { Footer } from "../Footer/Footer";
 
 import { PiHeartLight } from "react-icons/pi";
@@ -30,6 +30,13 @@ const Shopping = ({ products }) => {
 
   const [collectionstate, setCollections] = useState([]);
 
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
       setCategories([]);
@@ -38,6 +45,26 @@ const Shopping = ({ products }) => {
     }
   };
 
+
+  const getAddress = async () => {
+    try {
+      const pos = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+  
+      const { latitude, longitude } = pos.coords;
+      console.log('Got latitude and longitude:', latitude, longitude);
+      
+      // Return latitude and longitude
+      return { latitude, longitude };
+    } catch (error) {
+      console.error("Error getting address:", error);
+      // Return an object with null values or handle the error as needed
+      return { latitude: null, longitude: null };
+    }
+  };
+
+
   useEffect(() => {
     if (selectedCategory === "all") {
       // setCategories([]);
@@ -45,6 +72,7 @@ const Shopping = ({ products }) => {
       setCategories([selectedCategory]);
     }
   }, [selectedCategory]);
+
   useEffect(() => {
     setCollections([colletionResults]);
   }, [colletionResults]);
@@ -159,6 +187,37 @@ const Shopping = ({ products }) => {
 
   return (
     <>
+
+
+ <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            transform: 'translate(-50%, -50%)',
+            padding: '20px',
+            border: 'none',
+          },
+        }}
+      >
+        <div className={styless.modalContent}>
+          <button className={styless.closeButton} onClick={closeModal}>
+            &times;
+          </button>
+          <h2>Allow Loaction!</h2>
+          <p>Please Allow Loaction for better Experience</p>
+          <button onClick={getAddress} className="bg-primary">Allow</button>
+        </div>
+      </Modal>
+
       <div style={{ background: "#ffffff" }}>
         <div>
           <CategCart />

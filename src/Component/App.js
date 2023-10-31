@@ -67,9 +67,12 @@ const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
 );
 
+
 const LazyMainPage = React.lazy(() =>
   import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage")
 );
+
+
 
 const App = () => {
   
