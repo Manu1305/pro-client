@@ -191,7 +191,7 @@ const Shopping = ({ products }) => {
     <>
       <ScrollToTop>
         <>
-          <button onClick={calculateDistance}> click</button>
+     
           <div style={{ background: "#ffffff" }}>
             <div>
               <CategCart />
