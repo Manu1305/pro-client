@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const imgWithClick = { cursor: "pointer" };
 
@@ -10,14 +10,18 @@ const Photo = ({ index, onClick, photo, margin, direction, top, left }) => {
     imgStyle.top = top;
   }
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     onClick(event, { photo, index });
   };
 
+  console.log("photos in img", photo);
+
   return (
     <img
+      width={300}
       style={onClick ? { ...imgStyle, ...imgWithClick } : imgStyle}
-      {...photo}
+      // {...photo}
+      src={photo.src}
       onClick={onClick ? handleClick : null}
       alt="img"
     />

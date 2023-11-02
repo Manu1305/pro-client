@@ -33,19 +33,24 @@ function Section2({
   productDetails,
   setProductDetails,
 }) {
-  const [color, setColor] = useState("");
-  const [qtyAndSizes, setQtyAndSizes] = useState({});
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [index, setIndex] = useState(0);
+  
+  // const [updateQty, setUpdateQty] = useState(productDetails.length !==0 ? productDetails[index].qtyAndSizes:null)
+  const [qtyAndSizes, setQtyAndSizes] = useState(
+    productDetails.length !== 0 ? productDetails[index].qtyAndSizes : {}
+    );
 
-
-  const photos =productDetails.length !==0&& productDetails[index].images.map((item) => {
-    return { src: item, width: 2, height: 1 };
+  const updateCondition = productDetails.length !== 0;
+  // console.log("QTY",updateQty)
+  let photos =
+  updateCondition &&
+  productDetails[index].images.map((item) => {
+    return { src: item };
   });
   
-
-
+  const [color, setColor] = useState(updateCondition ? productDetails[0].color : "");
   const [totQut, setTotQut] = useState(0);
   const [loader, setLoader] = useState(true);
   const [items, setItems] = useState(photos);
@@ -53,6 +58,7 @@ function Section2({
   const onSortEnd = ({ oldIndex, newIndex }) => {
     setItems(arrayMoveImmutable(items, oldIndex, newIndex));
   };
+
   const handleImageSelection = (e) => {
     const selectedImages = e.target.files;
     const previews = [];
@@ -163,6 +169,21 @@ function Section2({
     setTotQut(quantity);
   }, [qtyAndSizes]);
 
+  useEffect(() => {
+    // console.log("Photos",items)
+    setItems(photos);
+    // setQtyAndSizes(productDetails[index].qtyAndSizes);
+  }, [index]);
+
+  console.log("qtyAndSizes", qtyAndSizes);
+
+  const updateProduct = async () => {
+    console.log(color);
+    console.log(qtyAndSizes);
+    console.log(items)
+
+  };
+
   return (
     <div className="bg-gray">
       <div className="bg-white mt-2 p-2">
@@ -179,9 +200,7 @@ function Section2({
           id="color"
           className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required
-          value={
-            Object.values(productDetails).length !== 0? productDetails[0].color : color
-          }
+          value={color}
           name="color"
           onChange={(e) => setColor(e.target.value)}
         />
@@ -195,7 +214,7 @@ function Section2({
               <div className={styles.sizeselect}>
                 <div className={`${styles.sizeButtons}`}>
                   <div>
-                    <h3 className="m-1">Total Quantity:</h3>
+                    <h3 className="m-1">Total Quantity:{totQut}</h3>
                   </div>
                   <div>
                     {sizeSelected[
@@ -224,12 +243,14 @@ function Section2({
                             name={size}
                             onChange={(e) =>
                               setQtyAndSizes((prev) => {
+                                //  console.log()
                                 return {
                                   ...prev,
                                   [e.target.name]: Number(e.target.value),
                                 };
                               })
                             }
+                            value={qtyAndSizes[size] ? qtyAndSizes[size] : ""}
                             className={styles.quantityInput}
                             style={{
                               border: "1px solid #DDDDDD",
@@ -247,36 +268,39 @@ function Section2({
           </div>
         </div>
 
-        {productDetails.length !==0 ?<div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "10px",
-            height: "50px",
-          }}
-        >
-          {productDetails?.map((ele, index) => (
-            <div
-              style={{
-                background: `${ele.color}`,
-                width: "50px",
-                height: "50px",
-                gap: "10px",
-                textAlign: "center",
-                lineHeight: "75px",
-                fontSize: "30px",
-                margin: "left -10px",
-              }}
-              onClick={() => 
-                {setIndex(index);
-                  console.log(index)
+        {updateCondition ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "10px",
+              height: "50px",
+            }}
+          >
+            {productDetails?.map((ele, index) => (
+              <div
+                style={{
+                  background: `${ele.color}`,
+                  width: "50px",
+                  height: "50px",
+                  gap: "10px",
+                  textAlign: "center",
+                  lineHeight: "75px",
+                  fontSize: "30px",
+                  margin: "left -10px",
                 }}
-            ></div>
-          ))}
-        </div> : null}
+                onClick={(e) => {
+                  setIndex(index);
+                  console.log(ele.color);
+                  setColor(ele.color);
+                }}
+              ></div>
+            ))}
+          </div>
+        ) : null}
       </div>
 
-      {/* {productDetails.length !==0 ? ( */}
+      {productDetails.length === 0 ? (
         <div className="bg-white mt-3 p-1">
           <div style={{ marginTop: "30px" }}>
             <h3 className="m-1 fw-bold">Product image</h3>
@@ -599,15 +623,15 @@ function Section2({
             </div>
           </div>
         </div>
-      {/* ) : ( */}
+      ) : (
         <div>
-          {/* <SortableGallery items={items} onSortEnd={onSortEnd} axis={"xy"} /> */}
+          <SortableGallery items={items} onSortEnd={onSortEnd} axis={"xy"} />
         </div>
-      {/* )} */}
+      )}
       <div className="m-2 d-flex justify-center items-center">
         {loader ? (
           <button
-            onClick={submitHandler}
+            onClick={updateCondition ? updateProduct : submitHandler}
             style={{ background: "#4BB543" }}
             className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
           >
