@@ -228,8 +228,6 @@ export const ProductSec = () => {
       confirmButtonText: status === 'Published' ? "Publish" : "unPublish",
     });
 
-    // setModalShow(true);
-
     if (result.isConfirmed) {
       await httpService
         .put(`${apiURL}/product/change-product-status/${id}`, {
@@ -237,10 +235,6 @@ export const ProductSec = () => {
         })
         .then((res) => {
           console.log("Prod", res.data);
-          // const filteredProduct = res.data?.filter(
-          //   (prd) => prd.status !== "unPublish"
-          // );
-          // dispatch(addReqProduct(filteredProduct));
           getProducts();
         })
         .catch((err) => {
