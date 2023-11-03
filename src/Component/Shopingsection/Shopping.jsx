@@ -374,6 +374,15 @@ console.log("prooooddata", filteredProducts)
                             pageCount={pageCount}
                             onPageChange={changePage}
                             containerClassName={"pagination"}
+                            onClick={()=>{
+                              window.scroll({
+                                top: 0,
+                                left: 0,
+                                behavior: "smooth",
+                              });
+                            }}
+
+                            
                           />
                         </div>
                       )}

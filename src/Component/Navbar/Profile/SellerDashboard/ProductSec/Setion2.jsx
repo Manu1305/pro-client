@@ -45,8 +45,10 @@ function Section2({
   // const [updateQty, setUpdateQty] = useState(productDetails.length !==0 ? productDetails[index].qtyAndSizes:null)
   const [qtyAndSizes, setQtyAndSizes] = useState(
     productDetails.length !== 0 ? productDetails[index].qtyAndSizes : {}
-  );
-
+    );
+    console.log(sizeSelected, "sizeSelected");
+    console.log(productDetails, "productDetails");
+console.log(productInfo.selectedSubcategory, "productInfo");
   const updateCondition = productDetails.length !== 0;
   // console.log("QTY",updateQty)
   let photos =
@@ -79,6 +81,76 @@ function Section2({
     setImages((prevImages) => [...prevImages, ...selected]);
     setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
   };
+
+
+
+let categoryy = productInfo.selectedSubcategory;
+
+
+  let imageToShow = null;
+  let imageToShow1 = null;
+  let imageToShow2= null;
+  let imageToShow3= null;
+
+  if (categoryy === "Shirts") {
+    imageToShow = (
+      <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+    );
+    imageToShow1 = (
+      <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+    );
+    imageToShow2 = (
+      <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+    );
+    imageToShow3 = (
+      <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+    );
+  } 
+  // else if (category === "women") {
+  //   imageToShow = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow1 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow2 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow3 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  // } else if (category === "kids-pant") {
+  //   imageToShow = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow1 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow2 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow3 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  // } else if (category === "pant") {
+  //   imageToShow = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow1 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow2 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow3 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  // } 
+
+  
+
+  // ProductImage(productInfo.selectedSubcategory)
+
 
   const submitHandler = async () => {
     setLoader(false);
@@ -331,9 +403,7 @@ function Section2({
                 }}
               ></div>
             ))}
-            <div>
-              
-            </div>
+            <div></div>
           </div>
         ) : null}
       </div>
@@ -388,7 +458,7 @@ function Section2({
               <div className="image-previews flex flex-row">
                 <div className="image-preview">
                   <div className="image-preview">
-                    <img
+                    {/* <img
                       src={imagePreviews[0]}
                       alt="imge 1"
                       style={{
@@ -396,7 +466,9 @@ function Section2({
                         maxHeight: "200px",
                         margin: "10px",
                       }}
-                    />
+
+                    /> */}
+                    {imageToShow}
                   </div>
 
                   <button
@@ -669,20 +741,21 @@ function Section2({
       <div className="m-2 d-flex justify-center items-center">
         {loader ? (
           <>
-          <button
-            onClick={updateCondition ? updateProduct : submitHandler}
-            style={{ background: "#4BB543" }}
-            className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
-          >
-            Submit
-          </button>
-          <button
-            onClick={() => navigate(-1)}
-            style={{ background: "#dc2626" }}
-            className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white "
-          >
-            Cancel
-          </button></>
+            <button
+              onClick={updateCondition ? updateProduct : submitHandler}
+              style={{ background: "#4BB543" }}
+              className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
+            >
+              Submit
+            </button>
+            <button
+              onClick={() => navigate(-1)}
+              style={{ background: "#dc2626" }}
+              className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white "
+            >
+              Cancel
+            </button>
+          </>
         ) : (
           <button
             style={{ background: "white" }}
