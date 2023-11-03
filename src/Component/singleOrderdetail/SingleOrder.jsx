@@ -148,7 +148,7 @@ function SingleOrder() {
   const totalAmount = orderPrice + tax + shipping;
 
   // cash
-  // paid amount  ==>
+  // paid amount  ==>   
   const casTax = orderPrice * 0.1 * 0.05; // gst = 10% of order amount + 5%
   
   const paidAmount = orderPrice * 0.1 + casTax + shipping;
@@ -394,7 +394,7 @@ function SingleOrder() {
               </div>
             </div>
           </div>
-          {user.email && user.urType === "buyer" ? (
+          {user.email && user.urType != "seller" ? (
             <div className={styles.five}>
               <div className={styles.stepper}>
                 <p className="font-bold mt-2 ml-2">Order Status</p>

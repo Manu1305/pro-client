@@ -144,13 +144,14 @@ const SellerOrder = () => {
         type: "image",
 
         renderCell: (params) => {
+          {console.log(params,'params')}
           return (
             <div>
               <img
                 src={params.row.Product}
                 alt="refresh"
                 width={30}
-                onClick={() => navigate(`/orderDetails/${params.row.prdId}`)}
+                onClick={() => navigate(`/orderDetails/${params.row.id}`)}
               />
             </div>
           );
