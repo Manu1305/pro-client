@@ -16,6 +16,7 @@ import Gallery from "react-photo-gallery";
 import { arrayMoveImmutable } from "array-move";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import Photo from "./Photo";
+import axios from "axios";
 
 const SortablePhoto = SortableElement((item) => <Photo {...item} />);
 const SortableGallery = SortableContainer(({ items }) => (
@@ -33,24 +34,28 @@ function Section2({
   productDetails,
   setProductDetails,
 }) {
+
+  const navigate =  useNavigate() 
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [index, setIndex] = useState(0);
-  
+
   // const [updateQty, setUpdateQty] = useState(productDetails.length !==0 ? productDetails[index].qtyAndSizes:null)
   const [qtyAndSizes, setQtyAndSizes] = useState(
     productDetails.length !== 0 ? productDetails[index].qtyAndSizes : {}
-    );
+  );
 
   const updateCondition = productDetails.length !== 0;
   // console.log("QTY",updateQty)
   let photos =
-  updateCondition &&
-  productDetails[index].images.map((item) => {
-    return { src: item };
-  });
-  
-  const [color, setColor] = useState(updateCondition ? productDetails[0].color : "");
+    updateCondition &&
+    productDetails[index].images.map((item) => {
+      return { src: item };
+    });
+
+  const [color, setColor] = useState(
+    updateCondition ? productDetails[0].color : ""
+  );
   const [totQut, setTotQut] = useState(0);
   const [loader, setLoader] = useState(true);
   const [items, setItems] = useState(photos);
@@ -172,16 +177,47 @@ function Section2({
   useEffect(() => {
     // console.log("Photos",items)
     setItems(photos);
-    // setQtyAndSizes(productDetails[index].qtyAndSizes);
   }, [index]);
 
   console.log("qtyAndSizes", qtyAndSizes);
 
   const updateProduct = async () => {
-    console.log(color);
-    console.log(qtyAndSizes);
-    console.log(items)
+    console.log("color", color);
+    console.log("qtyAndSizes", qtyAndSizes);
+    console.log(index);
+    // /update-size-color-images
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
 
+    const images = items.map((item) => item.src);
+
+    console.log("items", images);
+    try {
+      await axios
+        .put(
+          `${apiURL}/product/update-size-color-images/6540911be1aaf96abc694724`,
+          { images, qtyAndSizes: qtyAndSizes, color, index }
+        )
+        .then((res) => {
+          console.log("Success", res.data);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Updated Succesfully",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        })
+        .catch((Err) => {
+          console.log(Err);
+        });
+    } catch (error) {
+      console.log("Code Error", error);
+    }
   };
 
   return (
@@ -293,9 +329,13 @@ function Section2({
                   setIndex(index);
                   console.log(ele.color);
                   setColor(ele.color);
+                  setQtyAndSizes(productDetails[index].qtyAndSizes);
                 }}
               ></div>
             ))}
+            <div>
+              
+            </div>
           </div>
         ) : null}
       </div>
@@ -630,6 +670,7 @@ function Section2({
       )}
       <div className="m-2 d-flex justify-center items-center">
         {loader ? (
+          <>
           <button
             onClick={updateCondition ? updateProduct : submitHandler}
             style={{ background: "#4BB543" }}
@@ -637,6 +678,13 @@ function Section2({
           >
             Submit
           </button>
+          <button
+            onClick={() => navigate(-1)}
+            style={{ background: "#dc2626" }}
+            className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white "
+          >
+            Cancel
+          </button></>
         ) : (
           <button
             style={{ background: "white" }}
@@ -645,19 +693,6 @@ function Section2({
             <Watch width="200" color="red" />
           </button>
         )}
-
-        {/* <button
-          onClick={() => navigate(-1)}
-          className="bg-emerald-400 py-2.5 px-5 w-75 mr-2 mb-2 rounded-none text-sm font-medium text-white"
-        >
-          Back
-        </button> */}
-        {/* <button
-          onClick={() => setSecondModal(false)}
-          className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white rounded-none border-gray-200"
-        >
-          Cancel
-        </button> */}
       </div>
     </div>
   );

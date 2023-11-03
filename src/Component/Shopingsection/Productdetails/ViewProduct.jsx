@@ -283,12 +283,12 @@ const ViewProduct = ({getAllProducts}) => {
   const unPublishProduct = async (id,status) => {
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: `Are you sure. You want to ${status!== "unPublish" ?"Publish" :"unPublish"} this product..?`,
+      text: `Are you sure. You want to ${status!== "unPublish" ?"unPublish" :"Publish"} this product..?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: status !== "unPublish" ?"Publish" :"unPublish",
+      confirmButtonText: status === "Published" ?"Publish" :"unPublish",
     });
 
     if (result.isConfirmed) {

@@ -14,8 +14,6 @@ const Photo = ({ index, onClick, photo, margin, direction, top, left }) => {
     onClick(event, { photo, index });
   };
 
-  console.log("photos in img", photo);
-
   return (
     <img
       width={300}

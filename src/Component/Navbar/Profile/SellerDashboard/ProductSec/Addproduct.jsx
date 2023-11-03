@@ -12,7 +12,7 @@ function AddProduct() {
 
   const history = useNavigate();
 
-  const { productId } = useParams();
+  let { productId } = useParams();
 
   const categorySizes = {
     Mens: [],
@@ -406,13 +406,15 @@ function AddProduct() {
         .then((res) => {
           console.log("Res", res);
 
-          const { productInfo, ...others } = res.data;
+          const { productInfo,_id, ...others } = res.data;
           setProductInfoDet((prev) => {
             return { ...productInfo };
           });
           setProductInfo((prev) => {
             return { ...others };
           });
+          productId = _id
+          console.log(_id)
         })
         .catch((err) => {
           Swal.fire({
@@ -481,7 +483,6 @@ function AddProduct() {
           setSecondModal={setSecondModal}
           productDetails={productDetails}
           setProductDetails={setProductDetails}
-
         />
       ) : (
         <div className={styles.maindiv}>
