@@ -448,6 +448,7 @@ function AddProduct() {
               showConfirmButton: false,
               timer: 1000,
             });
+            setUplProductId(res.data.ack._id);
             const { productInfo, productDetails, ...others } = res.data.ack;
             setProductInfoDet((prev) => {
               return { ...productInfo };

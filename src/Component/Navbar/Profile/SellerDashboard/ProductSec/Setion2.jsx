@@ -3,7 +3,7 @@ import { MdDeleteSweep } from "react-icons/md";
 import styles from "./Addproduct.module.css";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { InfinitySpin, Watch } from "react-loader-spinner";
 import img1 from "../../../../../images/productupload1.jpg";
@@ -35,7 +35,9 @@ function Section2({
   setProductDetails,
 }) {
 
-  const navigate =  useNavigate() 
+  const navigate =  useNavigate();
+  const {id}= useParams() 
+  console.log(id)
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [index, setIndex] = useState(0);
@@ -182,10 +184,7 @@ function Section2({
   console.log("qtyAndSizes", qtyAndSizes);
 
   const updateProduct = async () => {
-    console.log("color", color);
-    console.log("qtyAndSizes", qtyAndSizes);
-    console.log(index);
-    // /update-size-color-images
+   
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -195,11 +194,10 @@ function Section2({
 
     const images = items.map((item) => item.src);
 
-    console.log("items", images);
     try {
       await axios
         .put(
-          `${apiURL}/product/update-size-color-images/6540911be1aaf96abc694724`,
+          `${apiURL}/product/update-size-color-images/${productId}`,
           { images, qtyAndSizes: qtyAndSizes, color, index }
         )
         .then((res) => {

@@ -174,7 +174,7 @@ export const ProductSec = () => {
                 ) : (
                   <Tooltip
                     title="Publish"
-                    onClick={() => unPublishProduct(params.row.id)}
+                    onClick={() => unPublishProduct(params.row.id,"Published")}
                   >
                     <IconButton>
                       <PublishedWithChangesIcon
@@ -220,15 +220,15 @@ export const ProductSec = () => {
   const unPublishProduct = async (id, status) => {
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: "Are you sure. You want to unpublish this product..?",
+      text: `Are you sure. You want to ${status === 'Published' ? "Publish" : "unPublish"} this product..`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Unpublish",
+      confirmButtonText: status === 'Published' ? "Publish" : "unPublish",
     });
 
-    setModalShow(true);
+    // setModalShow(true);
 
     if (result.isConfirmed) {
       await httpService
@@ -236,11 +236,11 @@ export const ProductSec = () => {
           status,
         })
         .then((res) => {
-          console.log("Prod Req", res.data);
-          const filteredProduct = res.data?.filter(
-            (prd) => prd.status !== "unPublish"
-          );
-          dispatch(addReqProduct(filteredProduct));
+          console.log("Prod", res.data);
+          // const filteredProduct = res.data?.filter(
+          //   (prd) => prd.status !== "unPublish"
+          // );
+          // dispatch(addReqProduct(filteredProduct));
           getProducts();
         })
         .catch((err) => {

@@ -355,6 +355,7 @@ const ViewProduct = ({getAllProducts}) => {
                           ? "UnPublish"
                           : "Publish"}
                       </button>
+                      <button className="btn btn-primary" onClick={() => navigate(`/dashboard/Addproduct/${product._id}`)}>Edit</button>
                   </div>
                 </div>
               )}
