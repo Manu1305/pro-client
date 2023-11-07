@@ -105,7 +105,7 @@ const [fee,setFee]=useState()
       />
       <div className="flex flex-row">
       <SaleChart  />
-      <Adminfee fee={fee}/>
+      {user.urType === "Admin" && <Adminfee fee={fee}/>}
       </div>
       
       <ExtraData Allproductlength={products} 

@@ -43,12 +43,13 @@ export const ProductSec = () => {
           (product) => product.seller === user.email
         );
         if (user?.urType === "admin") {
+          console.log(res.data)
+          console.log("Called")
           const filteredProduct = res.data?.filter(
             (prd) => prd.status !== "Pending"
           );
           dispatch(addReqProduct(filteredProduct));
           setRequestedProducts(filteredProduct);
-          getProducts();
         } else {
           setRequestedProducts(filteredProducts);
         }
@@ -124,14 +125,15 @@ export const ProductSec = () => {
     if (ele === "price") {
       return { field: "price", type: "Number", width: 100 };
     }
-    if (ele === "action") {
+    if (user.urType !== "seller" && ele === "action") {
+      
       return {
         field: "Action",
         type: "action",
         width: "160px",
         renderCell: (params) => {
           return (
-            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ display: "flex", flexDirection: "row" }}>
               {/* Delete */}
               <div
                 onClick={() => {
@@ -188,6 +190,7 @@ export const ProductSec = () => {
                 )}
               </div>
             </div>
+            
           );
         },
       };

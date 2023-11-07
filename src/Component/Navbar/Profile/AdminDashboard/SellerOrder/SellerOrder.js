@@ -144,7 +144,6 @@ const SellerOrder = () => {
         type: "image",
 
         renderCell: (params) => {
-          {console.log(params,'params')}
           return (
             <div>
               <img
@@ -163,7 +162,6 @@ const SellerOrder = () => {
         field: "Action",
         type: "action",
         renderCell: (params) => {
-          // console.log("Check KR", params.row);
           return (
             <div style={{ alignItems: "center" }}>
               {params.row["Delivery Status"] === "Ready To PickUp" && (
