@@ -110,11 +110,12 @@ const CustomerLogin = () => {
           state: {
             id: email,
             name: response.data.name,
-          },
+          }, 
+
         });
       } else {
-        toast.error("Your account temprorely is suspended", {
-          icon: "🚫"
+        toast.error("Your account temporarily suspended", {
+          icon: "⚠️"
         });
       }
     } catch (error) {

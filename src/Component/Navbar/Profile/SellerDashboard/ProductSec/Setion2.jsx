@@ -10,6 +10,22 @@ import img1 from "../../../../../images/productupload1.jpg";
 import img2 from "../../../../../images/productupload2.jpg";
 import img3 from "../../../../../images/productupload3.jpg";
 import img4 from "../../../../../images/productupload4.jpg";
+import pant1 from '../../../../../images/pant1.jpg'
+import pant2 from "../../../../../images/pant2.jpg";
+import pant3 from "../../../../../images/pant3.jpg";
+import pant4 from "../../../../../images/pant4.jpg";
+import top1 from '../../../../../images/top1.jpg'
+import top2 from "../../../../../images/top2.jpg";
+import top3 from "../../../../../images/top3.jpg";
+import top4 from "../../../../../images/top4.jpg"; 
+import saree1 from '../../../../../images/saree1.webp'
+import saree2 from "../../../../../images/saree2.webp";
+import saree3 from "../../../../../images/saree3.webp";
+import saree4 from "../../../../../images/saree4.webp";
+import kid1 from "../../../../../images/kid1.webp";
+import kid2 from "../../../../../images/kid2.webp";
+import kid3 from "../../../../../images/kid3.webp";
+import kid4 from "../../../../../images/kid4.webp";
 
 // sort images
 import Gallery from "react-photo-gallery";
@@ -44,6 +60,7 @@ function Section2({
   const [qtyAndSizes, setQtyAndSizes] = useState(
     productDetails.length !== 0 ? productDetails[index].qtyAndSizes : {}
     );
+    console.log(productInfo, "productInfo----------12");
     console.log(sizeSelected, "sizeSelected");
     console.log(productDetails, "productDetails");
 console.log(productInfo.selectedSubcategory, "productInfo");
@@ -83,7 +100,7 @@ console.log(productInfo.selectedSubcategory, "productInfo");
 
 
 let categoryy = productInfo.selectedSubcategory;
-
+let categoryy_1 = productInfo.selectedCategory;
 
   let imageToShow = null;
   let imageToShow1 = null;
@@ -104,20 +121,81 @@ let categoryy = productInfo.selectedSubcategory;
       <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
     );
   } 
-  // else if (category === "women") {
-  //   imageToShow = (
-  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
-  //   );
-  //   imageToShow1 = (
-  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
-  //   );
-  //   imageToShow2 = (
-  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
-  //   );
-  //   imageToShow3 = (
-  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
-  //   );
-  // } else if (category === "kids-pant") {
+
+   if (categoryy === "Pants") {
+     imageToShow = (
+       <img style={{ height: "200px", width: "40%" }} src={pant1} alt="" />
+     );
+     imageToShow1 = (
+       <img style={{ height: "200px", width: "40%" }} src={pant2} alt="" />
+     );
+     imageToShow2 = (
+       <img style={{ height: "200px", width: "40%" }} src={pant3} alt="" />
+     );
+     imageToShow3 = (
+       <img style={{ height: "200px", width: "40%" }} src={pant4} alt="" />
+     );
+   } else if (categoryy === "top") {
+     imageToShow = (
+       <img style={{ height: "200px", width: "40%" }} src={top1} alt="" />
+     );
+     imageToShow1 = (
+       <img style={{ height: "200px", width: "40%" }} src={top2} alt="" />
+     );
+     imageToShow2 = (
+       <img style={{ height: "200px", width: "40%" }} src={top3} alt="" />
+     );
+     imageToShow3 = (
+       <img style={{ height: "200px", width: "40%" }} src={top4} alt="" />
+     );
+   } 
+   else if (categoryy === "Bottom") {
+     imageToShow = (
+       <img style={{ height: "200px", width: "40%" }} src={top1} alt="" />
+     );
+     imageToShow1 = (
+       <img style={{ height: "200px", width: "40%" }} src={top2} alt="" />
+     );
+     imageToShow2 = (
+       <img style={{ height: "200px", width: "40%" }} src={top3} alt="" />
+     );
+     imageToShow3 = (
+       <img style={{ height: "200px", width: "40%" }} src={top4} alt="" />
+     );
+   } else if (categoryy === "Sarees") {
+     imageToShow = (
+       <img style={{ height: "200px", width: "40%" }} src={saree1} alt="" />
+     );
+     imageToShow1 = (
+       <img style={{ height: "200px", width: "40%" }} src={saree2} alt="" />
+     );
+     imageToShow2 = (
+       <img style={{ height: "200px", width: "40%" }} src={saree3} alt="" />
+     );
+     imageToShow3 = (
+       <img style={{ height: "200px", width: "40%" }} src={saree4} alt="" />
+     );
+   } else if (categoryy_1 === "Kids") {
+     imageToShow = (
+       <img style={{ height: "200px", width: "40%" }} src={kid1} alt="" />
+     );
+     imageToShow1 = (
+       <img style={{ height: "200px", width: "40%" }} src={kid2} alt="" />
+     );
+     imageToShow2 = (
+       <img style={{ height: "200px", width: "40%" }} src={kid3} alt="" />
+     );
+     imageToShow3 = (
+       <img style={{ height: "200px", width: "40%" }} src={kid4} alt="" />
+     );
+   } 
+
+
+
+
+
+
+  // else if (category === "kids-pant") {
   //   imageToShow = (
   //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
   //   );
@@ -440,11 +518,12 @@ let categoryy = productInfo.selectedSubcategory;
                     <span className="font-semibold">Image 1 </span> click here
                     to upload
                   </p>
-                  <img
+                  {/* <img
                     style={{ height: "200px", width: "40%" }}
                     src={img1}
                     alt=""
-                  />
+                  /> */}
+                  {imageToShow}
                   <p className="text-xs text-gray-500 dark:text-gray-400"></p>
                 </div>
                 <input
@@ -460,7 +539,7 @@ let categoryy = productInfo.selectedSubcategory;
               <div className="image-previews flex flex-row">
                 <div className="image-preview">
                   <div className="image-preview">
-                    {/* <img
+                    <img
                       src={imagePreviews[0]}
                       alt="imge 1"
                       style={{
@@ -468,9 +547,8 @@ let categoryy = productInfo.selectedSubcategory;
                         maxHeight: "200px",
                         margin: "10px",
                       }}
-
-                    /> */}
-                    {imageToShow}
+                    />
+                    {/* {imageToShow} */}
                   </div>
 
                   <button
@@ -523,11 +601,12 @@ let categoryy = productInfo.selectedSubcategory;
                     upload
                   </p>
 
-                  <img
+                  {/* <img
                     style={{ height: "200px", width: "40%" }}
                     src={img2}
                     alt=""
-                  />
+                  /> */}
+                  {imageToShow1}
                 </div>
 
                 <input
@@ -599,14 +678,15 @@ let categoryy = productInfo.selectedSubcategory;
                     />
                   </svg>
                   <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">Upload </span> 4th image
+                    <span className="font-semibold">Upload </span> 3rd image
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400"></p>
-                  <img
+                  {/* <img
                     style={{ height: "200px", width: "40%" }}
                     src={img3}
                     alt=""
-                  />
+                  /> */}
+                  {imageToShow2}
                 </div>
                 <input
                   id="dropzone-file"
@@ -680,11 +760,13 @@ let categoryy = productInfo.selectedSubcategory;
                     <span className="font-semibold">Upload </span> 4th image
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400"></p>
-                  <img
+                  {/* <img
                     style={{ height: "200px", width: "40%" }}
                     src={img4}
                     alt=""
-                  />
+                  /> */}
+
+                  {imageToShow3}
                 </div>
                 <input
                   id="dropzone-file"
