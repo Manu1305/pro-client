@@ -252,19 +252,19 @@ function AddProduct() {
   };
 
   const sizeSelected = {
-    Shirts: ["S", "M", "L", "XL", "XXL"],
-    Pants: [28, 30, 32, 34, 36, 38, 40],
-    top: ["XS", "S", "M", "L", "XL"],
-    Bottom: ["XS", "S", "M", "L", "XL"],
+    Shirts: ["S", "M", "L", "XL", "XXL","XXXL"],
+    Pants: [28, 30, 32, 34, 36, 38, 40,42],
+    top: ["XS", "S", "M", "L", "XL","XXL","XXXL"],
+    Bottom: ["XS", "S", "M", "L", "XL","XXL","XXXL"],
     Sarees: ["5.5 meters", "6 meters", "6.5 meters", "7 meters", "9 yards"],
     KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsShirts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsPants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsShorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    Frock: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    GirlsShirts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
+    GirlsPants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
+    GirlsShorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
+    Frock: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
   };
 
   const [productInfo, setProductInfo] = useState({
