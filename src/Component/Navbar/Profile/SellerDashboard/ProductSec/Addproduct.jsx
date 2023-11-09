@@ -4,14 +4,11 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import Section2 from "./Setion2";
 
 function AddProduct() {
-  const [isButtonVisible, setButtonVisible] = useState(true);
-
-  const history = useNavigate();
-
+  
   let { productId } = useParams();
 
   const categorySizes = {
@@ -364,7 +361,6 @@ function AddProduct() {
   const addNewProduct = async () => {
     // e.preventDefault();
     const isValid = validateForm();
-    setButtonVisible(false);
 
     const config = {
       headers: {
@@ -391,11 +387,9 @@ function AddProduct() {
             showConfirmButton: false,
             timer: 1000,
           });
-          setButtonVisible(true);
         });
     } catch (error) {
       console.log("Couldn't add product: ", error);
-      setButtonVisible(true);
     }
   };
 
