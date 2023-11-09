@@ -251,17 +251,17 @@ function AddProduct() {
   const sizeSelected = {
     Shirts: ["S", "M", "L", "XL", "XXL","XXXL"],
     Pants: [28, 30, 32, 34, 36, 38, 40,42],
-    top: ["XS", "S", "M", "L", "XL","XXL","XXXL"],
-    Bottom: ["XS", "S", "M", "L", "XL","XXL","XXXL"],
+    top: ["XS", "S", "M", "L", "XL","XXL","XXXL","Free Size"],
+    Bottom: ["XS", "S", "M", "L", "XL","XXL","XXXL","Free Size"],
     Sarees: ["5.5 meters", "6 meters", "6.5 meters", "7 meters", "9 yards"],
     KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsShirts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
-    GirlsPants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
-    GirlsShorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
-    Frock: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL"],
+    GirlsShirts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","Free Size"],
+    GirlsPants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","Free Size"],
+    GirlsShorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","Free Size"],
+    Frock: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","Free Size"],
   };
 
   const [productInfo, setProductInfo] = useState({
@@ -291,11 +291,11 @@ function AddProduct() {
   const [errors, setErrors] = useState({});
   const [uplProductId, setUplProductId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
-  const [secondModal, setSecondModal] = useState(false);
+  const [secondModal, setSecondModal] = useState(true);
 
   const categoriesWithSubcategories = {
     Mens: ["Shirts", "Pants"],
-    Womens: ["top", "Bottom", "Sarees"],
+    Womens: ["top", "Bottom", "Sarees","Kurtis"],
     Kids: [
       "KidsShirt",
       "KidsBaniyans",
