@@ -91,7 +91,6 @@ const [fee,setFee]=useState()
   useEffect(() => {
     getOrders();
     getUsers();
-    // getAllProducts();
     getProductrequest()
   }, []);
 
@@ -105,7 +104,7 @@ const [fee,setFee]=useState()
       />
       <div className="flex flex-row">
       <SaleChart  />
-      {user.urType === "Admin" && <Adminfee fee={fee}/>}
+      {user.urType === "admin" && <Adminfee fee={fee}/>}
       </div>
       
       <ExtraData Allproductlength={products} 

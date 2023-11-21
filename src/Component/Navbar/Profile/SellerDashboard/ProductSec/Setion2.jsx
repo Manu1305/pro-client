@@ -10,15 +10,15 @@ import img1 from "../../../../../images/productupload1.jpg";
 import img2 from "../../../../../images/productupload2.jpg";
 import img3 from "../../../../../images/productupload3.jpg";
 import img4 from "../../../../../images/productupload4.jpg";
-import pant1 from '../../../../../images/pant1.jpg'
+import pant1 from "../../../../../images/pant1.jpg";
 import pant2 from "../../../../../images/pant2.jpg";
 import pant3 from "../../../../../images/pant3.jpg";
 import pant4 from "../../../../../images/pant4.jpg";
-import top1 from '../../../../../images/top1.jpg'
+import top1 from "../../../../../images/top1.jpg";
 import top2 from "../../../../../images/top2.jpg";
 import top3 from "../../../../../images/top3.jpg";
-import top4 from "../../../../../images/top4.jpg"; 
-import saree1 from '../../../../../images/saree1.webp'
+import top4 from "../../../../../images/top4.jpg";
+import saree1 from "../../../../../images/saree1.webp";
 import saree2 from "../../../../../images/saree2.webp";
 import saree3 from "../../../../../images/saree3.webp";
 import saree4 from "../../../../../images/saree4.webp";
@@ -50,10 +50,9 @@ function Section2({
   productDetails,
   setProductDetails,
 }) {
-
-  const navigate =  useNavigate();
-  const {id}= useParams() 
-  console.log(id)
+  const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [index, setIndex] = useState(0);
@@ -61,11 +60,11 @@ function Section2({
   // const [updateQty, setUpdateQty] = useState(productDetails.length !==0 ? productDetails[index].qtyAndSizes:null)
   const [qtyAndSizes, setQtyAndSizes] = useState(
     productDetails.length !== 0 ? productDetails[index].qtyAndSizes : {}
-    );
-    console.log(productInfo, "productInfo----------12");
-    console.log(sizeSelected, "sizeSelected");
-    console.log(productDetails, "productDetails");
-console.log(productInfo.selectedSubcategory, "productInfo");
+  );
+  console.log(productInfo, "productInfo----------12");
+  console.log(sizeSelected, "sizeSelected");
+  console.log(productDetails, "productDetails");
+  console.log(productInfo.selectedSubcategory, "productInfo");
   const updateCondition = productDetails.length !== 0;
   // console.log("QTY",updateQty)
   let photos =
@@ -99,15 +98,13 @@ console.log(productInfo.selectedSubcategory, "productInfo");
     setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
   };
 
-
-
-let categoryy = productInfo.selectedSubcategory;
-let categoryy_1 = productInfo.selectedCategory;
+  let categoryy = productInfo.selectedSubcategory;
+  let categoryy_1 = productInfo.selectedCategory;
 
   let imageToShow = null;
   let imageToShow1 = null;
-  let imageToShow2= null;
-  let imageToShow3= null;
+  let imageToShow2 = null;
+  let imageToShow3 = null;
 
   if (categoryy === "Shirts") {
     imageToShow = (
@@ -122,80 +119,74 @@ let categoryy_1 = productInfo.selectedCategory;
     imageToShow3 = (
       <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
     );
-  } 
+  }
 
-   if (categoryy === "Pants") {
-     imageToShow = (
-       <img style={{ height: "200px", width: "40%" }} src={pant1} alt="" />
-     );
-     imageToShow1 = (
-       <img style={{ height: "200px", width: "40%" }} src={pant2} alt="" />
-     );
-     imageToShow2 = (
-       <img style={{ height: "200px", width: "40%" }} src={pant3} alt="" />
-     );
-     imageToShow3 = (
-       <img style={{ height: "200px", width: "40%" }} src={pant4} alt="" />
-     );
-   } else if (categoryy === "top") {
-     imageToShow = (
-       <img style={{ height: "200px", width: "40%" }} src={top1} alt="" />
-     );
-     imageToShow1 = (
-       <img style={{ height: "200px", width: "40%" }} src={top2} alt="" />
-     );
-     imageToShow2 = (
-       <img style={{ height: "200px", width: "40%" }} src={top3} alt="" />
-     );
-     imageToShow3 = (
-       <img style={{ height: "200px", width: "40%" }} src={top4} alt="" />
-     );
-   } 
-   else if (categoryy === "Bottom") {
-     imageToShow = (
-       <img style={{ height: "200px", width: "40%" }} src={top1} alt="" />
-     );
-     imageToShow1 = (
-       <img style={{ height: "200px", width: "40%" }} src={top2} alt="" />
-     );
-     imageToShow2 = (
-       <img style={{ height: "200px", width: "40%" }} src={top3} alt="" />
-     );
-     imageToShow3 = (
-       <img style={{ height: "200px", width: "40%" }} src={top4} alt="" />
-     );
-   } else if (categoryy === "Sarees") {
-     imageToShow = (
-       <img style={{ height: "200px", width: "40%" }} src={saree1} alt="" />
-     );
-     imageToShow1 = (
-       <img style={{ height: "200px", width: "40%" }} src={saree2} alt="" />
-     );
-     imageToShow2 = (
-       <img style={{ height: "200px", width: "40%" }} src={saree3} alt="" />
-     );
-     imageToShow3 = (
-       <img style={{ height: "200px", width: "40%" }} src={saree4} alt="" />
-     );
-   } else if (categoryy_1 === "Kids") {
-     imageToShow = (
-       <img style={{ height: "200px", width: "40%" }} src={kid1} alt="" />
-     );
-     imageToShow1 = (
-       <img style={{ height: "200px", width: "40%" }} src={kid2} alt="" />
-     );
-     imageToShow2 = (
-       <img style={{ height: "200px", width: "40%" }} src={kid3} alt="" />
-     );
-     imageToShow3 = (
-       <img style={{ height: "200px", width: "40%" }} src={kid4} alt="" />
-     );
-   } 
-
-
-
-
-
+  if (categoryy === "Pants") {
+    imageToShow = (
+      <img style={{ height: "200px", width: "40%" }} src={pant1} alt="" />
+    );
+    imageToShow1 = (
+      <img style={{ height: "200px", width: "40%" }} src={pant2} alt="" />
+    );
+    imageToShow2 = (
+      <img style={{ height: "200px", width: "40%" }} src={pant3} alt="" />
+    );
+    imageToShow3 = (
+      <img style={{ height: "200px", width: "40%" }} src={pant4} alt="" />
+    );
+  } else if (categoryy === "top") {
+    imageToShow = (
+      <img style={{ height: "200px", width: "40%" }} src={top1} alt="" />
+    );
+    imageToShow1 = (
+      <img style={{ height: "200px", width: "40%" }} src={top2} alt="" />
+    );
+    imageToShow2 = (
+      <img style={{ height: "200px", width: "40%" }} src={top3} alt="" />
+    );
+    imageToShow3 = (
+      <img style={{ height: "200px", width: "40%" }} src={top4} alt="" />
+    );
+  } else if (categoryy === "Bottom") {
+    imageToShow = (
+      <img style={{ height: "200px", width: "40%" }} src={top1} alt="" />
+    );
+    imageToShow1 = (
+      <img style={{ height: "200px", width: "40%" }} src={top2} alt="" />
+    );
+    imageToShow2 = (
+      <img style={{ height: "200px", width: "40%" }} src={top3} alt="" />
+    );
+    imageToShow3 = (
+      <img style={{ height: "200px", width: "40%" }} src={top4} alt="" />
+    );
+  } else if (categoryy === "Sarees") {
+    imageToShow = (
+      <img style={{ height: "200px", width: "40%" }} src={saree1} alt="" />
+    );
+    imageToShow1 = (
+      <img style={{ height: "200px", width: "40%" }} src={saree2} alt="" />
+    );
+    imageToShow2 = (
+      <img style={{ height: "200px", width: "40%" }} src={saree3} alt="" />
+    );
+    imageToShow3 = (
+      <img style={{ height: "200px", width: "40%" }} src={saree4} alt="" />
+    );
+  } else if (categoryy_1 === "Kids") {
+    imageToShow = (
+      <img style={{ height: "200px", width: "40%" }} src={kid1} alt="" />
+    );
+    imageToShow1 = (
+      <img style={{ height: "200px", width: "40%" }} src={kid2} alt="" />
+    );
+    imageToShow2 = (
+      <img style={{ height: "200px", width: "40%" }} src={kid3} alt="" />
+    );
+    imageToShow3 = (
+      <img style={{ height: "200px", width: "40%" }} src={kid4} alt="" />
+    );
+  }
 
   // else if (category === "kids-pant") {
   //   imageToShow = (
@@ -223,12 +214,9 @@ let categoryy_1 = productInfo.selectedCategory;
   //   imageToShow3 = (
   //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
   //   );
-  // } 
-
-  
+  // }
 
   // ProductImage(productInfo.selectedSubcategory)
-
 
   const submitHandler = async () => {
     setLoader(false);
@@ -334,7 +322,6 @@ let categoryy_1 = productInfo.selectedCategory;
   console.log("qtyAndSizes", qtyAndSizes);
 
   const updateProduct = async () => {
-   
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -346,10 +333,12 @@ let categoryy_1 = productInfo.selectedCategory;
 
     try {
       await axios
-        .put(
-          `${apiURL}/product/update-size-color-images/${productId}`,
-          { images, qtyAndSizes: qtyAndSizes, color, index }
-        )
+        .put(`${apiURL}/product/update-size-color-images/${productId}`, {
+          images,
+          qtyAndSizes: qtyAndSizes,
+          color,
+          index,
+        })
         .then((res) => {
           console.log("Success", res.data);
           Swal.fire({
@@ -400,7 +389,7 @@ let categoryy_1 = productInfo.selectedCategory;
                   <div>
                     <h3 className="m-1">Total Quantity:{totQut}</h3>
                   </div>
-                  <div>
+                  <div >
                     {sizeSelected[
                       !productInfo.selectedSubcategory
                         ? "Shirts"

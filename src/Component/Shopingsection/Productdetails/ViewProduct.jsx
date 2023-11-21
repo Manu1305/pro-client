@@ -320,7 +320,7 @@ const ViewProduct = ({getAllProducts}) => {
                     : imgPreview
                 }
                 className={`img-fluid img-responsive rounded product-image`}
-                style={{ height: "500px", width: "770px" }}
+                style={{ height: "500px", width: "770px",objectFit:'contain' }}
                 alt="img"
               />
             </div>
