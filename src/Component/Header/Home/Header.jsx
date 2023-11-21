@@ -74,7 +74,7 @@ const Header = ({ products }) => {
                   <img
                     src={item.image}
                     alt="cover"
-                    style={{ maxWidth: "100%", height: "auto" }}
+                    style={{ objectFit:'cover', height:'auto', width:'100%' }}
                     className="object-contain mob:object-scale-down"
                   />
                 </div>

@@ -183,6 +183,36 @@ function Section2({
     );
   }
 
+  // else if (category === "kids-pant") {
+  //   imageToShow = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow1 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow2 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow3 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  // } else if (category === "pant") {
+  //   imageToShow = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow1 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow2 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  //   imageToShow3 = (
+  //     <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+  //   );
+  // }
+
+  // ProductImage(productInfo.selectedSubcategory)
+
   const submitHandler = async () => {
     setLoader(false);
 
@@ -385,7 +415,7 @@ function Section2({
                   <div>
                     <h3 className="m-1">Total Quantity:{totQut}</h3>
                   </div>
-                  <div>
+                  <div >
                     {sizeSelected[
                       !productInfo.selectedSubcategory
                         ? "Shirts"

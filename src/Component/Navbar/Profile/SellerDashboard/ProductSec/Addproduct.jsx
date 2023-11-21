@@ -85,6 +85,7 @@ function AddProduct() {
       "Pleated Skirts",
       "High-Waisted Pants",
       "Harem Pants",
+      "jeggings"
     ],
     Sarees: [
       "Silk Sarees",
@@ -108,6 +109,25 @@ function AddProduct() {
       "Casual Sarees",
       "Lehenga Sarees",
     ],
+   Kurtis :[
+    "Anarkali Kurti",
+    "Straight Cut Kurti",
+    "A-Line Kurti",
+    "Flared Kurti",
+    "Trail Cut Kurti",
+    "High-Low Kurti",
+    "Kaftan Style Kurti",
+    "Shirt Style Kurti",
+    "Cape Style Kurti",
+    "Dhoti Style Kurti",
+    "Front Slit Kurti",
+    "Overlay Kurti",
+    "Princess Cut Kurti",
+    "Tunic Style Kurti",
+    "Double Layered Kurti",
+    
+]
+,
     KidsShirt: [
       "T-Shirts",
       "Polo Shirts",
@@ -256,7 +276,7 @@ function AddProduct() {
     Sarees: ["5.5 meters", "6 meters", "6.5 meters", "7 meters", "9 yards"],
     KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
+    shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL", "XXXXL", "XXXXXL"],
     KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     GirlsShirts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
     GirlsPants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
