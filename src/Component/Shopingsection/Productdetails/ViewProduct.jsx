@@ -15,11 +15,11 @@ import { userCartItem } from "../../../Redux/cart/cartAction";
 import { Footer } from "../../Footer/Footer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { addReqProduct } from "../../../Redux/productBefore/productReqAction";
+// import { addReqProduct } from "../../../Redux/productBefore/productReqAction";
 import Swal from "sweetalert2";
 import TruncatedText from "./TruncatedText";
 
-const ViewProduct = ({getAllProducts}) => {
+const ViewProduct = ({ getAllProducts }) => {
   const { productId } = useParams();
   const user = useSelector((state) => state.userReducer.user);
 
@@ -281,15 +281,17 @@ const ViewProduct = ({getAllProducts}) => {
     }
   }, [totalItems]);
 
-  const unPublishProduct = async (id,status) => {
+  const unPublishProduct = async (id, status) => {
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: `Are you sure. You want to ${status!== "unPublish" ?"unPublish" :"Publish"} this product..?`,
+      text: `Are you sure. You want to ${
+        status !== "unPublish" ? "unPublish" : "Publish"
+      } this product..?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: status === "Published" ?"Publish" :"unPublish",
+      confirmButtonText: status === "Published" ? "Publish" : "unPublish",
     });
 
     if (result.isConfirmed) {
@@ -300,7 +302,7 @@ const ViewProduct = ({getAllProducts}) => {
         .then((res) => {
           console.log("Prod Req", res.data);
           navigate("/shoppingPage");
-          getAllProducts()
+          getAllProducts();
         })
         .catch((err) => {
           console.log(err);
@@ -321,7 +323,11 @@ const ViewProduct = ({getAllProducts}) => {
                     : imgPreview
                 }
                 className={`img-fluid img-responsive rounded product-image`}
-                style={{ height: "500px", width: "770px", }}
+                style={{
+                  height: "500px",
+                  width: "770px",
+                  objectFit: "contain",
+                }}
                 alt="img"
                 
               />
@@ -347,17 +353,31 @@ const ViewProduct = ({getAllProducts}) => {
               {user.urType === "admin" && (
                 <div className="relative">
                   <div className="absolute right-0">
-                      <button
-                        className={`btn ${product.status === "Published" ? "btn-danger" : "btn-success"} btn-success m-2`}
-                        onClick={() => unPublishProduct(product._id, product.status === "Published"
-                        ? "UnPublish"
-                        : "Published")}
-                      >
-                        {product.status === "Published"
-                          ? "UnPublish"
-                          : "Publish"}
-                      </button>
-                      <button className="btn btn-primary" onClick={() => navigate(`/dashboard/Addproduct/${product._id}`)}>Edit</button>
+                    <button
+                      className={`btn ${
+                        product.status === "Published"
+                          ? "btn-danger"
+                          : "btn-success"
+                      } btn-success m-2`}
+                      onClick={() =>
+                        unPublishProduct(
+                          product._id,
+                          product.status === "Published"
+                            ? "UnPublish"
+                            : "Published"
+                        )
+                      }
+                    >
+                      {product.status === "Published" ? "UnPublish" : "Publish"}
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() =>
+                        navigate(`/dashboard/Addproduct/${product._id}`)
+                      }
+                    >
+                      Edit
+                    </button>
                   </div>
                 </div>
               )}
