@@ -5,7 +5,7 @@ import httpService from "../../../../Error Handling/httpService";
 import { apiURL } from "../../../../../const/config";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { InfinitySpin, Watch } from "react-loader-spinner";
+import { Watch } from "react-loader-spinner";
 import img1 from "../../../../../images/productupload1.jpg";
 import img2 from "../../../../../images/productupload2.jpg";
 import img3 from "../../../../../images/productupload3.jpg";
@@ -103,16 +103,16 @@ function Section2({
 
   if (categoryy === "Shirts") {
     imageToShow = (
-      <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+      <img style={{ height: "200px", width: "40%" }} src={img1} alt="" />
     );
     imageToShow1 = (
       <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
     );
     imageToShow2 = (
-      <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+      <img style={{ height: "200px", width: "40%" }} src={img3} alt="" />
     );
     imageToShow3 = (
-      <img style={{ height: "200px", width: "40%" }} src={img2} alt="" />
+      <img style={{ height: "200px", width: "40%" }} src={img4} alt="" />
     );
   }
 
