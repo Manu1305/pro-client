@@ -511,7 +511,7 @@ const ViewProduct = ({getAllProducts}) => {
                                     </div>
                                   </div>
                                   {/* {user?.email && user?.urType === "buyer" && ( */}
-                                  <div className="mt-1 ml-3 d-flex flex-row align-items-center">
+                                  <div className="mt-1 ml-3 d-flex flex-row align-items-center sm: ml-8">
                                     <div>
                                       <AiOutlineMinusCircle
                                         onClick={() => decreaseHandler(size)}

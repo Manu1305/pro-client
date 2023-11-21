@@ -259,7 +259,7 @@
   .descrip {
     margin: 40px;
     margin-top: 100px;
-    border-top: 0.3rem solid rgb(141, 137, 137);
+    /* border-top: 0.3rem solid rgb(141, 137, 137); */
     width: 80%;
     margin-right: 20px;
   }
@@ -300,6 +300,7 @@
 }
 
 .desgin {
+  margin-left: 20px;
   color: #d70a2a;
   height: 60px;
   width: 5rem;
@@ -307,8 +308,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
   align-items: center;
+  gap: 5px;
 }
 .tottal {
   display: flex;
