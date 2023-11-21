@@ -36,7 +36,7 @@ export const ProductRequest = () => {
       .then((res) => {
         setIsLoading(false);
 
-        const filteredProduct = res.data?.filter((prd) => prd.status === "Pending" )
+        const filteredProduct = res.data?.filter((prd) => prd.status === "Pending")
         dispatch(addReqProduct(filteredProduct));
         console.log("Prod Req", res.data)
         setProduct(filteredProduct);
@@ -91,20 +91,23 @@ export const ProductRequest = () => {
 
 
   const removeFromShop = async (id, obj) => {
-    await httpService
-      .put(`${apiURL}/product/remove-requested-product/${id}`, {
-        message: { ...obj, forU: user.email },
-      })
-      .then((res) => {
-        console.log(res.data);
-        toast("Deleted Product")
-
-        getProducts();
-      })
-      .catch((err) => {
-        console.log("ERROR", err);
-        getProducts()
-      });
+    try {
+      await httpService
+        .put(`${apiURL}/product/remove-requested-product/${id}`, {
+          message: { ...obj, forU: user.email },
+        })
+        .then((res) => {
+          console.log(res.data);
+          getProducts();
+          toast("Deleted Product")
+        })
+        .catch((err) => {
+          console.log("ERROR", err);
+          getProducts()
+        });
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   const header = [
@@ -139,16 +142,12 @@ export const ProductRequest = () => {
         type: "action",
         width: "150px",
         renderCell: (params) => {
-
-          console.log(params.row)
           return (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div
                 className="cursor-pointer"
                 onClick={() => {
                   setModalShow(true);
-
-                  console.log(params);
                   setDeleteProductId({
                     id: params.row.id,
                     seller: params.row.seller,
@@ -183,8 +182,6 @@ export const ProductRequest = () => {
   });
 
   const rowData = products.map((ele) => {
-
-    console.log("REQUESTS", ele)
     return {
       id: ele._id,
       images: ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
@@ -197,7 +194,6 @@ export const ProductRequest = () => {
 
   return (
     <div className={styless.container}>
-      {/* <h2>Product request</h2> */}
       {rowData.length !== 0 ? (
         <DataTable columns={header} rows={rowData} />
       ) : (

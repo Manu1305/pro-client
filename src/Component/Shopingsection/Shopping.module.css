@@ -53,13 +53,6 @@
   text-decoration: none;
 }
 
-/* .pagination li.active a {
-  background: #BF0A2A;
-} */
-
-/* .pagination li a:hover {
-  background-color: #a5aea3;
-} */
 
 .card-text {
   white-space: nowrap;
@@ -226,9 +219,7 @@
   margin-top: 3px;
 }
 
-/* .like_button :hover {
-  color: #BF0A2A;
-} */
+
 .loadingSpinner {
   margin-top: 20%;
   display: flex;

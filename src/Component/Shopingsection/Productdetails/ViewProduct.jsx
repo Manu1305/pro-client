@@ -17,6 +17,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { addReqProduct } from "../../../Redux/productBefore/productReqAction";
 import Swal from "sweetalert2";
+import TruncatedText from "./TruncatedText";
 
 const ViewProduct = ({getAllProducts}) => {
   const { productId } = useParams();
@@ -320,8 +321,9 @@ const ViewProduct = ({getAllProducts}) => {
                     : imgPreview
                 }
                 className={`img-fluid img-responsive rounded product-image`}
-                style={{ height: "500px", width: "770px" }}
+                style={{ height: "500px", width: "770px", }}
                 alt="img"
+                
               />
             </div>
             <div className="ml-5" style={{ display: "flex" }}>
@@ -538,7 +540,6 @@ const ViewProduct = ({getAllProducts}) => {
 
                                     <div>
                                       <BsPlusCircle
-                                        // className="m-3"
                                         onClick={() =>
                                           increaseHandler(size, quantity)
                                         }
@@ -628,7 +629,6 @@ const ViewProduct = ({getAllProducts}) => {
                 borderTop: "0.4rem solid rgb(243,243,243)",
                 width: "94%",
                 margin: "auto",
-                // marginTop:"10px",
                 left: 0,
               }}
             ></div>
@@ -638,15 +638,16 @@ const ViewProduct = ({getAllProducts}) => {
                 <p className={`about m-1 ${styles.about}`}>
                   Product description
                 </p>
-                <div className={`ml-20 w-75 ${styles["text1"]}`}>
-                  {product.description}
+                <div className={styles.descPara}>
+                  
+                  <TruncatedText text={product.description} maxLines={50}/>
                 </div>
               </div>
             </div>
 
             {/* info */}
             <div className={styles.descrips}>
-              <p className={`about mt-3 ${styles.about}`}>Product Details</p>
+              <p className={`about ${styles.about}`}>Product Details</p>
               <div className="ml-20 d-flex">
                 <div
                   style={{
@@ -718,14 +719,14 @@ const ViewProduct = ({getAllProducts}) => {
             </div>
 
             {/* more */}
-            {product.MoreDetails !== null && (
+            {/* {product.MoreDetails !== null && (
               <div className={styles.descrip}>
                 <p className={`about mt-3 ${styles.about}`}>More Details</p>
                 <div className={`m-2 w-70 ${styles["text1"]}`}>
                   {product.MoreDetails}
                 </div>
               </div>
-            )}
+            )} */}
           </div>
           <h2 className={styles.relatdd}>Related Product</h2>
           {
