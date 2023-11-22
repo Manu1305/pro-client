@@ -691,7 +691,7 @@ const ViewProduct = ({getAllProducts}) => {
                   }}
                 >
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Material.slice(0, 10)}
+                    {product.productInfo.Material}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>
                     {product.productInfo.Fit}

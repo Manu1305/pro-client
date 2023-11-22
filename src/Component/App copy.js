@@ -63,12 +63,6 @@ import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
 import SellerRelatedPro from "./Shopingsection/SellerRelatedProduct/sellerRelatedPro";
 import SingleOrder from "./singleOrderdetail/SingleOrder";
 import { Publish } from "@mui/icons-material";
-import DashHome from "./Dashboard/DashHome";
-import { ProductRequest } from "./Navbar/Profile/AdminDashboard/ProductReq";
-import Product from "./Navbar/Profile/SellerDashboard/Vendor/VendorComponent/Products/Products";
-import { WithdrawSec } from "./Navbar/Profile/SellerDashboard/WithdrawSec/WithdrawSec";
-import { PremiumSellers } from "./Navbar/Profile/SellerDashboard/PremiumSellers/PremiumSeller";
-import Dash from "./Dashboard/Dash";
 const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
 const LazySellerDashboard = React.lazy(() =>
   import("./Navbar/Profile/SellerDashboard/SellerDash")
@@ -82,7 +76,7 @@ const LazyMainPage = React.lazy(() =>
 
 
 const App = () => {
-
+  
   const [produts, setProducts] = useState([]);
   const [ProductLength, setProductLength] = useState();
 
@@ -122,7 +116,7 @@ const App = () => {
     await httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        console.log("All Products", res.data);
+        console.log("All Products",res.data);
 
         const filByStaus = res.data.filter((prd) => prd.status === "Published");
         dispatch(addProduct(filByStaus));
@@ -151,17 +145,10 @@ const App = () => {
               element={!user?.name ? <Login /> : <Header />}
             />
             <Route path="/" element={<Header products={produts} />} />
-            <Route path="/dashboard" element={<DashHome products={ProductLength} />}    >
-              {/* HERRE */}
-              
-              <Route path="dashboard" element={<Dash />} />
-              <Route path="product-requests" element={<ProductRequest />} />
-              <Route path="add-products" element={<AddProduct />} />
-              <Route path="products" element={<Product />} />
-              <Route path="withdraw-details" element={<WithdrawSec />} />
-              <Route path="premium-sellers" element={<PremiumSellers />} />
-            </Route>
-
+            <Route
+              path="/dashboard"
+              element={<SellerDashboard products={ProductLength} />}
+            />
 
             <Route
               path="/cart"
@@ -179,38 +166,29 @@ const App = () => {
               }
             />
 
+            <Route
+              path="/dashboard"
+              element={
+                <React.Suspense fallback={<div>Loading... </div>}>
+                  {" "}
+                  <LazySellerDashboard />
+                </React.Suspense>
+              }
+            />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            {/* <Route path="/dashboard/Addproduct" element={<React.Suspense fallback={<div> </div>}> <LazyAddProduct /> */}
+            {/* </React.Suspense>} /> */}
 
             <Route
               path="storeset"
               element={
                 <React.Suspense fallback={<div>Loading... </div>}>
-
+              
                   <LazyMainPage />
                 </React.Suspense>
               }
             />
-            <Route path="/ViewDetails/:productId" element={<ViewProduct getAllProducts={getAllProducts} />} />
+            <Route path="/ViewDetails/:productId" element={<ViewProduct getAllProducts={getAllProducts}/>} />
 
             <Route path="confirm/:totalPrice" element={<BuyerConfirm />} />
             <Route path="thankyou" element={<Thankyou />} />
@@ -220,7 +198,7 @@ const App = () => {
             <Route path="/details/:id" element={<DetailsPages />} />
             <Route path="sellerplans" element={<Plans />} />
             <Route path="StorePage" element={<StorePage />} />
-            {/* <Route path="/dashboard/Addproduct/:productId" element={<AddProduct />} /> */}
+            <Route path="/dashboard/Addproduct/:productId" element={<AddProduct />} />
             <Route path="storeset" element={<MainPage />} />
             <Route path="store" element={<Store />} />
             <Route path="payment" element={<SellerPayment />} />
@@ -276,7 +254,7 @@ const App = () => {
             <Route path="/wholesale-store" element={<WholesaleStore />} />
             <Route path="/delivery-frenchies" element={<DeliveryFranchise />} />
             <Route path="/retail-franchise" element={<RetailFranchise />} />
-            <Route path="/ViewDetails/:id" element={<SellerRelatedPro productItems={produts} />} />
+            <Route path="/ViewDetails/:id" element={<SellerRelatedPro  productItems={produts}/>} />
 
 
             {/* footer data */}
@@ -289,8 +267,6 @@ const App = () => {
 
           </Routes>
         </div>
-
-
       </ScrollToTop>
     </Router>
   );

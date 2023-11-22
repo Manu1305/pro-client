@@ -8,6 +8,8 @@ import {  useParams } from "react-router-dom";
 import Section2 from "./Setion2";
 
 function AddProduct() {
+
+
   
   let { productId } = useParams();
 

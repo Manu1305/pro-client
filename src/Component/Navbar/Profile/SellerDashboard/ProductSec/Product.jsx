@@ -234,7 +234,7 @@ export const ProductSec = () => {
     if (result.isConfirmed) {
       await httpService
         .put(`${apiURL}/product/change-product-status/${id}`, {
-          status,
+          status : status !== "Published" ? "unPublish" : "Published"
         })
         .then((res) => {
           console.log("Prod", res.data);

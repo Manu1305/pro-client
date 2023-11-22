@@ -164,9 +164,6 @@ console.log("prooooddata", filteredProducts)
     .slice(pagesVisited, pagesVisited + usersPerpage)
     .map((data) => {
       return (
-        
-
-        
         <div
           key={data.id}
           className="col-lg-3 col-md-4 col-6 mb-5"
@@ -219,7 +216,7 @@ console.log("prooooddata", filteredProducts)
             <div className="card-body">
               <div className="cart-title m-1">
                 {" "}
-                <p className={styless.tittt}>{data.title.slice(0, 22)}</p>
+                <p className={styless.tittt}>{}</p>
               </div>
               {/* {user && user.email ? ( */}
               <div className="d-flex justify-content-between">
