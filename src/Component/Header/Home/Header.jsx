@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import header from "./Header.module.css";
-import { Offer } from "./Offer/Offer";
-// import ProductCard from "./ProductCard/ProductCard";
-// import About from "./AboutSection/About";
-import NewData from "./NewArrival/NewArrival/NewData";
+import NewData from "./NewArrival/NewData";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { MdNavigateNext } from "react-icons/md";
 import { cards } from "./BigOfferData";
 import { CategoryNew } from "./Goodcards/Category/CategoryNew";
-import Who from "./WhoSection/Who";
+// import Who from "./WhoSection/Who";
 import TrendingItems from "./TopTrends/Trends";
 import Strength from "./TopTrends/StrengthUI/StrengthUI";
 import { Footer } from "../../Footer/Footer";
 import { Link } from "react-router-dom";
+import Who from './WhoSection/Who'
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -74,7 +72,11 @@ const Header = ({ products }) => {
                   <img
                     src={item.image}
                     alt="cover"
-                    style={{ objectFit:'cover', height:'auto', width:'100%' }}
+                    style={{
+                      objectFit: "cover",
+                      height: "auto",
+                      width: "100%",
+                    }}
                     className="object-contain mob:object-scale-down"
                   />
                 </div>
@@ -83,10 +85,11 @@ const Header = ({ products }) => {
           </Slider>
         </div>
       </div>
-      <Who />
+
+        <Who />
       <CategoryNew />
       <NewData products={products} />
-      <TrendingItems  />
+      <TrendingItems />
       <Strength />
       {/* <Offer />
 
@@ -94,6 +97,6 @@ const Header = ({ products }) => {
       <CustomerReview /> */}
       <Footer />
     </div>
-  )
+  );
 };
 export default Header;

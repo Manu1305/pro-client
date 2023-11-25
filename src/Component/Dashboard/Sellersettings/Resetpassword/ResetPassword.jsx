@@ -20,7 +20,6 @@ function ResetPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
   };
 
   return (

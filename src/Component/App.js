@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "../Scrolltotop";
-import Login from "./Navbar/Login/UserLogin/Login";
+import Login from "../Auth/UserLogin/Login";
 import Navbar from "./Navbar/Navbar";
 import Header from "./Header/Home/Header";
-import BlogHome from "./Pages/BlogHome/BlogHome";
-import DetailsPages from "./Pages/Details/DetailsPages";
-import SellerDashboard from "./Navbar/Profile/SellerDashboard/SellerDash";
-import Register from "./Navbar/Login/Buyer&SellerRegister/Register";
-import Plans from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/PlansForm/Plans";
 import MainPage from "./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage";
 import Store from "./Navbar/Profile/SellerStoreSetup/Store/Store";
 import SellerPayment from "./Navbar/Profile/SellerStoreSetup/SellerPayment/SellerPayment";
@@ -17,32 +12,24 @@ import BankPayment from "./Navbar/Profile/SellerStoreSetup/SellerPayment/BankPay
 import StorePage from "./Navbar/Profile/SellerStoreSetup/Pages";
 import Profile from "./Navbar/Dropdown/ProfileDropdown";
 import Editprofile from "./Dashboard/Sellersettings/sellerprofilesettings/EditProfile/Editprofile";
-import AddProduct from "./Navbar/Profile/SellerDashboard/ProductSec/Addproduct";
 import Withdraw from "./Dashboard/Withdraw/Withdraw";
-import SellerSettingsPage from "./Dashboard/Sellersettings/SellerSettings";
-import Thankyou from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/Thankyou";
 import AboutUs from "./Header/Home/AboutSection/About";
-import SubscriptionForm from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/ConfirmationPage/Confirmation";
-import Wish from "./Header/WishList/Wish";
+import Wish from "./Pages/WishList/Wish";
 import SellerProSettings from "./Dashboard/Sellersettings/sellerprofilesettings/sellerProfile";
-import ViewProduct from "./Shopingsection/Productdetails/ViewProduct";
-import BuyerConfirm from "./Header/BuyerConfirmation/BuyerConfirm";
-import FreeSubscriptionForm from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/PlansForm/FreePlan";
+import ViewProduct from "./Pages/Shop Section/Product Details/ViewProduct";
+import BuyerConfirm from "./Pages/Order Flow/BuyerConfirmation/BuyerConfirm";
 import BuyerOrder from "./Navbar/Profile/BuyerDashboard.js/MyOrder";
-import SellerRegister from "./Navbar/Login/Buyer&SellerRegister/SellerRegistration/ProfileForm/SellerRegistration";
 import Whydetail from "./Header/Home/WhoSection/Whydetail/Whydetail";
 import Whatmakeus from "./Header/Home/WhoSection/Whatmake/What";
 import WhoWeAre from "./Header/Home/WhoSection/WhoWeare/WhoWeare";
-import ProductVerification from "./Navbar/Profile/AdminDashboard/ProductDetails.jsx/ProductVerification";
-import DeliveryDash from "./Navbar/Profile/DeliveryDashBoard/Deliverydash";
-import AssignDekivery from "./Navbar/Profile/AdminDashboard/AssignDelivery/AssignDeliver";
+import DeliveryDash from "./Dashboard/Delivery/Delivery Dashboard/Deliverydash";
 import Error404 from "./Error/ErrorPage";
-import PaymentSuccess from "./success/PaymentSuccess";
+import PaymentSuccess from "./Pages/Order Flow/success/PaymentSuccess";
 import BuyerReturn from "./Navbar/Profile/BuyerDashboard.js/ReturnForm/BuyerReturn";
-import EmailCheck from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmation.jsx/Email";
-import Changepassword from "./Navbar/Login/UserLogin/ForgetPassword/Emailconfirmation.jsx/CHangepassword";
+import EmailCheck from "../Auth/UserLogin/ForgetPassword/Email Confirmation/Email";
+import Changepassword from "../Auth/UserLogin/ForgetPassword/Email Confirmation/CHangepassword";
 import Notification from "./Navbar/Notificatios/Notification";
-import ShoppingPage from "./Shopingsection/Shopping";
+import ShoppingPage from "./Pages/Shop Section/Shopping";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 import { ScaleLoader } from "react-spinners";
@@ -60,26 +47,31 @@ import { PrivacyPolicy } from "./Footer/Privacy&Policy/Privacy&Policy";
 import { SizeChart } from "./Footer/Size&Chart/Size&Chart";
 import { FaQ } from "./Footer/FAQ/FaQ";
 import { TermsCondition } from "./Footer/Terms & Condition/Terms & Condition";
-import SellerRelatedPro from "./Shopingsection/SellerRelatedProduct/sellerRelatedPro";
-import SingleOrder from "./singleOrderdetail/SingleOrder";
-import { Publish } from "@mui/icons-material";
-import DashHome from "./Dashboard/DashHome";
-import { ProductRequest } from "./Navbar/Profile/AdminDashboard/ProductReq";
-import Product from "./Navbar/Profile/SellerDashboard/Vendor/VendorComponent/Products/Products";
-import { WithdrawSec } from "./Navbar/Profile/SellerDashboard/WithdrawSec/WithdrawSec";
-import { PremiumSellers } from "./Navbar/Profile/SellerDashboard/PremiumSellers/PremiumSeller";
-import Dash from "./Dashboard/Dash";
-const LazyCart = React.lazy(() => import("./Header/Cart/Cart"));
-const LazySellerDashboard = React.lazy(() =>
-  import("./Navbar/Profile/SellerDashboard/SellerDash")
-);
+import SellerRelatedPro from "./Pages/Shop Section/SellerRelatedProduct/sellerRelatedPro";
+import DashHome from "./Dashboard/Home/DashHome";
+import { ProductRequest } from "./Dashboard/Product Request/ProductReq";
+import { PremiumSellers } from "./Dashboard/User Management/seller/PremiumSeller";
+import VendorDashboard from "./Dashboard/Home/VendorDashboard";
+import AddProduct from "./Dashboard/AddProduct/Addproduct";
+import SingleOrder from "./Dashboard/Order/singleOrderdetail/SingleOrder";
+import Thankyou from './../Auth/Buyer&SellerRegister/SellerRegistration/Thankyou';
+import Register from './../Auth/Buyer&SellerRegister/Register';
+import Plans from './../Auth/Buyer&SellerRegister/SellerRegistration/PlansForm/Plans';
+import SellerRegister from './../Auth/Buyer&SellerRegister/SellerRegistration/ProfileForm/SellerRegistration';
+import FreeSubscriptionForm from "../Auth/Buyer&SellerRegister/SellerRegistration/PlansForm/FreePlan";
+import SubscriptionForm from './../Auth/Buyer&SellerRegister/SellerRegistration/ConfirmationPage/Confirmation';
+import { ProductSec } from "./Dashboard/Product/Product";
+import AdminWithdrawControl from './Dashboard/Withdraw/Admin/AdminWithdrawControl';
+import { AllUsers } from './Dashboard/User Management/AllUsers';
+import AllOrders from "./Dashboard/Order/All Order/AllOrders";
+import { ReturnReq } from './Dashboard/Return Request/ReturnReq/ReturnReq';
+import OrderHistory from './Dashboard/Order/Orderhistory';
+import { ReturnDelivery } from './Dashboard/Delivery/Return Delivery/ReturnDelivery';
 
 
+const LazyCart = React.lazy(() => import("./Pages/Cart/Cart"));
 const LazyMainPage = React.lazy(() =>
-  import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage")
-);
-
-
+  import("./Navbar/Profile/SellerStoreSetup/StoreSetupMainPage/MainPage"))
 
 const App = () => {
 
@@ -89,8 +81,6 @@ const App = () => {
   const user = useSelector((state) => state.userReducer.user);
 
   const dispatch = useDispatch();
-
-  // Cart
 
   const getCarts = async () => {
     try {
@@ -148,58 +138,36 @@ const App = () => {
             <Route path="*" element={<Error404 />} />
             <Route
               path="login"
-              element={!user?.name ? <Login /> : <Header />}
+              element={!user?.name ? <Login /> : <Header products={produts}  />}
             />
             <Route path="/" element={<Header products={produts} />} />
             <Route path="/dashboard" element={<DashHome products={ProductLength} />}    >
               {/* HERRE */}
-              
-              <Route path="dashboard" element={<Dash />} />
-              <Route path="product-requests" element={<ProductRequest />} />
+
+              <Route path="chart-deatils" element={<VendorDashboard />} />
+              <Route path="product-requsets" element={<ProductRequest />} />
               <Route path="add-products" element={<AddProduct />} />
-              <Route path="products" element={<Product />} />
-              <Route path="withdraw-details" element={<WithdrawSec />} />
+              <Route path="all-orders" element={<OrderHistory />} />
               <Route path="premium-sellers" element={<PremiumSellers />} />
+              <Route path="user-management" element={<AllUsers />} />
+              <Route path="admin-withdraw-details" element={<AdminWithdrawControl />} />
+              <Route path="return-order-requests" element={<ReturnReq />} />
+
+
+              {/* Seller Dashboard */}
+              <Route path="all-products" element={<ProductSec />} />
+              <Route path="my-orders" element={<AllOrders />} />
+              <Route path="notifications" element={<Notification />} />
+              <Route path="withdraw-details" element={<Withdraw />} />
+
+
+              {/* delivery Dashboard */}
+              <Route path="assign-delivery" element={<DeliveryDash />} />
+              <Route path="assign-return-delivery" element={<ReturnDelivery />} />
+
             </Route>
 
-
-            <Route
-              path="/cart"
-              element={
-                <React.Suspense
-                  fallback={
-                    <div>
-                      <ScaleLoader />
-                    </div>
-                  }
-                >
-                  {" "}
-                  {user?.name ? <LazyCart /> : <Login />}
-                </React.Suspense>
-              }
-            />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <Route path="/cart" element={<React.Suspense fallback={<div><ScaleLoader /> </div>}   > {" "}  {user?.name ? <LazyCart /> : <Login />}   </React.Suspense>} />
 
             <Route
               path="storeset"
@@ -216,19 +184,15 @@ const App = () => {
             <Route path="thankyou" element={<Thankyou />} />
 
             <Route path="register" element={<Register />} />
-            <Route path="bloghome" element={<BlogHome />} />
-            <Route path="/details/:id" element={<DetailsPages />} />
             <Route path="sellerplans" element={<Plans />} />
             <Route path="StorePage" element={<StorePage />} />
-            {/* <Route path="/dashboard/Addproduct/:productId" element={<AddProduct />} /> */}
+            <Route path="/Addproduct/:productId" element={<AddProduct />} />
             <Route path="storeset" element={<MainPage />} />
             <Route path="store" element={<Store />} />
             <Route path="payment" element={<SellerPayment />} />
             <Route path="customer" element={<CustomerSup />} />
             <Route path="bank" element={<BankPayment />} />
             <Route path="pages" element={<StorePage />} />
-            <Route path="withdraw" element={<Withdraw />} />
-            <Route path="sellersettings" element={<SellerSettingsPage />} />
             <Route path="sellerregistration" element={<SellerRegister />} />
             <Route path="free" element={<FreeSubscriptionForm />} />
             <Route path="confirmation" element={<SubscriptionForm />} />
@@ -237,12 +201,7 @@ const App = () => {
             <Route path="/whatus" element={<Whatmakeus />} />
             <Route path="/whoweare" element={<WhoWeAre />} />
             <Route path="/orderDetails/:orderId" element={<SingleOrder />} />
-            <Route
-              path="/productVerification/:id"
-              element={<ProductVerification />}
-            />
             <Route path="/deliverydash" element={<DeliveryDash />} />
-            <Route path="/deliveryGuys" element={<AssignDekivery />} />
             <Route path="/payment_succesfull" element={<PaymentSuccess />} />
             <Route
               path="/shoppingPage"
@@ -265,7 +224,7 @@ const App = () => {
 
             <Route path="/passwordupdate" element={<EmailCheck />} />
             <Route path="Wish" element={<Wish />} />
-            <Route path="notifications" element={<Notification />} />
+            
 
             <Route path="/profile/:id " element={<Profile />} />
             <Route path="/Profilepage/:id" element={<SellerProSettings />} />

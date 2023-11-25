@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { ProductSec } from "./ProductSec/Product";
+import { ProductSec } from "../../../Dashboard/Product/Product";
 import dash from "./sellerDash.module.css";
-import { ProductRequest } from "../AdminDashboard/ProductReq";
+import { ProductRequest } from "../../../Dashboard/Product Request/ProductReq";
 import { useSelector } from "react-redux";
-import VendorDashboard from "./Vendor/VendorDashboard";
-import { AllUsers } from "./ReverseWithdraw/ReverseWithdrawSec";
-import AdminWithdrawControl from "../AdminDashboard/AdminWithdrawSec/AdminWithdrawControl";
-import SellerOrder from "../AdminDashboard/SellerOrder/SellerOrder";
+import VendorDashboard from "../../../Dashboard/Home/VendorDashboard";
+import { AllUsers } from "../../../Dashboard/User Management/AllUsers";
+import AdminWithdrawControl from "../../../Dashboard/Withdraw/Admin/AdminWithdrawControl";
+import SellerOrder from "../../../Dashboard/Order/SellerOrder/SellerOrder";
 import Withdraw from "../../../Dashboard/Withdraw/Withdraw";
-import { ReturnReq } from "../AdminDashboard/ReturnReq/ReturnReq";
-import { ReturnDelivery } from "../DeliveryDashBoard/ReturnDelivery/ReturnDelivery";
+import { ReturnReq } from "../../../Dashboard/Return Request/ReturnReq/ReturnReq";
+import { ReturnDelivery } from "../../../Dashboard/Delivery/Return Delivery/ReturnDelivery";
 import DeliveryDash from "../DeliveryDashBoard/Deliverydash";
-import OrderHistory from "../../../Dashboard/OrderHistory/Orderhistory";
-import AddProduct from "./ProductSec/Addproduct";
-import { PremiumSellers } from "./PremiumSellers/PremiumSeller";
+import OrderHistory from "../../../Dashboard/Order/Orderhistory";
+// import AddProduct from "./ProductSec/Addproduct";
+import { PremiumSellers } from "../../../Dashboard/User Management/seller/PremiumSeller";
 
 const SellerDashboard = ({ products }) => {
   const user = useSelector((state) => state.userReducer.user);
@@ -323,7 +323,7 @@ const SellerDashboard = ({ products }) => {
           )}
           {selectedLoginType === "AddProduct" && (
             <div className={dash["AddProduct"]}>
-              <AddProduct />
+              {/* <AddProduct /> */}
             </div>
           )}
           {selectedLoginType === "premium" && (

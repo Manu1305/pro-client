@@ -15,8 +15,9 @@ import {
   MDBBtn,
 } from "mdb-react-ui-kit";
 import Swal from "sweetalert2";
-import { apiURL } from "../../../../../../const/config";
 import httpService from "../../../../../Error Handling/httpService";
+import { apiURL } from "../../../../../../const/config";
+
  const BankPayment = () => {
   const [bankName, setBankName] = useState("");
   const [AccountNumber, setAccountNumber] = useState();

@@ -17,10 +17,7 @@ const SavedBanks = ({ bank, getSavedBank }) => {
               cursor: "pointer",
               backgroundColor: "white",
               border: "1px solid",
-              // selectedAddress && selectedbank.id === bank.id
-              //   ? "lightblue"
-              //   : "white",
-              border: "1px solid #ccc",
+
               borderRadius: "4px",
               padding: "10px",
               marginRight: "10px",
@@ -28,19 +25,7 @@ const SavedBanks = ({ bank, getSavedBank }) => {
               alignItems: "center",
             }}
           >
-            {/* <button
-              // onClick={() => removeAddress(bank._id)}
-              style={{
-                marginRight: "5px",
-                backgroundColor: "red",
-                border: "none",
-                padding: 0,
-                textDecoration: "underline",
-                cursor: "pointer",
-              }}
-            >
-              remove
-            </button> */}
+
 
             <div>
               <p>

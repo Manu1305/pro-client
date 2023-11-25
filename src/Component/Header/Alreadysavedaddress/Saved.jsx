@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { apiURL } from "../../../const/config";
-import httpService from "../../Error Handling/httpService";
+import httpService from "../../../Error Handling/httpService";
 import {TiDelete} from 'react-icons/ti'
 const SavedAddress = ({addresses,getSavedAddress}) => {
 
@@ -112,32 +112,6 @@ const SavedAddress = ({addresses,getSavedAddress}) => {
           </div>
         ))}
       </div>
-      {/* {selectedAddress && (
-        <div>
-          <h5>Selected Address:</h5>
-          <p>
-            <strong>Locality:</strong> {selectedAddress.addressDetails.locality}
-          </p>
-          <p>
-            <strong>Area:</strong> {selectedAddress.addressDetails.area}
-          </p>
-          <p>
-            <strong>Landmark:</strong> {selectedAddress.addressDetails.landmark}
-          </p>
-          <p>
-            <strong>City:</strong> {selectedAddress.addressDetails.city}
-          </p>
-          <p>
-            <strong>State:</strong> {selectedAddress.addressDetails.state}
-          </p>
-          <p>
-            <strong>Pincode:</strong> {selectedAddress.addressDetails.pincode}
-          </p>
-          <p>
-            <strong>Phone:</strong> {selectedAddress.addressDetails.phone}
-          </p>
-        </div>
-      )} */}
     </div>
   );
 };

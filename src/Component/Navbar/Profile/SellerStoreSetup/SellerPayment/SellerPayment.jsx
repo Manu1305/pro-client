@@ -1,34 +1,4 @@
-// import React from "react";
-// import payment from "./seller.module.css"
-// export const SellerPayment=()=>{
-//     return(
 
-//         <div className="container">
-//          <h2 className={payment.header}>Payment setup</h2>
-//     <form>
-
-//       <div className="form-group">
-//         <label for="state">Preferred Payment Method</label>
-//         <select className="form-control" id="state">
-//           <option>PayPal</option>
-//           <option>Skrill</option>
-//           <option>Bank Transfer</option>
-
-//         </select>
-//       </div>
-
-//       <div className="form-group">
-//         <label for="image">PayPal Email</label>
-//         <input type="email" className="form-control" id="email" placeholder="PayPal Email"/>
-//       </div>
-//       <button type="submit" className="btn btn-primary">Submit</button>
-//       <button type="submit" className="btn btn-dark">Submit</button>
-
-//     </form>
-//   </div>
-
-//     )
-// }
 import React from "react";
 // import { SkrillPayment } from "./SkrillPayment/SkrillPayment";
 import { useState } from "react";

@@ -188,11 +188,7 @@ import {
 
                   <span className="h1 fw-bold mb-0">Store setup</span>
                 </div>
-                <h5
-                  className="fw-normal my-4 pb-3"
-                  style={{ letterSpacing: "1px" }}
-                  
-                ></h5>
+
                 {/* {nameError && <div className="text-danger">{nameError}</div>} */}
                 <div className="d-flex flex-row align-items-center mb-4">
                   <label

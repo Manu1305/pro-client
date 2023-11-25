@@ -3,7 +3,7 @@ import React, { useState,useEffect } from "react";
 import styles from './NewAddress.module.css';
 import Swal from "sweetalert2";
 import { apiURL } from "../../../const/config";
-import httpService from "../../Error Handling/httpService";
+import httpService from "../../../Error Handling/httpService";
 
 function NewAddress({getSavedAddress}) {
   const [add, setAdd] = useState("");

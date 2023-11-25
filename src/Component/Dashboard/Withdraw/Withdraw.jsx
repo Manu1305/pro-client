@@ -5,7 +5,7 @@ import { BsWallet2 } from "react-icons/bs";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
 import { ScaleLoader } from "react-spinners";
-import DataTable from "../../Reuseable Comp/DataTable";
+import DataTable from "../Reuseable Comp/DataTable";
 
 const Withdraw = () => {
   const [withdraws, setWithdraws] = useState([]);
@@ -24,12 +24,14 @@ const Withdraw = () => {
         .get(`${apiURL}/seller/seller-admin-withdrawDetails`, config)
         .then((res) => {
           console.log("RESSSS", res.data);
+          setWithdraws(res.data);
           return res.data;
         })
         .catch((err) => {
           console.log(err);
+          setWithdraws([]);
         });
-      setWithdraws(res);
+      
     } catch (error) {
       console.log(error);
       setWithdraws([]);
