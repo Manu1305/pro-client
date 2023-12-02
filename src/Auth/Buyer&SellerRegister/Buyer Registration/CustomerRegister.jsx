@@ -47,7 +47,7 @@ const CustomerRegister = () => {
     e.preventDefault();
 
     const isValid = validate();
-    if (isValid ) {
+    if (isValid) {
       try {
         await httpService
           .post(`${apiURL}/user/signup`, {
@@ -89,26 +89,42 @@ const CustomerRegister = () => {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
-
+  const [time, setTime] = useState(10);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const sendOtp = () => {
+  const sendOtp = async () => {
     if (phone.length === 10) {
-      toast.success("otp sended successfuly");
-      setotpButton(true);
-      httpService
+      await httpService
         .post(`${apiURL}/user/send-otp`, { phone, userType })
         .then((response) => {
           console.log(response.data + "this is data");
-        })
+          toast.success(response?.data?.message);
+          setotpButton(true);
 
+          const timeout = setTimeout(() => {
+            // Action to perform after 10 seconds
+            console.log("Timeout completed after 10 seconds");
+            setotpButton(false);
+            // Add your logic or state changes here
+          }, 10000); // 10 seconds in milliseconds
+
+          // Update the countdown every second
+          const interval = setInterval(() => {
+            setTime((prevSeconds) => (prevSeconds > 0 ? prevSeconds - 1 : 0));
+          }, 1000);
+
+          return () => {
+            clearTimeout(timeout); // Clear the timeout if the component unmounts before the 10 seconds
+            clearInterval(interval); // Clear the interval on component unmount
+            
+          };
+        })
         .catch((error) => {
           console.error(error);
-          toast.error("otp not sended", error);
+          toast.error("colden't send otp", error);
         });
-      setTimeout(() => {}, 20000);
     } else {
       alert("phone number should 10");
     }
@@ -340,12 +356,16 @@ const CustomerRegister = () => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                       />
-                      <button
-                        className="rounded bg-green-500 w-20"
-                        onClick={sendOtp}
-                      >
-                        Send otp
-                      </button>
+                      {!otpbutton ? (
+                        <button
+                          className="rounded bg-green-500 w-20 cursor-pointer"
+                          onClick={sendOtp}
+                        >
+                          Send otp
+                        </button>
+                      ) : (
+                        <p className="font-bold">Didn't recieve otp... Send again in {time}</p>
+                      )}
                     </div>
                   </div>
 

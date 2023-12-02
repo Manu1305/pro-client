@@ -8,7 +8,7 @@ function Strength() {
     <div className="bg-white">
       <div>
       <RubberBand  >
-        <h1 className="w-100% font-extrabold">OUR KEY STRENGTHS</h1>
+        <h1 className="w-100% font-extrabold text-center">OUR KEY STRENGTHS</h1>
         </RubberBand>
       </div>
       <div className={styles.main}>

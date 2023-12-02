@@ -21,9 +21,11 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   margin-right: 20px;
+  /* background-color:#fff; */
   height: auto;
   width: 500px;
   border-radius: 10px;
+  /* box-shadow: 0 2px 8px rgba(34, 9, 9, 0.878); */
   
 }
 .bg{
@@ -32,6 +34,9 @@
 
 }
 
+/* .seeMore{
+  margin-left: 35rem;
+} */
 
 
 .card h2 {
@@ -140,7 +145,7 @@
   margin: 0 auto;
   max-width: 100%;
   height: 25rem;
-  width: 100px;
+  width: 500px;
 }
 .customerheading{
   width: 100px;

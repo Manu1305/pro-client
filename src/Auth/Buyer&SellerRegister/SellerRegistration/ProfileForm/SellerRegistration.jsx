@@ -91,19 +91,18 @@ const SellerRegister = () => {
     // Add more countries and states as needed
   };
   const [showButton, setShowButton] = useState(true);
-const [add, setAdd]= useState(null)
+  const [add, setAdd] = useState(null);
   const navigate = useNavigate();
-
 
   const getAddress = async () => {
     try {
       const pos = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
       });
-  
+
       const { latitude, longitude } = pos.coords;
-      console.log('Got latitude and longitude:', latitude, longitude);
-      
+      console.log("Got latitude and longitude:", latitude, longitude);
+
       // Return latitude and longitude
       return { latitude, longitude };
     } catch (error) {
@@ -112,21 +111,21 @@ const [add, setAdd]= useState(null)
       return { latitude: null, longitude: null };
     }
   };
-  
+
   const handleCustomerLogin = async (e) => {
     const isValid = validate();
-  
+
     console.log(isValid);
     if (isValid) {
       console.log("Clicked");
       e.preventDefault();
-  
+
       // Call the getAddress function to get the address and latitude/longitude
       const { latitude, longitude } = await getAddress();
-  
+
       if (latitude !== null && longitude !== null) {
-        console.log('Received latitude and longitude:', latitude, longitude);
-        
+        console.log("Received latitude and longitude:", latitude, longitude);
+
         dispatch(
           saveSellerData({
             name: userFilledData.name,
@@ -149,10 +148,10 @@ const [add, setAdd]= useState(null)
             longitude, // Include longitude in the data
           })
         );
-  
+
         navigate("/sellerplans");
       } else {
-        console.log('Failed to receive latitude and longitude');
+        console.log("Failed to receive latitude and longitude");
         // Handle the case where latitude and longitude are not available
       }
     } else {
@@ -160,14 +159,6 @@ const [add, setAdd]= useState(null)
       console.log("Validation function has returned false...");
     }
   };
-  
-
-  
-  
-  
-  
-  
-
 
   // const handleCustomerLogin = (e) => {
   //   const isValid = validate();
@@ -231,11 +222,11 @@ const [add, setAdd]= useState(null)
   //     await fetch(url)
   //       .then((res) => res.json())
   //       .then((data) => setAdd(data.address)
-       
+
   //       );
   //     console.log(add, "dfcdfk");
   //   });
-    
+
   // }
 
   useEffect(() => {
@@ -258,22 +249,36 @@ const [add, setAdd]= useState(null)
     }
   };
 
-  const sendOtp = () => {
-    if (phone.length == 10) {
-      toast.success("otp sended successfuly");
-      setShowButton(false);
-      httpService
+  const sendOtp = async () => {
+    if (phone.length === 10) {
+      await httpService
         .post(`${apiURL}/user/send-otp`, { phone, userType })
         .then((response) => {
           console.log(response.data + "this is data");
-        })
+          toast.success(response?.data?.message);
+          //  setotpButton(true);
 
+          const timeout = setTimeout(() => {
+            // Action to perform after 10 seconds
+            console.log("Timeout completed after 10 seconds");
+            //  setotpButton(false);
+            // Add your logic or state changes here
+          }, 10000); // 10 seconds in milliseconds
+
+          // Update the countdown every second
+          //  const interval = setInterval(() => {
+          //    setTime((prevSeconds) => (prevSeconds > 0 ? prevSeconds - 1 : 0));
+          //  }, 1000);
+
+          return () => {
+            //  clearTimeout(timeout); // Clear the timeout if the component unmounts before the 10 seconds
+            //  clearInterval(interval); // Clear the interval on component unmount
+          };
+        })
         .catch((error) => {
           console.error(error);
+          toast.error("colden't send otp", error);
         });
-      setTimeout(() => {
-        setShowButton(true);
-      }, 20000);
     } else {
       alert("phone number should 10");
     }
@@ -403,7 +408,7 @@ const [add, setAdd]= useState(null)
       cityError ||
       gstError ||
       pincodeError ||
-      shopNameError 
+      shopNameError
       // address1Error
     ) {
       return false;
@@ -442,15 +447,13 @@ const [add, setAdd]= useState(null)
                       <span className="h1 fw-bold mb-0">HitecMart</span>
                     </div>
                     <div className="flex flex-row">
-                      
-                    <h5
-                      className="fw-normal my-4 pb-3"
-                      style={{ letterSpacing: "1px" }}
-                    >
-                      Register as seller
-                    </h5>
-                    {/* <button className="bg-red-600 border"> allow location </button> */}
-
+                      <h5
+                        className="fw-normal my-4 pb-3"
+                        style={{ letterSpacing: "1px" }}
+                      >
+                        Register as seller
+                      </h5>
+                      {/* <button className="bg-red-600 border"> allow location </button> */}
                     </div>
                     {/* {nameError && <div className="text-danger">{nameError}</div>} */}
                     <div className="d-flex flex-row align-items-center mb-4">
@@ -574,26 +577,6 @@ const [add, setAdd]= useState(null)
                             <div className="text-danger">{GstError}</div>
                           )}
                         </div>
-
-
-
-
-
-
-
-                        
-
-
-
-
-
-
-
-
-
-
-
-
 
                         <div className="d-flex flex-row align-items-center mb-4">
                           <label

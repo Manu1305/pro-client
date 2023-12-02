@@ -322,7 +322,7 @@ const ViewProduct = ({ getAllProducts }) => {
                     ? product.productDetails[prdDetInd].images[0]
                     : imgPreview
                 }
-                className={`img-fluid img-responsive rounded product-image`}
+                className={`img-fluid img-responsive rounded product-image object-contain`}
                 style={{
                   height: "500px",
                   width: "770px",
@@ -335,7 +335,7 @@ const ViewProduct = ({ getAllProducts }) => {
               {product.productDetails[prdDetInd].images.map((img) => (
                 <div className="m-2">
                   <img
-                    style={{ height: "70px", width: "70px" }}
+                    style={{ height: "70px", width: "70px", objectFit:'contain' }}
                     src={img}
                     onClick={() => {
                       setImgPreview(img);
@@ -382,7 +382,7 @@ const ViewProduct = ({ getAllProducts }) => {
                 <div className={styles.heads}>
                   <div>
                     <h5 className={`text-uppercase brand ${styles.brand}`}>
-                      {product.brand}
+                      {product.title}
                     </h5>
                   </div>
                   {user?.email && user?.urType === "buyer" && (
@@ -408,7 +408,7 @@ const ViewProduct = ({ getAllProducts }) => {
                   )}
                 </div>
 
-                <span>{product.title}</span>
+                <span>{product.brand}</span>
 
                 <div
                   className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
@@ -482,10 +482,12 @@ const ViewProduct = ({ getAllProducts }) => {
                       {product.productDetails?.map((ele, index) => {
                         return typeof ele.color === "object" ? (
                           ele.color.map((item, id) => (
-                            <div key={id} className={styles.color_box_border} style={{borderRadius:`20px solid ${item}`}}>
-
+                            <div
+                              key={id}
+                              className={styles.color_box_border}
+                              style={{ borderRadius: `20px solid ${item}` }}
+                            >
                               <div
-                                
                                 className={styles.color_box}
                                 style={{ background: `${item}` }}
                                 // onClick={() => changeColor(, ele.color)}

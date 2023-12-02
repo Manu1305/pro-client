@@ -49,7 +49,7 @@ export const CategoryNew = () => {
     <div className={styles["login-new"]}>
     
       <div style={{ marginTop: "100px" }}>
-        <h1 className="font-extrabold ">CATEGORIES</h1>
+        <h1 className="font-extrabold text-center ">CATEGORIES</h1>
       </div>
 
       <section className={styles.heroSection}>
