@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import httpService from "../../../Error Handling/httpService";
 import { apiURL } from "../../../../const/config";
 import { useSelector } from "react-redux";
 import axios from "axios";

@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './About.module.css'
-import { Footer } from '../../../Footer/Footer'
 import Imgg1 from "../../../../images/Aboutus/2nd.png"
 import Flip from 'react-reveal/Flip'
 import LightSpeed from 'react-reveal/Flip'
@@ -119,7 +118,6 @@ effectively
      </div> </Rotate>
     
            </div> </Bounce>
-           <Footer />
       </div>
   )
 }

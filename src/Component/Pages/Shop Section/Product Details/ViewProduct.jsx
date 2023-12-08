@@ -12,10 +12,8 @@ import httpService from "../../../Error Handling/httpService";
 import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
 import { BiSolidOffer } from "react-icons/bi";
 import { userCartItem } from "../../../../Redux/cart/cartAction";
-import { Footer } from "../../../Footer/Footer";
 import axios from "axios";
 import { toast } from "react-toastify";
-// import { addReqProduct } from "../../../Redux/productBefore/productReqAction";
 import Swal from "sweetalert2";
 import TruncatedText from "./TruncatedText";
 
@@ -34,23 +32,8 @@ const ViewProduct = ({ getAllProducts }) => {
   const [imgPreview, setImgPreview] = useState("");
   const [prdDetInd, setPrdDetInd] = useState(0);
   const [product, setProduct] = useState(null);
-  // const [, set] = useState(second)
-
-  const getOneProducts = async () => {
-    try {
-      await axios
-        .get(`${apiURL}/product/get-single-products/${productId}`)
-        .then((res) => {
-          console.log("gggggggggg", res.data);
-          // alert("calling api")
-          console.log(res.data.productDetails[prdDetInd].images[0]);
-          setProduct(res.data);
-        })
-        .catch((error) => {
-          console.error("Error", error);
-        });
-    } catch (error) {}
-  };
+  const [pricesIndex, setPricesIndex] = useState(0);
+  const [selectedColor, setSelectedColor] = useState("");
 
   const handleShare = () => {
     if (navigator.share) {
@@ -255,10 +238,28 @@ const ViewProduct = ({ getAllProducts }) => {
     }
   };
 
-  const changeColor = (index) => {
+  const changeColor = (index, color) => {
     setPrdDetInd(index);
+    setSelectedColor(color);
   };
+
   useEffect(() => {
+    const getOneProducts = async () => {
+      try {
+        await axios
+          .get(`${apiURL}/product/get-single-products/${productId}`)
+          .then((res) => {
+            console.log("Product", res.data);
+            setProduct(res.data);
+          })
+          .catch((error) => {
+            console.error("Error", error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getOneProducts();
   }, []);
 
@@ -310,255 +311,288 @@ const ViewProduct = ({ getAllProducts }) => {
     }
   };
 
+  const calculatePer = (product) => {
+    const sellingPrice =
+      product.prices.length !== 0
+        ? product.prices[pricesIndex].sellingPrice
+        : product.sellingPrice;
+    const realPrice =
+      product.prices.length !== 0
+        ? product.prices[pricesIndex].realPrice
+        : product.realPrice;
+    const discount = ((realPrice - sellingPrice) / realPrice) * 100;
+    return Math.floor(discount);
+  };
   return (
     <div className={`${styles.card}`}>
       {product !== null && (
-        <div className="row">
-          <div className={`col-md-6`}>
-            <div className={`text-center p-4`}>
-              <img
-                src={
-                  !imgPreview
-                    ? product.productDetails[prdDetInd].images[0]
-                    : imgPreview
-                }
-                className={`img-fluid img-responsive rounded product-image`}
-                style={{
-                  height: "500px",
-                  width: "770px",
-                  objectFit: "contain",
-                }}
-                alt="img"
-              />
+        <>
+          <div className="row">
+            <div className={`col-md-6`}>
+              <div className={`text-center p-4`}>
+                <img
+                  src={
+                    !imgPreview
+                      ? product.productDetails[prdDetInd].images[0]
+                      : imgPreview
+                  }
+                  className={`img-fluid img-responsive rounded product-image`}
+                  style={{
+                    height: "500px",
+                    width: "770px",
+                    objectFit: "contain",
+                  }}
+                  alt="img"
+                />
+              </div>
+              <div className="ml-5" style={{ display: "flex" }}>
+                {product.productDetails[prdDetInd].images.map((img) => (
+                  <div className="m-2">
+                    <img
+                      style={{ height: "70px", width: "70px" }}
+                      src={img}
+                      onClick={() => {
+                        setImgPreview(img);
+                      }}
+                      alt=""
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="ml-5" style={{ display: "flex" }}>
-              {product.productDetails[prdDetInd].images.map((img) => (
-                <div className="m-2">
-                  <img
-                    style={{ height: "70px", width: "70px" }}
-                    src={img}
-                    onClick={() => {
-                      setImgPreview(img);
-                    }}
-                    alt=""
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
 
-          <div className="col-md-6">
-            <div className={`product`}>
-              {user.urType === "admin" && (
-                <div className="relative">
-                  <div className="absolute right-0">
-                    <button
-                      className={`btn ${
-                        product.status === "Published"
-                          ? "btn-danger"
-                          : "btn-success"
-                      } btn-success m-2`}
-                      onClick={() =>
-                        unPublishProduct(
-                          product._id,
+            <div className="col-md-6">
+              <div>
+                {/* Change Status */}
+                {user.urType === "admin" && (
+                  <div className="relative">
+                    <div className="absolute right-0">
+                      <button
+                        className={`btn ${
                           product.status === "Published"
-                            ? "UnPublish"
-                            : "Published"
-                        )
-                      }
-                    >
-                      {product.status === "Published" ? "UnPublish" : "Publish"}
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => navigate(`/Addproduct/${product._id}`)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
-              )}
-              <div className={"mt-4"} style={{ marginLeft: "30px" }}>
-                <div className={styles.heads}>
-                  <div>
-                    <h5 className={`text-uppercase brand ${styles.brand}`}>
-                      {product.brand}
-                    </h5>
-                  </div>
-                  {user?.email && user?.urType === "buyer" && (
-                    <div className={`m-1 ${styles.icons}`}>
-                      <div
-                        className={styles.wishicon}
-                        onClick={() => {
-                          wishUpdate(product._id);
-                        }}
+                            ? "btn-danger"
+                            : "btn-success"
+                        } btn-success m-2`}
+                        onClick={() =>
+                          unPublishProduct(
+                            product._id,
+                            product.status === "Published"
+                              ? "UnPublish"
+                              : "Published"
+                          )
+                        }
                       >
-                        <div onClick={() => setisWishItem(!isWishItem)}>
-                          {isWishItem ? (
-                            <AiFillHeart className={styles.mainicon} />
-                          ) : (
-                            <AiOutlineHeart className={styles.mainicon} />
-                          )}
+                        {product.status === "Published"
+                          ? "UnPublish"
+                          : "Publish"}
+                      </button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => navigate(`/Addproduct/${product._id}`)}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <div className={"mt-4"} style={{ marginLeft: "30px" }}>
+                  <div className={styles.heads}>
+                    <div>
+                      <h5 className={`text-uppercase brand ${styles.brand}`}>
+                        {product.brand}
+                      </h5>
+                    </div>
+                    {user?.email && user?.urType === "buyer" && (
+                      <div className={`m-1 ${styles.icons}`}>
+                        <div
+                          className={styles.wishicon}
+                          onClick={() => {
+                            wishUpdate(product._id);
+                          }}
+                        >
+                          <div onClick={() => setisWishItem(!isWishItem)}>
+                            {isWishItem ? (
+                              <AiFillHeart className={styles.mainicon} />
+                            ) : (
+                              <AiOutlineHeart className={styles.mainicon} />
+                            )}
+                          </div>
+                        </div>
+                        <div className={styles.tagandshare}>
+                          <BiShareAlt onClick={handleShare} />
                         </div>
                       </div>
-                      <div className={styles.tagandshare}>
-                        <BiShareAlt onClick={handleShare} />
+                    )}
+                  </div>
+
+                  <span>{product.title}</span>
+
+                  <div
+                    className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
+                  >
+                    <div>
+                      <h5 className="fw-bold text-3xl font-mono">
+                        ₹
+                        {product.prices.length !== 0
+                          ? product.prices[pricesIndex].sellingPrice
+                          : product.sellingPrice}
+                      </h5>
+                    </div>
+
+                    <div className={styles.starreviewmain}>
+                      {user && user.email ? (
+                        <div className={styles.star}>
+                          <h2 className="line-through">
+                            {product.prices.length !== 0
+                              ? product.prices[pricesIndex].realPrice
+                              : product.sellingPrice}
+                          </h2>
+                        </div>
+                      ) : null}
+                      <div className={`${styles.review}`}>
+                        <BiSolidOffer className="h-15 w-15" />
+
+                        <p className={styles.reviewtext}>
+                          {" "}
+                          {calculatePer(product)}% Off
+                        </p>
                       </div>
                     </div>
-                  )}
+                  </div>
+
+                  <div className={styles.priceandpercentage}>
+                    {user?.email && user?.urType === "buyer" && (
+                      <div className={styles.percentagetext}>
+                        <h5 className="text-success">93%</h5>
+                        <p> &nbsp; of buyers have reccomented this.</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <span>{product.title}</span>
-
-                <div
-                  className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
-                >
+                {/* color selection */}
+                <div className="p-4">
                   <div>
-                    {/* {user && user.email ? ( */}
-                    <h5 className="fw-bold text-3xl font-mono">
-                      ₹{product.sellingPrice}
+                    <h5 className={`about ${styles.about} font-bold `}>
+                      Choose a color
                     </h5>
-                    {/* //  ):null} */}
                   </div>
 
-                  <div className={styles.starreviewmain}>
-                    {user && user.email ? (
-                      <div className={styles.star}>
-                        <h2 className="line-through">{product.realPrice}</h2>
-                      </div>
-                    ) : null}
-                    <div className={`${styles.review}`}>
-                      <BiSolidOffer className="h-15 w-15" />
-
-                      <p className={styles.reviewtext}>
-                        {" "}
-                        {`${Math.floor(
-                          ((product.realPrice - product.sellingPrice) /
-                            product.realPrice) *
-                            100
-                        )}% Off`}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.priceandpercentage}>
-                  {user?.email && user?.urType === "buyer" && (
-                    <div className={styles.percentagetext}>
-                      <h5 className="text-success">93%</h5>
-                      <p> &nbsp; of buyers have reccomented this.</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* color selection */}
-              <div style={{ marginTop: "15px" }}>
-                <h5
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: 20,
-                    marginLeft: "30px",
-                  }}
-                  className={`about ${styles.about}`}
-                >
-                  Choose a color
-                </h5>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <div className={styles.color_Container}>
+                  <div className="mt-4 flex">
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "row",
                         gap: "10px",
-                        height: "50px",
+                        flexWrap: "wrap",
                       }}
                     >
                       {product.productDetails?.map((ele, index) => {
                         return typeof ele.color === "object" ? (
                           ele.color.map((item, id) => (
-                            <div key={id} className={styles.color_box_border} style={{borderRadius:`20px solid ${item}`}}>
-
+                            <div key={id}>
                               <div
-                                
                                 className={styles.color_box}
                                 style={{ background: `${item}` }}
-                                // onClick={() => changeColor(, ele.color)}
                               ></div>
                             </div>
                           ))
                         ) : (
                           <div
-                            key={index}
-                            className={styles.color_box}
-                            style={{ background: `${ele.color}` }}
-                            onClick={() => changeColor(index, ele.color)}
-                          ></div>
+                            className="p-1"
+                            style={{
+                              border:
+                                selectedColor === ele.color
+                                  ? `3px solid ${ele.color}`
+                                  : "",
+                            }}
+                          >
+                            <div
+                              key={index}
+                              className={styles.color_box}
+                              style={{ background: `${ele.color}` }}
+                              onClick={() => changeColor(index, ele.color)}
+                            ></div>
+                          </div>
                         );
                       })}
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="bg-red mt-4">
-                <div style={{ marginLeft: "30px" }}>
-                  {user.email && user.urType === "admin" ? (
-                    <label htmlFor="product_size">Stockes available</label>
-                  ) : (
-                    <label htmlFor="product_size">CHOOSE SIZE</label>
-                  )}
-                </div>
-                <div>
+                {/* Sizes */}
+                <div className="bg-red p-4 flex flex-col">
+                  <div>
+                    {user.email && user.urType === "admin" ? (
+                      <label htmlFor="product_size" className={styles.about}>
+                        Stockes available
+                      </label>
+                    ) : (
+                      <label htmlFor="product_size" className={styles.about}>
+                        Choose Sizes
+                      </label>
+                    )}
+                  </div>
                   {product.productDetails && (
-                    <div style={{ marginLeft: "30px" }}>
-                      <div className={`mt-1 left-0 ${styles.sizeresponsive}`}>
-                        {product.productDetails &&
-                          Object.entries(
-                            product.productDetails[prdDetInd]?.qtyAndSizes
-                          ).map(([size, quantity]) => (
-                            <div key={size} className={styles.tottal}>
-                              {quantity !== 0 && (
-                                <div>
+                    <div
+                      className={`mt-1 left-0 cursor-pointer ${styles.sizeresponsive}`}
+                    >
+                      {product.productDetails &&
+                        Object.entries(
+                          product.productDetails[prdDetInd]?.qtyAndSizes
+                        ).map(([size, quantity], index) => (
+                          <div key={size} className={styles.tottal}>
+                            {quantity !== 0 && (
+                              <div
+                                className="flex flex-col items-center justify-center"
+                                onClick={() => setPricesIndex(index)}
+                              >
+                                <div
+                                  className="flex flex-col justify-center items-center gap-2 h-16 w-24"
+                                  style={{
+                                    borderRadius: "0px",
+                                    backgroundColor:pricesIndex === index ?"rgb(206, 208, 236)" :"rgb(243,243,243)" ,
+                                    marginRight: "10px",
+                                  }}
+                                >
                                   <div
-                                    className={styles.desgin}
+                                    className="text-[#d70a2a] font-bold"
                                     style={{
-                                      borderRadius: "0px",
-                                      backgroundColor: "rgb(243,243,243)",
-                                      marginRight: "10px",
+                                      fontSize:
+                                        product.size === 0 ? "small" : "",
+                                      fontWeight:
+                                        product.size !== 0 ? "bold" : "",
                                     }}
                                   >
-                                    <div>{size}</div>
-                                    <div
-                                      style={{
-                                        fontSize: "11px",
-                                        color: "black",
-                                      }}
-                                    >
-                                      {quantity} left
-                                    </div>
+                                    {product.stock === 0
+                                      ? "Out of Stock"
+                                      : size}
                                   </div>
-                                  {/* {user?.email && user?.urType === "buyer" && ( */}
-                                  <div className="mt-1 ml-3 d-flex flex-row align-items-center sm: ml-8">
+                                  <div
+                                    style={{ fontSize: "14px" }}
+                                    className="text-[#d70a2a]"
+                                  >
+                                    {product.stock === 0
+                                      ? ""
+                                      : quantity + "left"}
+                                  </div>
+                                </div>
+                                {product.stock !== 0 && (
+                                  <div
+                                    style={{ marginLeft: "-17px" }}
+                                    className="flex  mt-1 items-center gap-[8px]"
+                                  >
                                     <div>
                                       <AiOutlineMinusCircle
                                         onClick={() => decreaseHandler(size)}
                                       />
                                     </div>
 
-                                    <div
-                                      style={{
-                                        width: "20px",
-                                      }}
-                                    >
+                                    <div>
                                       <input
                                         type="text"
-                                        placeholder="0"
+                                        defaultValue={0}
                                         style={{
                                           width: "20px",
                                           textAlign: "center",
@@ -579,78 +613,79 @@ const ViewProduct = ({ getAllProducts }) => {
                                       />
                                     </div>
                                   </div>
-                                  {/* // )} */}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                      </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ))}
                     </div>
                   )}
+                </div>
 
-                  <div className={`mb-3 mt-4 align-items-center`}>
-                    <>
-                      {user?.email && user?.urType === "buyer" && (
-                        <button
-                          className={`text-uppercase mr-2 ${styles.add_to_cart}`}
-                          onClick={() => addtoCartButton(product)}
-                        >
-                          <BsHandbagFill className="mb-1 mr-3" />
-                          Add to Cart
-                        </button>
-                      )}
-                    </>
-                    {offerBtn ? (
-                      <div className="container m-4">
-                        <div className="row justify-content-center">
-                          <div className="col-md-6 text-center">
-                            <h3 className="text-danger">
-                              Your Bulk Buying Deal Is a Click Away - Don't Miss
-                              Out!
-                            </h3>
-                          </div>
-                          <div className="col-md-6 text-center">
-                            <button
-                              className="btn btn-success"
-                              onClick={offerBtnHandler}
-                            >
-                              Offers
-                            </button>
-                          </div>
+                {/* Add to cart Button */}
+                <div className={`mb-3 pl-5 mt-4 align-items-center`}>
+                  <>
+                    {user?.email && user?.urType === "buyer" && (
+                      <button
+                        className={`text-uppercase mr-2 ${styles.add_to_cart}`}
+                        onClick={() => addtoCartButton(product)}
+                      >
+                        <BsHandbagFill className="mb-1 mr-3" />
+                        Add to Cart
+                      </button>
+                    )}
+                  </>
+                  {offerBtn ? (
+                    <div className="container m-4">
+                      <div className="row justify-content-center">
+                        <div className="col-md-6 text-center">
+                          <h3 className="text-danger">
+                            Your Bulk Buying Deal Is a Click Away - Don't Miss
+                            Out!
+                          </h3>
+                        </div>
+                        <div className="col-md-6 text-center">
+                          <button
+                            className="btn btn-success"
+                            onClick={offerBtnHandler}
+                          >
+                            Offers
+                          </button>
                         </div>
                       </div>
-                    ) : null}
-                  </div>
+                    </div>
+                  ) : null}
                 </div>
+
+                {/* Delivery Date */}
+                {user?.email && user?.urType === "buyer" && (
+                  <div
+                    className="h-40 w-96 ml-5"
+                    style={{ border: "solid #c9e0eb" }}
+                  >
+                    <div className={styles.headone}>
+                      <div className={styles.oneone}>
+                        <TbTruckDelivery />
+                      </div>
+                      <div>
+                        <h4 className="font-bold mt-4">
+                          Delivery with in 5 days
+                        </h4>
+                      </div>
+                    </div>
+
+                    <div className={styles.headone}>
+                      <div className={styles.oneone}>
+                        <AiOutlineShopping />
+                      </div>
+                      <div className={styles.onetwo}>
+                        <h4 className="font-bold mt-4">Return delivery</h4>
+                        <span>Free 3 days Delivery Return</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-
-              {user?.email && user?.urType === "buyer" && (
-                <div
-                  className={`${styles.lasthead}`}
-                  style={{ marginLeft: "10px" }}
-                >
-                  <div className={styles.headone}>
-                    <div className={styles.oneone}>
-                      <TbTruckDelivery />
-                    </div>
-                    <div>
-                      <h4 className="font-bold mt-4">
-                        Delivery with in 5 days
-                      </h4>
-                    </div>
-                  </div>
-
-                  <div className={styles.headone}>
-                    <div className={styles.oneone}>
-                      <AiOutlineShopping />
-                    </div>
-                    <div className={styles.onetwo}>
-                      <h4 className="font-bold mt-4">Return delivery</h4>
-                      <span>Free 3 days Delivery Return</span>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
           <div>
@@ -672,7 +707,7 @@ const ViewProduct = ({ getAllProducts }) => {
                   Product description
                 </p>
                 <div className={styles.descPara}>
-                  <TruncatedText text={product.description} maxLines={50} />
+                  <TruncatedText text={product?.description} maxLines={50} />
                 </div>
               </div>
             </div>
@@ -723,56 +758,37 @@ const ViewProduct = ({ getAllProducts }) => {
                   }}
                 >
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Material}
+                    {product?.productInfo?.Material}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Fit}
+                    {product?.productInfo?.Fit}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Idealfor}
+                    {product?.productInfo?.Idealfor}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Packoff}
+                    {product?.productInfo?.Packoff}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Pattern}
+                    {product?.productInfo?.Pattern}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Washcare}
+                    {product?.productInfo?.Washcare}
                   </div>
                   <div className={`m-2 ${styles["text1"]}`}>
-                    {product.productInfo.Convertible}
+                    {product?.productInfo?.Convertible}
                   </div>
                   <div className={`m-2 w-50 ${styles["text1"]}`}>
-                    {product.productInfo.Closure}
+                    {product?.productInfo?.Closure}
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* more */}
-            {/* {product.MoreDetails !== null && (
-              <div className={styles.descrip}>
-                <p className={`about mt-3 ${styles.about}`}>More Details</p>
-                <div className={`m-2 w-70 ${styles["text1"]}`}>
-                  {product.MoreDetails}
-                </div>
-              </div>
-            )} */}
           </div>
           <h2 className={styles.relatdd}>Related Product</h2>
-          {
-            <SellerRelatedPro
-              prodd={product.collections}
-              productId={product._id}
-            />
-          }
-        </div>
+          {<SellerRelatedPro seller={product?.seller} />}
+        </>
       )}
-
-      <div className={styles.footer}>
-        <Footer />
-      </div>
     </div>
   );
 };

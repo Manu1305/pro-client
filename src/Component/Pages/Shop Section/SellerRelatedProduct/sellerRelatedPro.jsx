@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,8 +6,8 @@ import styless from "./sellerrelated.module.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { apiURL } from "../../../../const/config";
-import httpService from "../../../Error Handling/httpService";
+import { useSelector } from "react-redux";
+
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -30,23 +30,13 @@ const SamplePrevArrow = (props) => {
   );
 };
 
-const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
-  const [productItems, setProductItems] = useState([]);
+const SellerRelatedPro = ({ seller }) => {
+  const products = useSelector((state) => state.productReducer.product).filter(
+    (item) => item.status === "Published"
+  );
 
-  // console.log("ffff", prodd)
-  useEffect(() => {
-    httpService
-      .get(`${apiURL}/product/get-all-products`)
-      .then((res) => {
-        setProductItems(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
 
   const settings = {
-    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -79,13 +69,14 @@ const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
       },
     ],
   };
+
   return (
     <div className={`${styless.bg}`}>
       <div className={`${styless.sliderContainer}`}>
         <Slider {...settings}>
-          {productItems &&
-            productItems.map((item) => {
-              if (item.collections === prodd) {
+          {products &&
+            products.map((item) => {
+              if (item.seller === seller) {
                 return (
                   <div key={item._id}>
                     <div className={styless.customerheading}>
@@ -107,7 +98,7 @@ const SellerRelatedPro = ({ addToCart, prodd, productId }) => {
                   </div>
                 );
               } else {
-                return null; // Return null for items that don't match the condition
+                return null // Return null for items that don't match the condition
               }
             })}
         </Slider>

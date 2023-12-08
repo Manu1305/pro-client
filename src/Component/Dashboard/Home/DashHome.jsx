@@ -147,14 +147,13 @@ function DashHome() {
       id: 2,
       list: "Return Delivery",
       to: "/dashboard/assign-delivery",
-      icon: <LocalShippingIcon style={{ transform: 'scaleX(-1)' }}/>,
+      icon: <LocalShippingIcon style={{ transform: "scaleX(-1)" }} />,
     },
   ];
 
   return (
     <div>
       <div class="dash-sidebar">
-        {/* <div className="Link "> */}
         {user.urType === "admin"
           ? dashboardList.map((item) => (
               <>
@@ -191,8 +190,7 @@ function DashHome() {
               <Link
                 to={item.to}
                 className={
-                  "/" + splitLocation[1] + "/" + splitLocation[2] ===
-                  item.to
+                  "/" + splitLocation[1] + "/" + splitLocation[2] === item.to
                     ? "active"
                     : ""
                 }
@@ -201,7 +199,6 @@ function DashHome() {
                 <span className="dash-icon-item">{item.list}</span>
               </Link>
             ))}
-        {/* </div> */}
       </div>
       <div className="dash-content">
         <Outlet />

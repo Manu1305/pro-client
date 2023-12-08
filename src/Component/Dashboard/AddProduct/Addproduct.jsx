@@ -2,15 +2,12 @@ import React, { useEffect } from "react";
 import styles from "./Addproduct.module.css";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Section2 from "./Setion2";
 import httpService from "../../Error Handling/httpService";
 import { apiURL } from "../../../const/config";
 
 function AddProduct() {
-
-
-  
   let { productId } = useParams();
 
   const categorySizes = {
@@ -87,7 +84,7 @@ function AddProduct() {
       "Pleated Skirts",
       "High-Waisted Pants",
       "Harem Pants",
-      "jeggings"
+      "jeggings",
     ],
     Sarees: [
       "Silk Sarees",
@@ -111,25 +108,23 @@ function AddProduct() {
       "Casual Sarees",
       "Lehenga Sarees",
     ],
-   Kurtis :[
-    "Anarkali Kurti",
-    "Straight Cut Kurti",
-    "A-Line Kurti",
-    "Flared Kurti",
-    "Trail Cut Kurti",
-    "High-Low Kurti",
-    "Kaftan Style Kurti",
-    "Shirt Style Kurti",
-    "Cape Style Kurti",
-    "Dhoti Style Kurti",
-    "Front Slit Kurti",
-    "Overlay Kurti",
-    "Princess Cut Kurti",
-    "Tunic Style Kurti",
-    "Double Layered Kurti",
-    
-]
-,
+    Kurtis: [
+      "Anarkali Kurti",
+      "Straight Cut Kurti",
+      "A-Line Kurti",
+      "Flared Kurti",
+      "Trail Cut Kurti",
+      "High-Low Kurti",
+      "Kaftan Style Kurti",
+      "Shirt Style Kurti",
+      "Cape Style Kurti",
+      "Dhoti Style Kurti",
+      "Front Slit Kurti",
+      "Overlay Kurti",
+      "Princess Cut Kurti",
+      "Tunic Style Kurti",
+      "Double Layered Kurti",
+    ],
     KidsShirt: [
       "T-Shirts",
       "Polo Shirts",
@@ -271,19 +266,71 @@ function AddProduct() {
   };
 
   const sizeSelected = {
-    Shirts: ["S", "M", "L", "XL", "XXL","XXXL","XXXXL","Free Size"],
-    Pants: [28, 30, 32, 34, 36, 38, 40,42],
-    top: ["XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
-    Bottom: ["XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
+    Shirts: ["S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
+    Pants: [28, 30, 32, 34, 36, 38, 40, 42],
+    top: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
+    Bottom: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
     Sarees: ["5.5 meters", "6 meters", "6.5 meters", "7 meters", "9 yards"],
     KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL", "XXXXL", "XXXXXL"],
     KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsShirts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
-    GirlsPants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
-    GirlsShorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
-    Frock: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL","XXL","XXXL","XXXXL","Free Size"],
+    GirlsShirts: [
+      "2T",
+      "3T",
+      "4T",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "XXXL",
+      "XXXXL",
+      "Free Size",
+    ],
+    GirlsPants: [
+      "2T",
+      "3T",
+      "4T",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "XXXL",
+      "XXXXL",
+      "Free Size",
+    ],
+    GirlsShorts: [
+      "2T",
+      "3T",
+      "4T",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "XXXL",
+      "XXXXL",
+      "Free Size",
+    ],
+    Frock: [
+      "2T",
+      "3T",
+      "4T",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "XXXL",
+      "XXXXL",
+      "Free Size",
+    ],
   };
 
   const [productInfo, setProductInfo] = useState({
@@ -314,10 +361,11 @@ function AddProduct() {
   const [uplProductId, setUplProductId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
   const [secondModal, setSecondModal] = useState(false);
+  const [checkbox, setCheckbox] = useState(false);
 
   const categoriesWithSubcategories = {
     Mens: ["Shirts", "Pants"],
-    Womens: ["top", "Bottom", "Sarees","Kurtis"],
+    Womens: ["top", "Bottom", "Sarees", "Kurtis"],
     Kids: [
       "KidsShirt",
       "KidsBaniyans",
@@ -395,7 +443,7 @@ function AddProduct() {
       await httpService
         .post(
           `${apiURL}/product/add-new-product`,
-          { productInfo: productInfoDet, genInfo: productInfo },
+          { productInfo: productInfoDet, genInfo: productInfo, },
           config
         )
         .then((res) => {
@@ -422,15 +470,15 @@ function AddProduct() {
         .then((res) => {
           console.log("Res", res);
 
-          const { productInfo,_id, ...others } = res.data;
+          const { productInfo, _id, ...others } = res.data;
           setProductInfoDet((prev) => {
             return { ...productInfo };
           });
           setProductInfo((prev) => {
             return { ...others };
           });
-          productId = _id
-          console.log(_id)
+          productId = _id;
+          console.log(_id);
         })
         .catch((err) => {
           Swal.fire({
@@ -473,8 +521,8 @@ function AddProduct() {
               return { ...others };
             });
 
-            console.log("productDetails",productDetails)
-            setProductDetails(productDetails)
+            console.log("productDetails", productDetails);
+            setProductDetails(productDetails);
             setSecondModal(true);
           }
         })
@@ -494,6 +542,7 @@ function AddProduct() {
     <div className="bg-gray">
       {secondModal ? (
         <Section2
+          checkbox={checkbox}
           productId={uplProductId}
           sizeSelected={sizeSelected}
           productInfo={productInfo}
@@ -501,7 +550,6 @@ function AddProduct() {
           productDetails={productDetails}
           setProductDetails={setProductDetails}
           Packoff={productInfoDet.Packoff}
-          
         />
       ) : (
         <div className={styles.maindiv}>
@@ -933,9 +981,7 @@ function AddProduct() {
               >
                 Tags
               </label>
-              {errors.tags && (
-                <p className="text-red-500 text-sm mt-1">{errors.tags}</p>
-              )}
+
               <textarea
                 name="tags"
                 value={productInfo.tags}
@@ -946,6 +992,30 @@ function AddProduct() {
                 className="block p-4 w-full text-sm border-1"
                 placeholder="Enter tages for searching product"
               />
+            </div>
+
+            <div className="bg-white mt-4">
+              <label
+                for="message"
+                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
+              >
+                IS Price Depens on sizes
+              </label>
+
+              <div className="flex items-center p-3">
+                <input
+                  type="checkbox"
+                  name="Yes"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => setCheckbox(e.target.checked)}
+                />
+                <label
+                  for="default-checkbox"
+                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Yes
+                </label>
+              </div>
             </div>
           </div>
           <div className="m-2 d-flex justify-center items-center">

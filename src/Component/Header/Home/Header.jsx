@@ -10,7 +10,6 @@ import { CategoryNew } from "./Goodcards/Category/CategoryNew";
 // import Who from "./WhoSection/Who";
 import TrendingItems from "./TopTrends/Trends";
 import Strength from "./TopTrends/StrengthUI/StrengthUI";
-import { Footer } from "../../Footer/Footer";
 import { Link } from "react-router-dom";
 import Who from './WhoSection/Who'
 
@@ -91,11 +90,6 @@ const Header = ({ products }) => {
       <NewData products={products} />
       <TrendingItems />
       <Strength />
-      {/* <Offer />
-
-      <ShortAbout />
-      <CustomerReview /> */}
-      <Footer />
     </div>
   );
 };

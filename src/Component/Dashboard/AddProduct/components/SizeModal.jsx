@@ -2,16 +2,12 @@ import React, { useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-// import { apiURL } from "../../../../../../const/config";
 import httpService from "../../../Error Handling/httpService";
 import { apiURL } from "../../../../const/config";
 
 function SizeModal({ quantityModal, setQuantityModal, getProducts, product }) {
   const [selectedSizes, setSelectedSizes] = useState({});
 
-  // const sizes = Object.keys(product?.qtyAndSizes);
-
-  console.log(product);
   const changeHandler = (e) => {
     setSelectedSizes((prev) => {
       return { ...prev, [e.target.name]: e.target.value };

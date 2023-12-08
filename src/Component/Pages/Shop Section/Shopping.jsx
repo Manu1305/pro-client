@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { useParams } from "react-router-dom";
-import { Footer } from "../../Footer/Footer";
 import { PiHeartLight } from "react-icons/pi";
 import { CategCart } from "./CategCart/CategCart";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -29,38 +28,15 @@ const Shopping = ({ products }) => {
 
   const [collectionstate, setCollections] = useState([]);
 
-  const [isModalOpen, setIsModalOpen] = useState(true);
   const [userLocation, setUserLocation] = useState(null); // User's location (latitude and longitude)
 
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
       setCategories([]);
     } else {
       setCategories([categor]);
-    }
-  };
-
-
-  const getAddress = async () => {
-    try {
-      const pos = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
-  
-      const { latitude, longitude } = pos.coords;
-      console.log('Got latitude and longitude:', latitude, longitude);
-      
-      // Return latitude and longitude
-      return { latitude, longitude };
-    } catch (error) {
-      console.error("Error getting address:", error);
-      // Return an object with null values or handle the error as needed
-      return { latitude: null, longitude: null };
     }
   };
 
@@ -153,12 +129,6 @@ const Shopping = ({ products }) => {
   useEffect(() => {
     handleLocationPermission();
   }, []);
-
-
-
-
-console.log("prooooddata", filteredProducts)
-
 
   const displayUsers = sortedProducts
     .slice(pagesVisited, pagesVisited + usersPerpage)
@@ -391,7 +361,6 @@ console.log("prooooddata", filteredProducts)
             </div>
           </div>
           <div style={{ overflow: "hidden" }}>
-            <Footer />
           </div>
         </>
       </ScrollToTop>

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
-import { Footer } from "../../Footer/Footer";
 import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
@@ -162,7 +161,6 @@ const WishList = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

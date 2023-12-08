@@ -9,6 +9,7 @@ import { apiURL } from "../../../const/config";
 export const AllUsers = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [premium, setPremium] = useState([]);
+
   const getUsers = async () => {
     try {
       const res = await httpService
@@ -74,18 +75,6 @@ export const AllUsers = () => {
         renderCell: (params) => {
           return (
             <div>
-              {/* {userStatus ? (
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => {
-                      deactivateUser(ele._id);
-                    }}
-                  >
-                    dectivate
-                  </button>
-                </div>
-              ) : ( */}
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <button
                   className={
@@ -96,7 +85,6 @@ export const AllUsers = () => {
                   {!params.row.Action ? "Activate" : "Deactivate"}
                 </button>
               </div>
-              {/* )} */}
             </div>
           );
         },
