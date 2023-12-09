@@ -251,6 +251,7 @@ const ViewProduct = ({ getAllProducts }) => {
           .then((res) => {
             console.log("Product", res.data);
             setProduct(res.data);
+            setSelectedColor(res.data?.productDetails[0].color)
           })
           .catch((error) => {
             console.error("Error", error);
@@ -313,11 +314,11 @@ const ViewProduct = ({ getAllProducts }) => {
 
   const calculatePer = (product) => {
     const sellingPrice =
-      product.prices.length !== 0
+      product?.prices
         ? product.prices[pricesIndex].sellingPrice
         : product.sellingPrice;
     const realPrice =
-      product.prices.length !== 0
+      product?.prices
         ? product.prices[pricesIndex].realPrice
         : product.realPrice;
     const discount = ((realPrice - sellingPrice) / realPrice) * 100;
@@ -400,7 +401,7 @@ const ViewProduct = ({ getAllProducts }) => {
                   <div className={styles.heads}>
                     <div>
                       <h5 className={`text-uppercase brand ${styles.brand}`}>
-                        {product.brand}
+                        {product.title}
                       </h5>
                     </div>
                     {user?.email && user?.urType === "buyer" && (
@@ -426,7 +427,7 @@ const ViewProduct = ({ getAllProducts }) => {
                     )}
                   </div>
 
-                  <span>{product.title}</span>
+                  <span>{product.brand}</span>
 
                   <div
                     className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
@@ -434,7 +435,7 @@ const ViewProduct = ({ getAllProducts }) => {
                     <div>
                       <h5 className="fw-bold text-3xl font-mono">
                         ₹
-                        {product.prices.length !== 0
+                        {product?.prices
                           ? product.prices[pricesIndex].sellingPrice
                           : product.sellingPrice}
                       </h5>
@@ -444,7 +445,7 @@ const ViewProduct = ({ getAllProducts }) => {
                       {user && user.email ? (
                         <div className={styles.star}>
                           <h2 className="line-through">
-                            {product.prices.length !== 0
+                            {product?.prices
                               ? product.prices[pricesIndex].realPrice
                               : product.sellingPrice}
                           </h2>
@@ -491,7 +492,11 @@ const ViewProduct = ({ getAllProducts }) => {
                       {product.productDetails?.map((ele, index) => {
                         return typeof ele.color === "object" ? (
                           ele.color.map((item, id) => (
-                            <div key={id}>
+                            <div
+                              key={id}
+                              className={styles.color_box_border}
+                              style={{ borderRadius: `20px solid ${item}` }}
+                            >
                               <div
                                 className={styles.color_box}
                                 style={{ background: `${item}` }}
@@ -503,7 +508,7 @@ const ViewProduct = ({ getAllProducts }) => {
                             className="p-1"
                             style={{
                               border:
-                                selectedColor === ele.color
+                                selectedColor === ele.color 
                                   ? `3px solid ${ele.color}`
                                   : "",
                             }}
@@ -627,7 +632,7 @@ const ViewProduct = ({ getAllProducts }) => {
                   <>
                     {user?.email && user?.urType === "buyer" && (
                       <button
-                        className={`text-uppercase mr-2 ${styles.add_to_cart}`}
+                        className={`text-uppercase mr-2 ${styles.add_to_cart} sm:w-[350px]`}
                         onClick={() => addtoCartButton(product)}
                       >
                         <BsHandbagFill className="mb-1 mr-3" />
@@ -636,7 +641,7 @@ const ViewProduct = ({ getAllProducts }) => {
                     )}
                   </>
                   {offerBtn ? (
-                    <div className="container m-4">
+                    <div className="container m-4 sm:w-[350px]">
                       <div className="row justify-content-center">
                         <div className="col-md-6 text-center">
                           <h3 className="text-danger">
@@ -660,7 +665,7 @@ const ViewProduct = ({ getAllProducts }) => {
                 {/* Delivery Date */}
                 {user?.email && user?.urType === "buyer" && (
                   <div
-                    className="h-40 w-96 ml-5"
+                    className="h-40 w-96 ml-5 sm:w-[350px]"
                     style={{ border: "solid #c9e0eb" }}
                   >
                     <div className={styles.headone}>

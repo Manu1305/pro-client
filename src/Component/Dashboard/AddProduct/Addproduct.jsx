@@ -331,6 +331,20 @@ function AddProduct() {
       "XXXXL",
       "Free Size",
     ],
+    Kurtis: [
+      "2T",
+      "3T",
+      "4T",
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "XXXL",
+      "XXXXL",
+      "Free Size",
+    ],
   };
 
   const [productInfo, setProductInfo] = useState({

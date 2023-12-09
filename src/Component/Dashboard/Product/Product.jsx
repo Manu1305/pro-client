@@ -125,13 +125,14 @@ export const ProductSec = () => {
     if (ele === "price") {
       return { field: "price", type: "Number", width: 100 };
     }
-    if (user.urType !== "seller" && ele === "action") {
+    if ( ele === "action") {
       
       return {
         field: "Action",
         type: "action",
         width: "160px",
         renderCell: (params) => {
+          console.log(params)
           return (
               <div style={{ display: "flex", flexDirection: "row" }}>
               {/* Delete */}
@@ -151,7 +152,7 @@ export const ProductSec = () => {
               {/* Edit */}
               <div
                 onClick={() =>
-                  navigate(`/dashboard/Addproduct/${params.row.id}`)
+                  navigate(`/Addproduct/${params.row.id}`)
                 }
               >
                 <Tooltip title="Edit" sx={{ fontSize: 20 }}>

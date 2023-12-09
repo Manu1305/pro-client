@@ -91,7 +91,10 @@ const SellerRelatedPro = ({ seller }) => {
                       </a>
                     </div>
                     <div className={styless.marbtm}>
-                      <h5 className={styless.title}>{item.brand}</h5>
+                      <h5 className={styless.title}>
+                        {item.brand}
+                      </h5>
+
                       <h5 className={styless.titlee}>{item.title}</h5>
                       {/* Add any other content you want to display */}
                     </div>

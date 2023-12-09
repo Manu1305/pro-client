@@ -85,12 +85,6 @@ function DashHome() {
       to: "/dashboard/premium-sellers",
       icon: <ManageAccountsIcon />,
     },
-    {
-      id: 11,
-      list: "Deliver Deatils",
-      to: "/dashboard/assign-delivery-order",
-      icon: <ManageAccountsIcon />,
-    },
   ];
 
   const sellerDashboard = [

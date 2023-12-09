@@ -145,7 +145,6 @@ const Shopping = ({ products }) => {
         >
           <div className="d-flex flex-column">
             <div className={styless.container}>
-            
               <Link
                 style={{
                   cursor: "pointer",
@@ -155,7 +154,11 @@ const Shopping = ({ products }) => {
                 to={user && user.email ? `/ViewDetails/${data._id}` : "/login"}
               >
                 <div className={styless.imagediv}>
-                  <img src={data.productDetails[0].images[0]} alt="" />
+                  <img
+                    src={data.productDetails[0].images[0]}
+                    alt=""
+                    className="object-contain"
+                  />
                   <div className={styless.like}>
                     <div
                       style={{

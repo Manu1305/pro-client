@@ -1,20 +1,19 @@
 .container {
   display: flex;
   flex-direction: row;
-  box-shadow: 15px 6px 10px 
+  box-shadow: 15px 6px 10px;
 }
 
 .redBox1 {
   /* background-color: #BF0A2A; */
-  background: #BF0A2A;
-
+  background: #bf0a2a;
   height: 300px;
   width: 50%;
   cursor: pointer;
   transition: width 2s;
 }
 .redBox {
-  background-color: #BF0A2A;
+  background-color: #bf0a2a;
   height: 300px;
   width: 50%;
   cursor: pointer;
@@ -28,7 +27,7 @@
   cursor: pointer;
 }
 
-.whiteBox :hover{
+.whiteBox :hover {
   font-weight: 900;
   /* font-size: 10rem; */
 }
@@ -47,14 +46,14 @@
 .text2 {
   font-weight: 900;
   font-size: 14rem;
-  color: #BF0A2A;
+  color: #bf0a2a;
 }
 .text3 {
   font-weight: 900;
   font-size: 14rem;
   position: relative;
   right: auto;
-  color: #BF0A2A;
+  color: #bf0a2a;
   float: right;
   margin-left: 265px;
 }
@@ -68,26 +67,26 @@
   margin-right: 265px;
 }
 
-
 .text1Hover {
   font-weight: 900;
   font-size: 14rem;
   color: white;
   margin-top: -35px;
   transition: margin-top 1.5s;
+  margin-left: 100px;
 }
 
 .text2Hover {
   font-weight: 900;
   font-size: 14rem;
-  color: #BF0A2A;
+  color: #bf0a2a;
   margin-top: -35px;
   transition: margin-top 1.5s;
 }
 .text3Hover {
   font-weight: 900;
   font-size: 14rem;
-  color: #BF0A2A;
+  color: #bf0a2a;
 
   margin-top: -35px;
   margin-left: 300px;
@@ -99,60 +98,57 @@
   color: white;
   margin-top: -35px;
   margin-right: 250px;
-  margin-left: -90px;
+  margin-left: -0px;
   transition: margin-top 1.5s;
+  overflow: hidden;
 }
 
-
-.hovertext{
+.hovertext {
   font-weight: 900;
-  font-size: 4rem; 
+  font-size: 4rem;
   margin-left: 400px;
   top: 0;
   color: white;
-  padding-bottom:100px;
+  padding-bottom: 100px;
   line-height: 0px;
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-
-
-
-.hover1text{
+.hover1text {
   font-weight: 900;
-  font-size: 4rem; 
+  font-size: 4rem;
   margin-left: 200px;
   top: 0;
-  color: #BF0A2A;
-  padding-bottom:100px;
+  color: #bf0a2a;
+  padding-bottom: 100px;
   line-height: 0px;
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-.hover3text{
+.hover3text {
   font-weight: 900;
-  font-size: 4rem; 
+  font-size: 4rem;
   margin-left: 400px;
   top: 0;
-  color: #BF0A2A;
-  padding-bottom:100px;
+  color: #bf0a2a;
+  padding-bottom: 100px;
   line-height: 0px;
   right: 0;
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
-.hover4text{
+.hover4text {
   font-weight: 900;
-  font-size: 4rem; 
+  font-size: 4rem;
   margin-right: 320px;
   top: 0;
   color: white;
-  padding-bottom:100px;
+  padding-bottom: 100px;
   line-height: 0px;
   right: 0;
   animation: fadeInAnimation ease 1s;
@@ -160,18 +156,17 @@
   animation-fill-mode: forwards;
 }
 
-
 @keyframes fadeInAnimation {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
 .redText {
-  color: #BF0A2A;
+  color: #bf0a2a;
 }
 
 .whiteText {
@@ -186,124 +181,112 @@
   margin-right: 315px;
 }
 
-
 .redBox1.hovered {
   height: 40px;
   transition: height 2s;
-  
-
 }
 .redBox.hovered {
   height: 40px;
   transition: height 2s;
-
 }
 
 .whiteBox.hovered {
   height: 40px;
   transition: height 2s;
   display: block;
-  
 }
-.whiteTextinner{
+.whiteTextinner {
   text-align: center;
   font-size: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.whiteTextlast{
+.whiteTextlast {
   position: absolute;
   left: auto;
   color: white;
 }
-.redTextlast{
+.redTextlast {
   position: relative;
- right: auto;
- color: #BF0A2A;
- float: right;
+  right: auto;
+  color: #bf0a2a;
+  float: right;
 }
-
 
 /* 
 ///////////responsive\\\\\\\\\\\\\\\\\\\\\\ */
 
-@media screen and (max-width:800px) {
-  
-.redBox {
-  /* background-color: #BF0A2A; */
-  background: #BF0A2A;
+@media screen and (max-width: 800px) {
+  .redBox {
+    /* background-color: #BF0A2A; */
+    background: #bf0a2a;
 
-  height: 150px;
-  width: 50%;
-  
-}
+    height: 150px;
+    width: 50%;
+  }
 
-.whiteBox {
-  height: 150px;
-  width: 50%;
-}
+  .whiteBox {
+    height: 150px;
+    width: 50%;
+  }
 
-.text1 {
-  font-weight: 900;
-  font-size: 5rem;
-}
+  .text1 {
+    font-weight: 900;
+    font-size: 5rem;
+  }
 
-.text {
-  font-weight: 900;
-  font-size: 5rem;
-}
+  .text {
+    font-weight: 900;
+    font-size: 5rem;
+  }
 
+  .redText {
+    color: #bf0a2a;
+  }
 
-.redText {
-  color: #BF0A2A;
-}
+  .whiteText {
+    color: white;
+  }
 
-.whiteText {
-  color: white;
-}
+  .leftMargin {
+    margin-left: 70px;
+  }
 
-.leftMargin {
-  margin-left: 70px;
-}
+  .rightMargin {
+    margin-right: 315px;
+  }
 
-.rightMargin {
-  margin-right: 315px;
-}  
+  .redTextlast {
+    color: #bf0a2a;
+  }
+  .redBox1 {
+    /* background-color: #BF0A2A; */
+    background: #bf0a2a;
 
-.redTextlast{
-  color: #BF0A2A;;
-  
-}
-.redBox1 {
-  /* background-color: #BF0A2A; */
-  background: #BF0A2A;
-
-  height: 150px;
-  width: 50%;
-  cursor: pointer;
-  transition: width 2s;
-}
-.text1 {
-  font-weight: 900;
-  font-size: 4rem;
-  color: white;
-  
-}
-.text2 {
-  font-weight: 900;
-  font-size: 4rem;
-  color: #BF0A2A;
-}
-.text3 {
-  font-weight: 900;
-  font-size: 4rem;
-  color: #BF0A2A;
-}
-.text4 {
-  font-weight: 900;
-  font-size: 4rem;
-  color: white;
-
-}
+    height: 150px;
+    width: 50%;
+    cursor: pointer;
+    transition: width 2s;
+  }
+  .text1 {
+    font-weight: 900;
+    font-size: 4rem;
+    color: white;
+  }
+  .text2 {
+    font-weight: 900;
+    font-size: 4rem;
+    color: #bf0a2a;
+  }
+  .text3 {
+    font-weight: 900;
+    font-size: 4rem;
+    color: #bf0a2a;
+  }
+  .text4 {
+    font-weight: 900;
+    font-size: 4rem;
+    color: white;
+  }
 }

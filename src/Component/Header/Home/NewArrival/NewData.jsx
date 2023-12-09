@@ -46,6 +46,7 @@ const NewData = ({ products }) => {
                       <img 
                         src={productItems?.productDetails[0]?.images[0]}
                         alt=""
+                        className="object-contain"
                       />
                     </div>
                   </Link>
