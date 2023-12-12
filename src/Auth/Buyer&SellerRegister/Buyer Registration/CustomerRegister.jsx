@@ -364,14 +364,14 @@ const CustomerRegister = () => {
                           Send otp
                         </button>
                       ) : (
-                        <p className="font-bold">Didn't recieve otp... Send again in {time}</p>
+                        <p className="font-bold"></p>
                       )}
                     </div>
                   </div>
 
                   <div className="mb-4" style={{ width: "40%" }}>
                     {otpError && <div className="text-danger">{otpError}</div>}
-                    {otpbutton && (
+                   
                       <div>
                         <label htmlFor="phoneFormControlLg" className="mb-1">
                           OTP
@@ -394,7 +394,7 @@ const CustomerRegister = () => {
                           )}
                         </div>
                       </div>
-                    )}
+                   
                   </div>
                 </div>
 

@@ -127,7 +127,6 @@ const BuyerConfirm = () => {
         });
       console.log("ERROR WHILE PLACING", res);
       return res;
-      setLoader(false);
     } catch (error) {
       console.log(error);
       setLoader(false);
@@ -164,7 +163,7 @@ const BuyerConfirm = () => {
               sum +
               (((totalPrice * 10) / 100) * 5) / 100
             : parseInt(totalPrice) + GST + sum;
-        let payment = await makePayment(amount);
+        let payment = await makePayment(amount.toFixed(2));
 
         let orderStoreInDB = await placeOrder(
           payment.data.id,
@@ -265,7 +264,7 @@ const BuyerConfirm = () => {
         (parseInt(params.totalPrice) * 10) / 100 +
         (((parseInt(params.totalPrice) * 10) / 100) * 5) / 100 +
         sum;
-      return amount;
+      return amount.toFixed(2);
     }
   };
 
@@ -491,7 +490,7 @@ const BuyerConfirm = () => {
                           </div>
                           <div className="d-flex justify-content-between m-3">
                             <div className="font-weight-bold">Items(10%)</div>
-                            <div>{(parseInt(totalPrice) * 10) / 100}</div>
+                            <div>{((parseInt(totalPrice) * 10) / 100).toFixed(2)}</div>
                           </div>
                         </>
                       )}
@@ -502,7 +501,7 @@ const BuyerConfirm = () => {
                       </div>
                       <div className="d-flex justify-content-between m-3">
                         <div>GST- (5%)</div>
-                        <div>{calGST()}</div>
+                        <div>{calGST().toFixed(2)}</div>
                       </div>
                     </div>
                     <div>

@@ -358,8 +358,8 @@ function SingleOrder() {
               </div>
               <div className="ml-2 leading-10">
                 <h4 className="mt-4">Certon exports</h4>
-                <p>info@certonexport.com</p>
-                <p>+91 96488 74887</p>
+                <p>info@hitecmart.com</p>
+                <p>+91 9711811030</p>
                 {/* <p>id:sdsdfsfv</p>
                 <p>Amount charged:43</p>
                 <p>Payment method:cash</p> */}

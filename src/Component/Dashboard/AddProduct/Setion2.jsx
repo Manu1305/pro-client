@@ -299,7 +299,7 @@ function Section2({
           setImagePreviews={setImagePreviews}
           imagePreviews={imagePreviews}
           images={images}
-          category={productInfo.selectedSubcategory}
+          category={productInfo.selectedCategory === "Kids" ? "Kids" :productInfo.selectedSubcategory}
         />
       ) : (
         <div>

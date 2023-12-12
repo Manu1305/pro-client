@@ -68,17 +68,11 @@ import Profile from "./Pages/Navbar/Dropdown/ProfileDropdown";
 import { StorePage } from './../Auth/Buyer&SellerRegister/SellerRegistration/RegistrationPage';
 import { Footer } from './Pages/Footer/Footer';
 
-
-
 const LazyCart = React.lazy(() => import("./Pages/Cart/Cart"));
 const LazyMainPage = React.lazy(() =>
   import("./Pages/Profile/Seller/StoreSetupMainPage/MainPage"))
 
 const App = () => {
-
-
-
-
 
   const [produts, setProducts] = useState([]);
   const [ProductLength, setProductLength] = useState();

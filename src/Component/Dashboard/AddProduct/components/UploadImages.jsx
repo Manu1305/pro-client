@@ -27,19 +27,18 @@ function UploadImages({
   imagePreviews,
   images,
   category,
-  Packoff
+  Packoff,
 }) {
   const imageToShow = {
     Shirts: [img1, img2, img3, img4],
     top: [top1, top2, top3, top4],
     Bottom: [top1, top2, top3, top4],
-    Sarrees: [saree1, saree2, saree3, saree4],
+    Sarees: [saree1, saree2, saree3, saree4],
     Kids: [kid1, kid2, kid3, kid4],
     Pants: [pant1, pant2, pant3, pant4],
+    Kurtis: [top1, top2, top3, top4],
   };
 
-  console.log(Packoff)
-  // const category = "Sarrees";
 
   const handleImageSelection = (e) => {
     console.log("FIles", e.target.files);
@@ -69,7 +68,12 @@ function UploadImages({
             className="h-80 w-80 p-2 m-2 text-center"
             style={{ height: "300px", width: "300px" }}
           >
-            <img className="shadow-md" style={{ width: "100%", height: "100%" }} src={item} alt="" />
+            <img
+              className="shadow-md"
+              style={{ width: "100%", height: "100%" }}
+              src={item}
+              alt=""
+            />
           </div>
         ))}
       </div>

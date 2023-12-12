@@ -312,18 +312,22 @@ const ViewProduct = ({ getAllProducts }) => {
     }
   };
 
-  const calculatePer = (product) => {
+  const calculatePer = () => {
     const sellingPrice =
-      product?.prices
+      product?.prices.length !== 0
         ? product.prices[pricesIndex].sellingPrice
         : product.sellingPrice;
     const realPrice =
-      product?.prices
+      product?.prices.length !== 0
         ? product.prices[pricesIndex].realPrice
         : product.realPrice;
     const discount = ((realPrice - sellingPrice) / realPrice) * 100;
     return Math.floor(discount);
   };
+
+
+
+  
   return (
     <div className={`${styles.card}`}>
       {product !== null && (
@@ -435,7 +439,7 @@ const ViewProduct = ({ getAllProducts }) => {
                     <div>
                       <h5 className="fw-bold text-3xl font-mono">
                         ₹
-                        {product?.prices
+                        {product?.prices.length !== 0
                           ? product.prices[pricesIndex].sellingPrice
                           : product.sellingPrice}
                       </h5>
@@ -445,7 +449,7 @@ const ViewProduct = ({ getAllProducts }) => {
                       {user && user.email ? (
                         <div className={styles.star}>
                           <h2 className="line-through">
-                            {product?.prices
+                            {product?.prices.length !== 0
                               ? product.prices[pricesIndex].realPrice
                               : product.sellingPrice}
                           </h2>
