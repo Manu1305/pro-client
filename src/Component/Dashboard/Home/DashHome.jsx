@@ -24,6 +24,10 @@ function DashHome() {
 
   const splitLocation = pathname.split("/");
 
+
+  console.log("splitLocation",splitLocation[1]+splitLocation[2] === "dashbaord")
+  console.log("splitLocation",splitLocation[1]+splitLocation[2] )
+
   const dashboardList = [
     {
       id: 1,
@@ -154,9 +158,9 @@ function DashHome() {
                 <Link
                   to={item.to}
                   className={
-                    "/" + splitLocation[1] + "/" + splitLocation[2] === item.to
+                   ( "/" + splitLocation[1] + "/" + splitLocation[2] === item.to)
                       ? "active"
-                      : ""
+                      : (splitLocation[2] === 'undefined') &&item.id===1 ? "active" : ""
                   }
                   key={item.id}
                 >

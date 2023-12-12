@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, } from "react-router-dom";
+import { Routes, Route, Navigate, } from "react-router-dom";
 import ScrollToTop from "../Scrolltotop";
 import Login from "../Auth/UserLogin/Login";
 import Navbar from "./Pages/Navbar/Navbar";
@@ -222,6 +222,7 @@ const App = () => {
           {/* Dashboard Components */}
           <Route path="/dashboard" element={<DashHome products={ProductLength} />}    >
 
+
             {/*  Admin Seller Dashboard*/}
             <Route path="chart-deatils" element={<VendorDashboard />} />
             <Route path="product-requsets" element={<ProductRequest />} />
@@ -243,6 +244,11 @@ const App = () => {
             <Route path="assign-delivery" element={<DeliveryDash />} />
             <Route path="assign-return-delivery" element={<ReturnDelivery />} />
 
+
+            <Route
+              index
+              element={<Navigate to="chart-deatils" replace />}
+            />
           </Route>
 
         </Routes>
