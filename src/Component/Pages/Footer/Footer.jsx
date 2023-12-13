@@ -10,7 +10,6 @@ export const Footer = () => {
   const [showFooter, setShowFooter] = useState(false);
 
   useEffect(() => {
-    console.log("Here is location ", location.pathname.includes("dashboard"));
 
     location.pathname.includes("dashboard")
       ? setShowFooter(true)

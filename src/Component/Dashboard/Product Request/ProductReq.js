@@ -111,11 +111,14 @@ export const ProductRequest = () => {
 
   const header = [
     "seller",
+    "productCode",
     "images",
     "brand",
     "Stock",
     "price",
     "action",
+    
+
   ].map((ele) => {
     let string = ele;
     string.replace(/^./, string[0].toUpperCase());
@@ -188,6 +191,7 @@ export const ProductRequest = () => {
       Stock: ele.stock,
       price: ele.sellingPrice,
       seller: ele.seller,
+      productCode:ele.productCode
     };
   });
 

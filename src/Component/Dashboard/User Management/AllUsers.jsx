@@ -5,9 +5,11 @@ import { ScaleLoader } from "react-spinners";
 import DataTable from "../Reuseable Comp/DataTable";
 import httpService from "../../Error Handling/httpService";
 import { apiURL } from "../../../const/config";
+import axios from "axios";
 
 export const AllUsers = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [check, setCheck] = useState(false);
   const [premium, setPremium] = useState([]);
 
   const getUsers = async () => {
@@ -54,6 +56,28 @@ export const AllUsers = () => {
       console.log(error);
     }
   };
+  const storeAccessButton = async (id) => {
+    try {
+      await axios
+        .put(`${apiURL}/user/change-isownstore-status/${id}`)
+        .then((res) => {
+          console.log("Status Updated", res.data);
+          const updatedData = premium.map((item) => {
+            if (item._id === res.data._id) {
+              return { ...res.data };
+            } else {
+              return item;
+            }
+          });
+          setPremium(updatedData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const header = [
     "name",
@@ -62,12 +86,34 @@ export const AllUsers = () => {
     "userType",
     "premium",
     "gst",
+    "Store",
     "Action",
   ].map((ele) => {
     let string = ele;
     string.replace(/^./, string[0].toUpperCase());
 
-    if (ele === "Action") {
+    if (ele === "Store") {
+      return {
+        field: "Store",
+        type: "store",
+        width: "200px",
+        renderCell: (params) => {
+          return (
+            <div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={params.row.Store}
+                  onChange={() => storeAccessButton(params.row.id)}
+                  className="sr-only peer"
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          );
+        },
+      };
+    } else if (ele === "Action") {
       return {
         field: "Action",
         type: "action",
@@ -99,18 +145,21 @@ export const AllUsers = () => {
     }
   });
 
-  const rowData = premium.map((ele) => {
-    return {
-      id: ele._id,
-      name: ele.name,
-      phone: ele.phone,
-      email: ele.email,
-      premium: ele.subscription.subsStatus,
-      userType: ele.urType,
-      gst: ele.gst,
-      Action: ele.status,
-    };
-  });
+  const rowData = premium
+    .map((ele) => {
+      return {
+        id: ele._id,
+        name: ele.name,
+        phone: ele.phone,
+        email: ele.email,
+        premium: ele.subscription.subsStatus,
+        userType: ele.urType,
+        gst: ele.gst,
+        Action: ele.status,
+        Store: ele.isOwnStore,
+      };
+    })
+    .filter((ele) => ele.userType !== "admin");
 
   return (
     <div className="container ml-5 mr-0">

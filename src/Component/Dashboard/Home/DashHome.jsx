@@ -25,9 +25,6 @@ function DashHome() {
   const splitLocation = pathname.split("/");
 
 
-  console.log("splitLocation",splitLocation[1]+splitLocation[2] === "dashbaord")
-  console.log("splitLocation",splitLocation[1]+splitLocation[2] )
-
   const dashboardList = [
     {
       id: 1,

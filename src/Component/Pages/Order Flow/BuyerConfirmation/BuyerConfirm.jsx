@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useStore } from "react-redux";
+import { useSelector } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../../const/config";
@@ -9,11 +9,10 @@ import { getUserAddress } from "../../../../const/api";
 import { MDBRadio } from "mdb-react-ui-kit";
 import httpService from "../../../Error Handling/httpService";
 import { toast } from "react-toastify";
-import { Triangle, Vortex } from "react-loader-spinner";
+import { Vortex } from "react-loader-spinner";
 
 const BuyerConfirm = () => {
   const params = useParams();
-
 
   // getting user info
   const user = useSelector((state) => state.userReducer.user);
@@ -25,15 +24,10 @@ const BuyerConfirm = () => {
   const [payType, setPayType] = useState("");
 
   const [loader, setLoader] = useState(false);
-  // const [paid, setPaid] = useState(params.totalPrice);
 
   // selected delivery addrees
   const [deliveryAddress, setDeliveryAddress] = useState({});
   const [sum, setSum] = useState(0);
-
-
-
-
 
   // getting saved addresses
 
@@ -42,6 +36,7 @@ const BuyerConfirm = () => {
     setAddresses(ans);
     setShowForm(false);
   };
+
   useEffect(() => {
     getSavedAddress();
   }, []);
@@ -97,7 +92,7 @@ const BuyerConfirm = () => {
 
   // place order
   const placeOrder = async (paymentId, amount) => {
-    setLoader(true)
+    setLoader(true);
     try {
       const config = {
         headers: {
@@ -146,17 +141,14 @@ const BuyerConfirm = () => {
   };
 
   const placeOrderButton = async () => {
-
     const valid = Object.keys(deliveryAddress).length > 0;
 
     try {
       if (valid && payType !== "") {
-    setLoader(true);
-
+        setLoader(true);
         const pType = payType === "Cash on delivery" ? "cash" : "online";
 
         // payment checkout
-
         const amount =
           payType === "Cash on delivery"
             ? (totalPrice * 10) / 100 +
@@ -173,6 +165,7 @@ const BuyerConfirm = () => {
         console.log("Order Ids", orderStoreInDB);
         console.log("payment", payment);
         setLoader(false);
+
         const options = {
           key: "rzp_live_m3oBDZHhzp8QRY",
           amount: payment.data.amount,
@@ -268,7 +261,6 @@ const BuyerConfirm = () => {
     }
   };
 
-  // console.log(calPaidAmount(), "ORDER PRICE");
   return (
     <>
       {loader ? (
@@ -294,11 +286,11 @@ const BuyerConfirm = () => {
             <div className="col-md-1"></div>
 
             <div
-              className="col-md-6 mb-4 w-50 "
+              className="col-md-6 mb-4"
               style={{ overflowX: "auto", backgroundColor: "#eeeeee" }}
             >
               <div
-                className="row justify-content-center"
+                className="flex justify-center items-center"
                 style={{ marginTop: "45px" }}
               >
                 <h1
@@ -417,13 +409,14 @@ const BuyerConfirm = () => {
                   border: 0,
                 }}
               >
-                <div className="row justify-content-center m-3">
+                <div className="flex justify-center items-center">
                   <h1
                     style={{
                       color: "#bf0a2a",
                       fontSize: "30px",
                       fontFamily: "poppins",
                       fontWeight: "bold",
+                      textAlign:"center"
                     }}
                   >
                     Pay With
@@ -464,13 +457,14 @@ const BuyerConfirm = () => {
               >
                 <div className="container py-5">
                   <div className="row d-flex justify-content-center align-items-center">
-                    <div className="row justify-content-center mb-4 mt-0">
+                    <div className="flex justify-center items-center">
                       <h1
                         style={{
                           color: "#bf0a2a",
                           fontSize: "30px",
                           fontFamily: "poppins",
                           fontWeight: "bold",
+                          textAlign:'center'
                         }}
                       >
                         Order Summary
@@ -490,7 +484,9 @@ const BuyerConfirm = () => {
                           </div>
                           <div className="d-flex justify-content-between m-3">
                             <div className="font-weight-bold">Items(10%)</div>
-                            <div>{((parseInt(totalPrice) * 10) / 100).toFixed(2)}</div>
+                            <div>
+                              {((parseInt(totalPrice) * 10) / 100).toFixed(2)}
+                            </div>
                           </div>
                         </>
                       )}
@@ -527,11 +523,11 @@ const BuyerConfirm = () => {
                     </div>
                   </div>
                   {payType === "Cash on delivery" && (
-                    <span className="p-3" style={{ fontSize: "13px" }}>
+                    <div className="p-3" style={{ fontSize: "13px",marginLeft:"20px" }}>
                       For Cash on Delivery You need to pay Minimum 10% of the
                       real product price. + GST + Shippment Charge will be
                       Included
-                    </span>
+                    </div>
                   )}
                 </div>
               </div>

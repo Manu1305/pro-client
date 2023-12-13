@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import {  useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -37,7 +36,7 @@ export const PremiumSellers = () => {
       const data = res.data;
       const premium = data.filter((data) => data.urType === "seller");
 
-      setPremium(res.data);
+      setPremium(premium);
     } catch (error) {
       console.log(error);
     }

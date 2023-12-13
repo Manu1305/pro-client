@@ -1,4 +1,4 @@
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 
 function DataTable({ rows, columns }) {
 
@@ -17,11 +17,10 @@ function DataTable({ rows, columns }) {
       slots={{ toolbar: GridToolbar }}
       pageSizeOptions={[10]}
       sx={{
-        m: 2,
         p: 3,
         background: "#ffffff",
-        width: "95%",
-        height: "90%",
+        width: "auto",
+        height: "auto",
         fontFamily: "Plus Jakarta Sans, sans-serif",
         color: "black",
       }}

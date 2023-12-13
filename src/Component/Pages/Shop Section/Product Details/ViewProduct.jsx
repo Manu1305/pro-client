@@ -354,7 +354,7 @@ const ViewProduct = ({ getAllProducts }) => {
                 {product.productDetails[prdDetInd].images.map((img) => (
                   <div className="m-2">
                     <img
-                      style={{ height: "70px", width: "70px" }}
+                      style={{ height: "70px", width: "70px" ,objectFit:'contain'}}
                       src={img}
                       onClick={() => {
                         setImgPreview(img);
@@ -451,7 +451,7 @@ const ViewProduct = ({ getAllProducts }) => {
                           <h2 className="line-through">
                             {product?.prices.length !== 0
                               ? product.prices[pricesIndex].realPrice
-                              : product.sellingPrice}
+                              : product.realPrice}
                           </h2>
                         </div>
                       ) : null}
@@ -513,7 +513,7 @@ const ViewProduct = ({ getAllProducts }) => {
                             style={{
                               border:
                                 selectedColor === ele.color 
-                                  ? `3px solid ${ele.color}`
+                                  ? `4px solid ${ele.color}`
                                   : "",
                             }}
                           >
