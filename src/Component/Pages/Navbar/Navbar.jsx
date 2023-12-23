@@ -73,7 +73,7 @@ const Navbar = ({products}) => {
         )}
 
         <li>
-          <Link to="shop" onClick={closeMenu}>
+          <Link to="/shop" onClick={closeMenu}>
             SHOP
           </Link>
         </li>

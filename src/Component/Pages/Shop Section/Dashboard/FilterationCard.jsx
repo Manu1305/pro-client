@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import "./filterationCard.css";
 import Range from "../Range/Range";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const FilterationCard = ({
-  filteredProducts,
   setFilteredProducts,
   category,
   setCategory,
-  products,
+
 }) => {
+  const navigate = useNavigate();
   const [range, setRange] = useState([130, 3000]);
-  const allProducts = [...products];
+  const allProducts = useSelector((state) => state.productReducer.product);
 
   // price filterartion
   const priceFilteration = (product) => {
@@ -37,8 +39,10 @@ const FilterationCard = ({
       const filtByPrc = priceFilteration(filtByCate);
 
       setFilteredProducts(filtByPrc);
+      navigate(`/shop/${category}`)
     } else {
       const filtByPrc = priceFilteration(allProducts);
+      navigate(`/shop/${category}`)
       setFilteredProducts(filtByPrc);
     }
   };
@@ -52,7 +56,14 @@ const FilterationCard = ({
         <div className="card-checkbox">
           <div className="part1">
             {["All", "Kids", "Mens", "Womens"].map((item, id) => (
-              <div className="checkbox" key={id}>
+              <div
+                className="checkbox"
+                key={id}
+                onClick={() => {
+                  setCategory(item);
+                  ;
+                }}
+              >
                 <input
                   type="checkbox"
                   value={item}

@@ -26,7 +26,6 @@ import BuyerReturn from "./Pages/Buyer Orders/Return Request/BuyerReturn";
 import EmailCheck from "../Auth/UserLogin/ForgetPassword/Email Confirmation/Email";
 import Changepassword from "../Auth/UserLogin/ForgetPassword/Email Confirmation/CHangepassword";
 import Notification from "./Pages/Navbar/Notificatios/Notification";
-import ShoppingPage from "./Pages/Shop Section/Shopping";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Fonts/Poppinsfonts/Poppins-Bold.ttf";
 import { ScaleLoader } from "react-spinners";
@@ -131,7 +130,6 @@ const App = () => {
 
 
 
-  console.log(products)
   return (
     <ScrollToTop>
       <div className="fontClass">
@@ -179,23 +177,17 @@ const App = () => {
           <Route path="/whoweare" element={<WhoWeAre />} />
           <Route path="/orderDetails/:orderId" element={<SingleOrder />} />
           <Route path="/payment_succesfull" element={<PaymentSuccess />} />
-          {/* <Route
-            path="/shop"
-            element={<ShoppingPage />}
-          /> */}
+
+
           <Route
             path="/shop"
-            element={<Shop  products={products} setProductLength={setProductLength} ProductLength={ProductLength} />}
+            element={<Shop products={products} setProductLength={setProductLength} ProductLength={ProductLength} />}
           />
           <Route
             path="/shop/:cate"
             element={<Shop products={products} setProductLength={setProductLength} ProductLength={ProductLength} />}
           />
 
-          <Route
-            path="/shop/:cate"
-            element={<Shop products={products} setProductLength={setProductLength} ProductLength={ProductLength} />}
-          />
           <Route path="About" element={<AboutUs />} />
           <Route
             path="/forgotpassword/:id/:token"

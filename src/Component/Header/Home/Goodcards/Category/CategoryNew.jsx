@@ -29,7 +29,7 @@ export const CategoryNew = () => {
     },
     {
       cate: "ALL",
-      category:'all',
+      category:'All',
       imgUrl:
         "https://img.freepik.com/free-photo/clothes_144627-25214.jpg?t=st=1689148141~exp=1689148741~hmac=68afcca0925f34e991bf2b8f0eba9032f8e57f484f620c96efce42fad14cc182",
     }

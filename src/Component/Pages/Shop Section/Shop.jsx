@@ -6,44 +6,27 @@ import women from "./Images/women.png";
 import kids from "./Images/kids.png";
 import footer from "./Images/footwear.png";
 import Card from "./Card/Card";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const Shop = ({ products, setProductLength, ProductLength }) => {
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [category, setCategory] = useState("");
+const Shop = ({ setProductLength }) => {
 
+
+  const navigate = useNavigate();
+  const productsN = useSelector((state) => state.productReducer.product);
   const { cate } = useParams();
+  const [category, setCategory] = useState(cate ? cate : "All");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    if (cate) {
-      // alert(cate)
-      if (cate && products) {
-        const data = products.filter(item =>  item.selectedCategory ===  cate
-        );
-        setFilteredProducts(data);
-      }
-      if (cate.toLocaleLowerCase() === "All".toLocaleLowerCase())
-        setFilteredProducts(products);
+    if (cate && cate !== "All") {
+      const data = productsN.filter((item) => item.selectedCategory === cate);
+      setFilteredProducts(data);
+    } else {
+      setFilteredProducts(productsN || []); 
     }
-  }, []);
+  }, [cate, productsN]);
 
-
-
-
-  // useEffect(() => {
-  //   // setFilteredProducts(products)
-  //   console.log("first",products)
-  //   setFilteredProducts(products)
-  // },[products])
-
-  // console.log("products",products)
-  // console.log("filteredProducts",filteredProducts)'
-
-const filterByCate = (cate) => {
-const filteredData = [...products].filter(item => item.selectedCategory === cate)
-
-setFilteredProducts(filteredData)
-}
 
   return (
     <div className="Home-main">
@@ -54,7 +37,6 @@ setFilteredProducts(filteredData)
             setCategory={setCategory}
             setFilteredProducts={setFilteredProducts}
             filteredProducts={filteredProducts}
-            products={products}
             setProductLength={setProductLength}
           />
         </div>
@@ -69,7 +51,10 @@ setFilteredProducts(filteredData)
               <div
                 className="collection-card"
                 key={item.id}
-                onClick={() => filterByCate(item.category)}
+                onClick={() => {
+                  setCategory(item.category);
+                  navigate(`/shop/${item.category}`);
+                }}
               >
                 <img src={item.src} alt="" />
               </div>

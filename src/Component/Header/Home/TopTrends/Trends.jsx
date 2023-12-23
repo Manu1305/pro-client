@@ -169,9 +169,7 @@ const TrendingItems = ({ products }) => {
             ))}
         </Slider>
       </div>
-      {/* <Link to="/shop">
-        <button className={styless.seeMore}>See More...</button>
-      </Link> */}
+  
     </div>
   );
 };
