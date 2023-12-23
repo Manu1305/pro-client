@@ -124,6 +124,7 @@ function AddProduct() {
       "Princess Cut Kurti",
       "Tunic Style Kurti",
       "Double Layered Kurti",
+      "Coord Kurtis"
     ],
     KidsShirt: [
       "T-Shirts",
@@ -270,7 +271,7 @@ function AddProduct() {
     Pants: [28, 30, 32, 34, 36, 38, 40, 42],
     top: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
     Bottom: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
-    Sarees: ["5.5 meters", "6 meters", "6.1 meters", "6.2 meters", "6.5 meters", "7 meters", "9 yards"],
+    Sarees: ["5.3 meters","5.5 meters", "6 meters", "6.1 meters", "6.2 meters", "6.5 meters", "7 meters", "9 yards"],
     KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL", "XXXXL", "XXXXXL"],

@@ -303,7 +303,7 @@ const ViewProduct = ({ getAllProducts }) => {
         })
         .then((res) => {
           console.log("Prod Req", res.data);
-          navigate("/shoppingPage");
+          navigate("/shop");
           getAllProducts();
         })
         .catch((err) => {

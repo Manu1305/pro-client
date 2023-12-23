@@ -73,7 +73,7 @@ const Navbar = ({products}) => {
         )}
 
         <li>
-          <Link to="shoppingPage" onClick={closeMenu}>
+          <Link to="shop" onClick={closeMenu}>
             SHOP
           </Link>
         </li>
@@ -82,7 +82,6 @@ const Navbar = ({products}) => {
           <div className={styles.dropdown1}>
             <span>FRANCHISE</span>
             <div className={styles["dropdown-content1"]}>
-              {/* <p>Hello World!</p> */}
               <p>
                 {" "}
                 <Link to="/wholesale-store" onClick={closeMenu}>

@@ -66,7 +66,7 @@ function SearchBar({ products }) {
         <div className={styles.resultsContainer}>
           {filteredItems.map((value) => (
             <div className={styles.link} key={value.tags} onClick={() => handleSuggestionClick(value.collections)}>
-              <Link to={`/shoppingPages/searchresult/${value.collections}`}>
+              <Link to={`/shops/searchresult/${value.collections}`}>
                 {value.collections}
               </Link>
             </div>

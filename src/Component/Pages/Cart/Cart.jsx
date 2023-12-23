@@ -63,7 +63,7 @@ const Cart = () => {
   if (CartItem.subTotal === 0) {
     return (
       <div className="text-center">
-        <Link to="/shoppingPage">
+        <Link to="/shop">
           <div
             style={{
               display: "flex",

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styless from "./Payment.module.css";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ const PaymentSuccess = () => {
 
   // serach params hook to get params
   const searchQuery = useSearchParams()[0];
+  console.log(searchQuery)
 
   // payment id
   const refernce = searchQuery.get("reference");
@@ -23,19 +24,24 @@ const PaymentSuccess = () => {
   useEffect(() => {
     setTimeout(() => {
       navigate('/buyerOrder')
-    },5000)
+    },10000)
   })
 
   return (
     <div className={`${styless.container}`}>
       <div className={`${styless.card}`}>
-        <h2>Payment Success</h2>
+        <h1 className="text-center font-bold">{refernce ? "Payment Success" : "Order Placed Succefully...!"}</h1>
         <div className={`${styless.customerHeading}`}>
-          <p>Payment Id: {JSON.stringify(refernce)}</p>
+          {refernce && <p>Payment Id: {JSON.stringify(refernce)}</p>}
         </div>
-        <button className={`${styless.button}`} onClick={takeOrdersPage}>
+        
+        <div className="flex justify-center items-center">
+        <button 
+        onClick={takeOrdersPage} className="bg-green-200 hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
           Go To Orders
         </button>
+        </div>
+
       </div>
     </div>
   );

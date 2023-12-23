@@ -1,0 +1,115 @@
+.Dashboard-card {
+  width: 260px;
+  height: auto;
+  background-color: white;
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.Dashboard-card-text {
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 17px;
+  height: 18px;
+  margin-right: 8px;
+}
+
+.card-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.checkbox label {
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.Card-btn {
+  background: #bf0a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dashboard-filter {
+  margin-top: 1.5rem;
+  font-size: medium;
+  font-weight: 700;
+}
+
+.Card-btn button {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.part1{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .Dashboard-main{
+    width: 100%;
+  }
+  .Dashboard-card {
+    width: 100%;
+    padding: 1rem;
+
+  }
+
+  .Card-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .part1{
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+}
+
+
+@media (mix-width: 760px) {
+  .Dashboard-main{
+    width: 100%;
+  }
+  .Dashboard-card {
+    width: 100%;
+    padding: 1rem;
+
+  }
+
+  .Card-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .part1{
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+}

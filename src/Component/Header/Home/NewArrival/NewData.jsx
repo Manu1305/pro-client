@@ -39,12 +39,12 @@ const NewData = ({ products }) => {
         <Slider {...settings}>
           {products &&
             products.map((productItems) => (
-              <div >
+              <div key={productItems._id}>
                 <div className={styless.customerheading}>
                   <Link to={`/ViewDetails/${productItems._id}`} >
                     <div className={`${styless.card}`}>
                       <img 
-                        src={productItems?.productDetails[0]?.images[0]}
+                        src={productItems?.image[0]}
                         alt=""
                         className="object-contain"
                       />

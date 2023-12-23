@@ -81,6 +81,7 @@ export const AllUsers = () => {
 
   const header = [
     "name",
+    "joined",
     "phone",
     "email",
     "userType",
@@ -149,7 +150,9 @@ export const AllUsers = () => {
     .map((ele) => {
       return {
         id: ele._id,
+        
         name: ele.name,
+        joined:new Date(ele.createdAt),
         phone: ele.phone,
         email: ele.email,
         premium: ele.subscription.subsStatus,

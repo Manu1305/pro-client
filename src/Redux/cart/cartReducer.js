@@ -7,10 +7,9 @@ const initialState = {
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_CART:
-            console.log("Reducer",action.payload)
             return {
                 ...state,
-                userCart: { ...action.payload }, 
+                userCart: { ...action.payload },
             };
         default:
             return state;

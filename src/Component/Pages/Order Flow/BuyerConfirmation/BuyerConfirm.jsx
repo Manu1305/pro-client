@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,16 +13,15 @@ import { Vortex } from "react-loader-spinner";
 
 const BuyerConfirm = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   // getting user info
   const user = useSelector((state) => state.userReducer.user);
-
+  console.log("user", user);
   const [cartItems, setCartItems] = useState([]);
-
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [payType, setPayType] = useState("");
-
   const [loader, setLoader] = useState(false);
 
   // selected delivery addrees
@@ -30,7 +29,6 @@ const BuyerConfirm = () => {
   const [sum, setSum] = useState(0);
 
   // getting saved addresses
-
   const getSavedAddress = async () => {
     const ans = await getUserAddress();
     setAddresses(ans);
@@ -91,7 +89,7 @@ const BuyerConfirm = () => {
   };
 
   // place order
-  const placeOrder = async (paymentId, amount) => {
+  const placeOrder = async () => {
     setLoader(true);
     try {
       const config = {
@@ -107,8 +105,6 @@ const BuyerConfirm = () => {
           {
             products: cartItems,
             address: deliveryAddress.addressDetails,
-            // paymentId,
-            // totalAmount: amount,
           },
           config
         )
@@ -120,7 +116,7 @@ const BuyerConfirm = () => {
           toast.warning(err.response.data.message);
           // return ;
         });
-      console.log("ERROR WHILE PLACING", res);
+      console.log("Place Order", res);
       return res;
     } catch (error) {
       console.log(error);
@@ -140,27 +136,32 @@ const BuyerConfirm = () => {
       });
   };
 
+  const calculateTotalAmount = () => {
+    const amount =
+      payType === "Cash on delivery"
+        ? (totalPrice * 10) / 100 + sum + (((totalPrice * 10) / 100) * 5) / 100
+        : parseInt(totalPrice) + GST + sum;
+    return amount.toFixed(2);
+  };
+
   const placeOrderButton = async () => {
     const valid = Object.keys(deliveryAddress).length > 0;
+
+    console.log("From Button");
 
     try {
       if (valid && payType !== "") {
         setLoader(true);
+
         const pType = payType === "Cash on delivery" ? "cash" : "online";
 
         // payment checkout
-        const amount =
-          payType === "Cash on delivery"
-            ? (totalPrice * 10) / 100 +
-              sum +
-              (((totalPrice * 10) / 100) * 5) / 100
-            : parseInt(totalPrice) + GST + sum;
-        let payment = await makePayment(amount.toFixed(2));
 
-        let orderStoreInDB = await placeOrder(
-          payment.data.id,
-          payment.data.amount
-        );
+        // make Payment on razorpay
+        let payment = await makePayment(calculateTotalAmount());
+
+        // Place Order
+        let orderStoreInDB = await placeOrder();
 
         console.log("Order Ids", orderStoreInDB);
         console.log("payment", payment);
@@ -205,7 +206,6 @@ const BuyerConfirm = () => {
           alert(response.error.metadata.order_id);
           alert(response.error.metadata.payment_id);
 
-          console.log("Resposne", response);
           setLoader(false);
         });
       } else {
@@ -215,7 +215,6 @@ const BuyerConfirm = () => {
       }
     } catch (error) {
       console.log("ERORR  ==>", error);
-      // alert("refresh the page")
     }
   };
 
@@ -250,14 +249,46 @@ const BuyerConfirm = () => {
 
   // paid amount
   const calPaidAmount = () => {
-    if (payType !== "Cash on delivery") {
-      return parseInt(params.totalPrice) + GST + sum;
+    console.log("CONDITION",user.isOwnStore);
+
+
+    if (payType !== "Cash on delivery"   ) {
+    
+      return (parseInt(params.totalPrice) + GST + sum).toFixed(2)
     } else {
       const amount =
         (parseInt(params.totalPrice) * 10) / 100 +
         (((parseInt(params.totalPrice) * 10) / 100) * 5) / 100 +
         sum;
       return amount.toFixed(2);
+    }
+  };
+
+  const placeOrderCOD = async () => {
+    const valid = Object.keys(deliveryAddress).length > 0;
+    console.log("From COD");
+    const condition =
+      payType === "Cash on delivery" && user.isOwnStore === true;
+
+    if (valid && payType !== "" && condition) {
+      let orderStoreInDB = await placeOrder();
+
+      setLoader(false);
+      navigate("/payment_succesfull");
+    } else {
+      warningMsg("Plese selete address or add address");
+      setLoader(false);
+    }
+  };
+
+  const checkIsOwnStore = () => {
+    const condition =
+      payType === "Cash on delivery" && user.isOwnStore === true;
+
+    if (condition) {
+      placeOrderCOD();
+    } else {
+      placeOrderButton();
     }
   };
 
@@ -416,7 +447,7 @@ const BuyerConfirm = () => {
                       fontSize: "30px",
                       fontFamily: "poppins",
                       fontWeight: "bold",
-                      textAlign:"center"
+                      textAlign: "center",
                     }}
                   >
                     Pay With
@@ -464,7 +495,7 @@ const BuyerConfirm = () => {
                           fontSize: "30px",
                           fontFamily: "poppins",
                           fontWeight: "bold",
-                          textAlign:'center'
+                          textAlign: "center",
                         }}
                       >
                         Order Summary
@@ -523,7 +554,10 @@ const BuyerConfirm = () => {
                     </div>
                   </div>
                   {payType === "Cash on delivery" && (
-                    <div className="p-3" style={{ fontSize: "13px",marginLeft:"20px" }}>
+                    <div
+                      className="p-3"
+                      style={{ fontSize: "13px", marginLeft: "20px" }}
+                    >
                       For Cash on Delivery You need to pay Minimum 10% of the
                       real product price. + GST + Shippment Charge will be
                       Included
@@ -541,7 +575,7 @@ const BuyerConfirm = () => {
                       borderRadius: "0px",
                       backgroundColor: "#bf0a2a",
                     }}
-                    onClick={placeOrderButton}
+                    onClick={checkIsOwnStore}
                   >
                     Place Order
                   </button>

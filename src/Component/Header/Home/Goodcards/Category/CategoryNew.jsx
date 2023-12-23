@@ -35,12 +35,8 @@ export const CategoryNew = () => {
     }
   ];
 
-
-
-
   const categoriesType = (type) => {
-    
-    navigation(`/shoppingPage/${type}`);
+    navigation(`/shop/${type}`);
   };
 
 

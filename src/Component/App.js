@@ -67,6 +67,7 @@ import { ReturnDelivery } from './Dashboard/Delivery/Return Delivery/ReturnDeliv
 import Profile from "./Pages/Navbar/Dropdown/ProfileDropdown";
 import { StorePage } from './../Auth/Buyer&SellerRegister/SellerRegistration/RegistrationPage';
 import { Footer } from './Pages/Footer/Footer';
+import Shop from "./Pages/Shop Section/Shop";
 
 const LazyCart = React.lazy(() => import("./Pages/Cart/Cart"));
 const LazyMainPage = React.lazy(() =>
@@ -74,7 +75,7 @@ const LazyMainPage = React.lazy(() =>
 
 const App = () => {
 
-  const [produts, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [ProductLength, setProductLength] = useState();
 
   const user = useSelector((state) => state.userReducer.user);
@@ -96,7 +97,6 @@ const App = () => {
           if (res.data.Message === "Your cart is empty...!") {
             // setCartItem([]);
           } else {
-            console.log("UserCARt", res);
             dispatch(userCartItem(res.data));
           }
         })
@@ -111,10 +111,11 @@ const App = () => {
     await httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        console.log("All Products", res.data);
-
+        
         const filByStaus = res.data.filter((prd) => prd.status === "Published");
         dispatch(addProduct(filByStaus));
+        console.log("All Products", filByStaus);
+
         setProducts(filByStaus);
         setProductLength(filByStaus.length);
       })
@@ -128,17 +129,20 @@ const App = () => {
     getAllProducts();
   }, []);
 
+
+
+  console.log(products)
   return (
     <ScrollToTop>
       <div className="fontClass">
-        <Navbar products={produts} />
+        <Navbar products={products} />
         <Routes>
           <Route path="*" element={<Error404 />} />
           <Route
             path="login"
-            element={!user?.name ? <Login /> : <Header products={produts} />}
+            element={!user?.name ? <Login /> : <Header products={products} />}
           />
-          <Route path="/" element={<Header products={produts} />} />
+          <Route path="/" element={<Header products={products} />} />
 
 
           <Route path="/cart" element={<React.Suspense fallback={<div><ScaleLoader /> </div>}   > {" "}  {user?.name ? <LazyCart /> : <Login />}   </React.Suspense>} />
@@ -175,18 +179,22 @@ const App = () => {
           <Route path="/whoweare" element={<WhoWeAre />} />
           <Route path="/orderDetails/:orderId" element={<SingleOrder />} />
           <Route path="/payment_succesfull" element={<PaymentSuccess />} />
+          {/* <Route
+            path="/shop"
+            element={<ShoppingPage />}
+          /> */}
           <Route
-            path="/shoppingPage"
-            element={<ShoppingPage products={produts} />}
+            path="/shop"
+            element={<Shop  products={products} setProductLength={setProductLength} ProductLength={ProductLength} />}
           />
           <Route
-            path="/shoppingPage/:category"
-            element={<ShoppingPage products={produts} />}
+            path="/shop/:cate"
+            element={<Shop products={products} setProductLength={setProductLength} ProductLength={ProductLength} />}
           />
 
           <Route
-            path="/shoppingPages/:category/:collections"
-            element={<ShoppingPage products={produts} />}
+            path="/shop/:cate"
+            element={<Shop products={products} setProductLength={setProductLength} ProductLength={ProductLength} />}
           />
           <Route path="About" element={<AboutUs />} />
           <Route
@@ -207,7 +215,7 @@ const App = () => {
           <Route path="/wholesale-store" element={<WholesaleStore />} />
           <Route path="/delivery-frenchies" element={<DeliveryFranchise />} />
           <Route path="/retail-franchise" element={<RetailFranchise />} />
-          <Route path="/ViewDetails/:id" element={<SellerRelatedPro productItems={produts} />} />
+          <Route path="/ViewDetails/:id" element={<SellerRelatedPro productItems={products} />} />
 
 
           {/* footer data */}

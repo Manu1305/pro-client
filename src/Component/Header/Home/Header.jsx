@@ -66,7 +66,7 @@ const Header = ({ products }) => {
         <div className={header.category1}>
           <Slider {...settings}>
             {cards.map((item) => (
-              <Link to="/shoppingPage">
+              <Link to="/shop">
                 <div key={item.id} style={{ position: "relative" }}>
                   <img
                     src={item.image}

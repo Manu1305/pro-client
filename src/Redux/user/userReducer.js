@@ -15,7 +15,6 @@ export const userReducer = (state = InitialState, action) => {
       return { ...state, seller: action.payload };
 
     case loginSuccess:
-      console.log("From Redux",action.payload)
       return { ...state, user: action.payload };
 
     default:

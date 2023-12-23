@@ -144,7 +144,7 @@ const TrendingItems = ({ products }) => {
             productItems.map((productItems) => (
               <div>
                 <div className={styless.customerheading}>
-                  <Link to='/shoppingpage' >
+                  <Link to='/shop' >
                     <div className={`${styless.card} shadow-md`}>
                       <img
                         src={productItems.image} 
@@ -169,7 +169,7 @@ const TrendingItems = ({ products }) => {
             ))}
         </Slider>
       </div>
-      {/* <Link to="/shoppingPage">
+      {/* <Link to="/shop">
         <button className={styless.seeMore}>See More...</button>
       </Link> */}
     </div>

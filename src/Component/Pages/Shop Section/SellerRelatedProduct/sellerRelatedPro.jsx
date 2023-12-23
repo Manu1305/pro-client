@@ -106,7 +106,7 @@ const SellerRelatedPro = ({ seller }) => {
             })}
         </Slider>
       </div>
-      <Link to="/shoppingPage">
+      <Link to="/shop">
         <button className={styless.seeMore}>Go to shop...</button>
       </Link>
     </div>

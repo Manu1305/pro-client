@@ -11,7 +11,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ScrollToTop from "../../../Scrolltotop";
 
-
 const Shopping = ({ products }) => {
   const { category, collections } = useParams();
 
@@ -30,8 +29,6 @@ const Shopping = ({ products }) => {
 
   const [userLocation, setUserLocation] = useState(null); // User's location (latitude and longitude)
 
-
-
   const handleCategoryChange = (categor) => {
     if (categor === "all") {
       setCategories([]);
@@ -39,7 +36,6 @@ const Shopping = ({ products }) => {
       setCategories([categor]);
     }
   };
-
 
   useEffect(() => {
     if (selectedCategory === "all") {
@@ -52,6 +48,7 @@ const Shopping = ({ products }) => {
   useEffect(() => {
     setCollections([colletionResults]);
   }, [colletionResults]);
+
   const sellingPrices = products.map((item) => item.sellingPrice);
   const highestPrice = Math.max(...sellingPrices);
   const lowestprice = 0;
@@ -75,8 +72,6 @@ const Shopping = ({ products }) => {
   const usersPerpage = 20;
   const pagesVisited = pageNumber * usersPerpage;
 
-
-
   const handleLocationPermission = async () => {
     try {
       const pos = await new Promise((resolve, reject) => {
@@ -90,41 +85,36 @@ const Shopping = ({ products }) => {
     }
   };
 
+  // Calculate the distance between two points using the Haversine formula
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in kilometers
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
 
-    // Calculate the distance between two points using the Haversine formula
-    const calculateDistance = (lat1, lon1, lat2, lon2) => {
-      const R = 6371; // Radius of the Earth in kilometers
-      const dLat = ((lat2 - lat1) * Math.PI) / 180;
-      const dLon = ((lon2 - lon1) * Math.PI) / 180;
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos((lat1 * Math.PI) / 180) *
-          Math.cos((lat2 * Math.PI) / 180) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    };
-
-
- // Calculate distances for each product and sort them
- const sortedProducts =
- filteredProducts &&
- userLocation
-   ? filteredProducts
-       .map((product) => {
-         const distance = calculateDistance(
-           userLocation.latitude,
-           userLocation.longitude,
-           product.latitude, // The store's latitude
-           product.longitude // The store's longitude
-         );
-         return { ...product, distance };
-       })
-       .sort((a, b) => a.distance - b.distance)
-   : filteredProducts;
-
-
+  // Calculate distances for each product and sort them
+  const sortedProducts =
+    filteredProducts && userLocation
+      ? filteredProducts
+          .map((product) => {
+            const distance = calculateDistance(
+              userLocation.latitude,
+              userLocation.longitude,
+              product.latitude, // The store's latitude
+              product.longitude // The store's longitude
+            );
+            return { ...product, distance };
+          })
+          .sort((a, b) => a.distance - b.distance)
+      : filteredProducts;
 
   useEffect(() => {
     handleLocationPermission();
@@ -155,7 +145,7 @@ const Shopping = ({ products }) => {
               >
                 <div className={styless.imagediv}>
                   <img
-                    src={data.productDetails[0].images[0]}
+                    src={data.image[0]}
                     alt=""
                     className="object-contain"
                   />
@@ -223,7 +213,6 @@ const Shopping = ({ products }) => {
     <>
       <ScrollToTop>
         <>
-     
           <div style={{ background: "#ffffff" }}>
             <div>
               <CategCart />
@@ -344,15 +333,13 @@ const Shopping = ({ products }) => {
                             pageCount={pageCount}
                             onPageChange={changePage}
                             containerClassName={"pagination"}
-                            onClick={()=>{
+                            onClick={() => {
                               window.scroll({
                                 top: 0,
                                 left: 0,
                                 behavior: "smooth",
                               });
                             }}
-
-                            
                           />
                         </div>
                       )}
@@ -363,8 +350,7 @@ const Shopping = ({ products }) => {
               </div>
             </div>
           </div>
-          <div style={{ overflow: "hidden" }}>
-          </div>
+          <div style={{ overflow: "hidden" }}></div>
         </>
       </ScrollToTop>
     </>

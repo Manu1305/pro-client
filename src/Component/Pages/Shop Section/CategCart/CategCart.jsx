@@ -40,7 +40,7 @@ export const CategCart = () => {
 
   const categoriesType = (type) => {
     
-    navigation(`/shoppingPage/${type}`);
+    navigation(`/shop/${type}`);
   };
 
 
