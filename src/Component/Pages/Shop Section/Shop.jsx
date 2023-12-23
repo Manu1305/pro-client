@@ -37,7 +37,14 @@ const Shop = ({ products, setProductLength, ProductLength }) => {
   // },[products])
 
   // console.log("products",products)
-  // console.log("filteredProducts",filteredProducts)
+  // console.log("filteredProducts",filteredProducts)'
+
+const filterByCate = (cate) => {
+const filteredData = [...products].filter(item => item.selectedCategory === cate)
+
+setFilteredProducts(filteredData)
+}
+
   return (
     <div className="Home-main">
       <div className="Home-upper-sec">
@@ -55,14 +62,14 @@ const Shop = ({ products, setProductLength, ProductLength }) => {
           <div className="card-main-collection">
             {[
               { id: 1, src: men, category: "Mens" },
-              { id: 1, src: women, category: "Women" },
+              { id: 1, src: women, category: "Womens" },
               { id: 2, src: kids, category: "Kids" },
               { id: 3, src: footer, category: "Footwear" },
             ].map((item) => (
               <div
                 className="collection-card"
                 key={item.id}
-                onClick={() => setCategory(item.category)}
+                onClick={() => filterByCate(item.category)}
               >
                 <img src={item.src} alt="" />
               </div>
