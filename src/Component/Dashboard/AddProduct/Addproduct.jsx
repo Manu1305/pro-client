@@ -1014,7 +1014,7 @@ function AddProduct() {
                 for="message"
                 className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
               >
-                IS Price Depens on sizes
+                Price depedns on sizes then ckeck the box
               </label>
 
               <div className="flex items-center p-3">

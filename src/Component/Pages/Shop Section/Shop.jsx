@@ -9,27 +9,39 @@ import Card from "./Card/Card";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Shop = ({ setProductLength }) => {
-
-
+const Shop = () => {
   const navigate = useNavigate();
-  const productsN = useSelector((state) => state.productReducer.product);
+  const products = useSelector((state) => state.productReducer.product);
   const { cate } = useParams();
   const [category, setCategory] = useState(cate ? cate : "All");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     if (cate && cate !== "All") {
-      const data = productsN.filter((item) => item.selectedCategory === cate);
-      setFilteredProducts(data);
-    } else {
-      setFilteredProducts(productsN || []); 
-    }
-  }, [cate, productsN]);
+      if (cate.length > 1) {
+        const data = products.filter((item) => {
+          const categeory = item.selectedCategory.toLocaleLowerCase();
+          const subCate = item.selectedSubcategory.toLocaleLowerCase();
+          const tags = item.tags.toLocaleLowerCase();
 
+          return (
+            tags.includes(cate.toLocaleLowerCase()) ||
+            categeory.includes(cate.toLocaleLowerCase()) ||
+            subCate.includes(cate.toLocaleLowerCase())
+          );
+        });
+        setFilteredProducts(data);
+      } else {
+        const data = products.filter((item) => item.selectedCategory === cate);
+        setFilteredProducts(data);
+      }
+    } else {
+      setFilteredProducts(products || []);
+    }
+  }, [cate, products]);
 
   return (
-    <div className="Home-main">
+    <div className="Home-mainmain">
       <div className="Home-upper-sec">
         <div className="Home-upper-sec-1">
           <FilterationCard
@@ -37,7 +49,6 @@ const Shop = ({ setProductLength }) => {
             setCategory={setCategory}
             setFilteredProducts={setFilteredProducts}
             filteredProducts={filteredProducts}
-            setProductLength={setProductLength}
           />
         </div>
         <div className="Home-upper-sec-2">

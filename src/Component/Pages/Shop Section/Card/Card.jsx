@@ -15,7 +15,10 @@ const Card = ({ items }) => {
         ) : (
           <img src={modelImg} alt="" />
         )}
+        <div className="bg-slate-30 rounded-sm">
         <IoIosHeartEmpty className="heart-icon" />
+
+        </div>
       </div>
 
       <div className="card-model-content">

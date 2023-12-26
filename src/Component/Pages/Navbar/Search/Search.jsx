@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import styles from "./SearchBar.module.css";
-
 
 function SearchBar({ products }) {
   const [query, setQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [selectedSuggestion, setSelectedSuggestion] = useState("");
 
+  const navigate = useNavigate();
+
   const item = products;
   const filteredItems = getFilteredUniqueItems(query, item).slice(0, 5);
-
 
   function handleSuggestionClick(suggestion) {
     setQuery("");
@@ -23,7 +23,6 @@ function SearchBar({ products }) {
       return items;
     }
 
-    
     const uniqueItems = [];
     const addedCollections = new Set();
 
@@ -31,7 +30,10 @@ function SearchBar({ products }) {
 
     for (const product of items) {
       const productCollectionsLowercase = product.collections.toLowerCase(); // Convert product collections to lowercase
-      if (productCollectionsLowercase.includes(queryLowercase) && !addedCollections.has(productCollectionsLowercase)) {
+      if (
+        productCollectionsLowercase.includes(queryLowercase) &&
+        !addedCollections.has(productCollectionsLowercase)
+      ) {
         uniqueItems.push(product);
         addedCollections.add(productCollectionsLowercase);
       }
@@ -47,22 +49,32 @@ function SearchBar({ products }) {
     }, 500);
     return () => clearTimeout(timeoutId);
   }, [query]);
+  const onPressEnter = (event) => {
+    if (event.key === "Enter") {
+      console.log(event.target.value);
 
+
+      // json
+      navigate(`/shop/${event.target.value}`);
+    }
+  };
   return (
     <div className={styles.container}>
       <input
         type="text"
-        value={selectedSuggestion || query}
-        onChange={(e) => setQuery(e.target.value)}
+        // value={selectedSuggestion || query}
+        // onChange={(e) => setQuery(e.target.value)}
         className={styles.input}
+        placeholder="Search"
+        onKeyDown={onPressEnter}
       />
       <CiSearch className={styles.searchIcon} />
-      {query && !isSearching && filteredItems.length === 0 && (
+      {/* {query && !isSearching && filteredItems.length === 0 && (
         <ul className={styles.resultsContainer}>
           <li>No results found</li>
         </ul>
-      )}
-      {query && filteredItems.length > 0 && (
+      )} */}
+      {/* {query && filteredItems.length > 0 && (
         <div className={styles.resultsContainer}>
           {filteredItems.map((value) => (
             <div className={styles.link} key={value.tags} onClick={() => handleSuggestionClick(value.collections)}>
@@ -70,9 +82,9 @@ function SearchBar({ products }) {
                 {value.collections}
               </Link>
             </div>
-          ))}
-        </div>
-      )}
+          ))} */}
+      {/* </div>
+      )} */}
     </div>
   );
 }
