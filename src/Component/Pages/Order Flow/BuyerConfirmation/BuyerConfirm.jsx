@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { apiURL } from "../../../../const/config";
@@ -10,6 +10,7 @@ import { MDBRadio } from "mdb-react-ui-kit";
 import httpService from "../../../Error Handling/httpService";
 import { toast } from "react-toastify";
 import { Vortex } from "react-loader-spinner";
+import { userCartItem } from "../../../../Redux/cart/cartAction";
 
 const BuyerConfirm = () => {
   const params = useParams();
@@ -17,7 +18,10 @@ const BuyerConfirm = () => {
 
   // getting user info
   const user = useSelector((state) => state.userReducer.user);
-  console.log("user", user);
+
+  const cart = useSelector(state => state.cartReducer.userCart)
+
+  console.log("USER CART",cart)
   const [cartItems, setCartItems] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -35,13 +39,11 @@ const BuyerConfirm = () => {
     setShowForm(false);
   };
 
-  useEffect(() => {
-    getSavedAddress();
-  }, []);
-
   const handleAddAddress = () => {
     setShowForm(!showForm);
   };
+
+  const dispatch = useDispatch()
 
   const getCartCarts = async () => {
     try {
@@ -55,8 +57,7 @@ const BuyerConfirm = () => {
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           setCartItems(res.data);
-
-          console.log("User Cart", res.data);
+          dispatch(userCartItem(res.data))
           return res.data;
         })
         .catch((err) => {
@@ -78,6 +79,7 @@ const BuyerConfirm = () => {
 
   useEffect(() => {
     getCartCarts();
+    getSavedAddress();
   }, []);
 
   const totalPrice = Number(params.totalPrice);
@@ -109,9 +111,16 @@ const BuyerConfirm = () => {
           config
         )
         .then((res) => {
-          return res.data;
+          if (res.data.message === "Order placed") {
+            setLoader(false);
+            navigate("/payment_succesfull");
+            return res.data;
+          } else {
+            setLoader(false);
+          }
         })
         .catch((err) => {
+          setLoader(false);
           console.log(err);
           toast.warning(err.response.data.message);
           // return ;
@@ -249,12 +258,10 @@ const BuyerConfirm = () => {
 
   // paid amount
   const calPaidAmount = () => {
-    console.log("CONDITION",user.isOwnStore);
+    console.log("CONDITION", user.isOwnStore);
 
-
-    if (payType !== "Cash on delivery"   ) {
-    
-      return (parseInt(params.totalPrice) + GST + sum).toFixed(2)
+    if (payType !== "Cash on delivery") {
+      return (parseInt(params.totalPrice) + GST + sum).toFixed(2);
     } else {
       const amount =
         (parseInt(params.totalPrice) * 10) / 100 +
@@ -272,9 +279,6 @@ const BuyerConfirm = () => {
 
     if (valid && payType !== "" && condition) {
       let orderStoreInDB = await placeOrder();
-
-      setLoader(false);
-      navigate("/payment_succesfull");
     } else {
       warningMsg("Plese selete address or add address");
       setLoader(false);
@@ -287,8 +291,10 @@ const BuyerConfirm = () => {
 
     if (condition) {
       placeOrderCOD();
+      getCartCarts();
     } else {
       placeOrderButton();
+      getCartCarts();
     }
   };
 
@@ -364,7 +370,7 @@ const BuyerConfirm = () => {
               >
                 {!showForm ? (
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    {addresses.map((address) => (
+                    {addresses.map((address,index) => (
                       <div
                         key={address._id}
                         style={{
@@ -468,6 +474,7 @@ const BuyerConfirm = () => {
                       name="inlineRadio"
                       id={`inlineRadio${index}`}
                       value={type}
+                      defaultChecked={index===1}
                       onChange={() => setPayType(type)}
                       inline
                     />

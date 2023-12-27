@@ -94,7 +94,7 @@ const App = () => {
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           if (res.data.Message === "Your cart is empty...!") {
-            // setCartItem([]);
+            console.log(res.data)
           } else {
             dispatch(userCartItem(res.data));
           }
