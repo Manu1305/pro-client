@@ -26,7 +26,7 @@ const Shop = () => {
 
           return (
             tags.includes(cate.toLocaleLowerCase()) ||
-            categeory.includes(cate.toLocaleLowerCase()) ||
+            categeory.toLocaleLowerCase() === cate.toLocaleLowerCase() ||
             subCate.includes(cate.toLocaleLowerCase())
           );
         });

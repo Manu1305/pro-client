@@ -19,9 +19,9 @@ const BuyerConfirm = () => {
   // getting user info
   const user = useSelector((state) => state.userReducer.user);
 
-  const cart = useSelector(state => state.cartReducer.userCart)
+  // const cart = useSelector(state => state.cartReducer.userCart)
 
-  console.log("USER CART",cart)
+  console.log("USER",user)
   const [cartItems, setCartItems] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -112,8 +112,6 @@ const BuyerConfirm = () => {
         )
         .then((res) => {
           if (res.data.message === "Order placed") {
-            setLoader(false);
-            navigate("/payment_succesfull");
             return res.data;
           } else {
             setLoader(false);
@@ -147,7 +145,7 @@ const BuyerConfirm = () => {
 
   const calculateTotalAmount = () => {
     const amount =
-      payType === "Cash on delivery"
+      (payType === "Cash on delivery"  && user.isOwnStore === false)
         ? (totalPrice * 10) / 100 + sum + (((totalPrice * 10) / 100) * 5) / 100
         : parseInt(totalPrice) + GST + sum;
     return amount.toFixed(2);
@@ -163,8 +161,6 @@ const BuyerConfirm = () => {
         setLoader(true);
 
         const pType = payType === "Cash on delivery" ? "cash" : "online";
-
-        // payment checkout
 
         // make Payment on razorpay
         let payment = await makePayment(calculateTotalAmount());
@@ -252,7 +248,7 @@ const BuyerConfirm = () => {
     if (payType === "Online Payment") {
       return GST;
     } else {
-      return (((parseInt(totalPrice) * 10) / 100) * 5) / 100;
+      return user.isOwnStore === true ?GST  :(((parseInt(totalPrice) * 10) / 100) * 5) / 100;
     }
   };
 
@@ -260,14 +256,14 @@ const BuyerConfirm = () => {
   const calPaidAmount = () => {
     console.log("CONDITION", user.isOwnStore);
 
-    if (payType !== "Cash on delivery") {
-      return (parseInt(params.totalPrice) + GST + sum).toFixed(2);
-    } else {
+    if (payType === "Cash on delivery" && user.isOwnStore === false ) {
       const amount =
-        (parseInt(params.totalPrice) * 10) / 100 +
-        (((parseInt(params.totalPrice) * 10) / 100) * 5) / 100 +
-        sum;
+      (parseInt(params.totalPrice) * 10) / 100 +
+      (((parseInt(params.totalPrice) * 10) / 100) * 5) / 100 +
+      sum;
       return amount.toFixed(2);
+    } else {
+      return (parseInt(params.totalPrice) + GST + sum).toFixed(2);
     }
   };
 
@@ -279,6 +275,12 @@ const BuyerConfirm = () => {
 
     if (valid && payType !== "" && condition) {
       let orderStoreInDB = await placeOrder();
+
+      if(orderStoreInDB.message ==="Order placed"){
+        setLoader(false);
+        navigate('/payment_succesfull')
+      }
+
     } else {
       warningMsg("Plese selete address or add address");
       setLoader(false);
@@ -515,7 +517,7 @@ const BuyerConfirm = () => {
                         <div>{totalPrice}</div>
                       </div>
 
-                      {payType === "Cash on delivery" && (
+                      {payType === "Cash on delivery" && user.isOwnStore === false && (
                         <>
                           <div>
                             <hr className="hr" />
@@ -560,7 +562,7 @@ const BuyerConfirm = () => {
                       </div>
                     </div>
                   </div>
-                  {payType === "Cash on delivery" && (
+                  {payType === "Cash on delivery" && user.isOwnStore === false && (
                     <div
                       className="p-3"
                       style={{ fontSize: "13px", marginLeft: "20px" }}

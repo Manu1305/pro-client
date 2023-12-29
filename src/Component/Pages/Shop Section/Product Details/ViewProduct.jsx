@@ -16,6 +16,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import TruncatedText from "./TruncatedText";
+import { FaCartShopping } from "react-icons/fa6";
 
 const ViewProduct = ({ getAllProducts }) => {
   const { productId } = useParams();
@@ -341,7 +342,7 @@ const ViewProduct = ({ getAllProducts }) => {
                       ? product.productDetails[prdDetInd].images[0]
                       : imgPreview
                   }
-                  className={`img-fluid img-responsive rounded product-image`}
+                  className={`img-fluid img-responsive rounded product-image shadow-sm`}
                   style={{
                     height: "500px",
                     width: "770px",
@@ -350,10 +351,11 @@ const ViewProduct = ({ getAllProducts }) => {
                   alt="img"
                 />
               </div>
-              <div className="ml-5" style={{ display: "flex" }}>
+              <div className="ml-5 flex flex-wrap gap-2">
                 {product.productDetails[prdDetInd].images.map((img) => (
-                  <div className="m-2">
+                  <div className="m-2" >
                     <img
+                    className="shadow-sm hover:shadow-lg"
                       style={{ height: "70px", width: "70px" ,objectFit:'contain'}}
                       src={img}
                       onClick={() => {
@@ -635,6 +637,7 @@ const ViewProduct = ({ getAllProducts }) => {
                 <div className={`mb-3 pl-5 mt-4 align-items-center`}>
                   <>
                     {user?.email && user?.urType === "buyer" && (
+                      <div className="flex gap-2">
                       <button
                         className={`text-uppercase mr-2 ${styles.add_to_cart} sm:w-[350px]`}
                         onClick={() => addtoCartButton(product)}
@@ -642,6 +645,14 @@ const ViewProduct = ({ getAllProducts }) => {
                         <BsHandbagFill className="mb-1 mr-3" />
                         Add to Cart
                       </button>
+                      <button
+                        className={`text-uppercase mr-2 ${styles.add_to_cart} sm:w-[350px] text-center`}
+                        onClick={() => navigate('/cart')}
+                      >
+                        <FaCartShopping className="mb-1 mr-3" />
+                        Go to cart
+                      </button>
+                      </div>
                     )}
                   </>
                   {offerBtn ? (

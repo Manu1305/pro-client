@@ -44,7 +44,6 @@ export const ProductSec = () => {
         );
         if (user?.urType === "admin") {
           console.log(res.data)
-          console.log("Called")
           const filteredProduct = res.data?.filter(
             (prd) => prd.status !== "Pending"
           );
