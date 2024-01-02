@@ -21,7 +21,7 @@ const BuyerConfirm = () => {
 
   // const cart = useSelector(state => state.cartReducer.userCart)
 
-  console.log("USER",user)
+  console.log("USER", user);
   const [cartItems, setCartItems] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -43,7 +43,7 @@ const BuyerConfirm = () => {
     setShowForm(!showForm);
   };
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const getCartCarts = async () => {
     try {
@@ -57,7 +57,7 @@ const BuyerConfirm = () => {
         .get(`${apiURL}/cart/user-cart`, config)
         .then((res) => {
           setCartItems(res.data);
-          dispatch(userCartItem(res.data))
+          dispatch(userCartItem(res.data));
           return res.data;
         })
         .catch((err) => {
@@ -145,7 +145,7 @@ const BuyerConfirm = () => {
 
   const calculateTotalAmount = () => {
     const amount =
-      (payType === "Cash on delivery"  && user.isOwnStore === false)
+      payType === "Cash on delivery" && user.isOwnStore === false
         ? (totalPrice * 10) / 100 + sum + (((totalPrice * 10) / 100) * 5) / 100
         : parseInt(totalPrice) + GST + sum;
     return amount.toFixed(2);
@@ -248,7 +248,9 @@ const BuyerConfirm = () => {
     if (payType === "Online Payment") {
       return GST;
     } else {
-      return user.isOwnStore === true ?GST  :(((parseInt(totalPrice) * 10) / 100) * 5) / 100;
+      return user.isOwnStore === true
+        ? GST
+        : (((parseInt(totalPrice) * 10) / 100) * 5) / 100;
     }
   };
 
@@ -256,11 +258,11 @@ const BuyerConfirm = () => {
   const calPaidAmount = () => {
     console.log("CONDITION", user.isOwnStore);
 
-    if (payType === "Cash on delivery" && user.isOwnStore === false ) {
+    if (payType === "Cash on delivery" && user.isOwnStore === false) {
       const amount =
-      (parseInt(params.totalPrice) * 10) / 100 +
-      (((parseInt(params.totalPrice) * 10) / 100) * 5) / 100 +
-      sum;
+        (parseInt(params.totalPrice) * 10) / 100 +
+        (((parseInt(params.totalPrice) * 10) / 100) * 5) / 100 +
+        sum;
       return amount.toFixed(2);
     } else {
       return (parseInt(params.totalPrice) + GST + sum).toFixed(2);
@@ -276,11 +278,10 @@ const BuyerConfirm = () => {
     if (valid && payType !== "" && condition) {
       let orderStoreInDB = await placeOrder();
 
-      if(orderStoreInDB.message ==="Order placed"){
+      if (orderStoreInDB.message === "Order placed") {
         setLoader(false);
-        navigate('/payment_succesfull')
+        navigate("/payment_succesfull");
       }
-
     } else {
       warningMsg("Plese selete address or add address");
       setLoader(false);
@@ -372,7 +373,7 @@ const BuyerConfirm = () => {
               >
                 {!showForm ? (
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    {addresses.map((address,index) => (
+                    {addresses.map((address, index) => (
                       <div
                         key={address._id}
                         style={{
@@ -476,7 +477,7 @@ const BuyerConfirm = () => {
                       name="inlineRadio"
                       id={`inlineRadio${index}`}
                       value={type}
-                      defaultChecked={index===1}
+                      defaultChecked={index === 1}
                       onChange={() => setPayType(type)}
                       inline
                     />
@@ -517,19 +518,20 @@ const BuyerConfirm = () => {
                         <div>{totalPrice}</div>
                       </div>
 
-                      {payType === "Cash on delivery" && user.isOwnStore === false && (
-                        <>
-                          <div>
-                            <hr className="hr" />
-                          </div>
-                          <div className="d-flex justify-content-between m-3">
-                            <div className="font-weight-bold">Items(10%)</div>
+                      {payType === "Cash on delivery" &&
+                        user.isOwnStore === false && (
+                          <>
                             <div>
-                              {((parseInt(totalPrice) * 10) / 100).toFixed(2)}
+                              <hr className="hr" />
                             </div>
-                          </div>
-                        </>
-                      )}
+                            <div className="d-flex justify-content-between m-3">
+                              <div className="font-weight-bold">Items(10%)</div>
+                              <div>
+                                {((parseInt(totalPrice) * 10) / 100).toFixed(2)}
+                              </div>
+                            </div>
+                          </>
+                        )}
 
                       <div className="d-flex justify-content-between m-3">
                         <div>Delivery</div>
@@ -562,16 +564,17 @@ const BuyerConfirm = () => {
                       </div>
                     </div>
                   </div>
-                  {payType === "Cash on delivery" && user.isOwnStore === false && (
-                    <div
-                      className="p-3"
-                      style={{ fontSize: "13px", marginLeft: "20px" }}
-                    >
-                      For Cash on Delivery You need to pay Minimum 10% of the
-                      real product price. + GST + Shippment Charge will be
-                      Included
-                    </div>
-                  )}
+                  {payType === "Cash on delivery" &&
+                    user.isOwnStore === false && (
+                      <div
+                        className="p-3"
+                        style={{ fontSize: "13px", marginLeft: "20px" }}
+                      >
+                        For Cash on Delivery You need to pay Minimum 10% of the
+                        real product price. + GST + Shippment Charge will be
+                        Included
+                      </div>
+                    )}
                 </div>
               </div>
 

@@ -43,11 +43,12 @@ export const ProductSec = () => {
           (product) => product.seller === user.email
         );
         if (user?.urType === "admin") {
-          console.log(res.data)
+          console.log("RES>",res.data)
           const filteredProduct = res.data?.filter(
             (prd) => prd.status !== "Pending"
           );
           dispatch(addReqProduct(filteredProduct));
+        
           setRequestedProducts(filteredProduct);
         } else {
           setRequestedProducts(filteredProducts);
@@ -205,12 +206,11 @@ export const ProductSec = () => {
   });
 
   const rowData = reqProducts.map((ele) => {
-    const date = new Date(ele.createdAt).toISOString().split("T")[0];
-
+    const date = new Date(ele?.createdAt)
+  
     return {
       id: ele._id,
-      images:
-        ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
+      images:ele.image[0],
       Brand: ele.brand,
       Stock: ele.stock,
       price: ele.sellingPrice,

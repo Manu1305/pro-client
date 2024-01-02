@@ -140,66 +140,75 @@ const ViewProduct = ({ getAllProducts }) => {
 
   // add to cart button
   const addtoCartButton = async (product) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
+    //  {user?.email && user?.urType === "buyer" && (
+    //  )}
+    if (user?.email && user?.urType === "buyer") {
+     
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
 
-    console.log(product);
+      console.log(product);
 
-    const { color, images } = product.productDetails[prdDetInd];
-    const { brand, sellingPrice, selectedCategory, title, seller } = product;
+      const { color, images } = product.productDetails[prdDetInd];
+      const { brand, sellingPrice, selectedCategory, title, seller } = product;
 
-    console.log("color", color);
-    console.log("images", images);
+      console.log("color", color);
+      console.log("images", images);
 
-    const item = {
-      productId: product._id,
-      productDetails: {
-        color,
-        images: images[0],
-        brand,
-        category: selectedCategory,
-        price: sellingPrice,
-        title,
-        seller,
-      },
-      sizeAndQua,
-      totalItems,
-    };
-    console.log(item);
+      const item = {
+        productId: product._id,
+        productDetails: {
+          color,
+          images: images[0],
+          brand,
+          category: selectedCategory,
+          price: sellingPrice,
+          title,
+          seller,
+        },
+        sizeAndQua,
+        totalItems,
+      };
+      console.log(item);
 
-    if (totalItems < 5) {
-      toast.warning("Minimum 5 quantity per order", {
-        position: "top-center",
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        draggable: true,
-        theme: "dark",
-      });
-    } else {
-      try {
-        await httpService
-          .post(
-            `${apiURL}/cart/add-to-cart`,
-            {
-              ...item,
-            },
-            config
-          )
-          .then((res) => {
-            console.log(res);
-            toast.success("item added to cart");
-            dispatch(userCartItem(res.data));
-          })
-          .catch((err) => console.log(err));
-      } catch (error) {
-        console.log(error);
+      if (totalItems < 5) {
+        toast.warning("Minimum 5 quantity per order", {
+          position: "top-center",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          theme: "dark",
+        });
+      } else {
+        try {
+          await httpService
+            .post(
+              `${apiURL}/cart/add-to-cart`,
+              {
+                ...item,
+              },
+              config
+            )
+            .then((res) => {
+              console.log(res);
+              toast.success("item added to cart");
+              dispatch(userCartItem(res.data));
+            })
+            .catch((err) => console.log(err));
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
+   
+    } 
+    else {
+      navigate('/login')
+     }
   };
 
   const offerBtnHandler = async () => {
@@ -252,7 +261,7 @@ const ViewProduct = ({ getAllProducts }) => {
           .then((res) => {
             console.log("Product", res.data);
             setProduct(res.data);
-            setSelectedColor(res.data?.productDetails[0].color)
+            setSelectedColor(res.data?.productDetails[0].color);
           })
           .catch((error) => {
             console.error("Error", error);
@@ -326,9 +335,6 @@ const ViewProduct = ({ getAllProducts }) => {
     return Math.floor(discount);
   };
 
-
-
-  
   return (
     <div className={`${styles.card}`}>
       {product !== null && (
@@ -353,10 +359,14 @@ const ViewProduct = ({ getAllProducts }) => {
               </div>
               <div className="ml-5 flex flex-wrap gap-2">
                 {product.productDetails[prdDetInd].images.map((img) => (
-                  <div className="m-2" >
+                  <div className="m-2">
                     <img
-                    className="shadow-sm hover:shadow-lg"
-                      style={{ height: "70px", width: "70px" ,objectFit:'contain'}}
+                      className="shadow-sm hover:shadow-lg"
+                      style={{
+                        height: "70px",
+                        width: "70px",
+                        objectFit: "contain",
+                      }}
                       src={img}
                       onClick={() => {
                         setImgPreview(img);
@@ -482,7 +492,9 @@ const ViewProduct = ({ getAllProducts }) => {
                 <div className="p-4">
                   <div>
                     <h5 className={`about ${styles.about} font-bold `}>
-                      Choose a color
+                      {product?.productInfo?.Packoff > 1
+                        ? "pack off"
+                        : "Choose a color"}
                     </h5>
                   </div>
 
@@ -514,7 +526,7 @@ const ViewProduct = ({ getAllProducts }) => {
                             className="p-1"
                             style={{
                               border:
-                                selectedColor === ele.color 
+                                selectedColor === ele.color
                                   ? `4px solid ${ele.color}`
                                   : "",
                             }}
@@ -563,7 +575,10 @@ const ViewProduct = ({ getAllProducts }) => {
                                   className="flex flex-col justify-center items-center gap-2 h-16 w-24"
                                   style={{
                                     borderRadius: "0px",
-                                    backgroundColor:pricesIndex === index ?"rgb(206, 208, 236)" :"rgb(243,243,243)" ,
+                                    backgroundColor:
+                                      pricesIndex === index
+                                        ? "rgb(206, 208, 236)"
+                                        : "rgb(243,243,243)",
                                     marginRight: "10px",
                                   }}
                                 >
@@ -636,8 +651,8 @@ const ViewProduct = ({ getAllProducts }) => {
                 {/* Add to cart Button */}
                 <div className={`mb-3 pl-5 mt-4 align-items-center`}>
                   <>
-                    {user?.email && user?.urType === "buyer" && (
-                      <div className="flex gap-2">
+                    {/* {user?.email && user?.urType === "buyer" && ( */}
+                    <div className="flex gap-2">
                       <button
                         className={`text-uppercase mr-2 ${styles.add_to_cart} sm:w-[350px]`}
                         onClick={() => addtoCartButton(product)}
@@ -647,13 +662,13 @@ const ViewProduct = ({ getAllProducts }) => {
                       </button>
                       <button
                         className={`text-uppercase mr-2 ${styles.add_to_cart} sm:w-[350px] text-center`}
-                        onClick={() => navigate('/cart')}
+                        onClick={() => navigate("/cart")}
                       >
                         <FaCartShopping className="mb-1 mr-3" />
                         Go to cart
                       </button>
-                      </div>
-                    )}
+                    </div>
+                    {/* )} */}
                   </>
                   {offerBtn ? (
                     <div className="container m-4 sm:w-[350px]">
