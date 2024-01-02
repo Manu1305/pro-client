@@ -69,13 +69,7 @@ function SingleOrder() {
     handleNext();
   }, [order]);
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   const user = useSelector((state) => state.userReducer.user);
 
@@ -146,9 +140,9 @@ function SingleOrder() {
   const totalAmount = orderPrice + tax + shipping;
 
   // cash
-  // paid amount  ==>   
+  // paid amount  ==>
   const casTax = orderPrice * 0.1 * 0.05; // gst = 10% of order amount + 5%
-  
+
   const paidAmount = orderPrice * 0.1 + casTax + shipping;
 
   // remaining amount
@@ -230,20 +224,14 @@ function SingleOrder() {
                 <h3>Payment details</h3>
               </div>
               <hr className={styles.line} />
-              <div>
+             {order?.orderStatus !== "Pending" &&<div>
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1">Transaction: {order.raz_paymentId}</p>
                 </div>
 
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1"> Payment method:{order.pType}</p>
-                </div>
-                {/* <div className="flex flex-row ml-3 mt-3">
-              <p className="ml-1">CardholderName:</p>
-            </div>
-            <div className="flex flex-row ml-3 mt-3">
-              <p className="ml-1">Card number :</p>
-            </div> */}
+                </div>F
                 <div className="flex flex-row ml-3 mt-3">
                   <p className="ml-1">Total amount: {totalAmount}</p>
                 </div>
@@ -282,7 +270,7 @@ function SingleOrder() {
                     </p>
                   </div>
                 )}
-              </div>
+              </div>}
             </div>
           </div>
 

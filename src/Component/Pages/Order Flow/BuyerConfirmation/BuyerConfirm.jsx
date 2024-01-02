@@ -25,7 +25,7 @@ const BuyerConfirm = () => {
   const [cartItems, setCartItems] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [payType, setPayType] = useState("");
+  const [payType, setPayType] = useState("Online Payment");
   const [loader, setLoader] = useState(false);
 
   // selected delivery addrees
@@ -103,7 +103,7 @@ const BuyerConfirm = () => {
 
       let res = await httpService
         .post(
-          `${apiURL}/orders/placeOrder`,
+          `${apiURL}/orders/placeOrder/${payType}`,
           {
             products: cartItems,
             address: deliveryAddress.addressDetails,
