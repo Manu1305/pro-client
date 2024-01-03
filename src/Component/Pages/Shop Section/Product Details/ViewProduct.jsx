@@ -143,7 +143,6 @@ const ViewProduct = ({ getAllProducts }) => {
     //  {user?.email && user?.urType === "buyer" && (
     //  )}
     if (user?.email && user?.urType === "buyer") {
-     
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -151,14 +150,13 @@ const ViewProduct = ({ getAllProducts }) => {
         },
       };
 
-      console.log(product);
-
       const { color, images } = product.productDetails[prdDetInd];
       const { brand, sellingPrice, selectedCategory, title, seller } = product;
 
-      console.log("color", color);
-      console.log("images", images);
+     const packouffprice = sellingPrice * color.length*totalItems
 
+
+      const packOff = product.productInfo.Packoff;
       const item = {
         productId: product._id,
         productDetails: {
@@ -166,17 +164,26 @@ const ViewProduct = ({ getAllProducts }) => {
           images: images[0],
           brand,
           category: selectedCategory,
-          price: sellingPrice,
+          price:sellingPrice,
           title,
           seller,
+          packOff,
         },
         sizeAndQua,
         totalItems,
       };
-      console.log(item);
 
-      if (totalItems < 5) {
+      if (totalItems < 5 && product.productInfo.Packoff < 2) {
         toast.warning("Minimum 5 quantity per order", {
+          position: "top-center",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          theme: "dark",
+        });
+      } else if (totalItems === 0) {
+        toast.warning("Minimum select one product", {
           position: "top-center",
           autoClose: 2500,
           hideProgressBar: false,
@@ -204,12 +211,12 @@ const ViewProduct = ({ getAllProducts }) => {
           console.log(error);
         }
       }
-   
-    } 
-    else {
-      navigate('/login')
-     }
+    } else {
+      navigate("/login");
+    }
   };
+
+  console.log("COLOR", product?.productDetails[0].color.length);
 
   const offerBtnHandler = async () => {
     try {
@@ -599,9 +606,9 @@ const ViewProduct = ({ getAllProducts }) => {
                                     style={{ fontSize: "14px" }}
                                     className="text-[#d70a2a]"
                                   >
-                                    {product.stock === 0
-                                      ? ""
-                                      : quantity + "left"}
+                                    {/* {product.stock === 0
+                                          ? ""
+                                          : quantity + "left"} */}
                                   </div>
                                 </div>
                                 {product.stock !== 0 && (

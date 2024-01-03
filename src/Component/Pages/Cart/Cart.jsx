@@ -16,7 +16,7 @@ const Cart = () => {
 
   const CartItem = useSelector((state) => state.cartReducer.userCart);
 
-  console.log(CartItem);
+  console.log(CartItem,'its cartitems');
 
   const dispatch = useDispatch();
 
@@ -136,13 +136,20 @@ const Cart = () => {
                               })
                               .join(", ")}
                             <div>
+                              {}
                               <span
                                 className="text-muted"
                                 // style={{ color: "green" }}
                               >
-                                Total quantities {item.totalQuantity}{" "}
+                                Total quantities {item.totalQuantity}
                               </span>
                             </div>
+                            {item?.productDetails?.packOff < 2 ? null : (
+                              <p>
+                                packOff contains{" "}
+                                {item.productDetails.color.length} items
+                              </p>
+                            )}
                             <div>
                               <span className="text-red-600 text-xl font-bold">
                                 price : &#8377;{item.productDetails.price}
@@ -150,23 +157,51 @@ const Cart = () => {
                             </div>
                           </div>
                         </div>
+                        {item.productDetails.packOff >= 2 ? (
+                          item.productDetails.color.map((color, key) => (
+                            <div
+                              key={key}
+                              className="col-md-3 col-lg-3 col-xl-2 d-flex"
+                              style={{
+                                background: `${color}`,
+                                height: "40px",
+                                width: "40px",
+                                borderRadius: "50%",
+                              }}
+                            ></div>
+                          ))
+                        ) : (
+                          <div
+                            className={`col-md-3 col-lg-3 col-xl-2 d-flex bg-[${item.productDetails.color}] h-[50px] w-[50px] rounded-full`}
+                            style={{
+                              background: `${item.productDetails.color}`,
+                              height: "50px",
+                              width: "50px",
+                              borderRadius:'50%'
+                            }}
+                          ></div>
+                        )}
 
-                        <div
-                          className="col-md-3 col-lg-3 col-xl-2 d-flex"
-                          style={{
-                            background: `${item.productDetails.color}`,
-                            height: "50px",
-                            width: "50px",
-                          }}
-                        ></div>
-                        <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                          <div className={Styles.hideprice}>
-                            <span className="text-red-600 text-xl font-bold">
-                              &#8377;
-                              {item.itemPrice}
-                            </span>
+                        {item.productDetails.packOff < 2 ? (
+                          <div className="col-md-1 col-lg-1 col-xl-1 text-end">
+                            <div className={Styles.hideprice}>
+                              <span className="text-red-600 text-xl font-bold">
+                                &#8377;
+                                {item.itemPrice}
+                              </span>
+                            </div>
                           </div>
-                        </div>
+                        ) : (
+                          <div className="col-md-1 col-lg-1 col-xl-1 text-end">
+                            <div className={Styles.hideprice}>
+                              <span className="text-red-600 text-xl font-bold">
+                                &#8377;
+                                {item.itemPrice}{" "}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+
                         <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                           <button
                             className="btn btn-link px-2 text-red-700"

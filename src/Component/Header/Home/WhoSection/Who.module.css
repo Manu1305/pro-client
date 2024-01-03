@@ -41,7 +41,7 @@
   font-weight: 900;
   font-size: 14rem;
   color: white;
-  margin-left: 100px;
+  margin-left: 25%;
 }
 .text2 {
   font-weight: 900;
@@ -52,10 +52,8 @@
   font-weight: 900;
   font-size: 14rem;
   position: relative;
-  right: auto;
   color: #bf0a2a;
   float: right;
-  margin-left: 265px;
 }
 .text4 {
   font-weight: 900;
@@ -73,7 +71,7 @@
   color: white;
   margin-top: -35px;
   transition: margin-top 1.5s;
-  margin-left: 100px;
+  margin-left: 25%
 }
 
 .text2Hover {
@@ -87,10 +85,9 @@
   font-weight: 900;
   font-size: 14rem;
   color: #bf0a2a;
-
   margin-top: -35px;
-  margin-left: 300px;
   transition: margin-top 1.5s;
+margin-left: 48%
 }
 .text4Hover {
   font-weight: 900;
@@ -132,7 +129,7 @@
 .hover3text {
   font-weight: 900;
   font-size: 4rem;
-  margin-left: 400px;
+  margin-left: 55%;
   top: 0;
   color: #bf0a2a;
   padding-bottom: 100px;
@@ -233,7 +230,9 @@
 
   .text1 {
     font-weight: 900;
-    font-size: 5rem;
+    font-size: 13rem;
+    color: white;
+    margin-left: 10%;
   }
 
   .text {
@@ -278,6 +277,7 @@
     font-weight: 900;
     font-size: 4rem;
     color: #bf0a2a;
+    margin-left: 10%;
   }
   .text3 {
     font-weight: 900;

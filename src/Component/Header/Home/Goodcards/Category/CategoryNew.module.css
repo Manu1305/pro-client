@@ -45,7 +45,8 @@
   width: 100%;
 }
 
-@media (min-width: 540px) {
+
+@media (min-width: 260px) {
   .login-new .cardGrid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -56,6 +57,7 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
 
 /* .login-new {
   box-shadow: 0 0 8px rgba(196, 38, 38, 0.878);
@@ -123,4 +125,6 @@
   line-height: 1.4;
   word-spacing: 100vw;
 }
+
+
 

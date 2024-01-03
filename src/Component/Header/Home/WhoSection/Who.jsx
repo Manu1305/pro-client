@@ -22,9 +22,9 @@ function Who() {
           onMouseOver={() => setState1(true)}
           onMouseOut={() => setState1(false)}
         >
-          <Zoom bottom>
+          
             <h1 className={!state1 ? styles.text1 : styles.text1Hover}>WHO</h1>
-          </Zoom>
+          
           {state1 && <h3 className={`${styles.hovertext}`}>WE ARE?</h3>}
         </div>
 
@@ -36,9 +36,9 @@ function Who() {
           onMouseOver={() => setState2(true)}
           onMouseOut={() => setState2(false)}
         >
-          <Zoom bottom>
+         
             <h1 className={!state2 ? styles.text2 : styles.text2Hover}>WHY</h1>
-          </Zoom>
+        
           {state2 && <h3 className={`${styles.hover1text}`}>HITECMART</h3>}
         </div>
       </div>
@@ -53,10 +53,10 @@ function Who() {
             navigate("whatus");
           }}
         >
-          <Fade left duration={4000}>
+          
             {" "}
             <h1 className={!state3 ? styles.text3 : styles.text3Hover}>WH</h1>
-          </Fade>
+  
           {state3 && <h3 className={`${styles.hover3text}`}>MAKE US</h3>}
         </div>
         <div
@@ -65,10 +65,10 @@ function Who() {
             navigate("whatus");
           }}
         >
-          <Fade right duration={4000}>
+        
             {" "}
             <h1 className={!state3 ? styles.text4 : styles.text4Hover}>AT</h1>
-          </Fade>
+         
           {state3 && <h3 className={`${styles.hover4text}`}>DIFFERENT</h3>}
         </div>
       </div>
