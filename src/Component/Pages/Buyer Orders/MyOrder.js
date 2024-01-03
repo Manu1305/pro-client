@@ -13,8 +13,6 @@ import { addorder } from './../../../Redux/order/orderAction';
 const BuyerOrder = () => {
   const dispatch = useDispatch();
 
-  // const orderss = useSelector((state) => state.orderReducer.order);
-  //
   const [orders, setOrders] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);

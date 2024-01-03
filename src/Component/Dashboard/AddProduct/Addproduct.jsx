@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import styles from "./Addproduct.module.css";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Section2 from "./Setion2";
 import httpService from "../../Error Handling/httpService";
 import { apiURL } from "../../../const/config";
 
 function AddProduct() {
   let { productId } = useParams();
+  const navigate = useNavigate();
 
   const categorySizes = {
     Mens: [],
@@ -124,7 +125,7 @@ function AddProduct() {
       "Princess Cut Kurti",
       "Tunic Style Kurti",
       "Double Layered Kurti",
-      "Coord Kurtis"
+      "Coord Kurtis",
     ],
     KidsShirt: [
       "T-Shirts",
@@ -271,7 +272,16 @@ function AddProduct() {
     Pants: [28, 30, 32, 34, 36, 38, 40, 42],
     top: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
     Bottom: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
-    Sarees: ["5.3 meters","5.5 meters", "6 meters", "6.1 meters", "6.2 meters", "6.5 meters", "7 meters", "9 yards"],
+    Sarees: [
+      "5.3 meters",
+      "5.5 meters",
+      "6 meters",
+      "6.1 meters",
+      "6.2 meters",
+      "6.5 meters",
+      "7 meters",
+      "9 yards",
+    ],
     KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
     shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL", "XXXXL", "XXXXXL"],
@@ -458,7 +468,7 @@ function AddProduct() {
       await httpService
         .post(
           `${apiURL}/product/add-new-product`,
-          { productInfo: productInfoDet, genInfo: productInfo, },
+          { productInfo: productInfoDet, genInfo: productInfo },
           config
         )
         .then((res) => {
@@ -553,8 +563,10 @@ function AddProduct() {
     productId && getProductForEdit();
   }, []);
 
+  console.log(productInfo);
+
   return (
-    <div className="bg-gray">
+    <div style={{ background: "rgb(247, 251, 255)" }}>
       {secondModal ? (
         <Section2
           checkbox={checkbox}
@@ -567,9 +579,9 @@ function AddProduct() {
           Packoff={productInfoDet.Packoff}
         />
       ) : (
-        <div className={styles.maindiv}>
-          <div className={styles.mainone}>
-            <div className="bg-white p-1">
+        <div className="flex flex-row gap-4 p-3">
+          <div className="flex flex-col gap-4 w-[50%]">
+            <div className="bg-white p-3 shadow-md">
               <div>
                 <label
                   for="title"
@@ -681,7 +693,7 @@ function AddProduct() {
 
             {/* General Info */}
 
-            <div className="mt-4 w-full" style={{ background: "white" }}>
+            <div className="mt-4 w-full p-3 shadow-md bg-white">
               <div className="m-2 w-97">
                 <label
                   for="countries"
@@ -697,7 +709,7 @@ function AddProduct() {
                 <select
                   id="product_category"
                   name="selectedCategory"
-                  value={productInfo.selectedCategory}
+                  value={productInfo?.selectedCategory}
                   onChange={(e) => onchangeHandler(e)}
                   className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
@@ -711,68 +723,68 @@ function AddProduct() {
                   })}
                 </select>
               </div>
-              {productInfo.selectedCategory && (
-                <div className="m-2 w-97">
-                  <label
-                    for="countries"
-                    className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Select product Subcategory
-                  </label>
-                  {errors.selectedSubcategory && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.selectedSubcategory}
-                    </p>
-                  )}
-                  <select
-                    id="category"
-                    name="selectedSubcategory"
-                    onChange={(e) => onchangeHandler(e)}
-                    value={productInfo.selectedSubcategory}
-                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option selected>Choose a subcategory</option>
-                    {categoriesWithSubcategories[
-                      productInfo.selectedCategory
-                    ].map((subcategory, index) => (
-                      <option key={index} value={subcategory}>
-                        {subcategory}
+              {/* {productInfo.selectedCategory && ( */}
+              <div className="m-2 w-97">
+                <label
+                  for="countries"
+                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Select product Subcategory
+                </label>
+                {errors.selectedSubcategory && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.selectedSubcategory}
+                  </p>
+                )}
+                <select
+                  id="category"
+                  name="selectedSubcategory"
+                  onChange={(e) => onchangeHandler(e)}
+                  value={productInfo?.selectedSubcategory}
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option selected>Choose a subcategory</option>
+                  {categoriesWithSubcategories[
+                    productInfo.selectedCategory === "" ? "Mens" : productInfo.selectedCategory
+                  ].map((subcategory, index) => (
+                    <option key={index} value={subcategory}>
+                      {subcategory}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* )} */}
+              {/* {productInfo.selectedSubcategory && ( */}
+              <div className="m-2 w-97">
+                <label
+                  for="countries"
+                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Select collection
+                </label>
+                {errors.collections && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.collections}
+                  </p>
+                )}
+                <select
+                  id="subcategory"
+                  name="collections"
+                  value={productInfo?.collections}
+                  onChange={(e) => onchangeHandler(e)}
+                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option selected>Choose a Collections</option>
+                  {Collections[productInfo.selectedSubcategory === "" ?"Shirts" :productInfo.selectedSubcategory].map(
+                    (collections, index) => (
+                      <option key={index} value={collections}>
+                        {collections}
                       </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              {productInfo.selectedSubcategory && (
-                <div className="m-2 w-97">
-                  <label
-                    for="countries"
-                    className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Select collection
-                  </label>
-                  {errors.collections && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.collections}
-                    </p>
+                    )
                   )}
-                  <select
-                    id="subcategory"
-                    name="collections"
-                    value={productInfo.collections}
-                    onChange={(e) => onchangeHandler(e)}
-                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option selected>Choose a Collections</option>
-                    {Collections[productInfo.selectedSubcategory].map(
-                      (collections, index) => (
-                        <option key={index} value={collections}>
-                          {collections}
-                        </option>
-                      )
-                    )}
-                  </select>
-                </div>
-              )}
+                </select>
+              </div>
+              {/* )} */}
 
               <form style={{ marginTop: "10px" }}>
                 <label
@@ -790,8 +802,9 @@ function AddProduct() {
                   <div className="rounded-b-lg ">
                     <textarea
                       id="editor"
+
                       rows="8"
-                      className="block w-full text-sm text-gray-800 border-1  focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                      className="block w-full text-sm text-gray-800 border-1 p-2  focus:ring-0 dark:text-white dark:placeholder-gray-400"
                       placeholder="Write product description here"
                       required
                       name="description"
@@ -802,12 +815,10 @@ function AddProduct() {
                 </div>
               </form>
             </div>
-            <br />
-            {/* Color removed */}
-            <div style={{ marginBottom: "20px", background: "white" }}>
+            <div className="bg-white mb-4 h-[230px] shadow-md p-3">
               <label
                 for="message"
-                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
+                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900 text-[20px]"
               >
                 Additional Text
               </label>
@@ -823,176 +834,45 @@ function AddProduct() {
                 rows="4"
                 required
                 maxLength={"70"}
-                className="block p-4 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block p-2 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter washcare description of product here..."
               />
             </div>
+            {/* Color removed */}
           </div>
 
-          <br />
-
-          <div className={`${styles.maintwo} m-2 p-1`}>
-            <div className="bg-white p-2">
+          {/* General Info */}
+          <div className={`${styles.maintwo} p-3 `}>
+            <div className="bg-white p-3 shadow-md">
               <h3 className="fw-bolder">General info</h3>
+              {Object.keys(productInfoDet).map((item) => (
+                <div className="mt-3" key={item}>
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    {item}
+                  </label>
 
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Material
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Enter Material Type`}
-                  required
-                  name="Material"
-                  value={productInfoDet.Material}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Pack Off
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Enter Packoff`}
-                  required
-                  name="Packoff"
-                  value={productInfoDet.Packoff}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Closure
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Enter Closure`}
-                  required
-                  name="Closure"
-                  value={productInfoDet.Closure}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Fit
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Enter Fit`}
-                  required
-                  name="Fit"
-                  value={productInfoDet.Fit}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Pattern
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Enter Pattern`}
-                  required
-                  name="Pattern"
-                  value={productInfoDet.Pattern}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Ideal For
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Men or Female`}
-                  required
-                  name="Idealfor"
-                  value={productInfoDet.Idealfor}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Washcare
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={`Enter Washcare instructions`}
-                  required
-                  name="Washcare"
-                  value={productInfoDet.Washcare}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Convertible
-                </label>
-
-                <input
-                  type="text"
-                  id="title"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={"Enter Yes or No"}
-                  required
-                  name="Convertible"
-                  value={productInfoDet.Convertible}
-                  onChange={(e) => InfoHandler(e)}
-                />
-              </div>
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Enter ${item} ${
+                      item === "Washcare" ? "instructions" : ""
+                    }`}
+                    required
+                    name={item}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+              ))}
             </div>
 
-            <div className="bg-white mt-4">
+            <div className="bg-white mt-4 p-3 shadow-md">
               <label
                 for="message"
-                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Tags
               </label>
@@ -1004,12 +884,12 @@ function AddProduct() {
                 rows="4"
                 maxLength={"70"}
                 required
-                className="block p-4 w-full text-sm border-1"
-                placeholder="Enter tages for searching product"
+                className="block p-2 w-full text-sm border-1"
+                placeholder="Enter keywords or product name to find your product"
               />
             </div>
 
-            <div className="bg-white mt-4">
+            <div className="bg-white mt-4 p-4 shadow-md">
               <label
                 for="message"
                 className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
@@ -1032,21 +912,52 @@ function AddProduct() {
                 </label>
               </div>
             </div>
-          </div>
-          <div className="m-2 d-flex justify-center items-center">
-            <button
-              onClick={productId ? updateUproduct : addNewProduct}
-              style={{ background: "#4BB543" }}
-              className="py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200"
-            >
-              {productId ? "Save and next" : "Submit"}
-            </button>
-            <button className="btn btn-danger py-2.5 px-5 w-75 mr-2 mb-2 text-sm font-medium text-white border-1 border-gray-200">
-              Cancel
-            </button>
+            <div className="bg-white mt-4 p-4 shadow-md">
+              <label
+                for="message"
+                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
+              >
+                
+              </label>
+
+              <div className="flex items-center p-3">
+                <input
+                  type="checkbox"
+                  name="Yes"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  onChange={(e) => setCheckbox(e.target.checked)}
+                />
+                <label
+                  for="default-checkbox"
+                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Yes
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       )}
+
+      {/* Buttons */}
+      <div className="m-2 flex flex-row justify-center items-center gap-6">
+        <button
+          onClick={productId ? updateUproduct : addNewProduct}
+          style={{ background: "#4BB543" }}
+          className="py-3 px-[5rem] shadow-md text-md font-medium text-white border-1 border-gray-200"
+        >
+          {productId ? "Save and next" : "Submit"}
+        </button>
+
+        <button
+          className="bg-red-600 shadow-md py-3 px-[5rem] text-md font-medium text-white border-1 border-gray-200"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 }

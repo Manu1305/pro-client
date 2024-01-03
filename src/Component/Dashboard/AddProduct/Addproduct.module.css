@@ -1,5 +1,4 @@
-.container {
-  /* background-image: url("https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials.jpg"); */
+/* .container {
   box-shadow: inset 10px 5px 5px rgb(255, 1, 1);
   border-radius: 5px;
   padding-left: 0px;
@@ -7,7 +6,7 @@
   justify-content: center;
   align-items: center;
   border: 3px solid rgba(196, 222, 0, 0);
-}
+} */
 
 .label {
   font-weight: bolder;

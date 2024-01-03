@@ -476,7 +476,7 @@ const BuyerConfirm = () => {
                       name="inlineRadio"
                       id={`inlineRadio${index}`}
                       value={type}
-                      defaultChecked={index===1}
+                      // defaultChecked={index===1}
                       onChange={() => setPayType(type)}
                       inline
                     />
