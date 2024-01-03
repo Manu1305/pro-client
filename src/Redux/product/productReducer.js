@@ -4,6 +4,9 @@ let InitialState = {
   allProducts: [],
 };
 
+
+
+
 export const productReducer = (state = InitialState, action) => {
   switch (action.type) {
     case AddProductType:

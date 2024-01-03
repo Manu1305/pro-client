@@ -69,8 +69,6 @@ function SingleOrder() {
     handleNext();
   }, [order]);
 
-
-
   const user = useSelector((state) => state.userReducer.user);
 
   console.log("dwvkb", user);
@@ -224,53 +222,54 @@ function SingleOrder() {
                 <h3>Payment details</h3>
               </div>
               <hr className={styles.line} />
-             {order?.orderStatus !== "Pending" &&<div>
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">Transaction: {order.raz_paymentId}</p>
+              {order?.orderStatus !== "Pending" && user.urType !== "user" && (
+                <div>
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1">Transaction: {order.raz_paymentId}</p>
+                  </div>
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1"> Payment method:{order.pType}</p>
+                  </div>
+                  F
+                  <div className="flex flex-row ml-3 mt-3">
+                    <p className="ml-1">Total amount: {totalAmount}</p>
+                  </div>
+                  {user.email && user.urType === "admin" ? (
+                    <div className="flex flex-row ml-3 mt-3 border border-black">
+                      <p className="ml-1 text-green-600 font-bold ">
+                        Customer paid amount:
+                        {order.pType === "cash"
+                          ? paidAmount.toFixed(2)
+                          : totalAmount}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-row ml-3 mt-3 border border-black">
+                      <p className="ml-1 text-green-600 font-bold ">
+                        paid amount:
+                        {order.pType === "cash"
+                          ? paidAmount.toFixed(2)
+                          : totalAmount}
+                      </p>
+                    </div>
+                  )}
+                  {user.email && user.urType === "admin" ? (
+                    <div className="flex flex-row ml-3 mt-3 border border-black">
+                      <p className="ml-1 text-red-600 font-bold">
+                        Amount need to collect from customer:
+                        {order.pType === "cash" ? remainingAmount : 0}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-row ml-3 mt-3 border border-black">
+                      <p className="ml-1 text-red-600 font-bold">
+                        Pending amount:
+                        {order.pType === "cash" ? remainingAmount : 0}
+                      </p>
+                    </div>
+                  )}
                 </div>
-
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1"> Payment method:{order.pType}</p>
-                </div>F
-                <div className="flex flex-row ml-3 mt-3">
-                  <p className="ml-1">Total amount: {totalAmount}</p>
-                </div>
-                {user.email && user.urType === "admin" ? (
-                  <div className="flex flex-row ml-3 mt-3 border border-black">
-                    <p className="ml-1 text-green-600 font-bold ">
-                      Customer paid amount:
-                      {order.pType === "cash"
-                        ? paidAmount.toFixed(2)
-                        : totalAmount}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex flex-row ml-3 mt-3 border border-black">
-                    <p className="ml-1 text-green-600 font-bold ">
-                      paid amount:
-                      {order.pType === "cash"
-                        ? paidAmount.toFixed(2)
-                        : totalAmount}
-                    </p>
-                  </div>
-                )}
-
-                {user.email && user.urType === "admin" ? (
-                  <div className="flex flex-row ml-3 mt-3 border border-black">
-                    <p className="ml-1 text-red-600 font-bold">
-                      Amount need to collect from customer:
-                      {order.pType === "cash" ? remainingAmount : 0}
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex flex-row ml-3 mt-3 border border-black">
-                    <p className="ml-1 text-red-600 font-bold">
-                      Pending amount:
-                      {order.pType === "cash" ? remainingAmount : 0}
-                    </p>
-                  </div>
-                )}
-              </div>}
+              )}
             </div>
           </div>
 

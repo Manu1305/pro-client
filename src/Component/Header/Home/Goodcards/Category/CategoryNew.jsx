@@ -44,7 +44,7 @@ export const CategoryNew = () => {
   return (
     <div className={styles["login-new"]}>
     
-      <div style={{ marginTop: "100px" }}>
+      <div style={{ marginTop: "20px" }}>
         <h1 className="font-extrabold text-center ">CATEGORIES</h1>
       </div>
 

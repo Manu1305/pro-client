@@ -35,7 +35,7 @@ const SellerRelatedPro = ({ seller }) => {
     (item) => item.status === "Published"
   );
 
-
+console.log(products,'products')
   const settings = {
     infinite: true,
     speed: 500,
@@ -83,25 +83,23 @@ const SellerRelatedPro = ({ seller }) => {
                       <a href={`/ViewDetails/${item._id}`}>
                         <div className={`${styless.card}`}>
                           <img
-                            src={item?.productDetails[0]?.images[0]}
+                            src={item?.image[0]}
                             alt="ie"
                             className={styless.igfff}
                           />
                         </div>
-                      </a>
+                      </a>  
                     </div>
                     <div className={styless.marbtm}>
-                      <h5 className={styless.title}>
-                        {item.brand}
-                      </h5>
+                      <h5 className={styless.title}>{item.brand}</h5>
 
                       <h5 className={styless.titlee}>{item.title}</h5>
-                      {/* Add any other content you want to display */}
+            
                     </div>
                   </div>
                 );
               } else {
-                return null // Return null for items that don't match the condition
+                return null 
               }
             })}
         </Slider>

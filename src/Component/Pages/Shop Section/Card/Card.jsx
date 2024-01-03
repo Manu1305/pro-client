@@ -8,7 +8,7 @@ const Card = ({ items }) => {
 
   const navigate = useNavigate()
   return (
-    <div className="product-card cursor-pointer" key={items._id} onClick={() =>navigate(`/ViewDetails/${items._id}`)}>
+    <div className="product-card cursor-pointer shadow-md" key={items._id} onClick={() =>navigate(`/ViewDetails/${items._id}`)}>
       <div className="card-wrapper">
         {items?.image[0] ? (
           <img src={items.image[0]} alt="" />
@@ -21,7 +21,7 @@ const Card = ({ items }) => {
         </div>
       </div>
 
-      <div className="card-model-content">
+      <div className="card-model-content p-2">
         <p>{items.title}</p>
         <span className="WebRupee">&#x20B9; {items.sellingPrice}</span>
       </div>

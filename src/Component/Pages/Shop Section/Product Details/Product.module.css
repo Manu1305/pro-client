@@ -21,6 +21,8 @@
   font-weight: 700;
   margin-top: 3rem;
   margin-bottom: 1rem;
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .sizes {
   -ms-overflow-style: none;
@@ -100,6 +102,9 @@
   justify-content: center;
   align-items: center;
 }
+.wishicon:hover{
+  background-color: rgb(242, 150, 153);
+}
 .mainicon {
   height: 30px;
   width: 30px;
@@ -113,6 +118,9 @@
   align-items: center;
   margin-left: 10px;
   opacity: 0.4;
+}
+.tagandshare:hover{
+   background-color: rgb(20, 135, 229);
 }
 .price {
   margin-top: 70px;

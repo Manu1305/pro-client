@@ -15,10 +15,10 @@ function Strength() {
         <div className={styles.one}>
           
           <div className={styles.innerone}>
-           <Bounce top duration={3000}>
+          
             <h4 className={styles.headingtext}>1000 +</h4>
 
-          </Bounce>
+        
             <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Active retailers</h4>
             <h6 className={styles.content}>
               We have 1000+ Retails from pan
@@ -28,10 +28,10 @@ function Strength() {
             </h6>
           </div>
           <div className={styles.innertwo}>
-           <Bounce top duration={3000}>
+         
 
             <h4 className={styles.headingtext}>60000 +</h4>
-          </Bounce>
+       
             <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Product delivered</h4>
             <h6  className={styles.content}>
               6000+ Products Successfully
@@ -45,11 +45,11 @@ function Strength() {
 
         <div className={styles.two}>
           <div className={styles.innerone}>
-           <Bounce top duration={3000}>
+         
           
             <h4 className={styles.headingtext}>500+</h4>
 
-          </Bounce>
+    
             <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Manufactures</h4>
             <h6 className={styles.content}>
               We have 500+ Active
@@ -60,10 +60,10 @@ function Strength() {
           </div>
 
           <div className={styles.innertwo}>
-          <Bounce top duration={3000}>
+       
             <h4 className={styles.headingtext}>50 +</h4>
 
-          </Bounce>
+    
             <h4 style={{fontWeight:'bolder'}} className={styles.subheading}>Franchise partners </h4>
             <h6 className={styles.content}>
               We have 50+ franchise partners

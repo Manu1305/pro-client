@@ -65,6 +65,7 @@ const BuyerOrder = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    getOrders()
     getOrders();
   }, []);
 
@@ -124,7 +125,7 @@ const BuyerOrder = () => {
           )}
         </div>
       ) : (
-        orders.length !== 0 &&
+        orders.length !== 0 && 
         orders.map((order, index) => {
           // const dateString = "2023-08-01T:36:25.914+00:00";
           const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
@@ -218,7 +219,7 @@ const BuyerOrder = () => {
                         {/* <button className="btn btn-warning my-2">
                           CHANGE ADDRESS
                         </button> */}
-                        {order.orderStatus !== "Cancelled" ? (
+                      {order.orderStatus !== "Cancelled" || order.orderStatus =="Pending"  ? (
                           <button
                             onClick={() => cancelorder(order._id)}
                             className="btn btn-danger"
