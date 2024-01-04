@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Section2 from "./Setion2";
 import httpService from "../../Error Handling/httpService";
 import { apiURL } from "../../../const/config";
+import { Collections, sizeSelected } from "./Datas";
 
 function AddProduct() {
   let { productId } = useParams();
@@ -18,345 +19,6 @@ function AddProduct() {
   };
 
   const productCategories = Object.keys(categorySizes);
-
-  const Collections = {
-    Shirts: [
-      "Dress Shirts",
-      "T-Shirts",
-      "Polo Shirts",
-      "Casual Button-Up Shirts",
-      "Flannel Shirts",
-      "Henley Shirts",
-      "Sweatshirts",
-      "Hoodies",
-      "Formal Shirts",
-    ],
-    Pants: [
-      "Jeans",
-      "Chinos",
-      "Formal Pants",
-      "Dress Pants",
-      "Cargo Pants",
-      "Sweatpants",
-      "Joggers",
-      "Track Pants",
-      "Corduroy Pants",
-    ],
-    top: [
-      "Blouses",
-      "T-Shirts",
-      "Tank Tops",
-      "Crop Tops",
-      "Sweaters",
-      "Cardigans",
-      "Hoodies",
-      "Peplum Tops",
-      "Tunics",
-      "Button-Up Shirts",
-      "Bodysuits",
-      "Off-the-Shoulder Tops",
-      "Wrap Tops",
-      "Tube Tops",
-      "Kimono Tops",
-      "Polo Shirts",
-      "Camisoles",
-      "Cold Shoulder Tops",
-      "Cowl Neck Tops",
-      "Ruffle Tops",
-    ],
-    Bottom: [
-      "Jeans",
-      "Leggings",
-      "Trousers",
-      "Skirts",
-      "Shorts",
-      "Culottes",
-      "Palazzo Pants",
-      "Joggers",
-      "Capri Pants",
-      "Wide-Leg Pants",
-      "Cargo Pants",
-      "Pencil Skirts",
-      "A-line Skirts",
-      "Maxi Skirts",
-      "Mini Skirts",
-      "Flared Skirts",
-      "Denim Skirts",
-      "Pleated Skirts",
-      "High-Waisted Pants",
-      "Harem Pants",
-      "jeggings",
-    ],
-    Sarees: [
-      "Silk Sarees",
-      "Cotton Sarees",
-      "Chiffon Sarees",
-      "Georgette Sarees",
-      "Banarasi Sarees",
-      "Kanjivaram Sarees",
-      "Designer Sarees",
-      "Bridal Sarees",
-      "Linen Sarees",
-      "Printed Sarees",
-      "Net Sarees",
-      "Half-and-Half Sarees",
-      "Satin Sarees",
-      "Embroidered Sarees",
-      "Saree with Blouse Sets",
-      "Traditional Sarees",
-      "Bollywood Sarees",
-      "Party Wear Sarees",
-      "Casual Sarees",
-      "Lehenga Sarees",
-    ],
-    Kurtis: [
-      "Anarkali Kurti",
-      "Straight Cut Kurti",
-      "A-Line Kurti",
-      "Flared Kurti",
-      "Trail Cut Kurti",
-      "High-Low Kurti",
-      "Kaftan Style Kurti",
-      "Shirt Style Kurti",
-      "Cape Style Kurti",
-      "Dhoti Style Kurti",
-      "Front Slit Kurti",
-      "Overlay Kurti",
-      "Princess Cut Kurti",
-      "Tunic Style Kurti",
-      "Double Layered Kurti",
-      "Coord Kurtis",
-    ],
-    KidsShirt: [
-      "T-Shirts",
-      "Polo Shirts",
-      "Button-Up Shirts",
-      "Graphic Tees",
-      "Long Sleeve Shirts",
-      "Hoodies",
-      "Sweatshirts",
-      "Tank Tops",
-      "Henley Shirts",
-      "Flannel Shirts",
-      "Sport Jerseys",
-      "Printed Shirts",
-      "Casual Shirts",
-      "Dress Shirts",
-      "Chambray Shirts",
-      "Uniform Shirts",
-      "Ruffle Tops (for girls)",
-      "Peplum Tops (for girls)",
-      "Bodysuits (for infants)",
-    ],
-
-    kidspants: [
-      "Jeans",
-      "Leggings",
-      "Trousers",
-      "Shorts",
-      "Cargo Pants",
-      "Sweatpants",
-      "Joggers",
-      "Track Pants",
-      "Corduroy Pants",
-      "Khaki Pants",
-      "Chinos",
-      "Capri Pants",
-      "Denim Pants",
-      "Athletic Pants",
-      "Overalls",
-      "School Uniform Pants",
-      "Printed Pants",
-      "Convertible Pants (with zip-off legs)",
-      "Dress Pants",
-      "Stretch Pants",
-    ],
-    shorts: [
-      "Denim Shorts",
-      "Athletic Shorts",
-      "Cargo Shorts",
-      "Bermuda Shorts",
-      "Chino Shorts",
-      "Board Shorts",
-      "Cotton Shorts",
-      "Khaki Shorts",
-      "Printed Shorts",
-      "Linen Shorts",
-      "Track Shorts",
-      "Pull-On Shorts",
-      "School Uniform Shorts",
-      "Sweat Shorts",
-      "Jogger Shorts",
-      "Running Shorts",
-      "Basketball Shorts",
-      "Active Shorts",
-      "Pleated Shorts",
-      "Swim Shorts",
-    ],
-    GirlsShirts: [
-      "T-Shirts",
-      "Blouses",
-      "Tank Tops",
-      "Polo Shirts",
-      "Button-Up Shirts",
-      "Sweaters",
-      "Hoodies",
-      "Long Sleeve Shirts",
-      "Crop Tops",
-      "Graphic Tees",
-    ],
-    GirlsPants: [
-      "Jeans",
-      "Leggings",
-      "Trousers",
-      "Yoga Pants",
-      "Culottes",
-      "Jeggings",
-      "Cargo Pants",
-      "Sweatpants",
-      "Capri Pants",
-      "Palazzo Pants",
-    ],
-
-    GirlsShorts: [
-      "Denim Shorts",
-      "Athletic Shorts",
-      "Cargo Shorts",
-      "Bermuda Shorts",
-      "Chino Shorts",
-      "Board Shorts",
-      "Cotton Shorts",
-      "Khaki Shorts",
-      "Printed Shorts",
-      "Linen Shorts",
-      "Track Shorts",
-      "Pull-On Shorts",
-      "School Uniform Shorts",
-      "Sweat Shorts",
-      "Jogger Shorts",
-      "Running Shorts",
-      "Basketball Shorts",
-      "Active Shorts",
-      "Pleated Shorts",
-      "Swim Shorts",
-    ],
-
-    Frock: [
-      "A-Line Frocks",
-      "Party Frocks",
-      "Casual Frocks",
-      "Maxi Frocks",
-      "Pinafore Frocks",
-      "Sundresses",
-      "Floral Frocks",
-      "Ruffle Frocks",
-      "Smocked Frocks",
-      "Tiered Frocks",
-    ],
-    KidsBaniyans: [
-      "Cotton Baniyans",
-      "Sleeveless Baniyans",
-      "Patterned Baniyans",
-      "Sports Baniyans",
-      "Printed Baniyans",
-      "Vest-Style Baniyans",
-      "Crew-Neck Baniyans",
-      "Ribbed Baniyans",
-      "Colored Baniyans",
-      "Tank Top Baniyans",
-    ],
-  };
-
-  const sizeSelected = {
-    Shirts: ["S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
-    Pants: [28, 30, 32, 34, 36, 38, 40, 42],
-    top: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
-    Bottom: ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXXXL", "Free Size"],
-    Sarees: [
-      "5.3 meters",
-      "5.5 meters",
-      "6 meters",
-      "6.1 meters",
-      "6.2 meters",
-      "6.5 meters",
-      "7 meters",
-      "9 yards",
-    ],
-    KidsShirt: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    kidspants: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    shorts: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL", "XXXXL", "XXXXXL"],
-    KidsBaniyans: ["2T", "3T", "4T", "XS", "S", "M", "L", "XL"],
-    GirlsShirts: [
-      "2T",
-      "3T",
-      "4T",
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL",
-      "XXXL",
-      "XXXXL",
-      "Free Size",
-    ],
-    GirlsPants: [
-      "2T",
-      "3T",
-      "4T",
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL",
-      "XXXL",
-      "XXXXL",
-      "Free Size",
-    ],
-    GirlsShorts: [
-      "2T",
-      "3T",
-      "4T",
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL",
-      "XXXL",
-      "XXXXL",
-      "Free Size",
-    ],
-    Frock: [
-      "2T",
-      "3T",
-      "4T",
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL",
-      "XXXL",
-      "XXXXL",
-      "Free Size",
-    ],
-    Kurtis: [
-      "2T",
-      "3T",
-      "4T",
-      "XS",
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL",
-      "XXXL",
-      "XXXXL",
-      "Free Size",
-    ],
-  };
 
   const [productInfo, setProductInfo] = useState({
     title: "",
@@ -579,385 +241,510 @@ function AddProduct() {
           Packoff={productInfoDet.Packoff}
         />
       ) : (
-        <div className="flex flex-row gap-4 p-3">
-          <div className="flex flex-col gap-4 w-[50%]">
-            <div className="bg-white p-3 shadow-md">
-              <div>
-                <label
-                  for="title"
-                  className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Title
-                </label>
-                {errors.title && (
-                  <p className="text-red-500 text-sm mt-1">{errors.title}</p>
-                )}
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter product title"
-                  required
-                  value={productInfo.title}
-                  onChange={(e) => onchangeHandler(e)}
-                />
-              </div>
-              <div>
-                <label
-                  for="title"
-                  className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Product Code
-                </label>
-                {errors.productCode && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.productCode}
-                  </p>
-                )}
-                <input
-                  type="text"
-                  id="title"
-                  name="productCode"
-                  className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter product code"
-                  value={productInfo.productCode}
-                  required
-                  onChange={(e) => onchangeHandler(e)}
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="brand"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  {errors.brand && (
-                    <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
+        <>
+          <div className="flex flex-row gap-4 p-3">
+            <div className="flex flex-col gap-4 w-[50%]">
+              <div className="bg-white p-3 shadow-md">
+                <div>
+                  <label
+                    for="title"
+                    className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Title
+                  </label>
+                  {errors.title && (
+                    <p className="text-red-500 text-sm mt-1">{errors.title}</p>
                   )}
-                  Brand
-                </label>
-                <input
-                  type="text"
-                  id="brand"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter Brand name"
-                  name="brand"
-                  value={productInfo.brand}
-                  onChange={(e) => onchangeHandler(e)}
-                  required
-                />
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter product title"
+                    required
+                    value={productInfo.title}
+                    onChange={(e) => onchangeHandler(e)}
+                  />
+                </div>
+                <div>
+                  <label
+                    for="title"
+                    className="m-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Product Code
+                  </label>
+                  {errors.productCode && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.productCode}
+                    </p>
+                  )}
+                  <input
+                    type="text"
+                    id="title"
+                    name="productCode"
+                    className=" border-1  border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter product code"
+                    value={productInfo.productCode}
+                    required
+                    onChange={(e) => onchangeHandler(e)}
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="brand"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    {errors.brand && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.brand}
+                      </p>
+                    )}
+                    Brand
+                  </label>
+                  <input
+                    type="text"
+                    id="brand"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter Brand name"
+                    name="brand"
+                    value={productInfo.brand}
+                    onChange={(e) => onchangeHandler(e)}
+                    required
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Orginal price
+                  </label>
+                  {errors.realPrice && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.realPrice}
+                    </p>
+                  )}
+                  <input
+                    type="number"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter price"
+                    name="realPrice"
+                    value={productInfo.realPrice}
+                    onChange={(e) => onchangeHandler(e)}
+                    required
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="selling"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Selling price
+                  </label>
+                  {errors.sellingPrice && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.material}
+                    </p>
+                  )}
+                  <input
+                    type="number"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter Selling price"
+                    required
+                    name="sellingPrice"
+                    value={productInfo.sellingPrice}
+                    onChange={(e) => onchangeHandler(e)}
+                  />
+                </div>
               </div>
-              <div className="mt-3">
+
+              <div className="mt-4 w-full p-3 shadow-md bg-white">
+                <div className="m-2 w-97">
+                  <label
+                    for="countries"
+                    className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    {errors.selectedCategory && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.selectedCategory}
+                      </p>
+                    )}
+                    Select product category
+                  </label>
+                  <select
+                    id="product_category"
+                    name="selectedCategory"
+                    value={productInfo?.selectedCategory}
+                    onChange={(e) => onchangeHandler(e)}
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option selected>Choose a category</option>
+                    {productCategories.map((category, index) => {
+                      return (
+                        <option key={index} value={category}>
+                          {category}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                {/* {productInfo.selectedCategory && ( */}
+                <div className="m-2 w-97">
+                  <label
+                    for="countries"
+                    className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Select product Subcategory
+                  </label>
+                  {errors.selectedSubcategory && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.selectedSubcategory}
+                    </p>
+                  )}
+                  <select
+                    id="category"
+                    name="selectedSubcategory"
+                    onChange={(e) => onchangeHandler(e)}
+                    value={productInfo?.selectedSubcategory}
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option selected>Choose a subcategory</option>
+                    {categoriesWithSubcategories[
+                      productInfo.selectedCategory === ""
+                        ? "Mens"
+                        : productInfo.selectedCategory
+                    ].map((subcategory, index) => (
+                      <option key={index} value={subcategory}>
+                        {subcategory}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="m-2 w-97">
+                  <label
+                    for="countries"
+                    className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Select collection
+                  </label>
+                  {errors.collections && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.collections}
+                    </p>
+                  )}
+                  <select
+                    id="subcategory"
+                    name="collections"
+                    value={productInfo?.collections}
+                    onChange={(e) => onchangeHandler(e)}
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option selected>Choose a Collections</option>
+                    {Collections[
+                      productInfo.selectedSubcategory === ""
+                        ? "Shirts"
+                        : productInfo.selectedSubcategory
+                    ].map((collections, index) => (
+                      <option key={index} value={collections}>
+                        {collections}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/* )} */}
+
+                <form style={{ marginTop: "10px" }}>
+                  <label
+                    htmlFor="editor"
+                    className="m-1 text-sm font-medium text-gray-900"
+                  >
+                    Product description
+                  </label>
+                  {errors.description && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.description}
+                    </p>
+                  )}
+                  <div className="w-full mb-4 p-2 dark:bg-gray-700 dark:border-gray-600">
+                    <div className="rounded-b-lg ">
+                      <textarea
+                        id="editor"
+                        rows="8"
+                        className="block w-full text-sm text-gray-800 border-1 p-2  focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                        placeholder="Write product description here"
+                        required
+                        name="description"
+                        value={productInfo.description}
+                        onChange={(e) => onchangeHandler(e)}
+                      />
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="bg-white mb-4 h-[230px] shadow-md p-3">
                 <label
-                  for="title"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  for="message"
+                  className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900 text-[20px]"
                 >
-                  Orginal price
+                  Additional Text
                 </label>
-                {errors.realPrice && (
+                {errors["Additional Text"] && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.realPrice}
+                    {errors["Additional Text"]}
                   </p>
                 )}
-                <input
-                  type="number"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter price"
-                  name="realPrice"
-                  value={productInfo.realPrice}
+                <textarea
+                  name="MoreDetails"
+                  value={productInfo.MoreDetails}
                   onChange={(e) => onchangeHandler(e)}
+                  rows="4"
                   required
-                />
-              </div>
-              <div className="mt-3">
-                <label
-                  for="selling"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Selling price
-                </label>
-                {errors.sellingPrice && (
-                  <p className="text-red-500 text-sm mt-1">{errors.material}</p>
-                )}
-                <input
-                  type="number"
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter Selling price"
-                  required
-                  name="sellingPrice"
-                  value={productInfo.sellingPrice}
-                  onChange={(e) => onchangeHandler(e)}
+                  maxLength={"70"}
+                  className="block p-2 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter washcare description of product here..."
                 />
               </div>
             </div>
 
             {/* General Info */}
+            <div className={`${styles.maintwo} p-3 `}>
+              <div className="bg-white p-4">
+                <h3 className="fw-bolder">General info</h3>
 
-            <div className="mt-4 w-full p-3 shadow-md bg-white">
-              <div className="m-2 w-97">
-                <label
-                  for="countries"
-                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  {errors.selectedCategory && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.selectedCategory}
-                    </p>
-                  )}
-                  Select product category
-                </label>
-                <select
-                  id="product_category"
-                  name="selectedCategory"
-                  value={productInfo?.selectedCategory}
-                  onChange={(e) => onchangeHandler(e)}
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option selected>Choose a category</option>
-                  {productCategories.map((category, index) => {
-                    return (
-                      <option key={index} value={category}>
-                        {category}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              {/* {productInfo.selectedCategory && ( */}
-              <div className="m-2 w-97">
-                <label
-                  for="countries"
-                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Select product Subcategory
-                </label>
-                {errors.selectedSubcategory && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.selectedSubcategory}
-                  </p>
-                )}
-                <select
-                  id="category"
-                  name="selectedSubcategory"
-                  onChange={(e) => onchangeHandler(e)}
-                  value={productInfo?.selectedSubcategory}
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option selected>Choose a subcategory</option>
-                  {categoriesWithSubcategories[
-                    productInfo.selectedCategory === "" ? "Mens" : productInfo.selectedCategory
-                  ].map((subcategory, index) => (
-                    <option key={index} value={subcategory}>
-                      {subcategory}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* )} */}
-              {/* {productInfo.selectedSubcategory && ( */}
-              <div className="m-2 w-97">
-                <label
-                  for="countries"
-                  className="block m-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Select collection
-                </label>
-                {errors.collections && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.collections}
-                  </p>
-                )}
-                <select
-                  id="subcategory"
-                  name="collections"
-                  value={productInfo?.collections}
-                  onChange={(e) => onchangeHandler(e)}
-                  className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option selected>Choose a Collections</option>
-                  {Collections[productInfo.selectedSubcategory === "" ?"Shirts" :productInfo.selectedSubcategory].map(
-                    (collections, index) => (
-                      <option key={index} value={collections}>
-                        {collections}
-                      </option>
-                    )
-                  )}
-                </select>
-              </div>
-              {/* )} */}
-
-              <form style={{ marginTop: "10px" }}>
-                <label
-                  htmlFor="editor"
-                  className="m-1 text-sm font-medium text-gray-900"
-                >
-                  Product description
-                </label>
-                {errors.description && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.description}
-                  </p>
-                )}
-                <div className="w-full mb-4 p-2 dark:bg-gray-700 dark:border-gray-600">
-                  <div className="rounded-b-lg ">
-                    <textarea
-                      id="editor"
-
-                      rows="8"
-                      className="block w-full text-sm text-gray-800 border-1 p-2  focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                      placeholder="Write product description here"
-                      required
-                      name="description"
-                      value={productInfo.description}
-                      onChange={(e) => onchangeHandler(e)}
-                    />
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div className="bg-white mb-4 h-[230px] shadow-md p-3">
-              <label
-                for="message"
-                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900 text-[20px]"
-              >
-                Additional Text
-              </label>
-              {errors["Additional Text"] && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors["Additional Text"]}
-                </p>
-              )}
-              <textarea
-                name="MoreDetails"
-                value={productInfo.MoreDetails}
-                onChange={(e) => onchangeHandler(e)}
-                rows="4"
-                required
-                maxLength={"70"}
-                className="block p-2 w-full text-sm border-1 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter washcare description of product here..."
-              />
-            </div>
-            {/* Color removed */}
-          </div>
-
-          {/* General Info */}
-          <div className={`${styles.maintwo} p-3 `}>
-            <div className="bg-white p-3 shadow-md">
-              <h3 className="fw-bolder">General info</h3>
-              {Object.keys(productInfoDet).map((item) => (
-                <div className="mt-3" key={item}>
+                <div className="mt-3">
                   <label
                     for="title"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    {item}
+                    Material
                   </label>
 
                   <input
                     type="text"
                     id="title"
                     className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder={`Enter ${item} ${
-                      item === "Washcare" ? "instructions" : ""
-                    }`}
+                    placeholder={`Enter Material Type`}
                     required
-                    name={item}
+                    name="Material"
+                    value={productInfoDet.Material}
                     onChange={(e) => InfoHandler(e)}
                   />
                 </div>
-              ))}
-            </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Pack Off
+                  </label>
 
-            <div className="bg-white mt-4 p-3 shadow-md">
-              <label
-                for="message"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Tags
-              </label>
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Enter Packoff`}
+                    required
+                    name="Packoff"
+                    value={productInfoDet.Packoff}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Closure
+                  </label>
 
-              <textarea
-                name="tags"
-                value={productInfo.tags}
-                onChange={(e) => onchangeHandler(e)}
-                rows="4"
-                maxLength={"70"}
-                required
-                className="block p-2 w-full text-sm border-1"
-                placeholder="Enter keywords or product name to find your product"
-              />
-            </div>
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Enter Closure`}
+                    required
+                    name="Closure"
+                    value={productInfoDet.Closure}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Fit
+                  </label>
 
-            <div className="bg-white mt-4 p-4 shadow-md">
-              <label
-                for="message"
-                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
-              >
-                Price depedns on sizes then ckeck the box
-              </label>
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Enter Fit`}
+                    required
+                    name="Fit"
+                    value={productInfoDet.Fit}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Pattern
+                  </label>
 
-              <div className="flex items-center p-3">
-                <input
-                  type="checkbox"
-                  name="Yes"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => setCheckbox(e.target.checked)}
-                />
-                <label
-                  for="default-checkbox"
-                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >
-                  Yes
-                </label>
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Enter Pattern`}
+                    required
+                    name="Pattern"
+                    value={productInfoDet.Pattern}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Ideal For
+                  </label>
+
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Men or Female`}
+                    required
+                    name="Idealfor"
+                    value={productInfoDet.Idealfor}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Washcare
+                  </label>
+
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={`Enter Washcare instructions`}
+                    required
+                    name="Washcare"
+                    value={productInfoDet.Washcare}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
+                <div className="mt-3">
+                  <label
+                    for="title"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Convertible
+                  </label>
+
+                  <input
+                    type="text"
+                    id="title"
+                    className="border-1 border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={"Enter Yes or No"}
+                    required
+                    name="Convertible"
+                    value={productInfoDet.Convertible}
+                    onChange={(e) => InfoHandler(e)}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="bg-white mt-4 p-4 shadow-md">
-              <label
-                for="message"
-                className=" m-2 p-2 block mb-2 text-sm font-medium text-gray-900"
-              >
-                
-              </label>
-
-              <div className="flex items-center p-3">
-                <input
-                  type="checkbox"
-                  name="Yes"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  onChange={(e) => setCheckbox(e.target.checked)}
-                />
+              <div className="bg-white mt-4 p-3 shadow-md">
                 <label
-                  for="default-checkbox"
-                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  for="message"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
-                  Yes
+                  Tags
                 </label>
+
+                <textarea
+                  name="tags"
+                  value={productInfo.tags}
+                  onChange={(e) => onchangeHandler(e)}
+                  rows="4"
+                  maxLength={"70"}
+                  required
+                  className="block p-2 w-full text-sm border-1"
+                  placeholder="Enter keywords or product name to find your product"
+                />
+              </div>
+
+              <div className="bg-white mt-4 p-4 shadow-md">
+                <label
+                  for="message"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Additional Infos
+                </label>
+
+                <div className="flex items-center p-3">
+                  <input
+                    type="checkbox"
+                    name="Yes"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    onChange={(e) => setCheckbox(e.target.checked)}
+                  />
+                  <label
+                    for="default-checkbox"
+                    className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Price depends on sizes then ckeck the box
+                  </label>
+                </div>
+                <div className="flex items-center p-3">
+                  <input
+                    type="checkbox"
+                    name="Yes"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    onChange={(e) => setCheckbox(e.target.checked)}
+                  />
+                  <label
+                    for="default-checkbox"
+                    className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Setwise
+                  </label>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          {/* Buttons */}
+          <div className="m-2 flex flex-row justify-center items-center gap-6">
+            <button
+              onClick={productId ? updateUproduct : addNewProduct}
+              style={{ background: "#4BB543" }}
+              className="py-3 px-[5rem] shadow-md text-md font-medium text-white border-1 border-gray-200"
+            >
+              {productId ? "Save and next" : "Submit"}
+            </button>
+
+            <button
+              className="bg-red-600 shadow-md py-3 px-[5rem] text-md font-medium text-white border-1 border-gray-200"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </>
       )}
-
-      {/* Buttons */}
-      <div className="m-2 flex flex-row justify-center items-center gap-6">
-        <button
-          onClick={productId ? updateUproduct : addNewProduct}
-          style={{ background: "#4BB543" }}
-          className="py-3 px-[5rem] shadow-md text-md font-medium text-white border-1 border-gray-200"
-        >
-          {productId ? "Save and next" : "Submit"}
-        </button>
-
-        <button
-          className="bg-red-600 shadow-md py-3 px-[5rem] text-md font-medium text-white border-1 border-gray-200"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          Cancel
-        </button>
-      </div>
     </div>
   );
 }

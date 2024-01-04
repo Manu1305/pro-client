@@ -355,7 +355,7 @@ const ViewProduct = ({ getAllProducts }) => {
                       ? product.productDetails[prdDetInd].images[0]
                       : imgPreview
                   }
-                  className={`img-fluid img-responsive rounded product-image shadow-sm`}
+                  className={`img-fluid img-responsive rounded product-image shadow-md`}
                   style={{
                     height: "500px",
                     width: "770px",
@@ -368,7 +368,7 @@ const ViewProduct = ({ getAllProducts }) => {
                 {product.productDetails[prdDetInd].images.map((img) => (
                   <div className="m-2">
                     <img
-                      className="shadow-sm hover:shadow-lg"
+                      className="shadow-md hover:shadow-lg"
                       style={{
                         height: "70px",
                         width: "70px",
@@ -606,9 +606,7 @@ const ViewProduct = ({ getAllProducts }) => {
                                     style={{ fontSize: "14px" }}
                                     className="text-[#d70a2a]"
                                   >
-                                    {/* {product.stock === 0
-                                          ? ""
-                                          : quantity + "left"} */}
+                                    
                                   </div>
                                 </div>
                                 {product.stock !== 0 && (

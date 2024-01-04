@@ -27,7 +27,6 @@ function Section2({
   Packoff,
   checkbox,
 }) {
-  console.log(checkbox)
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -40,18 +39,19 @@ function Section2({
 
   const updateCondition = productDetails.length !== 0;
 
+
+  console.log("DUMMY",updateCondition)
+
   let photos =
     updateCondition &&
     productDetails[index].images.map((item) => {
       return { src: item };
     });
   const [color, setColor] = useState(
-    updateCondition
-      ? productDetails[0].color.split(",")
-      : Packoff
-      ? Array(Number(Packoff)).fill("")
-      : []
+    updateCondition   ? productDetails[0]?.color : Packoff ? Array(Number(Packoff)).fill("") : []
   );
+
+
 
   const [totQut, setTotQut] = useState(0);
   const [loader, setLoader] = useState(true);
