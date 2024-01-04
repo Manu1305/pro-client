@@ -244,6 +244,18 @@ export const Collections = {
       "Colored Baniyans",
       "Tank Top Baniyans",
     ],
+  kidspair:[
+    "Top & Bottom Buddies",
+"Mini Outfit Duos",
+"Shirt 'n' Slacks Sets",
+"Youthful Pairing Picks",
+"Tee & Trouser Tandems",
+"Young Style Combinations",
+"Kids' CoordiCuts Collection",
+"Junior Mix & Match",
+"Tiny Tops 'n' Bottoms",
+"Kid Combo Couture"
+  ]
   };
 
 export  const sizeSelected = {
@@ -335,4 +347,16 @@ export  const sizeSelected = {
       "XXXXL",
       "Free Size",
     ],
+  kidspair: [
+    "0/0",
+    "16/20",
+    "16/16",
+    "20/26",
+    "20/20",
+    "22/32",
+    "20/32",
+    "28/32",
+    "26/36",
+    "34/38"
+  ],
   };

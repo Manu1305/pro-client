@@ -27,6 +27,7 @@ const AllOrders = () => {
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
+          console.log(res.data,"orders")
           return res.data;
         })
         .catch((err) => {
@@ -110,6 +111,9 @@ const AllOrders = () => {
 
   const header = [
     "Product",
+    "name",
+    "place",
+    "phone",
     "Order Id",
     "Orderd On",
     "Payment Method",
@@ -209,6 +213,9 @@ const AllOrders = () => {
       console.log("ID Recived", ele._id);
       return {
         id: ele._id,
+        "name": ele.dlvAddr.name,
+        "place":ele.dlvAddr.area,
+        "phone":ele.dlvAddr.phone,
         "Order Id": ele._id,
         prdId: ele.productId,
         Product: ele.prdData.images,

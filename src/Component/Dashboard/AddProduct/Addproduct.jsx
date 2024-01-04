@@ -62,6 +62,7 @@ function AddProduct() {
       "GirlsPants",
       "GirlsShorts",
       "Frock",
+      "kidspair",
     ],
   };
 

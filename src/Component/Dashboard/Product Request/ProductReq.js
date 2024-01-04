@@ -111,6 +111,7 @@ export const ProductRequest = () => {
 
   const header = [
     "seller",
+    "date",
     "productCode",
     "images",
     "brand",
@@ -186,6 +187,7 @@ export const ProductRequest = () => {
   const rowData = products.map((ele) => {
     return {
       id: ele._id,
+      date: ele.createdAt,
       images: ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
       brand: ele.brand,
       Stock: ele.stock,
@@ -194,7 +196,6 @@ export const ProductRequest = () => {
       productCode:ele.productCode
     };
   });
-
   return (
     <div>
       {rowData.length !== 0 ? (
