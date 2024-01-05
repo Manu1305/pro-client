@@ -47,7 +47,7 @@ function AddProduct() {
   const [errors, setErrors] = useState({});
   const [uplProductId, setUplProductId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
-  const [secondModal, setSecondModal] = useState(false);
+  const [secondModal, setSecondModal] = useState(true);
   const [checkbox, setCheckbox] = useState(false);
 
   const categoriesWithSubcategories = {
@@ -225,7 +225,6 @@ function AddProduct() {
     productId && getProductForEdit();
   }, []);
 
-  console.log(productInfo);
 
   return (
     <div style={{ background: "rgb(247, 251, 255)" }}>
@@ -690,7 +689,7 @@ function AddProduct() {
                   for="message"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
-                  Additional Infos
+                  Additional Information About Product
                 </label>
 
                 <div className="flex items-center p-3">

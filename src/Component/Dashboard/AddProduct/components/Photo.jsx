@@ -1,8 +1,4 @@
-import axios from "axios";
 import React from "react";
-import { MdDelete } from "react-icons/md";
-import httpService from "../../../Error Handling/httpService";
-import { apiURL } from "../../../../const/config";
 
 const imgWithClick = { cursor: "pointer" };
 
@@ -17,10 +13,6 @@ const Photo = ({ index, onClick, photo, margin, direction, top, left }) => {
   const handleClick = (event) => {
     onClick(event, { photo, index });
   };
-
-
-
-
 
   return (
     <div>

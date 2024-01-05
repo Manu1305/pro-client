@@ -236,7 +236,7 @@ function Section2({
   ));
 
   return (
-    <div className="bg-gray">
+    <div className="">
       <div className="mt-2 p-2">
         <div className="bg-white p-3">
           <label for="color" className="block m-2 text-2xl fw-bold bg-white">
@@ -257,6 +257,7 @@ function Section2({
             style={styles}
             prices={prices}
             setPrices={setPrices}
+            Packoff={Packoff}
           />
         </div>
         {updateCondition ? (

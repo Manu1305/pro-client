@@ -39,7 +39,7 @@ function UploadImages({
     Kurtis: [top1, top2, top3, top4],
   };
 
-
+console.log(category)
   const handleImageSelection = (e) => {
     console.log("FIles", e.target.files);
     const selectedImages = e.target.files;
@@ -59,11 +59,13 @@ function UploadImages({
     console.log("Images", images);
   }, [images]);
 
+
+  const checkCactegory = category ? category : "Shirts"
   return (
-    <div className="p-1 bg-white">
+    <div className="p-4 bg-white">
       <h2 className="text-2xl fw-bold">Examples</h2>
       <div className="flex flex-row justify-center items-center">
-        {imageToShow[`${category}`].map((item) => (
+        {imageToShow[`${checkCactegory}`].map((item) => (
           <div
             className="h-80 w-80 p-2 m-2 text-center"
             style={{ height: "300px", width: "300px" }}
