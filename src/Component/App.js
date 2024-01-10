@@ -48,7 +48,7 @@ import DashHome from "./Dashboard/Home/DashHome";
 import { ProductRequest } from "./Dashboard/Product Request/ProductReq";
 import { PremiumSellers } from "./Dashboard/User Management/seller/PremiumSeller";
 import VendorDashboard from "./Dashboard/Home/VendorDashboard";
-import AddProduct from "./Dashboard/AddProduct/Addproduct";
+import AddProduct from "./Dashboard/AddProduct/AddProduct";
 import SingleOrder from "./Dashboard/Order/singleOrderdetail/SingleOrder";
 import Thankyou from './../Auth/Buyer&SellerRegister/SellerRegistration/Thankyou';
 import Register from './../Auth/Buyer&SellerRegister/Register';
@@ -67,6 +67,9 @@ import Profile from "./Pages/Navbar/Dropdown/ProfileDropdown";
 import { StorePage } from './../Auth/Buyer&SellerRegister/SellerRegistration/RegistrationPage';
 import { Footer } from './Pages/Footer/Footer';
 import Shop from "./Pages/Shop Section/Shop";
+import ColorAndSizes from "./Dashboard/AddProduct/ColorAndSizes";
+import UploadImages from "./Dashboard/AddProduct/UploadImages";
+import ProductDetails from "./Dashboard/AddProduct/ProductDetails";
 
 const LazyCart = React.lazy(() => import("./Pages/Cart/Cart"));
 const LazyMainPage = React.lazy(() =>
@@ -110,7 +113,7 @@ const App = () => {
     await httpService
       .get(`${apiURL}/product/get-all-products`)
       .then((res) => {
-        
+
         const filByStaus = res.data.filter((prd) => prd.status === "Published");
         dispatch(addProduct(filByStaus));
         console.log("All Products", filByStaus);
@@ -162,7 +165,7 @@ const App = () => {
           <Route path="register" element={<Register />} />
           <Route path="sellerplans" element={<Plans />} />
           <Route path="StorePage" element={<StorePage />} />
-          <Route path="/Addproduct/:productId" element={<AddProduct />} />
+
           <Route path="store" element={<Store />} />
           <Route path="payment" element={<SellerPayment />} />
           <Route path="customer" element={<CustomerSup />} />
@@ -226,7 +229,16 @@ const App = () => {
             {/*  Admin Seller Dashboard*/}
             <Route path="chart-deatils" element={<VendorDashboard />} />
             <Route path="product-requsets" element={<ProductRequest />} />
-            <Route path="add-products" element={<AddProduct />} />
+
+            {/* AddProduct Routes */}
+            <Route path="add-products" element={<AddProduct />} >
+              <Route path="product-details" element={<ProductDetails />} />
+              <Route path="color-and-sizes" element={<ColorAndSizes />} />
+              <Route path="upload-product-images" element={<UploadImages />} />
+              <Route index element={<Navigate to="product-details" replace />} />
+            </Route>
+
+
             <Route path="all-orders" element={<OrderHistory />} />
             <Route path="premium-sellers" element={<PremiumSellers />} />
             <Route path="user-management" element={<AllUsers />} />
@@ -251,19 +263,20 @@ const App = () => {
             />
           </Route>
 
+
+          {/* Edit Product */}
+          <Route path="/edit-product/:productId" element={<AddProduct />} >
+            <Route path="product-details" element={<ProductDetails />} />
+            <Route path="color-and-sizes" element={<ColorAndSizes />} />
+            <Route path="upload-product-images" element={<UploadImages />} />
+            <Route index element={<Navigate to="product-details" replace />} />
+          </Route>
         </Routes>
         <Footer />
 
       </div>
 
-
-
-
-
-
-
     </ScrollToTop>
-    // </Router>
   );
 };
 
