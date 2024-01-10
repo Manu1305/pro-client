@@ -17,12 +17,12 @@ import Colors from "./components/Colors";
 import UploadImages from "./components/UploadImages";
 import ProductSizes from "./components/ProductSizes";
 
-function Section2({
+function ColorAndSizes({
   sizeSelected,
   productInfo,
   setSecondModal,
   productId,
-  productDetails,
+  productDetails = [],
   setProductDetails,
   Packoff,
   checkbox,
@@ -40,7 +40,6 @@ function Section2({
   const updateCondition = productDetails.length !== 0;
 
 
-  console.log("DUMMY",updateCondition)
 
   let photos =
     updateCondition &&
@@ -338,4 +337,4 @@ function Section2({
   );
 }
 
-export default Section2;
+export default ColorAndSizes;

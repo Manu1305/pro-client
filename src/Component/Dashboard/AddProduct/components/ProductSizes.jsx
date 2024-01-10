@@ -1,32 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { sizeSelected } from "../Datas";
+import styles from "../Addproduct.module.css";
 
-function ProductSizes({
-  qtyAndSizes,
-  productInfo,
-  styles,
-  totQut,
-  sizeSelected,
-  setQtyAndSizes,
-  setPrices,
-  checkbox,
-  // Packoff
-}) {
-  const priceHandler = (event, index) => {
-    const { name, value } = event.target;
-
-    setPrices((prevPrices) => {
-      const updatedPrices = [...prevPrices];
-
-      //   if index curent index not found
-      if (!updatedPrices[index]) {
-        updatedPrices[index] = {};
-      }
-      updatedPrices[index][name] = parseFloat(value);
-      return updatedPrices;
-    });
-  };
-
-  const Packoff = 1;
+function ProductSizes() {
+  const currentProduct = useSelector(
+    (state) => state.addProductReducer.product
+  );
+  console.log("currentProduct", currentProduct);
 
   const [selectedSizes, setSelectedSizes] = useState([]);
 
@@ -40,14 +21,15 @@ function ProductSizes({
     });
   };
 
-  useEffect(() => {
-    console.log(selectedSizes);
-  }, [selectedSizes]);
+  // const packOff = currentProduct.productInfo.Packoff  ;
+  const packOff = currentProduct.productInfo.Packoff  ;
+  // const isKidsProduct = currentProduct.selectedCategory.toLowerCase() === "kids";
+  const isKidsProduct = true;
 
   return (
     <div>
-      {false ? (
-        <div className={`${styles.formGroup} p-2`}>
+      {packOff === 1 ? (
+        <div className={`bg-white p-2`}>
           <label
             className={`${styles.label} m-2 text-2xl fw-bold `}
             htmlFor="product_size"
@@ -58,14 +40,10 @@ function ProductSizes({
             <div className="">
               <div className={`${styles.sizeButtons}`}>
                 <div>
-                  <h3 className="m-1">Total Quantity:{totQut}</h3>
+                  <h3 className="m-1">Total Quantity:{"totQut"}</h3>
                 </div>
                 <div className="flex flex-wrap gap-9 p-8">
-                  {sizeSelected[
-                    !productInfo.selectedSubcategory
-                      ? "Shirts"
-                      : productInfo.selectedSubcategory
-                  ].map((size, index) => (
+                  {sizeSelected["Shirts"].map((size, index) => (
                     <div key={index} className="flex gap-3">
                       <div className="flex justify-center items-center w-[150px] h-10 border-r-zinc-400 indent-2.5 border">
                         {size}
@@ -74,16 +52,7 @@ function ProductSizes({
                         type="number"
                         name={size}
                         placeholder="Enter quantites"
-                        onChange={(e) =>
-                          setQtyAndSizes((prev) => {
-                            return {
-                              ...prev,
-                              [e.target.name]: Number(e.target.value),
-                            };
-                          })
-                        }
                         defaultValue={0}
-                        value={qtyAndSizes[size] ? qtyAndSizes[size] : ""}
                         className="h-[40px] w-[150px] p-1"
                         style={{
                           border: "1px solid #DDDDDD",
@@ -94,18 +63,14 @@ function ProductSizes({
                 </div>
               </div>
             </div>
-            <div className="">
-              {checkbox && (
+            {/* <div className="">
+              {true && (
                 <>
                   <div className="flex justify-around m-2">
                     <h3>Selling price</h3>
                     <h3>Real price</h3>
                   </div>
-                  {sizeSelected[
-                    !productInfo.selectedSubcategory
-                      ? "Shirts"
-                      : productInfo.selectedSubcategory
-                  ].map((size, index) => (
+                  {sizeSelected["Shirts"].map((size, index) => (
                     <div className="flex flex-row gap-3">
                       <input
                         className="p-2 border-2 m-1"
@@ -126,10 +91,11 @@ function ProductSizes({
                   ))}
                 </>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (
+        // F
         <div
           className="p-6 px-16 flex gap-4"
           style={{ background: "rgb(247, 251, 255)" }}
@@ -138,54 +104,63 @@ function ProductSizes({
             <span className="text-xl font-bold">Check Pack Sizes</span>
             {/* For Sizes */}
             <div className="flex flex-wrap  justify-between">
-              {sizeSelected[
-                !productInfo.selectedSubcategory
-                  ? "Shirts"
-                  : productInfo.selectedSubcategory
-              ].map((size, index) => (
+              {sizeSelected["Shirts"].map((size, index) => (
                 <div
                   key={index}
-                  className="flex w-[50%] cursor-pointer items-center gap-4 p-2"
+                  className="flex w-[50%] "
                   onClick={() => handleSizes(size)}
                 >
-                  <input
-                    type="checkbox"
-                    className="p-3 w-6 h-6 cursor-pointer"
-                    name={size}
-                    id={`custom-checkbox-${index}`}
-                  />
-                  <label
-                    htmlFor={`custom-checkbox-${index}`}
-                    className="text-[16px] font-medium cursor-pointer"
-                  >
-                    {size}
-                  </label>
+                  {/* Sizes  */}
+                  <div className="flex cursor-pointer items-center gap-4 p-2">
+                    {!isKidsProduct && (
+                      <input
+                        type="checkbox"
+                        className="p-3 w-6 h-6 cursor-pointer"
+                        name={size}
+                        id={`custom-checkbox-${index}`}
+                      />
+                    )}
+                    <label
+                      htmlFor={`custom-checkbox-${index}`}
+                      className="text-[16px] w-20 h-8 font-medium cursor-pointer"
+                    >
+                      {size}
+                    </label>
+                    {isKidsProduct && (
+                      <input
+                        autoFocus={index === 0}
+                        className="w-[50%] p-2 border-1 rounded border-black"
+                        type="text"
+                        placeholder="Enter Prices"
+                      />
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
           {/* Enter Avialable sets */}
 
-          <div className="flex flex-col justify-center items-center w-[50%]  bg-white shadow-md">
+          <div className="flex flex-col px-4 w-[50%]  bg-white shadow-md">
             <div className="flex flex-col p-2 w-[50%]">
               <span className="text-medium font-bold text-start">
                 Enter Available Sets
               </span>
               <input
                 type="number"
-                className="text-center p-2 border-2 rounded mt-2 border-black"
+                className="p-2 border-2 rounded mt-2 border-black"
                 placeholder="Enter Availble Sets"
               />
             </div>
 
-            <div className="flex flex-col p-2 w-[50%]">
+            <div className="flex flex-col p-2">
               <span className="text-medium font-bold text-start">
-                Minimum Sets For Placing Order 
+                Minimum Sets For Placing Order
               </span>
               <input
                 type="number"
-                className="text-center p-2 border-2 rounded mt-2 border-black"
-                placeholder="Enter Minimum Sets For Placing Order "
+                className="p-2 border-2 rounded mt-2 w-[50%] border-black"
+                placeholder="Enter Minimum Sets"
               />
             </div>
           </div>

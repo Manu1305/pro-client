@@ -152,7 +152,7 @@ export const ProductSec = () => {
               {/* Edit */}
               <div
                 onClick={() =>
-                  navigate(`/Addproduct/${params.row.id}`)
+                  navigate(`/edit-product/${params.row.id}`)
                 }
               >
                 <Tooltip title="Edit" sx={{ fontSize: 20 }}>

@@ -412,7 +412,7 @@ const ViewProduct = ({ getAllProducts }) => {
                       </button>
                       <button
                         className="btn btn-primary"
-                        onClick={() => navigate(`/Addproduct/${product._id}`)}
+                        onClick={() => navigate(`/edit-product/${product._id}`)}
                       >
                         Edit
                       </button>
