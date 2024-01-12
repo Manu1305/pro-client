@@ -21,8 +21,10 @@ import kid2 from "../../../images/kid2.webp";
 import kid3 from "../../../images/kid3.webp";
 // import kid4 from "./../../../images/kid4.webp";
 import kid4 from "../../../images/kid4.webp";
+import { useNavigate } from "react-router-dom";
 
 function UploadImages() {
+  const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const category = "Shirts";
@@ -53,6 +55,15 @@ function UploadImages() {
   };
 
   const checkCactegory = category ? category : "Shirts";
+
+
+  const uploadImages = async() => {
+    try {
+      
+    } catch (error) {
+      console.log("GOT ERROR",error)
+    }
+  }
   return (
     <div>
       <div className="shadow-md bg-gray-50 p-3 mt-6">
@@ -165,6 +176,22 @@ function UploadImages() {
               </div>
             );
           })}
+      </div>
+      <div className="mt-5 p-2 flex justify-center items-center gap-4">
+        <button
+          onClick={uploadImages}
+          style={{ background: "#4BB543" }}
+          className="py-3 px-[5rem] shadow-md text-md font-medium text-white border-1 border-gray-200"
+        >
+          Submit
+        </button>
+        <button
+          onClick={() => navigate(-1)}
+          style={{ background: "#dc2626" }}
+          className="bg-red-600 shadow-md py-3 px-[5rem] text-md font-medium text-white border-1 border-gray-200"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );

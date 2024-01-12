@@ -224,7 +224,7 @@ function ColorAndSizes() {
       <div>
         <ProductSizes/>
       </div>
-      <div className="m-2 d-flex justify-center items-center">
+      <div className="flex justify-center items-center gap-4">
         <button
           onClick={false ? updateProductColorFunction : submitHandler}
           style={{ background: "#4BB543" }}

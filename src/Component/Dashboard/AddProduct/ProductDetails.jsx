@@ -1,11 +1,10 @@
-import React, { useEffect, useReducer } from "react";
-import styles from "./Addproduct.module.css";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import httpService from "../../Error Handling/httpService";
 import { apiURL } from "../../../const/config";
-import { Collections } from "./Datas";
+import { Collections } from "./Data";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductAction, updateSteps } from "../../../Redux/addProduct/addProductAction";
 
@@ -128,41 +127,6 @@ function ProductDetails() {
     });
   };
 
-  const addNewProduct = async () => {
-    // e.preventDefault();
-    const isValid = validateForm();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-
-    try {
-      await httpService
-        .post(
-          `${apiURL}/product/add-new-product`,
-          { productInfo: productInfoDet, genInfo: productInfo },
-          config
-        )
-        .then((res) => {
-          dispatch(addProductAction(res.data))
-          dispatch(updateSteps(1))
-          navigate('/dashboard/add-products/color-and-sizes')
-          console.log("PRODUCT RESPONSE", res.data);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Saved",
-            showConfirmButton: false,
-            timer: 1000,
-          });
-        });
-    } catch (error) {
-      console.log("Couldn't add product: ", error);
-    }
-  };
 
   const updateUproduct = async () => {
     try {
@@ -204,6 +168,40 @@ function ProductDetails() {
       console.log(error);
     }
   };
+
+
+  const uploadProductDetails = async() => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    try {
+      await httpService
+        .post(
+          `${apiURL}/product/add-new-product`,
+          { productInfo: productInfoDet, genInfo: productInfo },
+          config
+        )
+        .then((res) => {
+          dispatch(addProductAction(res.data))
+          dispatch(updateSteps(1))
+          navigate('/dashboard/add-products/color-and-sizes')
+          console.log("PRODUCT RESPONSE", res.data);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Saved Details",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        });
+    } catch (error) {
+      console.log("Couldn't add product: ", error);
+    }
+  }
 
   return (
     <div>
@@ -467,7 +465,7 @@ function ProductDetails() {
         </div>
 
         {/* General Info */}
-        <div className={`${styles.maintwo} p-3 `}>
+        <div className={`w-[50%] p-3 `}>
           <div className="bg-white p-4">
             <h3 className="fw-bolder">General info</h3>
 
@@ -644,49 +642,12 @@ function ProductDetails() {
             />
           </div>
 
-          {/* <div className="bg-white mt-4 p-4 shadow-md">
-            <label
-              for="message"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              Additional Information About Product
-            </label>
 
-            <div className="flex items-center p-3">
-              <input
-                type="checkbox"
-                name="Yes"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                onChange={(e) => setCheckbox(e.target.checked)}
-              />
-              <label
-                for="default-checkbox"
-                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                Price depends on sizes then ckeck the box
-              </label>
-            </div>
-            <div className="flex items-center p-3">
-              <input
-                type="checkbox"
-                name="Yes"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                onChange={(e) => setCheckbox(e.target.checked)}
-              />
-              <label
-                for="default-checkbox"
-                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                Setwise
-              </label>
-            </div>
-          </div> */}
         </div>
       </div>
-      {/* Buttons */}
       <div className="m-2 flex flex-row justify-center items-center gap-6">
         <button
-          onClick={productId ? updateUproduct : addNewProduct}
+          onClick={uploadProductDetails}
           style={{ background: "#4BB543" }}
           className="py-3 px-[5rem] shadow-md text-md font-medium text-white border-1 border-gray-200"
         >

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { sizeSelected } from "../Datas";
-import styles from "../Addproduct.module.css";
+import { sizeSelected } from "../Data";
 
 function ProductSizes() {
 
@@ -10,7 +9,7 @@ function ProductSizes() {
   );
  
   console.log("currentProduct",currentProduct)
-  const Packoff = currentProduct?.productInfo?.Packoff || 2
+  const packOff = currentProduct?.productInfo?.Packoff || 2
 
   const [selectedSizes, setSelectedSizes] = useState([]);
 
@@ -28,17 +27,17 @@ function ProductSizes() {
 
   return (
     <div>
-      {Packoff === 1 ? (
+      {packOff === 1 ? (
         <div className={`bg-white p-2`}>
           <label
-            className={`${styles.label} m-2 text-2xl fw-bold `}
+            className={`m-2 text-2xl fw-bold `}
             htmlFor="product_size"
           >
             Available Sizes
           </label>
           <div className="font-bold flex flex-row justify-between items-center">
             <div className="">
-              <div className={`${styles.sizeButtons}`}>
+              <div className='flex flex-col flex-wrap'>
                 <div>
                   <h3 className="m-1">Total Quantity:{"totQut"}</h3>
                 </div>
@@ -51,7 +50,7 @@ function ProductSizes() {
                       <input
                         type="number"
                         name={size}
-                        placeholder="Enter quantites"
+                        placeholder="Enter quantities"
                         className="h-[40px] w-[150px] p-1"
                         style={{
                           border: "1px solid #DDDDDD",
@@ -108,7 +107,7 @@ function ProductSizes() {
               ))}
             </div>
           </div>
-          {/* Enter Avialable sets */}
+          {/* Enter Available sets */}
 
           <div className="flex flex-col px-4 w-[50%]  bg-white shadow-md">
             <div className="flex flex-col p-2 w-[50%]">
@@ -118,7 +117,7 @@ function ProductSizes() {
               <input
                 type="number"
                 className="p-2 border-2 rounded mt-2 border-black"
-                placeholder="Enter Availble Sets"
+                placeholder="Enter Available Sets"
               />
             </div>
 

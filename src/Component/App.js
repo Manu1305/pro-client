@@ -48,8 +48,7 @@ import DashHome from "./Dashboard/Home/DashHome";
 import { ProductRequest } from "./Dashboard/Product Request/ProductReq";
 import { PremiumSellers } from "./Dashboard/User Management/seller/PremiumSeller";
 import VendorDashboard from "./Dashboard/Home/VendorDashboard";
-import AddProduct from "./Dashboard/AddProduct/AddProduct";
-import SingleOrder from "./Dashboard/Order/singleOrderdetail/SingleOrder";
+import SingleOrder from "./Dashboard/Order/singleOrderdetail/SingleOrder"
 import Thankyou from './../Auth/Buyer&SellerRegister/SellerRegistration/Thankyou';
 import Register from './../Auth/Buyer&SellerRegister/Register';
 import Plans from './../Auth/Buyer&SellerRegister/SellerRegistration/PlansForm/Plans';
@@ -67,6 +66,7 @@ import Profile from "./Pages/Navbar/Dropdown/ProfileDropdown";
 import { StorePage } from './../Auth/Buyer&SellerRegister/SellerRegistration/RegistrationPage';
 import { Footer } from './Pages/Footer/Footer';
 import Shop from "./Pages/Shop Section/Shop";
+import AddProduct from './Dashboard/AddProduct/Addproduct'
 import ColorAndSizes from "./Dashboard/AddProduct/ColorAndSizes";
 import UploadImages from "./Dashboard/AddProduct/UploadImages";
 import ProductDetails from "./Dashboard/AddProduct/ProductDetails";
