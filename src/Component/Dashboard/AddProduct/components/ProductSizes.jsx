@@ -4,10 +4,13 @@ import { sizeSelected } from "../Datas";
 import styles from "../Addproduct.module.css";
 
 function ProductSizes() {
+
   const currentProduct = useSelector(
     (state) => state.addProductReducer.product
   );
-  console.log("currentProduct", currentProduct);
+ 
+  console.log("currentProduct",currentProduct)
+  const Packoff = currentProduct?.productInfo?.Packoff || 2
 
   const [selectedSizes, setSelectedSizes] = useState([]);
 
@@ -21,14 +24,11 @@ function ProductSizes() {
     });
   };
 
-  // const packOff = currentProduct.productInfo.Packoff  ;
-  const packOff = currentProduct.productInfo.Packoff  ;
-  // const isKidsProduct = currentProduct.selectedCategory.toLowerCase() === "kids";
-  const isKidsProduct = true;
+  const isKidsProduct = currentProduct?.selectedCategory?.toLowerCase() === "kids";
 
   return (
     <div>
-      {packOff === 1 ? (
+      {Packoff === 1 ? (
         <div className={`bg-white p-2`}>
           <label
             className={`${styles.label} m-2 text-2xl fw-bold `}
@@ -52,7 +52,6 @@ function ProductSizes() {
                         type="number"
                         name={size}
                         placeholder="Enter quantites"
-                        defaultValue={0}
                         className="h-[40px] w-[150px] p-1"
                         style={{
                           border: "1px solid #DDDDDD",
@@ -63,39 +62,9 @@ function ProductSizes() {
                 </div>
               </div>
             </div>
-            {/* <div className="">
-              {true && (
-                <>
-                  <div className="flex justify-around m-2">
-                    <h3>Selling price</h3>
-                    <h3>Real price</h3>
-                  </div>
-                  {sizeSelected["Shirts"].map((size, index) => (
-                    <div className="flex flex-row gap-3">
-                      <input
-                        className="p-2 border-2 m-1"
-                        type="number"
-                        name="sellingPrice"
-                        placeholder="Enter Selling Price"
-                        onChange={(event) => priceHandler(event, index)}
-                      />
-
-                      <input
-                        className="p-2 border-2 m-1"
-                        type="number"
-                        name="realPrice"
-                        placeholder="Enter Real Price"
-                        onChange={(event) => priceHandler(event, index)}
-                      />
-                    </div>
-                  ))}
-                </>
-              )}
-            </div> */}
           </div>
         </div>
       ) : (
-        // F
         <div
           className="p-6 px-16 flex gap-4"
           style={{ background: "rgb(247, 251, 255)" }}

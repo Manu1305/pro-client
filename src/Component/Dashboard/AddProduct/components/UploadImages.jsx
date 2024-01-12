@@ -19,16 +19,13 @@ import kid1 from "../../../../images/kid1.webp";
 import kid2 from "../../../../images/kid2.webp";
 import kid3 from "../../../../images/kid3.webp";
 import kid4 from "../../../../images/kid4.webp";
-import { useEffect } from "react";
+import { useState } from "react";
 
-function UploadImages({
-  setImages,
-  setImagePreviews,
-  imagePreviews,
-  images,
-  category,
-  Packoff,
-}) {
+function UploadImages() {
+  const [images, setImages] = useState([])
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const category = "Shirts"
+  const Packoff = 1
   const imageToShow = {
     Shirts: [img1, img2, img3, img4],
     top: [top1, top2, top3, top4],
@@ -39,7 +36,6 @@ function UploadImages({
     Kurtis: [top1, top2, top3, top4],
   };
 
-console.log(category)
   const handleImageSelection = (e) => {
     console.log("FIles", e.target.files);
     const selectedImages = e.target.files;
@@ -55,9 +51,6 @@ console.log(category)
     setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
   };
 
-  useEffect(() => {
-    console.log("Images", images);
-  }, [images]);
 
 
   const checkCactegory = category ? category : "Shirts"

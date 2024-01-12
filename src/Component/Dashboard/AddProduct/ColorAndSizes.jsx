@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import styles from "./Addproduct.module.css";
 import httpService from "../../Error Handling/httpService";
 import { apiURL } from "../../../const/config";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Watch } from "react-loader-spinner";
-
 // sort images
 import Gallery from "react-photo-gallery";
 import { arrayMoveImmutable } from "array-move";
@@ -14,7 +11,6 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import Photo from "./components/Photo";
 import axios from "axios";
 import Colors from "./components/Colors";
-import UploadImages from "./components/UploadImages";
 import ProductSizes from "./components/ProductSizes";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,12 +18,9 @@ function ColorAndSizes() {
   const dispatch = useDispatch();
 
   const updateProductColor = useSelector(state => state.addProductReducer.product)
-  const  productDetails = updateProductColor.productDetails;
 
-  console.log("updateProductColor",updateProductColor)
-  // const Packoff = updateProductColor.productInfo.Packoff
-  const Packoff = 3
-
+  // const Packoff = 3
+  let { productId } = useParams();
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -75,26 +68,6 @@ function ColorAndSizes() {
       return; //
     }
 
-    if (images.length === 0) {
-      // No images selected
-      Swal.fire({
-        icon: "error",
-        title: "Validation Error",
-        text: "Please select at least one image.",
-      });
-      setLoader(true);
-      return; //
-    }
-    if (images.length > 20) {
-      // More than 4 images selected
-      Swal.fire({
-        icon: "error",
-        title: "Validation Error",
-        text: "You can only add up to 4 images.",
-      });
-      setLoader(true);
-      return; //
-    }
     if (totQut < 5) {
       Swal.fire({
         icon: "warning",
@@ -132,7 +105,9 @@ function ColorAndSizes() {
         )
         .then((res) => {
           console.log("SUCCESS RES", res.data);
+
           // setColor("");
+          navigate('/dashboard/add-products/upload-product-images')
           setImages([]);
           setImagePreviews([]);
           Swal.fire({
@@ -241,7 +216,7 @@ function ColorAndSizes() {
           <label for="color" className="block m-2 text-2xl">
             Colors
           </label>
-          <Colors Packoff={Packoff} color={color} setColor={setColor} />
+          <Colors color={color} setColor={setColor} />
         </div>
       </div>
 

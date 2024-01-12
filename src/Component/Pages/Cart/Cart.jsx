@@ -17,13 +17,13 @@ const Cart = () => {
   const CartItem = useSelector((state) => state.cartReducer.userCart);
 
   console.log(CartItem,'its cartitems');
+  // console.log("CartItem",CartItemitem.productDetails.color);
 
   const dispatch = useDispatch();
 
   const removeFromCart = async (id) => {
     Swal.fire({
       title: "Removing from cart.?",
-      // text: "Remove from cart",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -157,7 +157,7 @@ const Cart = () => {
                             </div>
                           </div>
                         </div>
-                        {item.productDetails.packOff >= 2 ? (
+                        {typeof(item.productDetails.color) !== "string" ? (
                           item.productDetails.color.map((color, key) => (
                             <div
                               key={key}
@@ -181,7 +181,6 @@ const Cart = () => {
                             }}
                           ></div>
                         )}
-
                         {item.productDetails.packOff < 2 ? (
                           <div className="col-md-1 col-lg-1 col-xl-1 text-end">
                             <div className={Styles.hideprice}>
@@ -210,6 +209,7 @@ const Cart = () => {
                             <BsTrash className="h-10 w-10" />
                           </button>
                         </div>
+
                       </div>
                     </div>
                   </div>

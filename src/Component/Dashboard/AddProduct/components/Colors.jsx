@@ -1,4 +1,11 @@
+import { useSelector } from "react-redux";
+
 const Colors = ({ color, setColor }) => {
+  const updateProductColor = useSelector(state => state.addProductReducer.product)
+  const  productDetails = updateProductColor.productDetails;
+
+  console.log("updateProductColor",updateProductColor)
+  const Packoff = updateProductColor?.productInfo?.Packoff || 1
   
   const handleColorChange = (value, index) => {
     // Create a copy of the colors array
