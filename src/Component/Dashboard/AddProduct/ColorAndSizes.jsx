@@ -85,27 +85,28 @@ function ColorAndSizes() {
       },
     };
 
-    const formData = new FormData();
-    for (const file of images) {
-      formData.append("images", file);
-    }
-    formData.append("qtyAndSizes", JSON.stringify(qtyAndSizes));
-    const colorsArray = typeof color === "string" ? color.split(",") : color;
+    // const formData = new FormData();
+    // for (const file of images) {
+    //   formData.append("images", file);
+    // }
+    // formData.append("qtyAndSizes", JSON.stringify(qtyAndSizes));
+    // const colorsArray = typeof color === "string" ? color.split(",") : color;
 
-    formData.append("color", colorsArray);
-    formData.append("prices", JSON.stringify(prices));
+    // formData.append("color", colorsArray);
+    // formData.append("prices", JSON.stringify(prices));
 
-    console.log("prices", prices);
+    // console.log("prices", prices);
     try {
       await httpService
         .put(
-          `${apiURL}/product/product_color_images/${updateProductColor._id}`,
-          formData,
+          `${apiURL}/product/add-product-size-and-quantity/${updateProductColor._id}`,
+          // multiColorProduct
+          {color,qtyAndSizes},
           config
         )
         .then((res) => {
           console.log("SUCCESS RES", res.data);
-
+          dispatch(res.data)
           // setColor("");
           navigate('/dashboard/add-products/upload-product-images')
           setImages([]);

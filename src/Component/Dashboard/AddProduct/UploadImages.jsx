@@ -19,11 +19,16 @@ import saree4 from "../../../images/saree4.webp";
 import kid1 from "../../../images/kid1.webp";
 import kid2 from "../../../images/kid2.webp";
 import kid3 from "../../../images/kid3.webp";
-// import kid4 from "./../../../images/kid4.webp";
 import kid4 from "../../../images/kid4.webp";
 import { useNavigate } from "react-router-dom";
+import { apiURL } from "../../../const/config";
+import httpService from "../../Error Handling/httpService";
+import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 function UploadImages() {
+  const currentProduct = useSelector(state => state.addProductReducer.product)
+
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -58,10 +63,50 @@ function UploadImages() {
 
 
   const uploadImages = async() => {
+    
+    if (!images) {
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Please select a color.",
+      });
+      return; //
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    const formData = new FormData();
+    for (const file of images) {
+      formData.append("images", file);
+    }
+
     try {
-      
+      await httpService
+        .post(
+          `${apiURL}/product/product_color_images/${currentProduct._id}`,
+          formData,
+          config
+        )
+        .then((res) => {
+          console.log("SUCCESS RES", res.data);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "The product successfully added",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } catch (error) {
-      console.log("GOT ERROR",error)
+      console.log("ERROR", error);
     }
   }
   return (

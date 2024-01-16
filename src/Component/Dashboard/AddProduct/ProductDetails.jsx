@@ -181,7 +181,7 @@ function ProductDetails() {
     try {
       await httpService
         .post(
-          `${apiURL}/product/add-new-product`,
+          `${apiURL}/product/add-product-details`,
           { productInfo: productInfoDet, genInfo: productInfo },
           config
         )
