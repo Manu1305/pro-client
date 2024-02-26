@@ -51,9 +51,9 @@ export const Footer = () => {
                   : 9711811030{" "}
                 </Link>
                 <Link className={styles.links}>
-                  <i className="fa fa-building" aria-hidden="true"></i> : Plot
-                  No: 128-P2, Ground Floor, EPIP Zone Whitefield Rd, near Ginger
-                  Hotel, Whitefield, EPIP Zone, Bengaluru, Karnataka 560066
+                  <i className="fa fa-building" aria-hidden="true"></i>{" "}
+                  :Tower-B, BRIGADE TECH PARK, Pattandur Agrahara, Whitefield,
+                  Bengaluru, Karnataka 560066
                 </Link>
                 <Link className={styles.links}>
                   <i className="fa fa-envelope-o" aria-hidden="true"></i> :

@@ -1,3 +1,294 @@
+// import React, { useEffect, useState } from "react";
+// import styles from "./MyOrder.module.css";
+// import { Link, useNavigate } from "react-router-dom";
+// import { Card, Button } from "react-bootstrap";
+// import { useSelector, useDispatch } from "react-redux";
+// import { addOrder } from "../../../Redux/actionContName";
+// import { apiURL } from "../../../const/config";
+// import httpService from "../../Error Handling/httpService";
+// import ClipLoader from "react-spinners/ClipLoader";
+// import { ScaleLoader } from "react-spinners";
+// import axios from "axios";
+// import Swal from "sweetalert2";
+// // import imge from "../../../../images/logoooo.jpg";
+// import DataTable from "../../Dashboard/Reuseable Comp/DataTable";
+// import { IconButton, Tooltip } from "@mui/material";
+// import CancelIcon from '@mui/icons-material/Cancel';
+// import CancelPresentationSharpIcon from '@mui/icons-material/CancelPresentationSharp';
+// import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+// const BuyerOrder = () => {
+//   const dispatch = useDispatch();
+
+//   // const orderss = useSelector((state) => state.orderReducer.order);
+//   //
+//   const [orders, setOrders] = useState([]);
+
+//   const [isLoading, setIsLoading] = useState(true);
+//   const user = useSelector((state) => state.userReducer.user);
+
+//   const returnButton = ({ order }) => {
+//     alert(order.updatedAt);
+
+//     const currentDate = new Date();
+
+//     console.log(order.updatedAt);
+//     console.log(currentDate);
+//     console.log("Check difference ", currentDate < order.updatedAt);
+//   };
+//   const navigate = useNavigate()
+//   // const user = useSelector((state) => state.userReducer.user)
+//   console.log("user", user);
+//   const getOrders = async () => {
+//     try {
+//       const config = {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${localStorage.getItem("token")}`,
+//         },
+//       };
+//       const res = await httpService
+//         .get(`${apiURL}/orders/get-all-orders`, config)
+//         .then((res) => {
+//           setIsLoading(false);
+
+//           // console.log(res.data + "orders csdc");
+//           return res.data;
+//         })
+//         .catch((err) => {
+//           console.log(err);
+//           setIsLoading(false);
+//         });
+//       console.log(res,'resopse');
+//       setOrders(res);
+//       dispatch(addOrder(res));
+
+//       if (res.length == 0) {
+//         setOrders([]);
+//       } else {
+//         alert()
+//         setOrders(res);
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     setIsLoading(true);
+//     getOrders();
+//   }, []);
+
+//   function cancelorder({ id }) {
+//     Swal.fire({
+//       title: "Are you sure to cancel this order?",
+//       text: "",
+//       icon: "warning",
+//       showCancelButton: true,
+//       confirmButtonColor: "#3085d6",
+//       cancelButtonColor: "#d33",
+//       confirmButtonText: "Yes",
+//       cancelButtonText: "No",
+//     }).then((result) => {
+//       if (result.isConfirmed) {
+//         const config = {
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${localStorage.getItem("token")}`,
+//           },
+//         };
+//         axios
+//           .put(`${apiURL}/orders/update-order/${id}`, config)
+//           .then((res) => {
+//             getOrders();
+//             Swal.fire("!", "Your Order cancelled successfully...", "success");
+//           })
+//           .catch((err) => {
+//             console.log(err);
+//           });
+//       }
+//     });
+//   }
+
+
+//   const header = [
+//     // "id",
+//     "date",
+//     "images",
+//     "brand",
+//     "sizeandQuantity",
+//     "TotalQuantity",
+//     "price",
+//     'OrderStatus',
+//     "action",
+
+//   ].map((ele) => {
+//     let string = ele;
+//     string.replace(/^./, string[0].toUpperCase());
+
+//     if (ele === "images") {
+//       return {
+//         field: "image",
+//         type: "image",
+//         renderCell: (params) => {
+//           return (
+//             <div onClick={() =>
+//               navigate(`/orderDetails/${params.row.id}`)
+//             }>
+//               <img src={!params.row.images ? "" : params.row.images} alt="dfs" width={30} />
+//             </div>
+//           );
+//         },
+//       };
+//     }
+//     if (ele === "action") {
+//       return {
+//         field: "Action",
+//         type: "action",
+//         width: "150px",
+//         renderCell: (params) => {
+//           let status = params.row.OrderStatus
+
+//           console.log("status", status)
+//           return (
+//             <div style={{ display: "flex", flexDirection: "row" }}>
+//               {status !== 'Cancelled' && (
+//                 <div
+//                   className="cursor-pointer"
+//                   onClick={() => {
+//                     cancelorder({ id: params.row.id })
+
+//                   }}
+//                 >
+
+
+//                   <Tooltip title="Cancel order">
+//                     <IconButton>
+//                       <CancelPresentationSharpIcon />
+//                     </IconButton>
+//                   </Tooltip>
+
+//                 </div>)
+//               }
+//               {status === 'Cancelled' && 'Deliverd' && (
+//                 <div
+//                   className="cursor-pointer"
+//                   onClick={() => {
+//                     cancelorder({ id: params.row.id })
+
+//                   }}
+//                 >
+
+
+//                   <Tooltip title="Cancel order">
+//                     <IconButton>
+
+//                     </IconButton>
+//                   </Tooltip>
+
+//                 </div>)
+//               }
+//               {status === 'Deliverd' && (
+//                 <div
+//                   className="cursor-pointer"
+//                   onClick={() => {
+//                     returnButton({ order: params.row })
+//                     // setDeleteProductId({
+//                     //   id: params.row.id,
+//                     //   seller: params.row.seller,
+//                     // });
+//                   }}
+//                 >
+
+
+//                   <Tooltip title="Return order">
+//                     <IconButton>
+//                       <LocalShippingIcon style={{ transform: 'scaleX(-1)' }} />
+//                     </IconButton>
+//                   </Tooltip>
+
+//                 </div>)
+//               }
+//               <div className="cursor-pointer" >
+//                 {/* <Tooltip title="Publish">
+//                   <IconButton>
+//                     <PublishedWithChangesIcon />
+//                   </IconButton>
+//                 </Tooltip> */}
+//               </div>
+//             </div>
+//           );
+//         },
+//       };
+//     } else {
+//       return {
+//         field: ele,
+//         headerName: string,
+//         width: 150,
+//         editable: true,
+//       };
+//     }
+//   });
+
+//   const rowData = orders.map((ele) => {
+//     const sizequantity = ele.sizeAndQua
+//    const date = new Date(ele.createdAt)
+//     return {
+//       id: ele._id,
+//       brand: ele.prdData.brand,
+//       images: ele.prdData.images,
+//       price: ele.prdData.price,
+//       sizeandQuantity: Object.entries(sizequantity).map(([size, value]) => {
+//         return `${size}-${value}`
+//       }).join(','),
+//       TotalQuantity: ele.quantity,
+//       OrderStatus: ele.orderStatus,
+//       date: date.toDateString()
+
+//       // images: ele.productDetails.length > 0 ? ele.productDetails[0].images[0] : "",
+//       // Stock: ele.stock,
+//       // price: ele.sellingPrice,
+//       // seller: ele.seller,
+//     };
+//   });
+
+//   return (
+//     <div className={` ${styles.tableWrapper}`}>
+//       {orders.length === 0 ? (
+//         <div style={{ margin: "auto" }}>
+//           {isLoading ? (
+//             <div
+//               style={{
+//                 display: "flex",
+//                 justifyContent: "center",
+//                 alignItems: "center",
+//               }}
+//             >
+//               <ScaleLoader animation="border" role="status" color="red">
+//                 <span className="visually-hidden">Loading...</span>
+//               </ScaleLoader>
+//               <p>Loading orders...</p>
+//             </div>
+//           ) : (
+//             <img
+//               src="https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg?w=740&t=st=1692603469~exp=1692604069~hmac=6b009cb003b1ee1aad15bfd7eefb475e78ce63efc0f53307b81b1d58ea66b352"
+//               alt="Loaded"
+//             />
+//           )}
+//         </div>
+//       ) : (
+//         orders.length !== 0 &&
+//           <div className="responsive-table-container">
+          
+//           <DataTable columns={header} rows={rowData} autoHeight  />
+//           </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default BuyerOrder;
+
+
 import React, { useEffect, useState } from "react";
 import styles from "./MyOrder.module.css";
 import { Link } from "react-router-dom";
@@ -125,7 +416,7 @@ const BuyerOrder = () => {
           )}
         </div>
       ) : (
-        orders.length !== 0 && 
+        orders.length !== 0 &&
         orders.map((order, index) => {
           // const dateString = "2023-08-01T:36:25.914+00:00";
           const dateFromISOString = new Date(order?.ordRetData?.retExpDate);
@@ -219,7 +510,7 @@ const BuyerOrder = () => {
                         {/* <button className="btn btn-warning my-2">
                           CHANGE ADDRESS
                         </button> */}
-                      {order.orderStatus !== "Cancelled" || order.orderStatus =="Pending"  ? (
+                        {order.orderStatus !== "Cancelled" || order.orderStatus == "Pending" ? (
                           <button
                             onClick={() => cancelorder(order._id)}
                             className="btn btn-danger"

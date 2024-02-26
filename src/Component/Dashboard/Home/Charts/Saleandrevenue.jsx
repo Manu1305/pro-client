@@ -53,7 +53,7 @@ function Saleandrevenue({
           : "/dashboard/all-orders",
     },
   ];
-  if (user && user.urType != "seller") {
+  if (user && user.urType == "admin") {
     data.push({
       icon: "fa-solid fa-users fa-3x text-danger",
       label: "Total Users",

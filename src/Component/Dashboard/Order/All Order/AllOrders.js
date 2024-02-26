@@ -10,11 +10,14 @@ import { toast } from "react-toastify";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import httpService from "../../../Error Handling/httpService";
 import { apiURL } from "../../../../const/config";
+import { useSelector } from "react-redux";
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const user = useSelector((state) => state.userReducer.user);
 
   const getOrders = async () => {
     try {
@@ -24,21 +27,25 @@ const AllOrders = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
+
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
-          console.log(res.data,"orders")
-          return res.data;
+          setIsLoading(false);
+          return res;
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
         });
-      setOrders(res);
-
-      res && setIsLoading(false);
+      const filteredProducts = res.data.filter(
+        (product) => product.seller === user.email
+      );
+      console.log("Filtered Products:", filteredProducts);
+      setOrders(filteredProducts);
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
+      setOrders([]);
     }
   };
 
@@ -148,6 +155,7 @@ const AllOrders = () => {
         field: "Action",
         type: "action",
         renderCell: (params) => {
+          console.log(params,)
           return (
             <div style={{ alignItems: "center" }}>
               {params.row["Delivery Status"] === "Ready To PickUp" && (

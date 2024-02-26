@@ -10,6 +10,7 @@ import { AiOutlineShopping, AiFillHeart } from "react-icons/ai";
 import { apiURL } from "../../../../const/config";
 import httpService from "../../../Error Handling/httpService";
 import { BsHandbagFill, BsPlusCircle } from "react-icons/bs";
+import { BsPlusLg } from "react-icons/bs";
 import { BiSolidOffer } from "react-icons/bi";
 import { userCartItem } from "../../../../Redux/cart/cartAction";
 import axios from "axios";
@@ -17,6 +18,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import TruncatedText from "./TruncatedText";
 import { FaCartShopping } from "react-icons/fa6";
+import { ImMinus, ImPlus } from "react-icons/im";
 
 const ViewProduct = ({ getAllProducts }) => {
   const { productId } = useParams();
@@ -35,7 +37,7 @@ const ViewProduct = ({ getAllProducts }) => {
   const [product, setProduct] = useState(null);
   const [pricesIndex, setPricesIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState("");
-
+  const [count, setCount] = useState(0);
   const handleShare = () => {
     if (navigator.share) {
       navigator
@@ -153,8 +155,7 @@ const ViewProduct = ({ getAllProducts }) => {
       const { color, images } = product.productDetails[prdDetInd];
       const { brand, sellingPrice, selectedCategory, title, seller } = product;
 
-     const packouffprice = sellingPrice * color.length*totalItems
-
+      const packouffprice = sellingPrice * color.length * totalItems;
 
       const packOff = product.productInfo.Packoff;
       const item = {
@@ -164,7 +165,7 @@ const ViewProduct = ({ getAllProducts }) => {
           images: images[0],
           brand,
           category: selectedCategory,
-          price:sellingPrice,
+          price: sellingPrice,
           title,
           seller,
           packOff,
@@ -256,7 +257,6 @@ const ViewProduct = ({ getAllProducts }) => {
   };
 
   const changeColor = (index, color) => {
-    setPrdDetInd(index);
     setSelectedColor(color);
   };
 
@@ -455,13 +455,24 @@ const ViewProduct = ({ getAllProducts }) => {
                   <div
                     className={`mt-4 price d-flex flex-row align-items-center ${styles.price}`}
                   >
-                    <div>
-                      <h5 className="fw-bold text-3xl font-mono">
-                        ₹
-                        {product?.prices.length !== 0
-                          ? product.prices[pricesIndex].sellingPrice
-                          : product.sellingPrice}
-                      </h5>
+                    <div className="flex flex-col">
+                      <div>
+                        <h5 className="fw-bold text-3xl font-mono">
+                          Single piece ₹
+                          {product?.prices.length !== 0
+                            ? product.prices[pricesIndex].sellingPrice
+                            : product.sellingPrice}
+                        </h5>
+                      </div>
+                      <div>
+                        <h5 className="fw-bold text-3xl font-mono">
+                          Pack off ₹
+                          {product?.prices.length !== 0
+                            ? product.prices[pricesIndex].sellingPrice
+                            : product.sellingPrice *
+                              product.productInfo.Packoff}
+                        </h5>
+                      </div>
                     </div>
 
                     <div className={styles.starreviewmain}>
@@ -500,7 +511,7 @@ const ViewProduct = ({ getAllProducts }) => {
                   <div>
                     <h5 className={`about ${styles.about} font-bold `}>
                       {product?.productInfo?.Packoff > 1
-                        ? "pack off"
+                        ? "pack off colors"
                         : "Choose a color"}
                     </h5>
                   </div>
@@ -522,10 +533,22 @@ const ViewProduct = ({ getAllProducts }) => {
                               className={styles.color_box_border}
                               style={{ borderRadius: `20px solid ${item}` }}
                             >
+                              {" "}
                               <div
-                                className={styles.color_box}
-                                style={{ background: `${item}` }}
-                              ></div>
+                                className="p-1"
+                                style={{
+                                  border:
+                                    selectedColor === item
+                                      ? `4px solid ${item}`
+                                      : "",
+                                }}
+                              >
+                                <div
+                                  className={styles.color_box}
+                                  style={{ background: `${item}` }}
+                                  onClick={() => changeColor(index, item)}
+                                ></div>
+                              </div>
                             </div>
                           ))
                         ) : (
@@ -560,7 +583,7 @@ const ViewProduct = ({ getAllProducts }) => {
                       </label>
                     ) : (
                       <label htmlFor="product_size" className={styles.about}>
-                        Choose Sizes
+                        pack off Sizes
                       </label>
                     )}
                   </div>
@@ -605,9 +628,7 @@ const ViewProduct = ({ getAllProducts }) => {
                                   <div
                                     style={{ fontSize: "14px" }}
                                     className="text-[#d70a2a]"
-                                  >
-                                    
-                                  </div>
+                                  ></div>
                                 </div>
                                 {product.stock !== 0 && (
                                   <div
@@ -651,6 +672,32 @@ const ViewProduct = ({ getAllProducts }) => {
                         ))}
                     </div>
                   )}
+                  <div>
+                    <h3>
+                      1 packoff contains{" "}
+                      {product?.productDetails[0].color.length} products
+                    </h3>
+                  </div>
+                  {/* <div className="mt-9">
+                    <h1 className="font-extrabold">ADD PACKOFF</h1>
+                    <div className="flex flex-row mt-3 gap-1">
+                      <ImMinus
+                        onClick={() =>
+                          count > 0 ? setCount(count - 1) : "null"
+                        }
+                        className="mt-3"
+                      />
+                      <div className="h-10 w-20 bg-slate-300  text-center">
+                        <h2 className="font-bold">{count}</h2>
+                      </div>
+                      <ImPlus
+                        className="mt-3"
+                        onClick={() => {
+                          setCount(count + 1);
+                        }}
+                      />
+                    </div>
+                  </div> */}
                 </div>
 
                 {/* Add to cart Button */}

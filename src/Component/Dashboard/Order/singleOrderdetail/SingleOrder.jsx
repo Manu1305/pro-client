@@ -16,7 +16,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import { apiURL } from "../../../../const/config";
-
 function SingleOrder() {
   const { orderId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -32,33 +31,47 @@ function SingleOrder() {
         0,
         10
       )}`,
+      title: `your order successfully placed at ${order?.createdAt.slice(
+        0,
+        10
+      )}`,
     },
     {
-      label: "Order packed",
-      // description: `your order successfully shipped at ${order.updatedAt.slice(0,10)}`,
+      label: "Order packing",
+      description: `your order packing is on proccess`,
     },
     {
-      label: "Shipping",
-      description: `Order is being packed.`,
+      label: "Shipment",
+      description: `Your product Shipment is on processing`,
     },
     {
-      label: " Delivered",
-      description: `Order Delivered.`,
+      label: " Delivery",
+      description: `Your order will be deliver within 3 days`,
+      delivery: `your order delivered successfully on ${order?.updatedAt?.slice(
+        0,
+        10
+      )}`,
     },
   ];
 
   const handleNext = () => {
     if (order !== null) {
       if (order.orderStatus === "Placed") {
-        setActiveStep(0);
-      }
-      if (order.orderStatus === "Dispatched 1") {
         setActiveStep(1);
       }
-
-      if (order.orderStatus === "confirm Delivery") {
+      if (
+        order.orderStatus === "Ready To PickUp" ||
+        order.orderStatus === "Dispatched 1"
+      ) {
         setActiveStep(2);
-      } else if (order.orderStatus === "Delivered") {
+      }
+
+      if (
+        order.orderStatus === "Shipped" ||
+        order.orderStatus === "confirm Delivery"
+      ) {
+        setActiveStep(3);
+      } else if (order.orderStatus === "Deliverd") {
         setActiveStep(4);
       } else {
         console.log("errror");
@@ -155,16 +168,17 @@ function SingleOrder() {
             width: "100%",
             overflow: "hidden",
           }}
+          className="font-mono"
         >
-          <div className={styles.headingdiv}>
+          <div className={`${styles.headingdiv} shadow-md`}>
             <h3 className="font-bold ">
               Order Id : HTM-{order._id.substr(order._id.length - 6)}
             </h3>
           </div>
-          <div className={styles.secondiv}>
+          <div className={`${styles.secondiv}`}>
             {user.urType !== "seller" && (
-              <div className={styles.insidediv}>
-                <div className={styles.boxheading}>
+              <div className={`${styles.insidediv} shadow-xl`}>
+                <div className={`${styles.boxheading}`}>
                   <h3>Customer details</h3>
                 </div>
                 <hr className={styles.line} />
@@ -192,7 +206,7 @@ function SingleOrder() {
             )}
 
             {user.urType !== "seller" && (
-              <div className={styles.insidediv}>
+              <div className={`${styles.insidediv} shadow-xl`}>
                 <div className={styles.boxheading}>
                   <h3>Shipping address</h3>
                 </div>
@@ -217,7 +231,7 @@ function SingleOrder() {
                 </div>
               </div>
             )}
-            <div className={styles.insidediv}>
+            <div className={`${styles.insidediv} shadow-xl`}>
               <div className={styles.boxheading}>
                 <h3>Payment details</h3>
               </div>
@@ -230,104 +244,134 @@ function SingleOrder() {
                   <div className="flex flex-row ml-3 mt-3">
                     <p className="ml-1"> Payment method:{order.pType}</p>
                   </div>
-                  F
+
                   <div className="flex flex-row ml-3 mt-3">
                     <p className="ml-1">Total amount: {totalAmount}</p>
                   </div>
                   {user.email && user.urType === "admin" ? (
-                    <div className="flex flex-row ml-3 mt-3 border border-black">
-                      <p className="ml-1 text-green-600 font-bold ">
-                        Customer paid amount:
-                        {order.pType === "cash"
-                          ? paidAmount.toFixed(2)
-                          : totalAmount}
-                      </p>
+                    <div>
+                      {order?.orderStatus != "Deliverd" ? (
+                        <div className="flex flex-row ml-3 mt-3 border border-black">
+                          <p className="ml-1 text-green-600 font-bold ">
+                            Customer paid amount:
+                            {order.pType === "cash"
+                              ? paidAmount.toFixed(2)
+                              : totalAmount}
+                          </p>
+                        </div>
+                      ) : null}
+                      {order?.orderStatus == "Deliverd" ? (
+                        <div className="flex flex-row ml-3 mt-3 border border-black">
+                          <p className="ml-1 text-green-600 font-bold ">
+                            Customer paid amount:
+                            {totalAmount}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
                   ) : (
-                    <div className="flex flex-row ml-3 mt-3 border border-black">
-                      <p className="ml-1 text-green-600 font-bold ">
-                        paid amount:
-                        {order.pType === "cash"
-                          ? paidAmount.toFixed(2)
-                          : totalAmount}
-                      </p>
+                    <div>
+                      {order?.orderStatus != "Deliverd" ? (
+                        <div className="flex flex-row ml-3 mt-3 border border-black">
+                          <p className="ml-1 text-green-600 font-bold ">
+                             paid amount:
+                            {order.pType === "cash"
+                              ? paidAmount.toFixed(2)
+                              : totalAmount}
+                          </p>
+                        </div>
+                      ) : null}
+                      {order?.orderStatus == "Deliverd" ? (
+                        <div className="flex flex-row ml-3 mt-3 border border-black">
+                          <p className="ml-1 text-green-600 font-bold ">
+                          paid amount:
+                            {totalAmount}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
                   )}
-                  {user.email && user.urType === "admin" ? (
-                    <div className="flex flex-row ml-3 mt-3 border border-black">
-                      <p className="ml-1 text-red-600 font-bold">
-                        Amount need to collect from customer:
-                        {order.pType === "cash" ? remainingAmount : 0}
-                      </p>
+                  {order.orderStatus != "Deliverd" ? (
+                    <div>
+                      {user.email && user.urType === "admin" ? (
+                      
+                          <div className="flex flex-row ml-3 mt-3 border border-black">
+                            <p className="ml-1 text-red-600 font-bold">
+                              Amount need to collect from customer:
+                              {order.pType === "cash"
+                                ? remainingAmount.toFixed(2)
+                                : 0}
+                            </p>
+                          </div>
+                   
+                      ) : (
+                        <div className="flex flex-row ml-3 mt-3 border border-black">
+                          <p className="ml-1 text-red-600 font-bold">
+                            Pending amount:
+                            {order.pType === "cash" ? remainingAmount : 0}
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div className="flex flex-row ml-3 mt-3 border border-black">
-                      <p className="ml-1 text-red-600 font-bold">
-                        Pending amount:
-                        {order.pType === "cash" ? remainingAmount : 0}
-                      </p>
-                    </div>
-                  )}
+                  ) : null}
                 </div>
               )}
             </div>
           </div>
 
-          <div className={styles.productdetailDiv}>
-            <div>
-              <p className={styles.boxheading}>Product details</p>
-              <table className={`${styles.table}`}>
-                <tr style={{ backgroundColor: "white" }}>
-                  <th className="bg-white">Product</th>
-                  <th className="bg-white">Single product price</th>
-                  <th className="bg-white ">Order Price</th>
-                  <th className="bg-white"> size and quantity</th>
-                  <tr />
-                  <tr>
-                    <td className={styles.table1}>
-                      <Link to={`/ViewDetails/${order.productId}`}>
-                        <img
-                          src={order.prdData.images}
-                          alt="hello"
-                          className="h-10 w-10 "
-                        />
-                      </Link>
-                      {order.prdData.title}
+          <div className={`${styles.productdetailDiv} shadow-lg`}>
+            <p className={styles.boxheading}>Product details</p>
+            <table className={`${styles.table}`}>
+              <tr style={{ backgroundColor: "white" }}>
+                <th className="bg-white">Product</th>
+                <th className="bg-white">Single product price</th>
+                <th className="bg-white ">Order Price</th>
+                <th className="bg-white"> size and quantity</th>
+                <tr />
+                <tr>
+                  <td className={styles.table1}>
+                    <Link to={`/ViewDetails/${order.productId}`}>
+                      <img
+                        src={order.prdData.images}
+                        alt="hello"
+                        className="h-10 w-10 "
+                      />
+                    </Link>
+                    {order.prdData.title}
+                  </td>
+                  {/* <td>{order.productId}</td> */}
+                  <td>&#8377; {order.prdData.price}</td>
+                  {/* <td>{order.quantity}</td> */}
+                  <td>&#8377;{order.ordPrc}</td>
+                  <td className="font-bold border border-blue-500 ">
+                    {Object.entries(order.sizeAndQua)
+                      .map(([size, value]) => {
+                        return `${size}-${value}`;
+                      })
+                      .join(", ")}
+                  </td>
+                  {user.email && user.urType === "admin" ? (
+                    <td>
+                      <button
+                        className="bg-green-500 rounded"
+                        onClick={() => {
+                          setShow(true);
+                          getSellerDetails();
+                        }}
+                      >
+                        {" "}
+                        view Seller details
+                      </button>
                     </td>
-                    {/* <td>{order.productId}</td> */}
-                    <td>&#8377; {order.prdData.price}</td>
-                    {/* <td>{order.quantity}</td> */}
-                    <td>&#8377;{order.ordPrc}</td>
-                    <td className="font-bold border border-blue-500 ">
-                      {Object.entries(order.sizeAndQua)
-                        .map(([size, value]) => {
-                          return `${size}-${value}`;
-                        })
-                        .join(", ")}
-                    </td>
-                    {user.email && user.urType === "admin" ? (
-                      <td>
-                        <button
-                          className="bg-green-500 rounded"
-                          onClick={() => {
-                            setShow(true);
-                            getSellerDetails();
-                          }}
-                        >
-                          {" "}
-                          view Seller details
-                        </button>
-                      </td>
-                    ) : null}
-                  </tr>
+                  ) : null}
                 </tr>
-                <hr />
-              </table>
-            </div>
+              </tr>
+              <hr />
+            </table>
           </div>
 
           <div className={styles.four}>
-            <div className={styles.logisticdetailsdiv}>
+            <div className={`${styles.logisticdetailsdiv} shadow-xl`}>
               <p className="ml-3 mt-1 font-bold">Logistic Details</p>
 
               <div
@@ -344,7 +388,7 @@ function SingleOrder() {
                 />
               </div>
               <div className="ml-2 leading-10">
-                <h4 className="mt-4">Certon exports</h4>
+                <h4 className="mt-4">Hitecmart Delivery team</h4>
                 <p>info@hitecmart.com</p>
                 <p>+91 9711811030</p>
                 {/* <p>id:sdsdfsfv</p>
@@ -353,7 +397,7 @@ function SingleOrder() {
               </div>
             </div>
 
-            <div className={styles.totalbill}>
+            <div className={`${styles.totalbill} shadow-xl`}>
               <p className="ml-3 mt-1 font-bold">Total Bill</p>
               <div className="ml-3">
                 <div className="flex flex-row">
@@ -380,22 +424,29 @@ function SingleOrder() {
             </div>
           </div>
           {user.email && user.urType != "seller" ? (
-            <div className={styles.five}>
-              <div className={styles.stepper}>
+            <div className={`${styles.five} sm:w-full`}>
+              <div
+                className={`${styles.stepper} shadow-xl p-3 sm:mt-4 sm:w-full`}
+              >
                 <p className="font-bold mt-2 ml-2">Order Status</p>
                 <Box sx={{ maxWidth: 400 }}>
                   <Stepper activeStep={activeStep} orientation="vertical">
                     {steps.map((step, index) => (
                       <Step key={step.label}>
-                        <StepLabel
-                          optional={
-                            index === 2 ? (
-                              <Typography variant="caption"></Typography>
-                            ) : null
-                          }
-                        >
-                          {step.label}
-                        </StepLabel>
+                        <StepLabel>{step.label}</StepLabel>
+                        {activeStep >= 1 ? (
+                          <Typography variant="caption">
+                            {" "}
+                            {step?.title}
+                          </Typography>
+                        ) : null}
+                        {activeStep == 4 ? (
+                          <Typography variant="caption">
+                            {" "}
+                            {step?.delivery}
+                          </Typography>
+                        ) : null}
+
                         <StepContent>
                           <Typography>{step.description}</Typography>
                           <Box sx={{ mb: 2 }}>
@@ -423,7 +474,7 @@ function SingleOrder() {
                   </Stepper>
                   {activeStep === steps.length && (
                     <Paper square elevation={0} sx={{ p: 3 }}>
-                      <Typography>Product delivered&apos;</Typography>
+                      <Typography>Thank you for choosing hitecmart</Typography>
                       {/* <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
                             Reset
                           </Button> */}

@@ -86,7 +86,8 @@ export const AllUsers = () => {
     "email",
     "userType",
     "premium",
-    "gst",
+    "lastseen",
+    // "gst",
     "Store",
     "Action",
   ].map((ele) => {
@@ -148,11 +149,23 @@ export const AllUsers = () => {
 
   const rowData = premium
     .map((ele) => {
+      const currentTime = new Date();
+      const date = new Date(ele.online);
+      const options = {
+        timeZone: "Asia/Kolkata",
+      };
+      const lastSeenTime = new Date(ele.online);
+      const timeDifference = (currentTime - lastSeenTime) / 1000;
+      const isOnline = timeDifference < 60;
+      let lastSeenFormatted = date.toLocaleString(options);
+      if (isOnline) {
+        lastSeenFormatted = "Online";
+      }
+
       return {
         id: ele._id,
-        
         name: ele.name,
-        joined:new Date(ele.createdAt),
+        joined: new Date(ele.createdAt),
         phone: ele.phone,
         email: ele.email,
         premium: ele.subscription.subsStatus,
@@ -160,6 +173,8 @@ export const AllUsers = () => {
         gst: ele.gst,
         Action: ele.status,
         Store: ele.isOwnStore,
+        // lastseen: date.toLocaleString(options),
+        lastseen: lastSeenFormatted,
       };
     })
     .filter((ele) => ele.userType !== "admin");

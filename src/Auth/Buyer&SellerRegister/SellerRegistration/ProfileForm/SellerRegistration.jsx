@@ -29,7 +29,7 @@ const SellerRegister = () => {
   const [phone, setPhone] = useState("");
 
   const [phoneOtp, setPhoneOtp] = useState("");
-  const [Afterotp, setAfterotp] = useState(false);
+  const [Afterotp, setAfterotp] = useState(true);
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");

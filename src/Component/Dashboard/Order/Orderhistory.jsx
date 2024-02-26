@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Container, Form, Modal, Row } from "react-bootstrap";
 import { apiURL } from "../../../const/config";
 import httpService from "../../Error Handling/httpService";
@@ -10,15 +9,16 @@ import { ScaleLoader } from "react-spinners";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { element } from "prop-types";
-
+import { useSelector } from "react-redux";
 const OrderHistory = () => {
-  const user = useSelector((state) => state.userReducer.user);
+ 
 
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const [show, setShow] = useState(false);
   const [id, setId] = useState("");
   const [orderIdSts, setOrderIdSts] = useState("");
+  
   const handleClose = () => setShow(false);
   const handleShow = (orderId) => {
     setShow(true);
@@ -33,7 +33,8 @@ const OrderHistory = () => {
     setOrderIdSts(orderId);
     setShowStatus(true);
   };
-
+  const user = useSelector((state) => state.userReducer.user);
+  
   const [packageDetails, setPackageDetails] = useState({});
   const changeHandler = (e) => {
     setPackageDetails((prev) => {
@@ -75,27 +76,24 @@ const OrderHistory = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       };
-
       const res = await httpService
         .get(`${apiURL}/orders/get-all-orders`, config)
         .then((res) => {
-          setIsLoading(false);
-          return res;
+          console.log(res.data, "orders");
+          return res.data;
         })
         .catch((err) => {
           console.log(err);
-          setIsLoading(false);
         });
-      const filteredProducts = res.data.filter(
-        (product) => product.seller === user.email
-      );
-      console.log("Filtered Products:", filteredProducts);
-      setOrders(filteredProducts);
+      setOrders(res);
+
+      res && setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setOrders([]);
+      setIsLoading(false);
     }
   };
+
 
   // Order status only admin
   const UpdateOrderStatus = async () => {
@@ -141,11 +139,12 @@ const OrderHistory = () => {
     "Orderd On",
     "Payment Method",
     "Price",
-    "Delivery Status",
+    user.urType ==="admin" ?"Delivery Status":"",
+    
     "Action",
   ].map((ele) => {
     let string = ele;
-    string.replace(/^./, string[0].toUpperCase());
+    string.replace(/^./, string[0]);
 
     if (ele === "Product") {
       return {
@@ -269,7 +268,8 @@ const OrderHistory = () => {
           );
         },
       };
-    } else {
+    }
+     else {
       return {
         id: ele,
         field: ele,
@@ -280,6 +280,8 @@ const OrderHistory = () => {
     }
   });
 
+
+  
   const rowData = orders.map((ele) => {
     const date = new Date(ele.createdAt).toISOString().split("T")[0];
 
@@ -291,14 +293,16 @@ const OrderHistory = () => {
       prdId: ele.productId,
       Product: ele.prdData.images,
       "Orderd On": date,
-      Price: ele.ordPrc + ( Number(ele.ordPrc) * 0.05) +( Number(ele.quantity) * 10),
+      Price: ele.ordPrc + Number(ele.ordPrc) * 0.05 + Number(ele.quantity) * 10,
       "Payment Method": ele.pType,
-      "Delivery Status": ele.orderStatus,
+      ...(user.urType === "admin"
+        ? { "Delivery Status": ele.orderStatus }
+        : {}),
     };
   });
 
   return (
-    <div>
+    <div> 
       {rowData.length !== 0 ? (
         <>
           <DataTable columns={header} rows={rowData} autoHeight />

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { persistor, store } from "./Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import {  Test} from "./1test/Test";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -19,7 +19,7 @@ root.render(
 
         <App />
         {/* <DashHome /> */}
-
+{/* <Test/> */}
         <ToastContainer
           position="top-center"
           autoClose={2500}

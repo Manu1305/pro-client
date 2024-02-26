@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.276ec6bd.css",
-    "main.js": "/static/js/main.6baa4de0.js",
-    "static/css/608.b6abe4e7.chunk.css": "/static/css/608.b6abe4e7.chunk.css",
-    "static/js/608.26515c86.chunk.js": "/static/js/608.26515c86.chunk.js",
-    "static/css/814.8b27ab9e.chunk.css": "/static/css/814.8b27ab9e.chunk.css",
-    "static/js/814.90103087.chunk.js": "/static/js/814.90103087.chunk.js",
+    "main.css": "/static/css/main.60fe4621.css",
+    "main.js": "/static/js/main.7c728d3a.js",
+    "static/css/608.6b6368b3.chunk.css": "/static/css/608.6b6368b3.chunk.css",
+    "static/js/608.351cce40.chunk.js": "/static/js/608.351cce40.chunk.js",
+    "static/css/814.fcb4fe3c.chunk.css": "/static/css/814.fcb4fe3c.chunk.css",
+    "static/js/814.12828d3f.chunk.js": "/static/js/814.12828d3f.chunk.js",
     "static/media/2nd.png": "/static/media/2nd.6282b22873bab85ec703.png",
     "static/media/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume 1.png": "/static/media/portrait-mature-man-assistant-helps-costumer-senior-visiting-fashion-boutique-male-buy-new-exclusive-costume 1.acd9c9f1bf067043c83d.png",
     "static/media/DeliveryFranch.png": "/static/media/DeliveryFranch.b83d39d534b9174520a5.png",
@@ -62,15 +62,15 @@
     "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
-    "main.276ec6bd.css.map": "/static/css/main.276ec6bd.css.map",
-    "main.6baa4de0.js.map": "/static/js/main.6baa4de0.js.map",
-    "608.b6abe4e7.chunk.css.map": "/static/css/608.b6abe4e7.chunk.css.map",
-    "608.26515c86.chunk.js.map": "/static/js/608.26515c86.chunk.js.map",
-    "814.8b27ab9e.chunk.css.map": "/static/css/814.8b27ab9e.chunk.css.map",
-    "814.90103087.chunk.js.map": "/static/js/814.90103087.chunk.js.map"
+    "main.60fe4621.css.map": "/static/css/main.60fe4621.css.map",
+    "main.7c728d3a.js.map": "/static/js/main.7c728d3a.js.map",
+    "608.6b6368b3.chunk.css.map": "/static/css/608.6b6368b3.chunk.css.map",
+    "608.351cce40.chunk.js.map": "/static/js/608.351cce40.chunk.js.map",
+    "814.fcb4fe3c.chunk.css.map": "/static/css/814.fcb4fe3c.chunk.css.map",
+    "814.12828d3f.chunk.js.map": "/static/js/814.12828d3f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.276ec6bd.css",
-    "static/js/main.6baa4de0.js"
+    "static/css/main.60fe4621.css",
+    "static/js/main.7c728d3a.js"
   ]
 }

@@ -120,7 +120,7 @@ function DashHome() {
     {
       id: 5,
       list: "My Orders",
-      to: "/dashboard/my-orders",
+      to: "/dashboard/all-orders",
       icon: <LocalMallIcon />,
     },
     {

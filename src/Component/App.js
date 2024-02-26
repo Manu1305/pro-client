@@ -75,12 +75,16 @@ const LazyCart = React.lazy(() => import("./Pages/Cart/Cart"));
 const LazyMainPage = React.lazy(() =>
   import("./Pages/Profile/Seller/StoreSetupMainPage/MainPage"))
 
+
 const App = () => {
 
   const [products, setProducts] = useState([]);
   const [ProductLength, setProductLength] = useState();
-
+  const [online, setOnline] = useState('')
   const user = useSelector((state) => state.userReducer.user);
+
+  console.log(user._id
+    , 'this is user data')
 
   const dispatch = useDispatch();
 
@@ -108,6 +112,23 @@ const App = () => {
     }
   };
 
+
+
+
+  const lastSeen = async () => {
+    try {
+      if (user?.name) {
+        const response = await httpService.post(`${apiURL}/user/onlinestatus/${user._id}`);
+
+        setOnline(response.data);
+      } else {
+        console.log('No user or user name is missing');
+      }
+    } catch (error) {
+      console.log('Error while calling API:', error);
+    }
+  };
+
   // all products
   const getAllProducts = async () => {
     await httpService
@@ -129,8 +150,17 @@ const App = () => {
   useEffect(() => {
     getCarts();
     getAllProducts();
-  }, []);
 
+
+  }, []);
+  if (user && user.name && user.name.length > 1) {
+    setTimeout(() => {
+      lastSeen()
+    }, 100000);
+  }
+  else {
+    console.log('no user')
+  }
 
 
   return (

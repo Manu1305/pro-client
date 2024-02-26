@@ -82,7 +82,7 @@ const CustomerLogin = () => {
         });
 
 
-      console.log(response)
+
       if (response.data.user.status) {
         localStorage.setItem("token", response.data.token);
         dispatch(currentUserData(response.data.user));
@@ -97,7 +97,7 @@ const CustomerLogin = () => {
           state: {
             id: email,
             name: response.data.name,
-          }, 
+          },
 
         });
       } else {

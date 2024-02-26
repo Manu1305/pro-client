@@ -95,13 +95,23 @@
     }
   }
   .tableWrapper{
-    margin: 20px;
+margin-left: 300px;
+  
   }
   @media (max-width: 767px) {
     .orderCard {
       width: 100%;
     }
-  
+    .tableWrapper{
+      margin-left: 0;
+      width: 100%;
+      overflow-x: scroll;
+      
+    }
+    .responsive-table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
   }
   .imgcircle{
     margin-left: 14rem;

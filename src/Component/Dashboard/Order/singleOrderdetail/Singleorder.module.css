@@ -1,175 +1,168 @@
-.headingdiv{
-    height: 50px;
-    display: flex;
-    align-items: center;
-    width: 90%;
-    background-color: white;
-    padding-left: 20px;
-    margin-top: 20px;
-    margin: auto;
-    
+.headingdiv {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  background-color: white;
+  padding-left: 20px;
+  margin-top: 20px;
+  margin: auto;
 }
-.secondiv{
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    margin: auto;
+.secondiv {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  margin: auto;
 }
-.insidediv{
-    height: 300px;
-    width: 30%;
-    background-color: white;
-    margin-left: 20px;
-    margin-top: 20px;  
-    border-radius: 10px;
+.insidediv {
+  height: 300px;
+  width: 30%;
+  background-color: white;
+  margin-left: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
 }
-.boxheading{
-height: 10%;
-width: 100%;
-display: flex;
-align-items: center;
-padding-left: 10px;
-font-weight: bold;
+.boxheading {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-weight: bold;
 }
-.productdetailDiv{
-    height: 150px;
-    width: 100%;
-    background-color: white;
-    margin: auto;
-    margin-top: 20px;
-    margin-left: 100px;
-   
+.productdetailDiv {
+  height: 150px;
+  width: 95%;
+  background-color: white;
+  margin: auto;
+  margin-top: 20px;
+ 
 }
 
-.table{
-    display: flex;
-    flex-direction: column;
-   margin-left: 20px;
-   width: 60%;
-   background-color: white;
+.table {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  width: 60%;
+  background-color: white;
 }
-.four{
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    height: 400px;
-    background-color: #F7FBFF;
-    margin: auto;
-    margin-top: 40px;
+.four {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 400px;
+  background-color: #f7fbff;
+  margin: auto;
+  margin-top: 40px;
 }
-.logisticdetailsdiv{
-    
-    height: 80%;
-    width: 40%;
-    margin-left: 20px;
-    background-color: white;
+.logisticdetailsdiv {
+  height: 80%;
+  width: 40%;
+  margin-left: 20px;
+  background-color: white;
 }
-.totalbill{
-  
-    height: 80%;
-    width: 40%;
-    background-color: white;
-    margin-left: 50px;
+.totalbill {
+  height: 80%;
+  width: 40%;
+  background-color: white;
+  margin-left: 50px;
 }
-.five{
-    height: 400px;
-    width: 90%;
-    background: #F7FBFF;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
+.five {
+  height: 400px;
+  width: 90%;
+  background: #f7fbff;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
 }
-.stepper{
-    height: 100%;
-    width: 40%;
-    background-color: white;
+.stepper {
+  height: 100%;
+  width: 40%;
+  background-color: white;
 }
-.prevOrder{
-    background-color: white;
-    width: 50%;
-    height: 100%;
-    margin-left: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.prevOrder {
+  background-color: white;
+  width: 50%;
+  height: 100%;
+  margin-left: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.table1{
-   
-    display: flex;
-    flex-direction: row;
-    margin-right: 20px;
-
+.table1 {
+  display: flex;
+  flex-direction: row;
+  margin-right: 20px;
 }
 
 @media only screen and (max-width: 600px) {
-    
-    .secondiv{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin: auto;
-    }
-    .insidediv{
-        height: 300px;
-        width: 90%;
-        background-color: white;
-        margin-left: 20px;
-        margin-top: 20px;  
-        border-radius: 10px; 
-    }
-    .productdetailDiv{
-        height: auto;
-        width: 100%;
-        background-color: white;
-       display: flex;
-       flex-direction: column;
-       overflow-x: scroll;
+  .secondiv {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+  }
+  .insidediv {
+    height: 300px;
+    width: 90%;
+    background-color: white;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  .productdetailDiv {
+    height: auto;
+    width: 84%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset;
+    margin-left: 9%;
+    /* overflow-x: scroll; */
+  }
+  .table {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+    width: 100%;
+    background-color: white;
+    overflow-x: scroll;
+    margin-left: 0px;
+  }
+  .four {
+    display: flex;
+    flex-direction: column;
 
-       
-    }
-    .table{
-        display: flex;
-        flex-direction: column;
-       margin-left: 0px;
-       width: 100%;
-       background-color: white;
-       overflow-x: scroll;
-       margin-left: 0px;
-    }
-    .four{
-        display: flex;
-        flex-direction: column;
-        
-        width: 100%;
-        height: 400px;
-        background-color: #F7FBFF;
-        margin: auto;
-        margin-top: 40px;
-    }
-    .logisticdetailsdiv{
-        height: 80%;
-        width: 100%;
-        margin-left: 20px;
-        background-color: white;
-        justify-content: center;
-        align-items: center;
-    }
-    .totalbill{
-  
-        height: 80%;
-        width: 100%;
-        background-color: white;
-        margin-left: 50px;
-        margin-top: 30px;
-    }
-    .five{
-        height: 400px;
-        width: 100%;
-        background: #F7FBFF;
-        margin: auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
+    width: 100%;
+    height: 400px;
+    background-color: #f7fbff;
+    margin: auto;
+    margin-top: 40px;
+  }
+  .logisticdetailsdiv {
+    height: 80%;
+    width: 100%;
+    margin-left: 20px;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+  }
+  .totalbill {
+    height: 80%;
+    width: 100%;
+    background-color: white;
+    margin-left: 0px;
+    margin-top: 30px;
+  }
+  .five {
+    height: 400px;
+    width: 100%;
+    background: #f7fbff;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+  }
 }
