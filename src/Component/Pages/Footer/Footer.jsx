@@ -51,9 +51,10 @@ export const Footer = () => {
                   : 9711811030{" "}
                 </Link>
                 <Link className={styles.links}>
-                  <i className="fa fa-building" aria-hidden="true"></i>{" "}
-                  :Tower-B, BRIGADE TECH PARK, Pattandur Agrahara, Whitefield,
-                  Bengaluru, Karnataka 560066
+                  <i className="fa fa-building" aria-hidden="true"></i>: Plot
+                  No.30, Rajiv Gandhi MIDC Rd, Phase 1, Hinjawadi Rajiv Gandhi
+                  Infotech Park, Hinjawadi, Pune, Pimpri-Chinchwad,
+                  Maharashtra 411057
                 </Link>
                 <Link className={styles.links}>
                   <i className="fa fa-envelope-o" aria-hidden="true"></i> :

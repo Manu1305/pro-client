@@ -69,10 +69,10 @@ export const ContactUs = () => {
               <i className="fa fa-map-marker-alt fa-2x text-danger"></i>
             </div>
             <p className="mb-2">
-              Tower-B, BRIGADE TECH PARK, Pattandur Agrahara, Whitefield,
-             
+              Plot No.30, Rajiv Gandhi MIDC Rd, Phase 1, Hinjawadi Rajiv Gandhi
+              Infotech Park, Hinjawadi,
             </p>
-            <p className="mb-0"> Bengaluru, Karnataka 560066</p>
+            <p className="mb-0"> Pune, Pimpri-Chinchwad, Maharashtra 411057 </p>
           </div>
         </div>
         <div className="row g-5">
@@ -164,8 +164,7 @@ export const ContactUs = () => {
               <iframe
                 title="Google Map"
                 className="w-100 rounded"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d485.99085298273354!2d77.71816123933453!3d12.976532093672814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae11a235ad9125%3A0xc51d9bf3915e2ae5!2sCerton%20Technologies!5e0!3m2!1sen!2sin!4v1697783454352!5m2!1sen!2sin"
-                frameBorder="0"
+                src="//www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.5844024054645!2d73.7326525!3d18.592766299999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bbc385aeab8f%3A0x344941a044e88035!2s30%2C%20Rajiv%20Gandhi%20MIDC%20Rd%2C%20Phase%201%2C%20Hinjawadi%20Rajiv%20Gandhi%20Infotech%20Park%2C%20Hinjawadi%2C%20Pimpri-Chinchwad%2C%20Maharashtra%20411057!5e0!3m2!1sen!2sin!4v1709613731746!5m2!1sen!2sin"
                 style={{ height: "100%", minHeight: "300px", border: 0 }}
                 allowFullScreen
                 aria-hidden={false}
@@ -178,4 +177,3 @@ export const ContactUs = () => {
     </div>
   );
 };
-

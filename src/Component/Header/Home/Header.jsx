@@ -11,7 +11,7 @@ import { CategoryNew } from "./Goodcards/Category/CategoryNew";
 import TrendingItems from "./TopTrends/Trends";
 import Strength from "./TopTrends/StrengthUI/StrengthUI";
 import { Link } from "react-router-dom";
-import Who from './WhoSection/Who'
+import Who from "./WhoSection/Who";
 
 const SampleNextArrow = (props) => {
   const { onClick } = props;
@@ -61,7 +61,7 @@ const Header = ({ products }) => {
   };
 
   return (
-    <div style={{ overflow: "hidden" }}>
+    <div style={{ overflow: "scroll" }}>
       <div className={header.container2}>
         <div className={header.category1}>
           <Slider {...settings}>
@@ -85,7 +85,7 @@ const Header = ({ products }) => {
         </div>
       </div>
 
-        <Who />
+      <Who />
       <CategoryNew />
       <NewData products={products} />
       <TrendingItems />
